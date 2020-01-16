@@ -9,7 +9,7 @@ Tools needed before:
 4. Mongodb
 
 To start the server:
-* Ensure that you are in /api/ directory
+* Ensure that you are in `/api/` directory
 * Run `yarn` command to fetch all dependencies
 * Run `yarn run mongo:start` command to start the mongodb
 * Run `yarn start` command to start the server locally
