@@ -1,0 +1,10 @@
+# API
+api/build
+api/node_modules
+api/db
+
+# MISC
+.vscode/*
+*.DS_Store
+*.env
+*.exe
