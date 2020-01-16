@@ -1,7 +1,8 @@
 # API
 api/build
 api/node_modules
-api/db
+api/db/*
+!api/db/doNotRemove
 
 # MISC
 .vscode/*
