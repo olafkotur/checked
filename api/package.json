@@ -4,9 +4,9 @@
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
-    "tsc": "tsc",
     "start": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
-    "build": "tsc && node ./build/index.js",
+    "build": "tsc",
+    "server": "node ./build/index.js",
     "mongo:start": "mongod --dbpath db --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null"
   },
