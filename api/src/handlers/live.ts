@@ -7,6 +7,8 @@ import { IDbReading, ISimpleResponse } from '../models';
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
+    console.log(req.body);
+    // Safeguard to ensure extra unwanted collections aren't created
     if (!DbHelperService.isValidCollection(req.body.type)) {
       const response: ISimpleResponse = { code: "failed", message: 'invalid collection name', time: moment().unix() }
       res.send(response);
