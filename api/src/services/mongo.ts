@@ -32,6 +32,14 @@ export const MongoService = {
     });
   },
 
+  updateOne: async (collection: string, query: any, data: any) => {
+    await database.collection(collection).replaceOne(query, data, (error: Error) => {
+    if (error) {
+      throw error;
+    }
+    });
+  },
+
   findOne: async (collection: string, query: any) => {
     return new Promise((resolve: any) => {
       database.collection(collection).findOne(query, (error: Error, res: any) => {

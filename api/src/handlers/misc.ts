@@ -5,11 +5,7 @@ import { ISimpleResponse } from '../models';
 export const MiscHandler = {
 
   getPingResponse: (_req: express.Request, res: express.Response) => {
-    const response: ISimpleResponse = {
-      value: 'PONG',
-      time: moment().unix(),
-    };
-
+    const response: ISimpleResponse = { value: 'PONG', time: moment().unix() };
     res.send(response);
   },
 
