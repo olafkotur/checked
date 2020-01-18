@@ -18,6 +18,7 @@
 * Run `yarn run mongo:stop` command to kill the mongodb background process
 
 #### Heroku deployment
+* Run `heroku addons:create mongolab:sandbox` created mongo instance, only need to run once
 * Run `heroku container:login`
 * Run `heroku container:push web -a checked-api` this builds the image so may take some time
 * Run `heroku container:release web -a checked-api`
