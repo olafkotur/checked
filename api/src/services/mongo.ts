@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/';
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
 
 let database: any = null;
 
@@ -26,6 +26,14 @@ export const MongoService = {
 
   insertMany: async (collection: string, data: any) => {
     await database.collection(collection).insertMany(data, (error: Error) => {
+    if (error) {
+      throw error;
+    }
+    });
+  },
+
+  updateOne: async (collection: string, query: any, data: any) => {
+    await database.collection(collection).replaceOne(query, data, (error: Error) => {
     if (error) {
       throw error;
     }
