@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "mongodb": "^3.3.5",
+    "request": "^2.88.0",
     "typescript": "^3.7.3"
   },
   "devDependencies": {
