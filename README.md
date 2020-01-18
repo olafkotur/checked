@@ -17,4 +17,10 @@
 * Simply kill the node process
 * Run `yarn run mongo:stop` command to kill the mongodb background process
 
+#### Heroku deployment
+* Run `heroku container:login`
+* Run `heroku container:push web -a checked-api` this builds the image so may take some time
+* Run `heroku container:release web -a checked-api`
+* Optional, run `heroku logs -a checked-api --tail` for live app log information
+
 ---
