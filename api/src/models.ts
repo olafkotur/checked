@@ -1,7 +1,10 @@
-export type LiveDataKeys = 'temperature';
+export const ValidCollections = [
+  'temperature',
+];
 
 export interface ISimpleResponse {
-  value: string,
+  code: string,
+  message: string,
   time: number,
 }
 
