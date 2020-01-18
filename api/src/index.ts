@@ -15,7 +15,8 @@ async function main() {
   }));
 
   // Live handlers
-  app.post('/api/upload/live', LiveHandler.uploadLiveData);
+  app.post('/api/live/upload', LiveHandler.uploadLiveData);
+  app.get('/api/live/:type', LiveHandler.getLiveData);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);

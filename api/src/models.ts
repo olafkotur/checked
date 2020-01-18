@@ -10,9 +10,6 @@ export interface ISimpleResponse {
 
 export interface IDbReading {
   sensorId: number,
-  createdAt: Date,
-}
-
-export interface IDbTemperature extends IDbReading {
   value: number,
+  createdAt: Date,
 }

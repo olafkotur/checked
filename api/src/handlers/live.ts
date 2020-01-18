@@ -2,7 +2,7 @@ import express from 'express';
 import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbTemperature, ISimpleResponse } from '../models';
+import { IDbReading, ISimpleResponse } from '../models';
 
 export const LiveHandler = {
 
@@ -13,7 +13,7 @@ export const LiveHandler = {
       return false;
     }
 
-    const data: IDbTemperature = {
+    const data: IDbReading = {
       sensorId: req.body.sensorId,
       value: req.body.value,
       createdAt: new Date(),
@@ -32,5 +32,20 @@ export const LiveHandler = {
     const response: ISimpleResponse = { code: "success", message: 'added to collection', time: moment().unix() }
     res.send(response);
     return true;
-  },  
+  },
+
+  getLiveData: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany(req.params.type, {});
+
+    // Converts to client friendly format
+    const formatted: IDbReading = data.map((val: any) => {
+      return {
+        sensorId: val.sensorId,
+        value: val.value,
+        time: moment(val.createdAt).unix(),
+      }
+    });
+
+    res.send(formatted);
+  }
 }
