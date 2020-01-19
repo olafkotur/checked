@@ -4,6 +4,8 @@ import { MongoService } from './services/mongo';
 import { LiveHandler } from './handlers/live';
 import { MiscHandler } from './handlers/misc';
 
+require('dotenv').config();
+
 const PORT = process.env.PORT || 8080;
 const app: express.Application = express();
 
@@ -21,7 +23,7 @@ async function main() {
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
   app.get('/api/docs', MiscHandler.getDocumentation);
-  app.get('/api/danger/purge', MiscHandler.resetDatabase);
+  app.get('/api/danger/purge/:code', MiscHandler.resetDatabase);
 
   app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
 
