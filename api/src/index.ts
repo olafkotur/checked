@@ -21,6 +21,7 @@ async function main() {
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
   app.get('/api/docs', MiscHandler.getDocumentation);
+  app.get('/api/danger/purge', MiscHandler.resetDatabase);
 
   app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
 

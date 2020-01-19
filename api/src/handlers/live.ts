@@ -7,7 +7,6 @@ import { IDbReading, ISimpleResponse } from '../models';
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
-    console.log(req.body);
     // Safeguard to ensure extra unwanted collections aren't created
     if (!DbHelperService.isValidCollection(req.body.type)) {
       const response: ISimpleResponse = { code: "failed", message: 'invalid collection name', time: moment().unix() }
@@ -25,10 +24,8 @@ export const LiveHandler = {
     const exists: boolean = await DbHelperService.exists(req.body.type, { sensorId: data.sensorId });
     if (exists) {
       await MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
-      console.info('LiveHandler: updated 1 document');
     } else {
       await MongoService.insertOne(req.body.type, data)
-      console.info('LiveHandler: added 1 document');
     }
 
     const response: ISimpleResponse = { code: "success", message: 'added to collection', time: moment().unix() }
@@ -49,5 +46,5 @@ export const LiveHandler = {
     });
 
     res.send(formatted);
-  }
+  },
 }

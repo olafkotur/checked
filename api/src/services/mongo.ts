@@ -21,6 +21,7 @@ export const MongoService = {
     if (error) {
       throw error;
     }
+    console.log('MongoService: Added 1 document');
     });
   },
 
@@ -29,6 +30,7 @@ export const MongoService = {
     if (error) {
       throw error;
     }
+    console.log(`MongoService: Added ${data.length} documents`);
     });
   },
 
@@ -37,6 +39,7 @@ export const MongoService = {
     if (error) {
       throw error;
     }
+    console.log('MongoService: Updated 1 document');
     });
   },
 
@@ -77,4 +80,9 @@ export const MongoService = {
       }
     });
   },
+
+  deleteEverything: async () => {
+    await database.dropDatabase();
+    console.log('MongoService: Purge requested, database reset to default');
+  }
 }
