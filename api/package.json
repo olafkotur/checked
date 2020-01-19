@@ -7,6 +7,9 @@
     "start": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
     "build": "tsc",
     "server": "node ./build/index.js",
+    "release": "heroku container:push web -a checked-api && heroku container:release web -a checked-api",
+    "logs": "heroku logs -a checked-api --tail",
+    "mock": "node mocker.js",
     "mongo:start": "mongod --dbpath db --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null"
   },
