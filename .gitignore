@@ -4,9 +4,8 @@ api/node_modules
 api/db/*
 !api/db/doNotRemove
 
-# ANALYSER
-analyser/node_modules
-analyser/build
+# SCHEDULER
+scheduler/node_modules
 
 # MISC
 .vscode/*
