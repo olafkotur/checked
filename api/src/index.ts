@@ -30,6 +30,8 @@ async function main() {
 
   // Zone handlers
   app.post('/api/zones/add', ZoneHandler.addZone);
+  app.post('/api/zones/update/:zoneId', ZoneHandler.updateZone);
+  app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
   app.get('/api/zones', ZoneHandler.getZoneData);
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
 

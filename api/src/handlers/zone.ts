@@ -17,6 +17,7 @@ export const ZoneHandler = {
       lastUpdated: new Date(),
     };
 
+    // Ensure that a zone with the same id does not already exist
     await DbHelperService.exists('zones', { id: data.id }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('zones', data)
@@ -24,13 +25,52 @@ export const ZoneHandler = {
       } else {
         response = { code: "failed", message: 'zone already exists', time: moment().unix() }
       }
-    })
+    });
 
     res.send(response);
   },
 
-  updateZone: () => {},
-  deleteZone: () => {},
+  updateZone: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
+    const data: IDbZoneData = {
+      id: parseInt(req.params.zoneId),
+      name: req.body.name,
+      activity: req.body.activity,
+      createdAt: new Date(),
+      lastUpdated: new Date(),
+    };
+
+    // Ensure that the zone exists before attempting to update
+    await DbHelperService.exists('zones', { id: data.id }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.updateOne('zones', { id: data.id }, data);
+        response = { code: "success", message: 'updated existing zone', time: moment().unix() }
+      } else {
+        response = { code: "failed", message: 'zone does not exist', time: moment().unix() }
+      }
+    });
+
+    res.send(response);
+  },
+
+  deleteZone: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
+    const zoneId: number = parseInt(req.params.zoneId);
+
+    // Ensure that the zone exists before attempting to delte
+    await DbHelperService.exists('zones', { id: zoneId }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.deleteOne('zones', { id: zoneId });
+        response = { code: "success", message: 'deleted existing zone', time: moment().unix() }
+      } else {
+        response = { code: "failed", message: 'zone does not exist', time: moment().unix() }
+      }
+    });
+
+    res.send(response);
+  },
 
   getSingleZoneData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('zones', { id: parseInt(req.params.zoneId) });
