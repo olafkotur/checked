@@ -2,22 +2,21 @@ import express from 'express';
 import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbReading, ISimpleResponse } from '../models';
+import { IDbReading, IReadingResponse, ISimpleResponse } from '../models';
 
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
-    console.log(req.body);
     // Safeguard to ensure extra unwanted collections aren't created
-    if (!DbHelperService.isValidCollection(req.body.type)) {
+    if (!DbHelperService.isValidLiveCollection(req.body.type)) {
       const response: ISimpleResponse = { code: "failed", message: 'invalid collection name', time: moment().unix() }
       res.send(response);
       return false;
     }
 
     const data: IDbReading = {
-      sensorId: req.body.sensorId,
-      value: req.body.value,
+      sensorId: parseInt(req.body.sensorId),
+      value: parseInt(req.body.value),
       createdAt: new Date(),
     };
 
@@ -25,10 +24,8 @@ export const LiveHandler = {
     const exists: boolean = await DbHelperService.exists(req.body.type, { sensorId: data.sensorId });
     if (exists) {
       await MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
-      console.info('LiveHandler: updated 1 document');
     } else {
       await MongoService.insertOne(req.body.type, data)
-      console.info('LiveHandler: added 1 document');
     }
 
     const response: ISimpleResponse = { code: "success", message: 'added to collection', time: moment().unix() }
@@ -36,11 +33,33 @@ export const LiveHandler = {
     return true;
   },
 
-  getLiveData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany(req.params.type, {});
+  getSingleLiveData: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findOne(req.params.type, { sensorId: parseInt(req.params.sensorId) });
+    if (data === null) {
+      res.send({});
+      return false;
+    }
 
     // Converts to client friendly format
-    const formatted: IDbReading = data.map((val: any) => {
+    const formatted: IReadingResponse = {
+      sensorId: data.sensorId,
+      value: data.value,
+      time: moment(data.createdAt).unix(),
+    };
+
+    res.send(formatted);
+    return true;
+  },
+
+  getLiveData: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany(req.params.type, {});
+    if (data === null) {
+      res.send([]);
+      return false;
+    } 
+
+    // Converts to client friendly format
+    const formatted: IReadingResponse[] = data.map((val: any) => {
       return {
         sensorId: val.sensorId,
         value: val.value,
@@ -49,5 +68,6 @@ export const LiveHandler = {
     });
 
     res.send(formatted);
-  }
+    return true;
+  },
 }

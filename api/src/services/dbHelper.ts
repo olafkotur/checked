@@ -1,11 +1,11 @@
 import { MongoService } from '../services/mongo';
-import { ValidCollections } from '../models';
+import { ValidLiveCollections } from '../models';
 
 export const DbHelperService = {
 
-  isValidCollection: (collection: string): boolean => {
+  isValidLiveCollection: (collection: string): boolean => {
     let exists: boolean = false;
-    ValidCollections.forEach((col: string) => {
+    ValidLiveCollections.forEach((col: string) => {
       collection === col ? exists = true : exists = false;
     });
 
