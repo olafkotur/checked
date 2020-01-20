@@ -7,9 +7,11 @@ import { IDbReading, IReadingResponse, ISimpleResponse } from '../models';
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
     // Safeguard to ensure extra unwanted collections aren't created
     if (!DbHelperService.isValidLiveCollection(req.body.type)) {
-      const response: ISimpleResponse = { code: "failed", message: 'invalid collection name', time: moment().unix() }
+      response = { code: "failed", message: 'invalid collection name', time: moment().unix() }
       res.send(response);
       return false;
     }
@@ -21,14 +23,15 @@ export const LiveHandler = {
     };
 
     // Update only if reading with same sensorId exists
-    const exists: boolean = await DbHelperService.exists(req.body.type, { sensorId: data.sensorId });
-    if (exists) {
-      await MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
-    } else {
-      await MongoService.insertOne(req.body.type, data)
-    }
+    await DbHelperService.exists(req.body.type, { id: data.sensorId }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
+      } else {
+        MongoService.insertOne(req.body.type, data)
+      }
+      response = { code: "success", message: 'added to collection', time: moment().unix() }
+    });
 
-    const response: ISimpleResponse = { code: "success", message: 'added to collection', time: moment().unix() }
     res.send(response);
     return true;
   },
