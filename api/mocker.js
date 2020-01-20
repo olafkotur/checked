@@ -2,7 +2,7 @@ const request = require('request');
 const delay = require('delay');
 require('dotenv').config();
 
-const DEBUG = false;
+const DEBUG = true;
 const domain = DEBUG ? 'http://localhost:8080' : process.env.DOMAIN_URI;
 
 const HelperService = {

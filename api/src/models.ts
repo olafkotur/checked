@@ -21,6 +21,14 @@ export interface ILocationResponse {
   time: number 
  }
 
+ export interface IZoneDataResponse {
+  id: number,
+  name: number,
+  activity: string,
+  createdAt: number,
+  lastUpdated: number,
+ }
+
 export interface IDbReading {
   sensorId: number,
   value: number,
@@ -33,3 +41,11 @@ export interface IDbLocation {
   yValue: number,
   createdAt: Date
 }
+
+export interface IDbZoneData {
+  id: number,
+  name: number,
+  activity: string,
+  createdAt: Date,
+  lastUpdated: Date,
+ }
