@@ -3,7 +3,7 @@ import moment from 'moment';
 import { ISimpleResponse, IZoneDataResponse } from '../models';
 import { MongoService } from '../services/mongo';
 
-export const MiscHandler = {
+export const ZoneHandler = {
 
   addZone: (_req: express.Request, res: express.Response) => {
     const response: ISimpleResponse = { code: 'success', message: 'pong', time: moment().unix() };
@@ -13,8 +13,8 @@ export const MiscHandler = {
   updateZone: () => {},
   deleteZone: () => {},
 
-  getSingleZoneData: async (_req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('zones', {});
+  getSingleZoneData: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findOne('zones', { id: parseInt(req.params.zoneId) });
     if (data === null) {
       res.send({});
       return false;
@@ -31,6 +31,27 @@ export const MiscHandler = {
 
     res.send(formatted);
     return true;
-  }
+  },
   
+  getZoneData: async (_req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('zones', {});
+    if (data === null) {
+      res.send([]);
+      return false;
+    }
+
+    // Converts to client friendly format
+    const formatted: IZoneDataResponse[] = data.map((val: any) => {
+      return {
+        id: val.id,
+        name: val.name,
+        activity: val.activity,
+        createdAt: moment(val.createdAt).unix(),
+        lastUpdated: moment(val.lastUpdated).unix(),
+      }
+    });
+
+    res.send(formatted);
+    return true;
+  }
 }

@@ -4,6 +4,7 @@ import { MongoService } from './services/mongo';
 import { LiveHandler } from './handlers/live';
 import { LocationHandler } from './handlers/location';
 import { MiscHandler } from './handlers/misc';
+import { ZoneHandler } from './handlers/zone';
 
 require('dotenv').config();
 
@@ -20,12 +21,16 @@ async function main() {
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);
   app.get('/api/live/:type', LiveHandler.getLiveData);
-  app.get('/api/live/:type/:sensorId?', LiveHandler.getSingleLiveData);
+  app.get('/api/live/:type/:sensorId', LiveHandler.getSingleLiveData);
 
   // Location handlers
   app.post('/api/location/upload', LocationHandler.uploadLocationData);
   app.get('/api/location', LocationHandler.getLocationData);
   app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
+
+  // Zone handlers
+  app.get('api/zones', ZoneHandler.getZoneData);
+  app.get('api/zones/:zoneId', ZoneHandler.getSingleZoneData);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
