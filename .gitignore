@@ -4,6 +4,10 @@ api/node_modules
 api/db/*
 !api/db/doNotRemove
 
+# ANALYSER
+analyser/node_modules
+analyser/build
+
 # MISC
 .vscode/*
 *.DS_Store
