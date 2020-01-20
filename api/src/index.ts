@@ -2,7 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoService } from './services/mongo';
 import { LiveHandler } from './handlers/live';
+import { LocationHandler } from './handlers/location';
 import { MiscHandler } from './handlers/misc';
+import { ZoneHandler } from './handlers/zone';
+
+require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
 const app: express.Application = express();
@@ -17,10 +21,24 @@ async function main() {
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);
   app.get('/api/live/:type', LiveHandler.getLiveData);
+  app.get('/api/live/:type/:sensorId', LiveHandler.getSingleLiveData);
+
+  // Location handlers
+  app.post('/api/location/upload', LocationHandler.uploadLocationData);
+  app.get('/api/location', LocationHandler.getLocationData);
+  app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
+
+  // Zone handlers
+  app.post('/api/zones/add', ZoneHandler.addZone);
+  app.post('/api/zones/update/:zoneId', ZoneHandler.updateZone);
+  app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
+  app.get('/api/zones', ZoneHandler.getZoneData);
+  app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
   app.get('/api/docs', MiscHandler.getDocumentation);
+  app.get('/api/danger/purge/:code', MiscHandler.resetDatabase);
 
   app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
 

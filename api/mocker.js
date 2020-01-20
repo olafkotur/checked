@@ -1,8 +1,9 @@
 const request = require('request');
 const delay = require('delay');
+require('dotenv').config();
 
 const DEBUG = true;
-const domain = DEBUG ? 'http://localhost:8080' : 'http://checked-api.herokuapp.com';
+const domain = DEBUG ? 'http://localhost:8080' : process.env.DOMAIN_URI;
 
 const HelperService = {
   get: (uri) => {
@@ -42,7 +43,7 @@ const HelperService = {
   }
 };
 
-const collections = [
+const liveCollections = [
   'temperature',
 ];
 
@@ -52,20 +53,31 @@ const options = {
   maxSensorId: 5,
   minTemperature: 22,
   maxTemperature: 30,
+  minCoords: 0,
+  maxCoords: 100
 }
 
 async function main() {
+  let body = {};
   while (true) {
     
     // Live data
-    collections.forEach((col) => {
-      const body = {
+    liveCollections.forEach((col) => {
+      body = {
         type: col,
         value: HelperService.random(options.minTemperature, options.maxTemperature),
         sensorId: HelperService.random(options.minSensorId, options.maxSensorId)
       }
       HelperService.post(domain + '/api/live/upload', body);
     });
+
+    // Location data
+    body = {
+      sensorId: HelperService.random(options.minSensorId, options.maxSensorId),
+      xValue: HelperService.random(options.minCoords, options.maxCoords),
+      yValue: HelperService.random(options.minCoords, options.maxCoords),
+    }
+    HelperService.post(domain + '/api/location/upload', body);
 
     await delay(options.timeout);
   }
