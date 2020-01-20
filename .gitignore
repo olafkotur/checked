@@ -4,6 +4,9 @@ api/node_modules
 api/db/*
 !api/db/doNotRemove
 
+# SCHEDULER
+scheduler/node_modules
+
 # MISC
 .vscode/*
 *.DS_Store
