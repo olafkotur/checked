@@ -7,6 +7,8 @@ import { IDbLocation, ILocationResponse, ISimpleResponse } from '../models';
 export const LocationHandler = {
 
   uploadLocationData: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
     const data: IDbLocation = {
       sensorId: parseInt(req.body.sensorId),
       xValue: parseInt(req.body.xValue),
@@ -15,14 +17,15 @@ export const LocationHandler = {
     };
 
     // Update only if reading with same sensorId exists
-    const exists: boolean = await DbHelperService.exists('location', { sensorId: data.sensorId });
-    if (exists) {
-      await MongoService.updateOne('location', { sensorId: data.sensorId }, data);
-    } else {
-      await MongoService.insertOne('location', data)
-    }
+    await DbHelperService.exists(req.body.type, { id: data.sensorId }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.updateOne('location', { sensorId: data.sensorId }, data);
+      } else {
+        MongoService.insertOne('location', data);
+      }
+      response = { code: "success", message: 'added to collection', time: moment().unix() }
+    });
 
-    const response: ISimpleResponse = { code: "success", message: 'added to collection', time: moment().unix() }
     res.send(response);
   },
 

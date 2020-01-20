@@ -29,8 +29,9 @@ async function main() {
   app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
 
   // Zone handlers
-  app.get('api/zones', ZoneHandler.getZoneData);
-  app.get('api/zones/:zoneId', ZoneHandler.getSingleZoneData);
+  app.post('/api/zones/add', ZoneHandler.addZone);
+  app.get('/api/zones', ZoneHandler.getZoneData);
+  app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);

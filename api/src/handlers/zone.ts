@@ -1,12 +1,31 @@
 import express from 'express';
 import moment from 'moment';
-import { ISimpleResponse, IZoneDataResponse } from '../models';
+import { IZoneDataResponse, IDbZoneData, ISimpleResponse } from '../models';
 import { MongoService } from '../services/mongo';
+import { DbHelperService } from '../services/dbHelper';
 
 export const ZoneHandler = {
 
-  addZone: (_req: express.Request, res: express.Response) => {
-    const response: ISimpleResponse = { code: 'success', message: 'pong', time: moment().unix() };
+  addZone: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
+    const data: IDbZoneData = {
+      id: parseInt(req.body.id),
+      name: req.body.name,
+      activity: req.body.activity,
+      createdAt: new Date(),
+      lastUpdated: new Date(),
+    };
+
+    await DbHelperService.exists('zones', { id: data.id }).then((exists: boolean) => {
+      if (!exists) {
+        MongoService.insertOne('zones', data)
+        response = { code: "success", message: 'added zone to collection', time: moment().unix() }
+      } else {
+        response = { code: "failed", message: 'zone already exists', time: moment().unix() }
+      }
+    })
+
     res.send(response);
   },
 
