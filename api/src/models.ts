@@ -1,7 +1,3 @@
-export const ValidLiveCollections = [
-  'temperature',
-];
-
 export interface ISimpleResponse {
   code: string,
   message: string,

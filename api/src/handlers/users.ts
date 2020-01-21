@@ -2,12 +2,45 @@ import express from 'express';
 import moment from 'moment';
 import { ISimpleResponse, IDbUser, IDbUserWithPassword } from '../models';
 import { MongoService } from '../services/mongo';
+import { DbHelperService } from '../services/dbHelper';
 
 export const MiscHandler = {
 
-  createUser: async (req: express.Request, res: express.Response) => {},
+  createUser: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
 
-  deleteUser: async (req: express.Request, res: express.Response) => {},
+    const userId: number = await DbHelperService.assignUserId();
+
+    // Ensure that a zone with the same id does not already exist
+    await DbHelperService.exists('zones', { userName: req.body.userName }).then((exists: boolean) => {
+      if (!exists) {
+        MongoService.insertOne('zones', data)
+        response = { code: "success", message: 'created new user', time: moment().unix() }
+      } else {
+        response = { code: "failed", message: 'username already taken', time: moment().unix() }
+      }
+    });
+
+    res.send(response);
+  },
+
+  deleteUser: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = {};
+
+    const userId: number = parseInt(req.params.userId);
+
+    // Ensure that the zone exists before attempting to delte
+    await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.deleteOne('users', { userId: userId });
+        response = { code: "success", message: 'deleted existing user', time: moment().unix() }
+      } else {
+        response = { code: "failed", message: 'user does not exist', time: moment().unix() }
+      }
+    });
+
+    res.send(response);
+  },
 
   getSingleUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
