@@ -48,7 +48,7 @@ export interface IDbZoneData {
 
  export interface IDbUser {
   userId: number,
-  userName: string,
+  username: string,
   createdAt: Date,
   lastUpdated: Date
  }

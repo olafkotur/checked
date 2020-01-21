@@ -5,6 +5,7 @@ import { LiveHandler } from './handlers/live';
 import { LocationHandler } from './handlers/location';
 import { MiscHandler } from './handlers/misc';
 import { ZoneHandler } from './handlers/zone';
+import { UserHandler } from './handlers/users';
 
 require('dotenv').config();
 
@@ -34,6 +35,12 @@ async function main() {
   app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
   app.get('/api/zones', ZoneHandler.getZoneData);
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
+
+  // User handlers
+  app.post('/api/users/create', UserHandler.createUser);
+  app.delete('/api/users/delete', UserHandler.deleteUser);
+  app.get('/api/users/:userId', UserHandler.getSingleUser);
+  app.get('/api/users', UserHandler.getUsers);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);

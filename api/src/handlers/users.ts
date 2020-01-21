@@ -3,18 +3,27 @@ import moment from 'moment';
 import { ISimpleResponse, IDbUser, IDbUserWithPassword } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
+import { AuthService } from '../services/auth';
 
-export const MiscHandler = {
+export const UserHandler = {
 
   createUser: async (req: express.Request, res: express.Response) => {
     let response: ISimpleResponse | object = {};
 
-    const userId: number = await DbHelperService.assignUserId();
+    const hashedPassword: string = AuthService.hashValue(req.body.password);
 
-    // Ensure that a zone with the same id does not already exist
-    await DbHelperService.exists('zones', { userName: req.body.userName }).then((exists: boolean) => {
+    const data: IDbUserWithPassword = {
+      userId: await DbHelperService.assignUserId(),
+      username: req.body.username,
+      password: hashedPassword,
+      createdAt: new Date(),
+      lastUpdated: new Date(),
+    };
+
+    // Check that a user with the same username does not exist
+    await DbHelperService.exists('users', { username: req.body.username }).then((exists: boolean) => {
       if (!exists) {
-        MongoService.insertOne('zones', data)
+        MongoService.insertOne('users', data)
         response = { code: "success", message: 'created new user', time: moment().unix() }
       } else {
         response = { code: "failed", message: 'username already taken', time: moment().unix() }
@@ -51,7 +60,7 @@ export const MiscHandler = {
 
     const formatted: IDbUser = {
       userId: data.userId,
-      userName: data.userName,
+      username: data.username,
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -70,7 +79,7 @@ export const MiscHandler = {
     const formatted: IDbUser[] = data.map((user: IDbUserWithPassword ) => {
       return {
         userId: user.userId,
-        userName: user.userName,
+        username: user.username,
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }
