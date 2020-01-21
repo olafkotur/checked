@@ -43,9 +43,20 @@ export interface IDbLocation {
 }
 
 export interface IDbZoneData {
-  id: number,
+  zoneId: number,
   name: number,
   activity: string,
   createdAt: Date,
   lastUpdated: Date,
+ }
+
+ export interface IDbUser {
+  userId: number,
+  userName: string,
+  createdAt: Date,
+  lastUpdated: Date
+ }
+
+ export interface IDbUserWithPassword extends IDbUser {
+  password: string
  }
