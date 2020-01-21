@@ -1,7 +1,3 @@
-export const ValidLiveCollections = [
-  'temperature',
-];
-
 export interface ISimpleResponse {
   code: string,
   message: string,
@@ -43,9 +39,20 @@ export interface IDbLocation {
 }
 
 export interface IDbZoneData {
-  id: number,
+  zoneId: number,
   name: number,
   activity: string,
   createdAt: Date,
   lastUpdated: Date,
+ }
+
+ export interface IDbUser {
+  userId: number,
+  username: string,
+  createdAt: Date,
+  lastUpdated: Date
+ }
+
+ export interface IDbUserWithPassword extends IDbUser {
+  password: string
  }

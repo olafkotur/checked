@@ -10,7 +10,7 @@ export const ZoneHandler = {
     let response: ISimpleResponse | object = {};
 
     const data: IDbZoneData = {
-      id: parseInt(req.body.id),
+      zoneId: parseInt(req.body.id),
       name: req.body.name,
       activity: req.body.activity,
       createdAt: new Date(),
@@ -18,7 +18,7 @@ export const ZoneHandler = {
     };
 
     // Ensure that a zone with the same id does not already exist
-    await DbHelperService.exists('zones', { id: data.id }).then((exists: boolean) => {
+    await DbHelperService.exists('zones', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('zones', data)
         response = { code: "success", message: 'added zone to collection', time: moment().unix() }
@@ -34,7 +34,7 @@ export const ZoneHandler = {
     let response: ISimpleResponse | object = {};
 
     const data: IDbZoneData = {
-      id: parseInt(req.params.zoneId),
+      zoneId: parseInt(req.params.zoneId),
       name: req.body.name,
       activity: req.body.activity,
       createdAt: new Date(),
@@ -42,9 +42,9 @@ export const ZoneHandler = {
     };
 
     // Ensure that the zone exists before attempting to update
-    await DbHelperService.exists('zones', { id: data.id }).then((exists: boolean) => {
+    await DbHelperService.exists('zones', { id: data.zoneId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.updateOne('zones', { id: data.id }, data);
+        MongoService.updateOne('zones', { id: data.zoneId }, data);
         response = { code: "success", message: 'updated existing zone', time: moment().unix() }
       } else {
         response = { code: "failed", message: 'zone does not exist', time: moment().unix() }
