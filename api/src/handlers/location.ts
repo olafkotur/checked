@@ -17,7 +17,7 @@ export const LocationHandler = {
     };
 
     // Update only if reading with same sensorId exists
-    await DbHelperService.exists(req.body.type, { id: data.sensorId }).then((exists: boolean) => {
+    await DbHelperService.exists('location', { sensorId: data.sensorId }).then((exists: boolean) => {
       if (exists) {
         MongoService.updateOne('location', { sensorId: data.sensorId }, data);
       } else {
