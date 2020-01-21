@@ -23,7 +23,7 @@ export const LiveHandler = {
     };
 
     // Update only if reading with same sensorId exists
-    await DbHelperService.exists(req.body.type, { id: data.sensorId }).then((exists: boolean) => {
+    await DbHelperService.exists(req.body.type, { sensorId: data.sensorId }).then((exists: boolean) => {
       if (exists) {
         MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
       } else {

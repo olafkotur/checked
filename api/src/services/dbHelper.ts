@@ -1,5 +1,6 @@
 import { MongoService } from '../services/mongo';
-import { ValidLiveCollections } from '../models';
+import { IDbUserWithPassword } from '../models';
+import { ValidLiveCollections } from '../imports';
 
 export const DbHelperService = {
 
@@ -20,4 +21,17 @@ export const DbHelperService = {
       return false;
     }
   },
+
+  assignUserId: async (): Promise<number> => {
+    const users: any = await MongoService.findMany('users', {});
+
+    // Find the next available user id from the database
+    let highestId: number = 0;
+    users.forEach((user: IDbUserWithPassword) => {
+      if (user.userId >= highestId) {
+        highestId = user.userId + 1;
+      }
+    });
+    return highestId;
+  }
 }

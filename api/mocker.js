@@ -2,7 +2,7 @@ const request = require('request');
 const delay = require('delay');
 require('dotenv').config();
 
-const DEBUG = true;
+const DEBUG = false;
 const domain = DEBUG ? 'http://localhost:8080' : process.env.DOMAIN_URI;
 
 const HelperService = {
@@ -48,9 +48,9 @@ const liveCollections = [
 ];
 
 const options = {
-  timeout: 5000,
+  timeout: 1000,
   minSensorId: 1,
-  maxSensorId: 5,
+  maxSensorId: 10,
   minTemperature: 22,
   maxTemperature: 30,
   minCoords: 0,
