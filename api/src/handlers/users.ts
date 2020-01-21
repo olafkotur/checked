@@ -89,4 +89,25 @@ export const UserHandler = {
     return true;
   },
 
+  login: async (req: express.Request, res: express.Response) => {
+    let response: ISimpleResponse | object = { code: 'failed', message: 'username or password is incorrect', time: moment().unix() };
+    const hashedPassword: string = AuthService.hashValue(req.body.password);
+
+    const data: any = await MongoService.findOne('users', { username: req.body.username });
+    if (data === null) {
+      res.send(response);
+      return false;
+    }
+
+    // Check if credentials are correct
+    if (data.username === req.body.username) {
+      if (data.password === hashedPassword) {
+        response = { code: 'success', message: 'user logged in', time: moment().unix() }; 
+      }
+    }
+
+    res.send(response);
+    return true;
+  }
+
 }
