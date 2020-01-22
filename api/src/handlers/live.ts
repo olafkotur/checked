@@ -10,7 +10,7 @@ export const LiveHandler = {
   uploadLiveData: async (req: express.Request, res: express.Response) => {
     // Safeguard to ensure extra unwanted collections aren't created
     if (!DbHelperService.isValidLiveCollection(req.body.type)) {
-      ResponseService.failed('Invalid collection name', res);
+      ResponseService.bad('Invalid collection name', res);
       return false;
     }
 
@@ -29,7 +29,7 @@ export const LiveHandler = {
       }
     });
 
-    ResponseService.success('Added to collection', res);
+    ResponseService.create('Added to collection', res);
     return true;
   },
 

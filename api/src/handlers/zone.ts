@@ -20,9 +20,9 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('zones', data)
-        ResponseService.success('Added new zone to collection', res);
+        ResponseService.create('Added new zone to collection', res);
       } else {
-        ResponseService.failed('Zone already exists', res);
+        ResponseService.bad('Zone already exists', res);
       }
     });
   },
@@ -40,9 +40,9 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { id: data.zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.updateOne('zones', { id: data.zoneId }, data);
-        ResponseService.success('Updated existing zone', res);
+        ResponseService.ok('Updated existing zone', res);
       } else {
-        ResponseService.failed('Zone does not exist', res);
+        ResponseService.notFound('Zone does not exist', res);
       }
     });
   },
@@ -54,9 +54,9 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { id: zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('zones', { id: zoneId });
-        ResponseService.success('Deleted existing zone', res);
+        ResponseService.ok('Deleted existing zone', res);
       } else {
-        ResponseService.failed('Zone does not exist', res);
+        ResponseService.notFound('Zone does not exist', res);
       }
     });
   },

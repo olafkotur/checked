@@ -5,7 +5,7 @@ import { ResponseService } from '../services/response';
 export const MiscHandler = {
 
   getPingResponse: (_req: express.Request, res: express.Response) => {
-    ResponseService.success('Pong', res);
+    ResponseService.ok('Pong', res);
   },
 
   getDocumentation: (_req: express.Request, res: express.Response) => {
@@ -15,12 +15,12 @@ export const MiscHandler = {
   resetDatabase: async (req: express.Request, res: express.Response) => {
     // Safeguard to ensure this isn't trigerred accidentally
     if (req.params.code !== process.env.PURGE_CODE) {
-      ResponseService.failed('Invalid purge code', res);
+      ResponseService.unauthorized('Invalid purge code', res);
       return false;
     } 
 
     await MongoService.deleteEverything();
-    ResponseService.failed('Database successfully purged', res);
+    ResponseService.ok('Database successfully purged', res);
     return true;
   }
 }

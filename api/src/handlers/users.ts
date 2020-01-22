@@ -22,9 +22,9 @@ export const UserHandler = {
     await DbHelperService.exists('users', { username: req.body.username }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
-        ResponseService.success('Created new user', res);
+        ResponseService.create('Created new user', res);
       } else {
-        ResponseService.failed('Username already taken', res);
+        ResponseService.bad('Username already taken', res);
       }
     });
   },
@@ -36,9 +36,9 @@ export const UserHandler = {
     await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('users', { userId: userId });
-        ResponseService.success('Deleted existing user', res);
+        ResponseService.ok('Deleted existing user', res);
       } else {
-        ResponseService.failed('User does not exist', res);
+        ResponseService.notFound('User does not exist', res);
       }
     });
   },
@@ -86,14 +86,14 @@ export const UserHandler = {
 
     const data: any = await MongoService.findOne('users', { username: req.body.username });
     if (data === null) {
-      ResponseService.failed('Username or password is incorrect', res);
+      ResponseService.unauthorized('Username or password is incorrect', res);
       return false;
     }
 
     // Check if credentials are correct
     if (data.username === req.body.username) {
       if (data.password === hashedPassword) {
-        ResponseService.success('User logged in', res);
+        ResponseService.ok('User logged in', res);
       }
     }
 

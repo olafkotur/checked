@@ -1,15 +1,17 @@
-export interface ISuccessResponse {
+export interface IResponse {
   code: number,
-  type: string,
+  status: string,
+  date: string,
+  unix: number,
   message: string,
-  date: Date
 }
 
-export interface IFailedResponse {
+export interface IDataResponse {
   code: number,
-  type: string,
-  message: string,
-  date: Date
+  status: string,
+  date: string,
+  unix: number,
+  result: any
 }
 
 export interface IReadingResponse {
