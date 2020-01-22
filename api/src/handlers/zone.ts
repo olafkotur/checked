@@ -3,8 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbZoneData } from '../models/db';
-import { IZoneDataResponse } from '../models/response';
+import { IDbZoneData } from '../types/db';
+import { IZoneDataResponse } from '../types/response';
 
 export const ZoneHandler = {
 

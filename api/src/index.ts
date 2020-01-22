@@ -6,6 +6,7 @@ import { LocationHandler } from './handlers/location';
 import { MiscHandler } from './handlers/misc';
 import { ZoneHandler } from './handlers/zone';
 import { UserHandler } from './handlers/users';
+import { MemberHandler } from './handlers/members';
 
 require('dotenv').config();
 
@@ -42,6 +43,12 @@ async function main() {
   app.delete('/api/users/delete/:userId', UserHandler.deleteUser);
   app.get('/api/users/:userId', UserHandler.getSingleUser);
   app.get('/api/users', UserHandler.getUsers);
+
+  // Member handlers
+  app.post('/api/members/create', MemberHandler.createMember);
+  app.delete('/api/members/delete/:memberId', MemberHandler.deleteMember);
+  app.get('/api/members/:memberId', MemberHandler.getSingleMember);
+  app.get('/api/members', MemberHandler.getMembers);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);

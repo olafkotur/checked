@@ -3,8 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbReading } from '../models/db';
-import { IReadingResponse } from '../models/response';
+import { IDbReading } from '../types/db';
+import { IReadingResponse } from '../types/response';
 
 export const LiveHandler = {
 

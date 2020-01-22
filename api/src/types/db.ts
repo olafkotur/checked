@@ -22,10 +22,16 @@ export interface IDbZoneData {
 export interface IDbUser {
   userId: number,
   username: string,
+  password: string
   createdAt: Date,
   lastUpdated: Date
 }
 
-export interface IDbUserWithPassword extends IDbUser {
-  password: string
+export interface IDbMember {
+  memberId: number,
+  firstName: string,
+  lastName: string,
+  adminUsername: string,
+  createdAt: Date,
+  lastUpdated: Date
 }

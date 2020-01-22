@@ -35,9 +35,18 @@ export interface ILocationResponse {
   lastUpdated: number,
 }
 
+export interface IUserResponse {
+  userId: number,
+  username: string,
+  createdAt: number,
+  lastUpdated: number
+}
+
 export interface IMemberResponse {
   memberId: number,
   firstName: string,
   lastName: string,
-  note: string
+  adminUsername: string,
+  createdAt: number,
+  lastUpdated: number
 }

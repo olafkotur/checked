@@ -3,8 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbLocation } from '../models/db';
-import { ILocationResponse } from '../models/response';
+import { IDbLocation } from '../types/db';
+import { ILocationResponse } from '../types/response';
 
 export const LocationHandler = {
 
