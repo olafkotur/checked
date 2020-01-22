@@ -72,7 +72,7 @@ export const MemberHandler = {
       return false;
     }
 
-    const formatted: IMemberResponse[] = data.map(async (member: IDbMember) => {
+    const formatted: IMemberResponse[] = data.map((member: IDbMember) => {
       return {
         memberId: member.memberId,
         firstName: member.firstName,
@@ -86,5 +86,28 @@ export const MemberHandler = {
     ResponseService.data(formatted, res);
     return true;
   },
+
+  getMembersByUser: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('members', { adminUsername: req.params.adminUsername });
+    console.log(data);
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    const formatted: IMemberResponse[] = data.map((member: IDbMember) => {
+      return {
+        memberId: member.memberId,
+        firstName: member.firstName,
+        lastName: member.lastName,
+        adminUsername: member.adminUsername,
+        createdAt: moment(data.createdAt).unix(),
+        lastUpdated: moment(data.lastUpdated).unix()
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  }
 
 };
