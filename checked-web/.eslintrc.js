@@ -11,13 +11,15 @@ module.exports = {
         "no-this-before-super": 2,
         "no-undef": 2,
         "no-unreachable": 2,
-        "no-unused-vars": 0,
+        "@typescript-eslint/no-unused-vars": 0,
+        "@typescript-eslint/no-explicit-any": 0,
         "constructor-super": 2,
         "valid-typeof": 2,
-        "semi": [
+        "@typescript-eslint/semi": [
             2,
             "always"
-        ]
+        ],
+        "@typescript-eslint/interface-name-prefix": 0
     },
     settings: {
         react: {
