@@ -11,3 +11,62 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* ==== GLOBAL ==== */
+
+.dashContainer {
+  margin-right: 15px;
+  margin-left: 72px;
+  padding-top: 85px;
+}
+
+/* ===== MENUBAR ===== */
+
+.topBarLogo {
+  width: 30px;
+  height: 30px;
+}
+
+.drawer {
+  margin-top: 64px;
+  transition: cubic-bezier(0.6, -0.1, 0.735, 0.045) 0.4s;
+}
+
+.drawerOpen {
+  width: 225px;
+}
+
+.drawerClosed {
+  overflow-x: hidden;
+  width: 60px;
+}
+
+.menuIcon {
+  color: white;
+}
+
+.topBar {
+  background: #ffffff;
+}
+
+.dimmer {
+  width: 100vw;
+  height: 100%;
+  background-color: black;
+  opacity: 0.2;
+  position: fixed;
+  z-index: 999;
+}
+
+.fadeOut {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 500ms;
+}
+
+.fadeIn {
+  visibility: visible;
+  opacity: 0.2;
+  transition: visibility 0s linear 0s, opacity 300ms;
+}
+
