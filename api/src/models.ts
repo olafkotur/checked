@@ -1,7 +1,15 @@
-export interface ISimpleResponse {
-  code: string,
+export interface ISuccessResponse {
+  code: number,
+  type: string,
   message: string,
-  time: number
+  date: Date
+}
+
+export interface IFailedResponse {
+  code: number,
+  type: string,
+  message: string,
+  date: Date
 }
 
 export interface IReadingResponse {

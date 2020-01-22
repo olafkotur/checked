@@ -2,13 +2,12 @@ import express from 'express';
 import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbLocation, ILocationResponse, ISimpleResponse } from '../models';
+import { ResponseService } from '../services/response';
+import { IDbLocation, ILocationResponse } from '../models';
 
 export const LocationHandler = {
 
   uploadLocationData: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const data: IDbLocation = {
       sensorId: parseInt(req.body.sensorId),
       xValue: parseInt(req.body.xValue),
@@ -23,10 +22,9 @@ export const LocationHandler = {
       } else {
         MongoService.insertOne('location', data);
       }
-      response = { code: "success", message: 'added to collection', time: moment().unix() }
     });
 
-    res.send(response);
+    ResponseService.success('Added to collection', res);
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
@@ -44,7 +42,7 @@ export const LocationHandler = {
       time: moment(data.createdAt).unix(),
     };
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 
@@ -65,7 +63,7 @@ export const LocationHandler = {
       }
     });
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 }
