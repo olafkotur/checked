@@ -1,3 +1,9 @@
+/******************************************************************
+* This code was originally written for SCC330 by George Park in   *
+* JavaScript. I have converted it to TypeScript and changed a     *
+* fair amount of the code to allow this component to better fit   *
+* the application.                                                *
+*******************************************************************/
 
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText } from '@material-ui/core/';
