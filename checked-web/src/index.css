@@ -20,11 +20,21 @@ code {
   padding-top: 85px;
 }
 
+.montserrat {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 200% !important;
+  letter-spacing: 6px !important;
+  color: #313131 !important;
+}
+
 /* ===== MENUBAR ===== */
 
 .topBarLogo {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
+  transform: translateX(10px);
+  border-radius: 10px;
 }
 
 .drawer {
@@ -42,7 +52,7 @@ code {
 }
 
 .menuIcon {
-  color: white;
+  color: #131313;
 }
 
 .topBar {

@@ -40,14 +40,14 @@ class MenuBar extends React.Component<IProps, IState> {
 
         return (
             <div>
-                <AppBar position="fixed" className="topBar" style={{ zIndex: 9999 }}>
+                <AppBar position="fixed" className="topBar" color="inherit" style={{ zIndex: 9999 }}>
                     <Toolbar>
-                        <IconButton onClick={this.toggleDrawer} >
+                        <IconButton onClick={this.toggleDrawer} style={{transform: "translateX(-20px)"}}>
                             <Menu className="menuIcon" />
                         </IconButton>
                         <div className="text-center w-100">
-                            <Typography variant="h6" className="pl-3">
-                                Checked
+                            <Typography variant="h6" className="pl-3 mr-5 montserrat">
+                                - Checked -
                             </Typography>
                         </div>
 

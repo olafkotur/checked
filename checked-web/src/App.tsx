@@ -1,8 +1,8 @@
 import React from 'react';
-import { Router, Link } from "@reach/router";
-
+import { Router } from "@reach/router";
 import MenuBar from './components/MenuBar';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 const Meme = (props: any): JSX.Element =>  {
@@ -16,7 +16,7 @@ const Meme = (props: any): JSX.Element =>  {
 const Meme2 = (props: any): JSX.Element => {
 	return (
 		<div className="dashContainer">
-			2
+			Memes1
 		</div>
 	);
 };
