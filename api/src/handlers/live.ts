@@ -2,17 +2,16 @@ import express from 'express';
 import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbReading, IReadingResponse, ISimpleResponse } from '../models';
+import { ResponseService } from '../services/response';
+import { IDbReading } from '../types/db';
+import { IReadingResponse } from '../types/response';
 
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     // Safeguard to ensure extra unwanted collections aren't created
     if (!DbHelperService.isValidLiveCollection(req.body.type)) {
-      response = { code: "failed", message: 'invalid collection name', time: moment().unix() }
-      res.send(response);
+      ResponseService.bad('Invalid collection name', res);
       return false;
     }
 
@@ -29,17 +28,16 @@ export const LiveHandler = {
       } else {
         MongoService.insertOne(req.body.type, data)
       }
-      response = { code: "success", message: 'added to collection', time: moment().unix() }
     });
 
-    res.send(response);
+    ResponseService.create('Added to collection', res);
     return true;
   },
 
   getSingleLiveData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne(req.params.type, { sensorId: parseInt(req.params.sensorId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
@@ -50,14 +48,14 @@ export const LiveHandler = {
       time: moment(data.createdAt).unix(),
     };
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 
   getLiveData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany(req.params.type, {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     } 
 
@@ -70,7 +68,7 @@ export const LiveHandler = {
       }
     });
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 }

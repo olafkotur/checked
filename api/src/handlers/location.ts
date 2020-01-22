@@ -2,13 +2,13 @@ import express from 'express';
 import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbLocation, ILocationResponse, ISimpleResponse } from '../models';
+import { ResponseService } from '../services/response';
+import { IDbLocation } from '../types/db';
+import { ILocationResponse } from '../types/response';
 
 export const LocationHandler = {
 
   uploadLocationData: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const data: IDbLocation = {
       sensorId: parseInt(req.body.sensorId),
       xValue: parseInt(req.body.xValue),
@@ -23,16 +23,15 @@ export const LocationHandler = {
       } else {
         MongoService.insertOne('location', data);
       }
-      response = { code: "success", message: 'added to collection', time: moment().unix() }
     });
 
-    res.send(response);
+    ResponseService.create('Added to collection', res);
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     } 
 
@@ -44,14 +43,14 @@ export const LocationHandler = {
       time: moment(data.createdAt).unix(),
     };
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 
   getLocationData: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('location', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     } 
 
@@ -65,7 +64,7 @@ export const LocationHandler = {
       }
     });
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
 }

@@ -1,14 +1,14 @@
 import express from 'express';
 import moment from 'moment';
-import { IZoneDataResponse, IDbZoneData, ISimpleResponse } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
+import { ResponseService } from '../services/response';
+import { IDbZoneData } from '../types/db';
+import { IZoneDataResponse } from '../types/response';
 
 export const ZoneHandler = {
 
   addZone: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const data: IDbZoneData = {
       zoneId: parseInt(req.body.id),
       name: req.body.name,
@@ -21,18 +21,14 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('zones', data)
-        response = { code: "success", message: 'added zone to collection', time: moment().unix() }
+        ResponseService.create('Added new zone to collection', res);
       } else {
-        response = { code: "failed", message: 'zone already exists', time: moment().unix() }
+        ResponseService.bad('Zone already exists', res);
       }
     });
-
-    res.send(response);
   },
 
   updateZone: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const data: IDbZoneData = {
       zoneId: parseInt(req.params.zoneId),
       name: req.body.name,
@@ -45,37 +41,31 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { id: data.zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.updateOne('zones', { id: data.zoneId }, data);
-        response = { code: "success", message: 'updated existing zone', time: moment().unix() }
+        ResponseService.ok('Updated existing zone', res);
       } else {
-        response = { code: "failed", message: 'zone does not exist', time: moment().unix() }
+        ResponseService.notFound('Zone does not exist', res);
       }
     });
-
-    res.send(response);
   },
 
   deleteZone: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const zoneId: number = parseInt(req.params.zoneId);
 
     // Ensure that the zone exists before attempting to delte
     await DbHelperService.exists('zones', { id: zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('zones', { id: zoneId });
-        response = { code: "success", message: 'deleted existing zone', time: moment().unix() }
+        ResponseService.ok('Deleted existing zone', res);
       } else {
-        response = { code: "failed", message: 'zone does not exist', time: moment().unix() }
+        ResponseService.notFound('Zone does not exist', res);
       }
     });
-
-    res.send(response);
   },
 
   getSingleZoneData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('zones', { id: parseInt(req.params.zoneId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
@@ -88,14 +78,14 @@ export const ZoneHandler = {
       lastUpdated: moment(data.lastUpdated).unix(),
     };
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
   
   getZoneData: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('zones', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     }
 
@@ -110,7 +100,7 @@ export const ZoneHandler = {
       }
     });
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   }
 }
