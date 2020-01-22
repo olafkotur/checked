@@ -7,6 +7,9 @@ api/db/*
 # SCHEDULER
 scheduler/node_modules
 
+#CHECKED-WEB
+checked-web/node_modules
+
 # MISC
 .vscode/*
 *.DS_Store
