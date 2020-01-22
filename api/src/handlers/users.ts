@@ -1,15 +1,13 @@
 import express from 'express';
-import moment from 'moment';
-import { ISimpleResponse, IDbUser, IDbUserWithPassword } from '../models';
+import { IDbUser, IDbUserWithPassword } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { AuthService } from '../services/auth';
+import { ResponseService } from '../services/response';
 
 export const UserHandler = {
 
   createUser: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const hashedPassword: string = AuthService.hashValue(req.body.password);
 
     const data: IDbUserWithPassword = {
@@ -24,31 +22,25 @@ export const UserHandler = {
     await DbHelperService.exists('users', { username: req.body.username }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
-        response = { code: "success", message: 'created new user', time: moment().unix() }
+        ResponseService.create('Created new user', res);
       } else {
-        response = { code: "failed", message: 'username already taken', time: moment().unix() }
+        ResponseService.bad('Username already taken', res);
       }
     });
-
-    res.send(response);
   },
 
   deleteUser: async (req: express.Request, res: express.Response) => {
-    let response: ISimpleResponse | object = {};
-
     const userId: number = parseInt(req.params.userId);
 
     // Ensure that the zone exists before attempting to delte
     await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('users', { userId: userId });
-        response = { code: "success", message: 'deleted existing user', time: moment().unix() }
+        ResponseService.ok('Deleted existing user', res);
       } else {
-        response = { code: "failed", message: 'user does not exist', time: moment().unix() }
+        ResponseService.notFound('User does not exist', res);
       }
     });
-
-    res.send(response);
   },
 
   getSingleUser: async (req: express.Request, res: express.Response) => {
@@ -65,7 +57,7 @@ export const UserHandler = {
       lastUpdated: data.lastUpdated
     };
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return false;
   },
 
@@ -85,8 +77,27 @@ export const UserHandler = {
       }
     });
 
-    res.send(formatted);
+    ResponseService.data(formatted, res);
     return true;
   },
+
+  login: async (req: express.Request, res: express.Response) => {
+    const hashedPassword: string = AuthService.hashValue(req.body.password);
+
+    const data: any = await MongoService.findOne('users', { username: req.body.username });
+    if (data === null) {
+      ResponseService.unauthorized('Username or password is incorrect', res);
+      return false;
+    }
+
+    // Check if credentials are correct
+    if (data.username === req.body.username) {
+      if (data.password === hashedPassword) {
+        ResponseService.ok('User logged in', res);
+      }
+    }
+
+    return true;
+  }
 
 }

@@ -1,7 +1,17 @@
-export interface ISimpleResponse {
-  code: string,
+export interface IResponse {
+  code: number,
+  status: string,
+  date: string,
+  unix: number,
   message: string,
-  time: number
+}
+
+export interface IDataResponse {
+  code: number,
+  status: string,
+  date: string,
+  unix: number,
+  result: any
 }
 
 export interface IReadingResponse {
