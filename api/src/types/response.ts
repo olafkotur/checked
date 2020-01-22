@@ -25,7 +25,7 @@ export interface ILocationResponse {
   xValue: number,
   yValue: number,
   time: number 
- }
+}
 
  export interface IZoneDataResponse {
   id: number,
@@ -33,36 +33,20 @@ export interface ILocationResponse {
   activity: string,
   createdAt: number,
   lastUpdated: number,
- }
-
-export interface IDbReading {
-  sensorId: number,
-  value: number,
-  createdAt: Date
 }
 
-export interface IDbLocation {
-  sensorId: number,
-  xValue: number,
-  yValue: number,
-  createdAt: Date
-}
-
-export interface IDbZoneData {
-  zoneId: number,
-  name: number,
-  activity: string,
-  createdAt: Date,
-  lastUpdated: Date,
- }
-
- export interface IDbUser {
+export interface IUserResponse {
   userId: number,
   username: string,
-  createdAt: Date,
-  lastUpdated: Date
- }
+  createdAt: number,
+  lastUpdated: number
+}
 
- export interface IDbUserWithPassword extends IDbUser {
-  password: string
- }
+export interface IMemberResponse {
+  memberId: number,
+  firstName: string,
+  lastName: string,
+  adminUsername: string,
+  createdAt: number,
+  lastUpdated: number
+}

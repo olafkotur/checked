@@ -1,16 +1,17 @@
 import express from 'express';
-import { IDbUser, IDbUserWithPassword } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { AuthService } from '../services/auth';
 import { ResponseService } from '../services/response';
+import { IDbUser } from '../types/db';
+import { IUserResponse } from '../types/response';
 
 export const UserHandler = {
 
   createUser: async (req: express.Request, res: express.Response) => {
     const hashedPassword: string = AuthService.hashValue(req.body.password);
 
-    const data: IDbUserWithPassword = {
+    const data: IDbUser = {
       userId: await DbHelperService.assignUserId(),
       username: req.body.username,
       password: hashedPassword,
@@ -32,7 +33,7 @@ export const UserHandler = {
   deleteUser: async (req: express.Request, res: express.Response) => {
     const userId: number = parseInt(req.params.userId);
 
-    // Ensure that the zone exists before attempting to delte
+    // Ensure that the user exists before attempting to delte
     await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('users', { userId: userId });
@@ -46,11 +47,11 @@ export const UserHandler = {
   getSingleUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
-    const formatted: IDbUser = {
+    const formatted: IUserResponse = {
       userId: data.userId,
       username: data.username,
       createdAt: data.createdAt,
@@ -64,11 +65,11 @@ export const UserHandler = {
   getUsers: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('users', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     }
 
-    const formatted: IDbUser[] = data.map((user: IDbUserWithPassword ) => {
+    const formatted: IUserResponse[] = data.map((user: IDbUser) => {
       return {
         userId: user.userId,
         username: user.username,

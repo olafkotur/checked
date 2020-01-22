@@ -1,6 +1,6 @@
 import express from 'express';
 import moment from 'moment';
-import { IResponse, IDataResponse } from '../models';
+import { IResponse, IDataResponse } from '../types/response';
 
 export const ResponseService = {
   ok: (msg: string, res: express.Response) => {
