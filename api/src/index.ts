@@ -49,6 +49,7 @@ async function main() {
   app.delete('/api/members/delete/:memberId', MemberHandler.deleteMember);
   app.get('/api/members/:memberId', MemberHandler.getSingleMember);
   app.get('/api/members', MemberHandler.getMembers);
+  app.get('/api/members/user/:adminUsername', MemberHandler.getMembersByUser);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
