@@ -10,7 +10,7 @@ export const MemberHandler = {
 
   createMember: async (req: express.Request, res: express.Response) => {
     // Check if admin user exists before assigning them a member
-    const admin: any = await MongoService.findOne('users', { username: req.body.username })
+    const admin: any = await MongoService.findOne('users', { username: req.body.adminUsername })
     if (admin === null) {
       ResponseService.notFound('Admin user does not exist', res);
       return false;

@@ -26,7 +26,7 @@ export const DbHelperService = {
     const users: any = await MongoService.findMany('users', {});
 
     // Find the next available user id from the database
-    let highestId: number = 0;
+    let highestId: number = 1;
     users.forEach((user: IDbUser) => {
       if (user.userId >= highestId) {
         highestId = user.userId + 1;
@@ -39,7 +39,7 @@ export const DbHelperService = {
     const members: any = await MongoService.findMany('members', {});
 
     // Find the next available member id from the database
-    let highestId: number = 0;
+    let highestId: number = 1;
     members.forEach((member: IDbMember) => {
       if (member.memberId >= highestId) {
         highestId = member.memberId + 1;
