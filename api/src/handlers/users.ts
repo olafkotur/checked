@@ -1,9 +1,9 @@
 import express from 'express';
-import { IDbUser, IDbUserWithPassword } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { AuthService } from '../services/auth';
 import { ResponseService } from '../services/response';
+import { IDbUser, IDbUserWithPassword } from '../models/db';
 
 export const UserHandler = {
 
@@ -46,7 +46,7 @@ export const UserHandler = {
   getSingleUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
@@ -64,7 +64,7 @@ export const UserHandler = {
   getUsers: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('users', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     }
 

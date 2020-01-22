@@ -1,9 +1,10 @@
 import express from 'express';
 import moment from 'moment';
-import { IZoneDataResponse, IDbZoneData } from '../models';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
+import { IDbZoneData } from '../models/db';
+import { IZoneDataResponse } from '../models/response';
 
 export const ZoneHandler = {
 
@@ -64,7 +65,7 @@ export const ZoneHandler = {
   getSingleZoneData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('zones', { id: parseInt(req.params.zoneId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
@@ -84,7 +85,7 @@ export const ZoneHandler = {
   getZoneData: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('zones', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     }
 

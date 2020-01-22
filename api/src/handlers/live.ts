@@ -3,7 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbReading, IReadingResponse } from '../models';
+import { IDbReading } from '../models/db';
+import { IReadingResponse } from '../models/response';
 
 export const LiveHandler = {
 
@@ -36,7 +37,7 @@ export const LiveHandler = {
   getSingleLiveData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne(req.params.type, { sensorId: parseInt(req.params.sensorId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     }
 
@@ -54,7 +55,7 @@ export const LiveHandler = {
   getLiveData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany(req.params.type, {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     } 
 

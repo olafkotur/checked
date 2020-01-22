@@ -3,7 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbLocation, ILocationResponse } from '../models';
+import { IDbLocation } from '../models/db';
+import { ILocationResponse } from '../models/response';
 
 export const LocationHandler = {
 
@@ -30,7 +31,7 @@ export const LocationHandler = {
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId) });
     if (data === null) {
-      res.send({});
+      ResponseService.data({}, res);
       return false;
     } 
 
@@ -49,7 +50,7 @@ export const LocationHandler = {
   getLocationData: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('location', {});
     if (data === null) {
-      res.send([]);
+      ResponseService.data([], res);
       return false;
     } 
 
