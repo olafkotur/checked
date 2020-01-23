@@ -1,17 +1,18 @@
 export const config = {
+  default: {
+    username: 'mocker',
+    password: 'bigmemes69',
+    activityName: 'Mocked Activity',
+    zoneName: 'Mocked Zone',
+    memberFirstName: 'Mock',
+    memberLastName: 'Mocked'
+  },
   rules: {
-    liveData: '* * * * *',
+    live: '* * * * *',
+    location: '* * * * * *',
   },
   types: {
     liveData: ['temperature'],
-  },
-  values: {
-    minSensorId: 1,
-    maxSensorId: 10,
-    minTemperature: 22,
-    maxTemperature: 30,
-    minCoords: 0,
-    maxCoords: 100
   },
   minValues: {
     temperature: 22,
@@ -20,5 +21,5 @@ export const config = {
   maxValues: {
     temperature: 30,
     coords: 100,
-  }
+  },
 }

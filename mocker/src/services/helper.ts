@@ -1,4 +1,4 @@
-export const MiscService = {
+export const HelperService = {
   randomInt(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);
