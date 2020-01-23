@@ -1,4 +1,4 @@
-export interface IDbReading {
+export interface IDbLive {
   sensorId: number,
   value: number,
   createdAt: Date
@@ -11,10 +11,9 @@ export interface IDbLocation {
   createdAt: Date
 }
 
-export interface IDbZoneData {
+export interface IDbZone {
   zoneId: number,
   name: number,
-  activity: string,
   createdAt: Date,
   lastUpdated: Date,
 }
@@ -32,6 +31,14 @@ export interface IDbMember {
   firstName: string,
   lastName: string,
   adminUsername: string,
+  createdAt: Date,
+  lastUpdated: Date
+}
+
+export interface IDbActivity {
+  activityId: number,
+  name: string,
+  zoneId: number
   createdAt: Date,
   lastUpdated: Date
 }
