@@ -4,8 +4,10 @@ export const config = {
     password: 'bigmemes69',
     activityName: 'Mocked Activity',
     zoneName: 'Mocked Zone',
-    memberFirstName: 'Mock',
-    memberLastName: 'Mocked'
+    memberFirstName: 'Mocked',
+    memberLastName: 'Member',
+    numberOfZones: 3,
+    numberOfMembers: 10
   },
   rules: {
     live: '* * * * *',

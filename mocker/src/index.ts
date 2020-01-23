@@ -3,7 +3,7 @@ import { HttpService } from './services/http';
 import { config } from './config';
 
 const DEBUG: boolean = true;
-const DOMAIN: string = DEBUG ? 'localhost:8080' : 'https://checked-api.herokuapp.com';
+const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 const CODE: string = 'swcVegca5wmJ2u3fHLWtBhxdaHiV';
 
 async function main() {
@@ -17,14 +17,14 @@ async function main() {
   });
 
   // Create new mock zones
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < config.default.numberOfZones; i++) {
     await HttpService.post(DOMAIN + '/api/zones/create', {
       name: config.default.zoneName
     });
   }
 
   // Create new mock members
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < config.default.numberOfMembers; i++) {
     await HttpService.post(DOMAIN + '/api/members/create', {
       firstName: config.default.memberFirstName,
       lastName: config.default.memberLastName,
