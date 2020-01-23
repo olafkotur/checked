@@ -6,6 +6,9 @@ module.exports = {
         ecmaVersion: 2018,  // Allows for the parsing of modern ECMAScript features
         sourceType: 'module',  // Allows for the use of imports
     },
+    env: {
+        es6: true,
+    },
     rules: {
         "no-const-assign": 2,
         "no-this-before-super": 2,

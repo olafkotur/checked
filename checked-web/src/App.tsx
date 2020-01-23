@@ -2,6 +2,8 @@ import React from 'react';
 import { Router } from "@reach/router";
 import MenuBar from './components/MenuBar';
 
+import { UserService } from './api/UserService';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
@@ -21,7 +23,11 @@ const Meme2 = (props: any): JSX.Element => {
 	);
 };
 
-
+UserService.createUser('meme', 'meme').then((bidMeme) => {
+	console.log(bidMeme);
+}).catch((meme: boolean) => {
+	console.log(meme);
+});
 
 const App: React.FC = () => {
   	return (
