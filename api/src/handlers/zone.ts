@@ -8,11 +8,10 @@ import { IZoneDataResponse } from '../types/response';
 
 export const ZoneHandler = {
 
-  addZone: async (req: express.Request, res: express.Response) => {
+  createZone: async (req: express.Request, res: express.Response) => {
     const data: IDbZoneData = {
-      zoneId: parseInt(req.body.id),
+      zoneId: await DbHelperService.assignAvailableId('zones', 'zoneId'),
       name: req.body.name,
-      activity: req.body.activity,
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -32,7 +31,6 @@ export const ZoneHandler = {
     const data: IDbZoneData = {
       zoneId: parseInt(req.params.zoneId),
       name: req.body.name,
-      activity: req.body.activity,
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -71,9 +69,8 @@ export const ZoneHandler = {
 
     // Converts to client friendly format
     const formatted: IZoneDataResponse = {
-      id: data.id,
+      id: data.zoneId,
       name: data.name,
-      activity: data.activity,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix(),
     };
@@ -90,11 +87,10 @@ export const ZoneHandler = {
     }
 
     // Converts to client friendly format
-    const formatted: IZoneDataResponse[] = data.map((val: any) => {
+    const formatted: IZoneDataResponse[] = data.map((val: IDbZoneData) => {
       return {
-        id: val.id,
+        id: val.zoneId,
         name: val.name,
-        activity: val.activity,
         createdAt: moment(val.createdAt).unix(),
         lastUpdated: moment(val.lastUpdated).unix(),
       }

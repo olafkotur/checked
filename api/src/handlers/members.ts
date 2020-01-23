@@ -44,7 +44,7 @@ export const MemberHandler = {
     });
   },
 
-  getSingleMember: async (req: express.Request, res: express.Response) => {
+  getMember: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('members', { memberId: parseInt(req.params.memberId) });
     if (data === null) {
       ResponseService.data({}, res);

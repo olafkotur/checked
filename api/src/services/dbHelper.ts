@@ -47,4 +47,30 @@ export const DbHelperService = {
     });
     return highestId;
   },
+
+  assignActivityId: async (): Promise<number> => {
+    const members: any = await MongoService.findMany('members', {});
+
+    // Find the next available member id from the database
+    let highestId: number = 1;
+    members.forEach((member: IDbMember) => {
+      if (member.memberId >= highestId) {
+        highestId = member.memberId + 1;
+      }
+    });
+    return highestId;
+  },
+
+  assignAvailableId: async (collection: string, id: string): Promise<number> => {
+    const data: any = await MongoService.findMany(collection, {});
+
+    // Find the next available id in the database 
+    let highestId: number = 1;
+    data.forEach((obj: any) => {
+      if (obj[id] >= highestId) {
+        highestId = obj[id] + 1;
+      }
+    });
+    return highestId;
+  }
 }

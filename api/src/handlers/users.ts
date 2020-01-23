@@ -44,7 +44,7 @@ export const UserHandler = {
     });
   },
 
-  getSingleUser: async (req: express.Request, res: express.Response) => {
+  getUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
     if (data === null) {
       ResponseService.data({}, res);

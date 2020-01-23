@@ -14,7 +14,6 @@ export interface IDbLocation {
 export interface IDbZoneData {
   zoneId: number,
   name: number,
-  activity: string,
   createdAt: Date,
   lastUpdated: Date,
 }
@@ -32,6 +31,14 @@ export interface IDbMember {
   firstName: string,
   lastName: string,
   adminUsername: string,
+  createdAt: Date,
+  lastUpdated: Date
+}
+
+export interface IDbActivity {
+  activityId: number,
+  name: string,
+  zoneId: number
   createdAt: Date,
   lastUpdated: Date
 }

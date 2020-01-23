@@ -30,7 +30,6 @@ export interface ILocationResponse {
  export interface IZoneDataResponse {
   id: number,
   name: number,
-  activity: string,
   createdAt: number,
   lastUpdated: number,
 }
