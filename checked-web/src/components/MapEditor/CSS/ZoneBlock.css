@@ -1,6 +1,8 @@
 .zoneBlock {
     width: 100px;
     height: 100px;
-    background-color: pink;
+    background-color: #FF9E00;
     /* margin-top: 5px; */
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.12)
 }

@@ -1,28 +1,60 @@
+:root {
+  --Primary: #ff9e00;
+  --Dark: #cf6e00;
+  --Light: #ffb718;
+  --TextDark: #131313;
+  --TextMuted: #888888;
+  --borderStyle: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 .sideMenu {
-    width: 100%;
-    height: 15%;
-    background-color: red;
-
-
+  width: 100%;
+  height: 15%;
+  background-color: white;
+  border: var(--borderStyle);
+  border-bottom: none;
 }
 
 .mainEditor {
-    width: 100%;
-    height: 85%;
-    background-color: blue;
-
-
+  width: 100%;
+  height: 85%;
+  background-color: white;
+  border: var(--borderStyle);
 }
 
 .editorContainer {
-    width: 100%;
-    height: 800px;
-    background-color: pink;
+  width: 100%;
+  height: 800px;
+  background-color: pink;
 }
 
 .blockContainer {
-    background-color: cadetblue;
-    width: 200px;
+  background-color: white;
+  width: 125px;
+  height: 100%;
+  padding: 10px;
+  border-right: var(--borderStyle);
+  float: left;
+}
+
+#blocksContainer {
+    width: 100%;
     height: 100%;
-    padding: 10px;
+}
+
+
+.zoneButton {
+  height: 100px;
+  width: 100px;
+  border-radius: 999px;
+  position: relative;
+  background-color: var(--Primary);
+}
+
+.clearButton {
+  height: 100px;
+  width: 100px;
+  border-radius: 999px;
+  position: relative;
+  background-color: rgb(139, 3, 3);
 }

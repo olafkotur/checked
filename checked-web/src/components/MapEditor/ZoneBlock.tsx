@@ -2,6 +2,7 @@ import React from 'react';
 import './CSS/ZoneBlock.css'
 
 
+
 const ZoneBlock = () => {
     return (
         <div className="zoneBlock">
@@ -11,3 +12,10 @@ const ZoneBlock = () => {
 };
 
 export default ZoneBlock;
+
+// interact('.zoneBlock').draggable({
+//     onmove(event) {
+//         console.log(event.pageX,
+//             event.pageY)
+//     }
+// })
