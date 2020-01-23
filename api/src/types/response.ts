@@ -14,7 +14,7 @@ export interface IDataResponse {
   result: any
 }
 
-export interface IReadingResponse {
+export interface ILiveResponse {
  sensorId: number,
  value: number,
  time: number 
@@ -27,10 +27,9 @@ export interface ILocationResponse {
   time: number 
 }
 
- export interface IZoneDataResponse {
-  id: number,
+ export interface IZoneResponse {
+  zoneId: number,
   name: number,
-  activity: string,
   createdAt: number,
   lastUpdated: number,
 }
@@ -47,6 +46,14 @@ export interface IMemberResponse {
   firstName: string,
   lastName: string,
   adminUsername: string,
+  createdAt: number,
+  lastUpdated: number
+}
+
+export interface IActivityResponse {
+  activityId: number,
+  name: string,
+  zoneId: number
   createdAt: number,
   lastUpdated: number
 }

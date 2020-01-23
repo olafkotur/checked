@@ -3,8 +3,8 @@ import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbReading } from '../types/db';
-import { IReadingResponse } from '../types/response';
+import { IDbLive } from '../types/db';
+import { ILiveResponse } from '../types/response';
 
 export const LiveHandler = {
 
@@ -15,7 +15,7 @@ export const LiveHandler = {
       return false;
     }
 
-    const data: IDbReading = {
+    const data: IDbLive = {
       sensorId: parseInt(req.body.sensorId),
       value: parseInt(req.body.value),
       createdAt: new Date(),
@@ -42,7 +42,7 @@ export const LiveHandler = {
     }
 
     // Converts to client friendly format
-    const formatted: IReadingResponse = {
+    const formatted: ILiveResponse = {
       sensorId: data.sensorId,
       value: data.value,
       time: moment(data.createdAt).unix(),
@@ -60,7 +60,7 @@ export const LiveHandler = {
     } 
 
     // Converts to client friendly format
-    const formatted: IReadingResponse[] = data.map((val: any) => {
+    const formatted: ILiveResponse[] = data.map((val: any) => {
       return {
         sensorId: val.sensorId,
         value: val.value,
