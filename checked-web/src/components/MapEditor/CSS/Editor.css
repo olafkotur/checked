@@ -1,0 +1,28 @@
+.sideMenu {
+    width: 100%;
+    height: 15%;
+    background-color: red;
+
+
+}
+
+.mainEditor {
+    width: 100%;
+    height: 85%;
+    background-color: blue;
+
+
+}
+
+.editorContainer {
+    width: 100%;
+    height: 800px;
+    background-color: pink;
+}
+
+.blockContainer {
+    background-color: cadetblue;
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+}

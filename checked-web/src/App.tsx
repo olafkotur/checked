@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router } from "@reach/router";
 import MenuBar from './components/MenuBar';
+import MapEditor from './components/MapEditor';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -21,6 +22,14 @@ const Meme2 = (props: any): JSX.Element => {
 	);
 };
 
+const Editor = (props: any): JSX.Element => {
+	return (
+		<div className="dashContainer">
+			<MapEditor/>
+		</div>
+	);
+};
+
 
 
 const App: React.FC = () => {
@@ -30,6 +39,7 @@ const App: React.FC = () => {
       		<Router>
         		<Meme path="/" />
 				<Meme2 path="meme" />
+				<Editor path="editor"/>
       		</Router>
     	</div>
   	);
