@@ -1,8 +1,10 @@
 import express from 'express';
+import moment from 'moment';
 import { MongoService } from '../services/mongo';
 import { ResponseService } from '../services/response';
 import { DbHelperService } from '../services/dbHelper';
 import { IDbActivity } from '../types/db';
+import { IActivityResponse } from '../types/response';
 
 export const ActivityHandler = {
 
@@ -35,11 +37,81 @@ export const ActivityHandler = {
     return true;
   },
 
-  // updateActivity: (req: express.Request, res: express.Response) => {},
+  deleteActivity: async (req: express.Request, res: express.Response) => {
+    const activityId: number = parseInt(req.params.activityId);
 
-  // deleteActivity: (req: express.Request, res: express.Response) => {},
+    // Ensure that the activity exists before attempting to delete
+    await DbHelperService.exists('activity', { activityId: activityId }).then((exists: boolean) => {
+      if (exists) {
+        MongoService.deleteOne('activity', { activityId: activityId });
+        ResponseService.ok('Deleted existing activity', res);
+      } else {
+        ResponseService.notFound('Activity does not exist', res);
+      }
+    });
+  },
 
-  // getActivity: (req: express.Request, res: express.Response) => {},
+  getActivity: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findOne('activity', { activityId: parseInt(req.params.activityId) });
+    if (data === null) {
+      ResponseService.data({}, res);
+      return false;
+    }
 
-  // getActivities: (req: express.Request, res: express.Response) => {},
+    // Converts to client friendly format
+    const formatted: IActivityResponse = {
+      activityId: data.activityId,
+      name: data.name,
+      zoneId: data.zoneId,
+      createdAt: moment(data.createdAt).unix(),
+      lastUpdated: moment(data.lastUpdated).unix(),
+    };
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
+  getActivities: async (_req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('activity', {});
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    // Converts to client friendly format
+    const formatted: IActivityResponse[] = data.map((val: IDbActivity) => {
+      return {
+        activityId: val.activityId,
+        name: val.name,
+        zoneId: val.zoneId,
+        createdAt: moment(val.createdAt).unix(),
+        lastUpdated: moment(val.lastUpdated).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
+  getActivitiesByZone: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('activity', { zoneId: parseInt(req.params.zoneId) });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    // Converts to client friendly format
+    const formatted: IActivityResponse[] = data.map((val: IDbActivity) => {
+      return {
+        activityId: val.activityId,
+        name: val.name,
+        zoneId: val.zoneId,
+        createdAt: moment(val.createdAt).unix(),
+        lastUpdated: moment(val.lastUpdated).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
 }

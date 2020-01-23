@@ -54,6 +54,10 @@ async function main() {
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);
+  app.delete('/api/activity/delete/:activityId', ActivityHandler.deleteActivity);
+  app.get('/api/activity/:activityId', ActivityHandler.getActivity);
+  app.get('/api/activity', ActivityHandler.getActivities);
+  app.get('/api/activity/zone/:zoneId', ActivityHandler.getActivitiesByZone);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);
