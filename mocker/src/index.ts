@@ -2,13 +2,14 @@ import { ScheduleService } from './services/schedule';
 import { HttpService } from './services/http';
 import { config } from './config';
 
+require('dotenv').config();
+
 const DEBUG: boolean = true;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
-const CODE: string = 'swcVegca5wmJ2u3fHLWtBhxdaHiV';
 
 async function main() {
   // Clear database
-  await HttpService.get(DOMAIN + `/api/danger/purge/${CODE}`);
+  await HttpService.get(DOMAIN + `/api/danger/purge/${process.env.PURGE_CODE || ''}`);
 
   // Create new mock user
   await HttpService.post(DOMAIN + '/api/users/create', {
