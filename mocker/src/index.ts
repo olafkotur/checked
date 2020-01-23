@@ -33,7 +33,7 @@ async function main() {
   }
 
   // Start schedules
-  ScheduleService.live();
-  ScheduleService.location();
+  ScheduleService.live(DOMAIN);
+  ScheduleService.location(DOMAIN);
 
 } main();

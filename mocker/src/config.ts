@@ -10,8 +10,8 @@ export const config = {
     numberOfMembers: 10
   },
   rules: {
-    live: '* * * * *',
-    location: '* * * * * *',
+    live: '*/10 * * * * *',
+    location: '*/10 * * * * *',
   },
   types: {
     liveData: ['temperature'],
