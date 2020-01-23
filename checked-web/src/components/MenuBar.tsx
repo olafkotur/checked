@@ -19,8 +19,8 @@ interface IState {
     open: boolean;
 }
 
-interface IProps {
-}
+// interface IProps {
+// }
 
 class MenuBar extends React.Component<IProps, IState> {
 
