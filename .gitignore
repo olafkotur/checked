@@ -11,7 +11,6 @@ scheduler/node_modules
 checked-web/node_modules
 
 # MISC
-.vscode/*
 *.DS_Store
 *.env
 *.exe
