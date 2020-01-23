@@ -17,7 +17,7 @@ export const MemberHandler = {
     }
 
     const data: IDbMember = {
-      memberId: await DbHelperService.assignMemberId(),
+      memberId: await DbHelperService.assignAvailableId('members', 'memberId'),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       adminUsername: req.body.adminUsername,
