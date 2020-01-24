@@ -2,22 +2,15 @@ import { HttpService } from './HttpService';
 
 export const UserService = {
 
-    createUser: async (username: string, password: string): Promise<object> => {
+    createUser: async (username: string, password: string): Promise<any> => {
         const uri = 'users/create';
-        const body = encodeURIComponent( 'username=' + username + '&password=' + password );
-        await HttpService.post(uri, body).then((res) => {
-            console.log('res', res);
-            return res;
-        });
-        return { error: 1 };
+        const body = encodeURIComponent( ('username=' + username + '&password=' + password) );
+        return await HttpService.post(uri, body);
     },
 
-    getAllUsers: (): Array<object> => {
+    getAllUsers: async (): Promise<any> => {
         const uri = 'users';
-        HttpService.get(uri).then((res => {
-            return res;
-        }));
-        return [];
+        return await HttpService.get(uri);
     }
 
 };

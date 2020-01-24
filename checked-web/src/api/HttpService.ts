@@ -28,6 +28,7 @@ export const HttpService = {
         return new Promise((resolve: any, reject: any) => {
             request.post(options, (error: Error) => {
                 if (error) {
+                    console.error('error:\n', error);
                     reject();
                 }
                 resolve();

@@ -1,44 +1,58 @@
 import React from 'react';
 import { Router } from "@reach/router";
+import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
-
-import { UserService } from './api/UserService';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const Meme = (props: any): JSX.Element =>  {
-	return (
-		<div className="dashContainer">
-			meme
-		</div>
-	);
-};
+interface IState {
+	authorised: boolean;
+}
 
-const Meme2 = (props: any): JSX.Element => {
-	return (
-		<div className="dashContainer">
-			Memes1
-		</div>
-	);
-};
+class App extends React.Component<{}, IState> {
 
-UserService.createUser('meme', 'meme').then((bidMeme) => {
-	console.log(bidMeme);
-}).catch((meme: boolean) => {
-	console.log(meme);
-});
+	constructor(props: any){
+		super(props);
+		this.state = { authorised: false };
+		this.setAuthorised = this.setAuthorised.bind(this);
+	}
 
-const App: React.FC = () => {
-  	return (
-		<div>
-			<MenuBar />
-      		<Router>
-        		<Meme path="/" />
-				<Meme2 path="meme" />
-      		</Router>
-    	</div>
-  	);
+	setAuthorised(authState: boolean): void {
+		this.setState({authorised: authState});
+		console.log("AUTH STATE CHANGE", this.state.authorised);
+		return;
+	};
+
+	render(): JSX.Element {
+
+		const Meme = (props: any): JSX.Element => {
+			return (
+				<div className="dashContainer">
+					meme
+				</div>
+			);
+		};
+
+		if (this.state.authorised) {
+			return (
+				<div>
+					<MenuBar />
+					<Router>
+						<Meme path='/' />
+					</Router>
+				</div>
+			);
+		} else {
+			return (
+				<div>
+					<Login setAuthorised={this.setAuthorised} />
+				</div>
+			);
+		}
+	}
+
+  	
 };
 
 export default App;

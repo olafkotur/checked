@@ -22,7 +22,7 @@ interface IState {
 // interface IProps {
 // }
 
-class MenuBar extends React.Component<IProps, IState> {
+class MenuBar extends React.Component<{}, IState> {
 
     constructor(props: any) {
         super(props);
@@ -76,7 +76,7 @@ class MenuBar extends React.Component<IProps, IState> {
                                     <ListItemIcon><Icon /></ListItemIcon>
                                     <ListItemText>Memes</ListItemText>
                                 </ListItem>
-                                <ListItem button onClick={(): any => navigate('meme')} key={'placeholder'} >
+                                <ListItem button onClick={(): any => navigate('meme')} key={'placeholder1'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
                                     <ListItemText>Memes1</ListItemText>
                                 </ListItem>
@@ -84,7 +84,7 @@ class MenuBar extends React.Component<IProps, IState> {
                             </List>
                             <Divider />
                             <List>
-                                <ListItem button key={'placeholder'} disabled={true}>
+                                <ListItem button key={'placeholder2'} disabled={true}>
                                     <ListItemIcon><Icon /></ListItemIcon>
                                     <ListItemText primary={'Placeholder'} />
                                 </ListItem>
