@@ -11,6 +11,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -22,6 +23,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -33,6 +35,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -44,6 +47,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -55,6 +59,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -66,6 +71,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
@@ -77,10 +83,12 @@ export const ResponseService = {
       unix: moment().unix(),
       result: data,
     };
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.send(response);
   },
 
   redirect: (uri: string, res: express.Response) => {
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.redirect(uri);
   },
 
