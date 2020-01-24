@@ -28,6 +28,23 @@ code {
   color: #313131 !important;
 }
 
+.tiledBackground {
+  background-image: url('./media/spikes.png');
+  background-repeat: repeat;
+  height: 100vh;
+  width: 100%;
+}
+
+.vcenterParent {
+  position: relative;
+}
+
+.vcenterChild {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* ===== MENUBAR ===== */
 
 .topBarLogo {
@@ -80,3 +97,24 @@ code {
   transition: visibility 0s linear 0s, opacity 300ms;
 }
 
+
+/* ===== LOGIN ===== */
+
+.logo {
+  width: 100%;
+  border-radius: 10%;
+}
+
+.signInCard {
+  transition: 6s;
+  animation: slideDown 1.25s
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-250%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
