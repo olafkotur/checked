@@ -27,21 +27,15 @@ function clearZones() {
     //const zones = document.getElementsByClassName("zoneBlock");
     const zones = document.getElementsByClassName("zoneBlock")
     const element = document.getElementById('blocksContainer');
-
+    const elementParent = document.getElementById('mainEditor');
 
     console.log(zones)
     console.log(document.getElementsByClassName("zoneBlock"));
 
-    if (element != null) {
+    if (element != null &&  elementParent != null) {
         if (zones != null) {
             console.log(zones.length)
-            for (let i = 0; i < zones.length; i++) {
-
-                console.log(i)
-                //element.removeChild(zones[i]);
-                console.log(zones[i])
-
-            }
+                ReactDOM.unmountComponentAtNode(elementParent)
         }
     }
 }
