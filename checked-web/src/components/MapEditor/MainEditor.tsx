@@ -1,6 +1,6 @@
 import React from 'react';
 import "./CSS/Editor.css"
-import ZoneBlock from './ZoneBlock';
+
 
 const MainEditor = () => {
     return (

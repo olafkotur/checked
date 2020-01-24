@@ -11,7 +11,7 @@ const ZoneBlock = (props:any) => {
     // }
 
     return (
-        <div className="zoneBlock">
+        <div className="zoneBlock" id={props.id} data-name={props.name}>
             <h1 className="zoneTitle">Zone {props.name}</h1>
         </div>
     );

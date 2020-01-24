@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import {clearZonesArr} from './BlockContainer'
-
+import React from 'react';
+import {clearZonesArr} from './BlockContainer';
+import Delete from '@material-ui/icons/Delete'
 import "./CSS/Editor.css"
 import ReactDOM from 'react-dom';
+
 
 
 
@@ -10,7 +11,9 @@ import ReactDOM from 'react-dom';
 const ClearContainer = () => {
     return (
         <div className="blockContainer">
-            <div onClick={clearZones} className="clearButton"> </div>
+            <div onClick={clearZones} className="clearButton"> 
+                <Delete className="bigIcon"/>
+            </div>
 
         </div>
     );

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-
+import React from 'react';
+import Add from '@material-ui/icons/Add'
 
 import "./CSS/Editor.css"
 import ZoneBlock from './ZoneBlock';
@@ -10,9 +10,11 @@ var zones: any[] = [];
 
 const BlockContainer = () => {
     return (
-        <div className = "blockContainer">
-            <div onClick={newZone} className = "zoneButton"> </div>
-            
+        <div className="blockContainer">
+            <div onClick={newZone} className="zoneButton">
+                <Add className="bigIcon"/>
+            </div>
+
         </div>
     );
 };
@@ -21,14 +23,22 @@ const BlockContainer = () => {
 
 // functions
 
-export function clearZonesArr(){
+export function clearZonesArr() {
     zones = []
     console.log("Clearing zones array")
 }
 
+
+function createID(){
+    const endpoint = "/api/zones/create"
+    var id = 7
+
+    return id
+}
+
 function newZone() {
     console.log("button pressed");
-    zones[zones.length] = <ZoneBlock name = {(zones.length + 1).toString()} />;
+    zones[zones.length] = <ZoneBlock key={(zones.length + 1).toString()} name={(zones.length + 1).toString()} id={(zones.length + 1)} />;
     //const zones =  document.getElementsByClassName("zoneBlock")
 
 
@@ -38,7 +48,7 @@ function newZone() {
         </div>,
         document.getElementById('mainEditor')
     )
-    
+
 }
 
 
