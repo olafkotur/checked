@@ -24,14 +24,17 @@ const BackgroundGrid = () => {
 };
 
 function genCol() {
-    for (let i = 0; i < 50; i++) {
+    const loop = Math.floor(window.innerWidth / 25)
+  
+    for (let i = 0; i < loop; i++) {
         col[col.length] = <BgColumn/>
         
     }
 }
 
 function genRow() {
-    for (let i = 0; i < 50; i++) {
+    const loop = Math.floor(window.innerHeight / 25)
+    for (let i = 0; i < loop; i++) {
         row[row.length] = <BgRow />
 
     }

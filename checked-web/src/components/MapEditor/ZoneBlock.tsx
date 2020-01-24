@@ -16,7 +16,7 @@ const ZoneBlock = (props: any) => {
 
             <form onSubmit={e => { e.preventDefault(); }} className="zoneForm">
                 <label className="zoneForm">
-                    <input className="zoneTitle" type="text" name="name" placeholder={"Zone " + props.name} />
+                    <input id = {"Zone"+props.name+"Label"}className="zoneTitle" type="text" name="name" placeholder={"Zone " + props.name} />
                 </label>
 
             </form>
