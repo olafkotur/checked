@@ -3,6 +3,8 @@ import { Router } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './muiTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
@@ -20,7 +22,7 @@ class App extends React.Component<{}, IState> {
 
 	setAuthorised(authState: boolean): void {
 		this.setState({authorised: authState});
-		console.log("AUTH STATE CHANGE", this.state.authorised);
+		console.log(this.state.authorised);
 		return;
 	};
 
@@ -36,18 +38,18 @@ class App extends React.Component<{}, IState> {
 
 		if (this.state.authorised) {
 			return (
-				<div>
+				<ThemeProvider theme={theme}>
 					<MenuBar />
 					<Router>
 						<Meme path='/' />
 					</Router>
-				</div>
+				</ThemeProvider>
 			);
 		} else {
 			return (
-				<div>
+				<ThemeProvider theme={theme}>
 					<Login setAuthorised={this.setAuthorised} />
-				</div>
+				</ThemeProvider>
 			);
 		}
 	}
