@@ -5,33 +5,34 @@
   --TextDark: #131313;
   --TextMuted: #888888;
   --borderStyle: 1px solid rgba(0, 0, 0, 0.12);
+
 }
 
 .sideMenu {
   width: 100%;
-  height: 15%;
+  height: 125px;
   background-color: white;
   border: var(--borderStyle);
   border-bottom: none;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
-
-
 }
 
 .mainEditor {
   width: 100%;
-  height: 85%;
-  background-color: white;
+  height: calc(100% - 125px);
+  background-color: transparent;
   border: var(--borderStyle);
 }
 
 .editorContainer {
-  width: 100%;
-  height: 800px;
-  background-color: pink;
-   
+  width: calc(100% - 85px);
+  height: calc(100% - 85px);
+ 
+  position: absolute;
+  top: 75px;
+  left: 75px;
 }
 
 .blockContainer {
@@ -41,14 +42,12 @@
   padding: 10px;
   border-right: var(--borderStyle);
   float: left;
-   
 }
 
 #blocksContainer {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
-
 
 .zoneButton {
   height: 100px;
@@ -74,7 +73,19 @@
   background-color: rgb(14, 155, 26);
 }
 
-.colorPickerContainer{
+.saveButton:hover {
+  border: 3px solid white;
+}
+
+.clearButton:hover {
+  border: 3px solid white;
+}
+
+.zoneButton:hover {
+  border: 3px solid white;
+}
+
+.colorPickerContainer {
   position: relative;
   height: 100%;
   width: 100%;
@@ -83,7 +94,9 @@
   border-radius: 10%;
 }
 
-.colorSquare{
+
+
+.colorSquare {
   background-color: red;
   width: 25%;
   height: 25%;
@@ -91,16 +104,87 @@
   border: var(--borderStyle);
 }
 
-.colorSquare:hover{
-  border: 3px solid white;;  
+.colorSquare:hover {
+  border: 3px solid white;
 }
 
 .bigIcon {
   color: white;
-  vertical-align:middle;
+  vertical-align: middle;
   width: 80% !important;
   height: 80% !important;
   margin-left: 10%;
   margin-top: 10%;
 }
 
+
+
+/* Picker Colours --------------------------------- */
+
+/* Row 1 */
+#varient1 {
+  background-color: #ff9e00;
+}
+
+#varient2 {
+  background-color: #cf6e00;
+}
+
+#varient3 {
+  background-color: #ffb718;
+}
+
+#varient4 {
+  background-color: lightgreen;
+}
+
+/* Row 2 */
+#varient5 {
+  background-color: pink;
+}
+
+#varient6 {
+  background-color: orchid;
+}
+
+#varient7 {
+  background-color: lightskyblue;
+}
+
+#varient8 {
+  background-color: lightblue;
+}
+
+/* Row 3 */
+#varient9 {
+  background-color: lightcoral;
+}
+
+#varient10 {
+  background-color: lightgoldenrodyellow;
+}
+
+#varient11 {
+  background-color: rgb(122, 40, 255);
+}
+
+#varient12 {
+  background-color: paleturquoise;
+}
+
+/* Row 4 */
+#varient13 {
+  background-color: teal;
+}
+
+#varient14 {
+  background-color: goldenrod;
+}
+
+#varient15 {
+  background-color: palevioletred;
+}
+
+#varient16 {
+  background-color: black;
+}
