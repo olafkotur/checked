@@ -24,14 +24,13 @@ export const HttpService = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         };
-
         return new Promise((resolve: any, reject: any) => {
-            request.post(options, (error: Error) => {
+            request.post(options, (error: Error, _res: any, body: any) => {
+                console.log('body', body);
                 if (error) {
-                    console.error('error:\n', error);
                     reject();
                 }
-                resolve();
+                resolve(JSON.parse(body));
             });
         });
     },
