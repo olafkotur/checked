@@ -21,9 +21,16 @@ const BlockContainer = () => {
 
 // functions
 
+export function clearZonesArr(){
+    zones = []
+    console.log("Clearing zones array")
+}
+
 function newZone() {
     console.log("button pressed");
-    zones[zones.length] = <ZoneBlock />;
+    zones[zones.length] = <ZoneBlock name = {(zones.length + 1).toString()} />;
+    //const zones =  document.getElementsByClassName("zoneBlock")
+
 
     ReactDOM.render(
         <div id="blocksContainer">
@@ -31,6 +38,7 @@ function newZone() {
         </div>,
         document.getElementById('mainEditor')
     )
+    
 }
 
 
