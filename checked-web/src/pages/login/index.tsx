@@ -23,11 +23,11 @@ export class Login extends React.Component<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
-        this.state = { 
-            username: '', 
-            password: '', 
-            cardCSS: 'signInCardOnScreen', 
-            signUpCardCSS: 'signUpCardOffScreen', 
+        this.state = {
+            username: '',
+            password: '',
+            cardCSS: 'signInCardOnScreen',
+            signUpCardCSS: 'signUpCardOffScreen',
             signUp: false,
             snackbarOpen: false,
             snackbarMessage: '',
@@ -37,7 +37,6 @@ export class Login extends React.Component<IProps, IState> {
         this.toggleSnackbar = this.toggleSnackbar.bind(this);
     }
 
-
     handleSignIn(username: string, password: string): void {
         UserService.login(username, password).then((res) => {
             console.log(res);
@@ -45,7 +44,7 @@ export class Login extends React.Component<IProps, IState> {
                 this.props.setAuthorised(true);
             } else {
                 console.log(res);
-                this.setState({snackbarMessage: res.message});
+                this.setState({ snackbarMessage: res.message });
                 this.toggleSnackbar();
             }
         }).catch(() => {
@@ -56,7 +55,7 @@ export class Login extends React.Component<IProps, IState> {
 
     handleSignUp(username: string, password: string): void {
         UserService.createUser(username, password).then((res) => {
-            if(res.status === 'created') {
+            if (res.status === 'created') {
                 this.props.setAuthorised(true);
             } else {
                 this.setState({ snackbarMessage: res.message });
@@ -83,9 +82,9 @@ export class Login extends React.Component<IProps, IState> {
     };
 
     toggleSnackbar(): void {
-        this.setState({snackbarOpen: !this.state.snackbarOpen});
+        this.setState({ snackbarOpen: !this.state.snackbarOpen });
     }
-
+                        
     render(): JSX.Element {
 
         return (
@@ -139,7 +138,7 @@ export class Login extends React.Component<IProps, IState> {
                                 disabled={this.state.username.length < 3 || this.state.password.length < 6}
                             >
                                 Sign In
-                            </Button>
+                                </Button>
                             <Button
                                 type="button"
                                 fullWidth
@@ -150,17 +149,17 @@ export class Login extends React.Component<IProps, IState> {
                                 disabled={this.state.username.length < 3 || this.state.password.length < 6}
                             >
                                 Sign Up
-                            </Button>
+                                </Button>
                             <Grid container className="mb-3">
                                 <Grid item xs>
                                     {/* <Link href="" variant="body2" color="primary">
 
-                                    </Link> */}
+                                        </Link> */}
                                 </Grid>
                                 <Grid item>
                                     <Link href="" variant="body2">
                                         Forgot password?
-                                    </Link>
+                                        </Link>
                                 </Grid>
                             </Grid>
                         </div>
