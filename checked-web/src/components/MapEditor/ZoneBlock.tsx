@@ -20,7 +20,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { value: '', placeHolder: "Zone " + this.props.name };
+        this.state = { value: "Zone " + this.props.name , placeHolder: "Zone " + this.props.name };
 
         this.myChangeHandler = this.myChangeHandler.bind(this);
         this.mySubmitHandler = this.mySubmitHandler.bind(this);

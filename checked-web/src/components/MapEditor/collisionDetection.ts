@@ -1,3 +1,5 @@
+
+// This was taken from 330 (Slightly altered to fit typescript)
 function checkCollision(zones: any) {
 
     for (let i = 0; i < zones.length; i++) {
