@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
           .toList(),
         ),
       floatingActionButton: FloatingActionButton(
-        //onPressed: ,
+        onPressed: (){},
         tooltip: 'Add a new zone',
         child: Icon(Icons.add),
       ),
