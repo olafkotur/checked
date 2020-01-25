@@ -1,3 +1,4 @@
+import 'package:checked_mobile_application/screens/home.dart';
 import 'package:flutter/material.dart';
 
 class Intro extends StatefulWidget {
@@ -48,7 +49,9 @@ class _IntroState extends State<Intro> {
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.red)),
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     color: Colors.orange,
                     textColor: Colors.white,
                     child: Text("Get Started!".toUpperCase(),
