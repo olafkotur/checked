@@ -15,13 +15,26 @@ class _HomeState extends State<Home> {
           IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.white,
+              color: Colors.black,
             ),
             onPressed: () {
               // do something
             },
           )
         ],
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // Add grid here
+          ],
+        ),
+      ),
+      floatingActionButton:  FloatingActionButton(
+        //onPressed: ,
+        tooltip: 'Add a new zone',
+        child: Icon(Icons.add),
       ),
     );
   }
