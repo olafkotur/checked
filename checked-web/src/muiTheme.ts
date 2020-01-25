@@ -20,7 +20,15 @@ const theme = createMuiTheme({
         info: {
             main: '#2196f3'
         }
-    }
+    },
+    typography: {
+        button: {
+            fontFamily: 'Montserrat, sans-serif',
+            fontWeight: 600,
+            letterSpacing: '0.1em',
+            textTransform: 'none'
+        },
+    },
 });
 
 export default theme;
