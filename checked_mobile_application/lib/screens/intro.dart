@@ -50,7 +50,17 @@ class _IntroState extends State<Intro> {
                         borderRadius: new BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.red)),
                     onPressed: () {
-
+                      Navigator.of(context).pushReplacement(new PageRouteBuilder(
+                          maintainState: true,
+                          opaque: true,
+                          pageBuilder: (context, _, __) => new Home(),
+                          transitionDuration: const Duration(seconds: 0),
+                          transitionsBuilder: (context, anim1, anim2, child) {
+                            return new FadeTransition(
+                              child: child,
+                              opacity: anim1,
+                            );
+                          }));
                     },
                     color: Colors.orange,
                     textColor: Colors.white,
