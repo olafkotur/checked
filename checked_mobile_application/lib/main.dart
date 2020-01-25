@@ -1,4 +1,6 @@
+import 'package:checked_mobile_application/screens/SignUp.dart';
 import 'package:checked_mobile_application/screens/landing.dart';
+import 'package:checked_mobile_application/screens/logIn.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.amber,
         accentColorBrightness: Brightness.light
       ),
-      home: Landing(),
+      home: SignUp(),
     );
   }
 }
