@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:checked_mobile_application/screens/intro.dart';
 import 'package:flutter/material.dart';
 
 class Landing extends StatefulWidget {
@@ -67,5 +67,19 @@ class _LandingState extends State<Landing> {
         ),
       ),
     );
+  }
+
+    void moveToNextScreen() {
+    Navigator.of(context).pushReplacement(new PageRouteBuilder(
+        maintainState: true,
+        opaque: true,
+        pageBuilder: (context, _, __) => new Intro(),
+        transitionDuration: const Duration(seconds: 2),
+        transitionsBuilder: (context, anim1, anim2, child) {
+          return new FadeTransition(
+            child: child,
+            opacity: anim1,
+          );
+        }));
   }
 }
