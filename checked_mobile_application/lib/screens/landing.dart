@@ -69,12 +69,12 @@ class _LandingState extends State<Landing> {
     );
   }
 
-    void moveToNextScreen() {
+  void moveToNextScreen() {
     Navigator.of(context).pushReplacement(new PageRouteBuilder(
         maintainState: true,
         opaque: true,
         pageBuilder: (context, _, __) => new Intro(),
-        transitionDuration: const Duration(seconds: 2),
+        transitionDuration: const Duration(seconds: 1),
         transitionsBuilder: (context, anim1, anim2, child) {
           return new FadeTransition(
             child: child,

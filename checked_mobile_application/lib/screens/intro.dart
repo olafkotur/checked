@@ -8,8 +8,11 @@ class Intro extends StatefulWidget {
 class _IntroState extends State<Intro> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+return new Scaffold(
+      appBar: new AppBar(
+        backgroundColor: Colors.pink,
+        title: new Text("Intro"),
+      ),
     );
   }
 }
