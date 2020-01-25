@@ -39,12 +39,10 @@ export class Login extends React.Component<IProps, IState> {
 
     handleSignIn(username: string, password: string): void {
         UserService.login(username, password).then((res) => {
-            console.log(res);
             if (res.status === 'ok') {
                 this.props.setAuthorised(true);
             } else {
-                console.log(res);
-                this.setState({ snackbarMessage: res.message });
+                this.setState({ snackbarMessage: res.message.toString() });
                 this.toggleSnackbar();
             }
         }).catch(() => {
@@ -58,7 +56,7 @@ export class Login extends React.Component<IProps, IState> {
             if (res.status === 'created') {
                 this.props.setAuthorised(true);
             } else {
-                this.setState({ snackbarMessage: res.message });
+                this.setState({ snackbarMessage: res.message.toString() });
                 this.toggleSnackbar();
             }
         }).catch(() => {

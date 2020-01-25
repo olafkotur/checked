@@ -22,7 +22,6 @@ class App extends React.Component<{}, IState> {
 
 	setAuthorised(authState: boolean): void {
 		this.setState({authorised: authState});
-		console.log(this.state.authorised);
 		return;
 	};
 
