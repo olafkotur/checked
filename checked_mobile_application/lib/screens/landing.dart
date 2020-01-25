@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 class Landing extends StatefulWidget {
@@ -6,7 +8,13 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
-@override
+  @override
+  initState() {
+    super.initState();
+    new Timer(const Duration(seconds: 5), moveToNextScreen);
+  }
+
+  @override
   Widget build(BuildContext context){
     return Scaffold(
       body: Container(
