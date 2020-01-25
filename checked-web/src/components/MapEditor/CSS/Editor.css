@@ -23,7 +23,7 @@
   width: 100%;
   height: calc(100% - 125px);
   background-color: transparent;
-  border: var(--borderStyle);
+  border: none;
 }
 
 .editorContainer {

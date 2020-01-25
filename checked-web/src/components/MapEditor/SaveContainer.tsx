@@ -4,7 +4,9 @@ import React from 'react';
 import "./CSS/Editor.css"
 
 import { Save } from '@material-ui/icons';
-import checkCollision from './colisionDetection';
+
+// this import is reused from 330
+import checkCollision from './collisionDetection';
 
 
 const SaveContainer = () => {
@@ -24,7 +26,8 @@ function save() {
     const zones = document.getElementsByClassName("zoneBlock")
     let toSend = []
 
-    if (checkCollision(zones) == false) {
+    // checks if the zones are not overlapping (reused from 330)
+    if (checkCollision(zones) === false) { 
 
         for (let i = 0; i < zones.length; i++) {
             const zone = zones[i];
