@@ -34,11 +34,6 @@ function save() {
 
             const rect = zone.getBoundingClientRect();
             const backgroundStyle = window.getComputedStyle(zone, null).getPropertyValue("background-color");
-            // const label = document.getElementById("Zone"+zone.getAttribute('data-name')+"Label");
-            // if (label != null) {
-            //     console.log(label)
-            // }
-
             const zoneJson = {
                 id: zone.id,
                 name: zone.getAttribute('data-name'),
