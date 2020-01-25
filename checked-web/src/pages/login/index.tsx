@@ -3,6 +3,7 @@ import React from 'react';
 import { UserService } from '../../api/UserService';
 import { Button, Typography, TextField, Grid, Link, Card, CardContent, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
+import UseAnimations from 'react-useanimations';
 
 import Logo from '../../media/checkedLogo.jpg';
 interface IState {
@@ -13,6 +14,7 @@ interface IState {
     signUp: boolean;
     snackbarOpen: boolean;
     snackbarMessage: string;
+    showLoader: boolean;
 }
 
 interface IProps {
@@ -31,6 +33,7 @@ export class Login extends React.Component<IProps, IState> {
             signUp: false,
             snackbarOpen: false,
             snackbarMessage: '',
+            showLoader: false,
         };
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
@@ -38,31 +41,39 @@ export class Login extends React.Component<IProps, IState> {
     }
 
     handleSignIn(username: string, password: string): void {
-        UserService.login(username, password).then((res) => {
-            if (res.status === 'ok') {
-                this.props.setAuthorised(true);
-            } else {
-                this.setState({ snackbarMessage: res.message.toString() });
+        this.setState({showLoader: true});
+        setTimeout(() => {        
+            UserService.login(username, password).then((res) => {
+                if (res.status === 'ok') {
+                    this.props.setAuthorised(true);
+                } else {
+                    this.setState({ snackbarMessage: res.message.toString() });
+                    this.toggleSnackbar();
+                }
+            }).catch(() => {
+                this.setState({ snackbarMessage: 'Something went wrong.' });
                 this.toggleSnackbar();
-            }
-        }).catch(() => {
-            this.setState({ snackbarMessage: 'Something went wrong.' });
-            this.toggleSnackbar();
-        });
-    }
+            });
+            this.setState({ showLoader: false });
+        }, 1000);
+    };
 
     handleSignUp(username: string, password: string): void {
-        UserService.createUser(username, password).then((res) => {
-            if (res.status === 'created') {
-                this.props.setAuthorised(true);
-            } else {
-                this.setState({ snackbarMessage: res.message.toString() });
+        this.setState({ showLoader: true });
+        setTimeout(() => {
+            UserService.createUser(username, password).then((res) => {
+                if (res.status === 'created') {
+                    this.props.setAuthorised(true);
+                } else {
+                    this.setState({ snackbarMessage: res.message.toString() });
+                    this.toggleSnackbar();
+                }
+            }).catch(() => {
+                this.setState({ snackbarMessage: 'Something went wrong.' });
                 this.toggleSnackbar();
-            }
-        }).catch(() => {
-            this.setState({ snackbarMessage: 'Something went wrong.' });
-            this.toggleSnackbar();
-        });;
+            });;
+            this.setState({ showLoader: false });
+        }, 1000);
     }
 
     handleKeyDown(event: any): void {
@@ -96,9 +107,14 @@ export class Login extends React.Component<IProps, IState> {
                             <Typography variant="h6" className="montserrat">
                                 Checked
                             </Typography>
-                            <Typography variant="subtitle1" className="mb-5 text-muted uppercase">
+                            <Typography variant="subtitle1" className="mb-2 text-muted uppercase">
                                 Keep track of your space.
                             </Typography>
+                        </div>
+                        <div className="loaderDiv text-center mb-4 mt-4 vcenterParent">
+                            {this.state.showLoader &&
+                                <UseAnimations animationKey="loading2" size={30} className="loginLoader vcenterChild"/>
+                            }
                         </div>
                         <div>
                             <TextField
