@@ -152,7 +152,7 @@ export class Login extends React.Component<IProps, IState> {
                                 disabled={this.state.username.length < 3 || this.state.password.length < 6}
                             >
                                 Sign In
-                                </Button>
+                            </Button>
                             <Button
                                 type="button"
                                 fullWidth
@@ -163,24 +163,24 @@ export class Login extends React.Component<IProps, IState> {
                                 disabled={this.state.username.length < 3 || this.state.password.length < 6}
                             >
                                 Sign Up
-                                </Button>
+                            </Button>
                             <Grid container className="mb-3">
                                 <Grid item xs>
                                     {/* <Link href="" variant="body2" color="primary">
 
-                                        </Link> */}
+                                    </Link> */}
                                 </Grid>
                                 <Grid item>
                                     <Link href="" variant="body2">
                                         Forgot password?
-                                        </Link>
+                                    </Link>
                                 </Grid>
                             </Grid>
                         </div>
 
                     </CardContent>
                 </Card>
-                <Snackbar open={this.state.snackbarOpen} autoHideDuration={6000} onClose={this.toggleSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Snackbar open={this.state.snackbarOpen} autoHideDuration={6000} onClose={this.toggleSnackbar} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                     <MuiAlert onClose={this.toggleSnackbar} variant="filled" severity="error">
                         {this.state.snackbarMessage}
                     </MuiAlert>
