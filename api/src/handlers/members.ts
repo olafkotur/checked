@@ -26,7 +26,7 @@ export const MemberHandler = {
     };
 
     MongoService.insertOne('members', data);
-    ResponseService.create('Created new member', res);
+    ResponseService.create({ memberId: data.memberId }, res);
     return true;
   },
 
