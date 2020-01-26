@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class SignUp extends StatefulWidget {
   @override
@@ -7,6 +10,13 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
+
+  var url = 'checked-api.herokuapp.com/api/users/create';
+
+  String _email = "";
+  String _password = "";
+  String _company = "";
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +66,26 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          //height: 40.0,
+                          child: TextFormField(
+                            onChanged: (String val) => setState(() => _email = val),
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter your Email";
+                              }
+                              String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+                                "\\@" +
+                                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                                "(" +
+                                "\\." +
+                                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                                ")+";
+                              RegExp regExp = new RegExp(p);
+                              if (regExp.hasMatch(value)) {
+                                return null;
+                              }
+                              return 'Email is not valid';
+                             },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -79,8 +107,25 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          //height: 40.0,
+                          child: TextFormField(
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter your email";
+                              }
+                              String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+                                "\\@" +
+                                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                                "(" +
+                                "\\." +
+                                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                                ")+";
+                              RegExp regExp = new RegExp(p);
+                              if (regExp.hasMatch(value)) {
+                                return null;
+                              }
+                              return 'Email is not valid';
+                             },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -102,8 +147,15 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          child: TextFormField(
+                            onChanged: (String val) => setState(() => _password = val),
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter your password";
+                              }else if(value.length < 8){
+                                return "Password must be at less 8 characters long";
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -125,8 +177,14 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          child: TextFormField(
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter your password";
+                              }else if(value.length < 8){
+                                return "Password must be at less 8 characters long";
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -148,8 +206,8 @@ class _SignUpState extends State<SignUp> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          child: TextFormField(
+                            onChanged: (String val) => setState(() => _company = val),
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -167,7 +225,22 @@ class _SignUpState extends State<SignUp> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             GestureDetector(
-                              onTap: (){print("Go Back to signIn page");},
+                              onTap: () async {
+                                _formKey.currentState.validate();
+                                _formKey.currentState.save();
+                                var client = http.Client();
+                                String body = 'email=$_email&password=$_password&companyName=$_company';
+                                print(body);
+                                final encoding = Encoding.getByName('utf-8');
+
+                                try{
+                                var response = await http.post("http://checked-api.herokuapp.com/api/users/create", body:body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
+                                print(response.body);
+                                }finally{
+                                  client.close();
+                                }
+
+                              },
                               child: Container(
                                 height: 50,
                                 width: 150,
@@ -189,14 +262,16 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ),
-                        SizedBox(height:40.0),
+                        SizedBox(height:20.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Text("Already have an account?"),
                             SizedBox(width: 2.0,),
                             GestureDetector(
-                              onTap: (){},
+                              onTap: (){
+                                print(_email);
+                              },
                               child: Text("Log in here",style: 
                                 TextStyle(
                                   decoration: TextDecoration.underline,
@@ -205,6 +280,7 @@ class _SignUpState extends State<SignUp> {
                             )
                           ],
                         ),
+                        SizedBox(height: 40.0,)
                       ],
                     ),
                   ),
