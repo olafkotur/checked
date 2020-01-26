@@ -61,16 +61,31 @@ class _HomeState extends State<Home> {
             left: 0.0,
             bottom: 0.0,
             child: DragTarget(
+              onAccept: (Color color) {
+                deletedColor = Colors.red[400];
+              },
               builder: (
                 BuildContext context,
                 List<dynamic> accepted,
                 List<dynamic> rejected,
               ) {
                 return Container(
-                  width: 500.0,
-                  height: 100.0,
-                  decoration: BoxDecoration(
-                    color: accepted.isEmpty ? deletedColor : Colors.red[400],
+                  width: 300.0,
+                  height: 120.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: accepted.isEmpty ? deletedColor : Colors.red[400],
+                            size: 60.0,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },
@@ -80,8 +95,12 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},
+        backgroundColor: Colors.green,
         tooltip: 'Add a new zone',
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          ),
       ),
     );
   }
@@ -129,7 +148,6 @@ class _DragBoxState extends State<DragBox> {
             ),
           ),
         ),
-
         onDraggableCanceled: (velocity, offset) {
           setState(() {
             position = offset;
