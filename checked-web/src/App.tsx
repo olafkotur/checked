@@ -1,48 +1,53 @@
 import React from 'react';
 import { Router } from "@reach/router";
+import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './components/MapEditor';
 
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './muiTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
-const Meme = (props: any): JSX.Element =>  {
-	return (
-		<div className="dashContainer">
-			meme
-		</div>
-	);
-};
+interface IState {
+	authorised: boolean;
+}
 
-const Meme2 = (props: any): JSX.Element => {
-	return (
-		<div className="dashContainer">
-			Memes1
-		</div>
-	);
-};
+class App extends React.Component<{}, IState> {
 
-const Editor = (props: any): JSX.Element => {
-	return (
-		<div className="dashContainer">
-			<MapEditor/>
-		</div>
-	);
-};
+	constructor(props: any){
+		super(props);
+		this.state = { authorised: false };
+		this.setAuthorised = this.setAuthorised.bind(this);
+	}
+
+	setAuthorised(authState: boolean): void {
+		this.setState({authorised: authState});
+		return;
+	};
+
+	render(): JSX.Element {
 
 
 
-const App: React.FC = () => {
-  	return (
-		<div>
-			<MenuBar />
-      		<Router>
-        		<Meme path="/" />
-				<Meme2 path="meme" />
-				<Editor path="editor"/>
-      		</Router>
-    	</div>
-  	);
+		if (this.state.authorised) {
+			return (
+				<ThemeProvider theme={theme}>
+					<MenuBar />
+					<Router>
+						<Meme path='/' />
+            <Editor path="editor"/>
+					</Router>
+				</ThemeProvider>
+			);
+		} else {
+			return (
+				<ThemeProvider theme={theme}>
+					<Login setAuthorised={this.setAuthorised} />
+				</ThemeProvider>
+			);
+		}
+	}
 };
 
 export default App;

@@ -22,6 +22,20 @@
 * Run `yarn release` to docker the project and release to production
 * Run `yarn logs` to see live logging information in heroku
 
+## Checked Web App
+#### Requirements
+1. Yarn
+2. Typescript
+
+#### Setup
+1. Make sure to be in the `checked-web` directory.
+2. Run `yarn add`. Do this each time you pull new changes, this installs all relevant node_modules from new packages.
+3. Then run `yarn start` to run the client at `localhost:3000`
+
+#### Linting
+* ESLint has been configured with this project.
+* Using the ESLint Extension from VSCode is reccomended
+* Else, run `yarn lint` before committing changes, and fix any errors.
 ---
 
 ## SCHEDULER
