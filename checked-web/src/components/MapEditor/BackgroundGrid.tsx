@@ -17,7 +17,7 @@ function genCol(): void {
 }
 
 function genRow(): void {
-    const loop = Math.floor(window.innerHeight / 25);
+    const loop = (Math.floor(window.innerHeight / 25) - 8);
     for (let i = 0; i < loop; i++) {
         row[row.length] = <BgRow key={i} />;
 

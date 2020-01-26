@@ -1,13 +1,14 @@
 .BgContainer {
-  position: absolute;
-  top: calc(75px + 125px);
-  left: 75px;
-  width: calc(100% - 85px);
-  height: calc(100% - (85px + 125px));
+
+
+  width: calc(100% - 90px);
+  height: calc(100vh - 225px);
   background-color: transparent;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  position: absolute;
+  /* background-color: blue; */
+  /* border: 1px solid rgba(0, 0, 0, 0.12); */
   /* height: calc(100% - 125px); */
 }
 
@@ -28,9 +29,10 @@
 }
 
 .colsDiv {
-  position: absolute;
   width: 100%;
   height: 100%;
   background-color: transparent;
   z-index: -1;
+  position: absolute;
+  
 }

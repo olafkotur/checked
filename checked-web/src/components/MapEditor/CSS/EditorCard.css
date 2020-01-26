@@ -10,7 +10,15 @@
 
 .editorCard{
     width: calc(100% - 90px);
-    height: 100%;
+    height: calc(100vh - 100px);
     margin-top: 75px;
     margin-left: 75px;
+    overflow: hidden;
+    background-color: transparent;
 }
+
+.editorContent {
+    padding: 0px !important;
+    overflow: hidden;
+}
+
