@@ -15,6 +15,7 @@ export const UserHandler = {
       userId: await DbHelperService.assignAvailableId('users', 'userId'),
       email: req.body.email || '',
       password: hashedPassword,
+      companyName: req.body.companyName || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -61,6 +62,7 @@ export const UserHandler = {
     const formatted: IUserResponse = {
       userId: data.userId,
       email: data.email,
+      companyName: data.companyName || '',
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -80,6 +82,7 @@ export const UserHandler = {
       return {
         userId: user.userId,
         email: user.email,
+        companyName: user.companyName,
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }

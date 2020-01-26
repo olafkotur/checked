@@ -26,7 +26,8 @@ export interface IDbZone {
 export interface IDbUser {
   userId: number,
   email: string,
-  password: string
+  password: string,
+  companyName: string,
   createdAt: Date,
   lastUpdated: Date
 }

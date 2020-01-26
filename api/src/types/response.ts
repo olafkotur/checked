@@ -42,6 +42,7 @@ export interface ILocationResponse {
 export interface IUserResponse {
   userId: number,
   email: string,
+  companyName: string,
   createdAt: number,
   lastUpdated: number
 }
