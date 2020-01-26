@@ -2,7 +2,7 @@ import React from 'react';
 import { Router } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
-import MapEditor from './components/MapEditor';
+import MapEditor from './pages/map-editor';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './muiTheme';
@@ -17,7 +17,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: false };
+		this.state = { authorised: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 	}
 
@@ -28,15 +28,12 @@ class App extends React.Component<{}, IState> {
 
 	render(): JSX.Element {
 
-
-
 		if (this.state.authorised) {
 			return (
 				<ThemeProvider theme={theme}>
 					<MenuBar />
 					<Router>
-						<Meme path='/' />
-            <Editor path="editor"/>
+            			<MapEditor path="editor"/>
 					</Router>
 				</ThemeProvider>
 			);

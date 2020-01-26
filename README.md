@@ -29,7 +29,7 @@
 
 #### Setup
 1. Make sure to be in the `checked-web` directory.
-2. Run `yarn add`. Do this each time you pull new changes, this installs all relevant node_modules from new packages.
+2. Run `yarn`. Do this each time you pull new changes, this installs all relevant node_modules from new packages.
 3. Then run `yarn start` to run the client at `localhost:3000`
 
 #### Linting

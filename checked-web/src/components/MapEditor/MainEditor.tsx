@@ -1,5 +1,5 @@
 import React from 'react';
-import "./CSS/Editor.css"
+import "./CSS/Editor.css";
 
 
 const MainEditor = () => {

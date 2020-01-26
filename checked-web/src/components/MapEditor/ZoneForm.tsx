@@ -9,19 +9,19 @@ interface State {
 }
 
 class ZoneForm extends React.Component<Props, State> {
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             username: '',
             age: null,
         };
     }
-    myChangeHandler = (event:any) => {
-        let nam = event.target.name;
-        let val = event.target.value;
+    myChangeHandler = (event: any) => {
+        const nam = event.target.name;
+        const val = event.target.value;
         this.setState({ [nam]: val });
-        console.log("statechange")
-    }
+        console.log("statechange");
+    };
     render() {
         return (
             <form>

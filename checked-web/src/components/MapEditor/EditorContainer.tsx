@@ -1,10 +1,10 @@
 import React from 'react';
-import SideMenu from './SideMenu'
-import MainEditor from './MainEditor'
-import "./CSS/Editor.css"
-import '../InteractJS/DragZone.js'
+import SideMenu from './SideMenu';
+import MainEditor from './MainEditor';
+import "./CSS/Editor.css";
+import './InteractJS/DragZone.js';
 
-const EditorContainer = () => {
+const EditorContainer = (): JSX.Element => {
     return (
         <div className = "editorContainer">
             <SideMenu />
