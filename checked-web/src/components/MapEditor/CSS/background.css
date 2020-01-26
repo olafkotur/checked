@@ -2,7 +2,7 @@
 
 
   width: calc(100% - 90px);
-  height: calc(100vh - 225px);
+  height: calc(100vh - 175px);
   background-color: transparent;
   z-index: 0;
   overflow: hidden;
