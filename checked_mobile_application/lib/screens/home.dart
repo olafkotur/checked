@@ -114,7 +114,21 @@ class _DragBoxState extends State<DragBox> {
             position = offset;
           });
         },
-        feedback: 
+        feedback: Container(
+          width: 100.0,
+          height: 100.0,
+          color: widget.itemColor,
+          child: Center(
+            child: Text(
+              widget.label,
+              style: TextStyle(
+                color: Colors.white,
+                decoration: TextDecoration.none,
+                fontSize: 20.0,
+              ),
+            ),
+          ),
+        ),
       )
     );
   }
