@@ -1,7 +1,7 @@
 import React from 'react';
 import './CSS/background.css';
 
-const BgColumn = () => {
+const BgColumn = (): JSX.Element => {
     return (
         <div className = "BgColumn">
             

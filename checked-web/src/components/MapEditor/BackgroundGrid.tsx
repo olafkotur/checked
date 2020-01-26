@@ -7,7 +7,24 @@ import BgRow from './BgRow';
 const col: any[] = [];
 const row: any[] = [];
 
-const BackgroundGrid = () => {
+function genCol(): void {
+    const loop = Math.floor(window.innerWidth / 25);
+
+    for (let i = 0; i < loop; i++) {
+        col[col.length] = <BgColumn key={i} />;
+
+    }
+}
+
+function genRow(): void {
+    const loop = Math.floor(window.innerHeight / 25);
+    for (let i = 0; i < loop; i++) {
+        row[row.length] = <BgRow key={i} />;
+
+    }
+}
+
+const BackgroundGrid = (): JSX.Element => {
     genCol();
     genRow();
     return (
@@ -23,21 +40,6 @@ const BackgroundGrid = () => {
     );
 };
 
-function genCol() {
-    const loop = Math.floor(window.innerWidth / 25);
-  
-    for (let i = 0; i < loop; i++) {
-        col[col.length] = <BgColumn key={i} />;
-        
-    }
-}
 
-function genRow() {
-    const loop = Math.floor(window.innerHeight / 25);
-    for (let i = 0; i < loop; i++) {
-        row[row.length] = <BgRow key={i}/>;
-
-    }
-}
 
 export default BackgroundGrid;

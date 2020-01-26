@@ -3,19 +3,19 @@ import request from 'request';
 const endpoint = 'http://checked-api.herokuapp.com/api/';
 
 export const HttpService = {
-    get: (uri: string): Promise<void> => {
+    get: (uri: string): Promise<any> => {
         uri = endpoint + uri;
         return new Promise((resolve: any, reject: any) => {
-            request.get({ uri }, (error: Error) => {
+            request.get({ uri }, (error: Error, _res: any, body: any) => {
                 if (error) {
                     reject();
                 }
-                resolve();
+                resolve(JSON.parse(body));
             });
         });
     },
 
-    post: async (uri: string, body: any): Promise<void> => {
+    post: async (uri: string, body: any): Promise<any> => {
         uri = endpoint + uri;
         const options = {
             uri,
@@ -35,7 +35,7 @@ export const HttpService = {
         });
     },
 
-    delete: (uri: string): Promise<void> => {
+    delete: (uri: string): Promise<any> => {
         uri = endpoint + uri;
         return new Promise((resolve: any, reject: any) => {
             request.delete({ uri }, (error: Error) => {
