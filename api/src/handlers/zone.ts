@@ -20,7 +20,7 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('zones', data)
-        ResponseService.create('Added new zone to collection', res);
+        ResponseService.create({ zoneId: data.zoneId }, res);
       } else {
         ResponseService.bad('Zone already exists', res);
       }

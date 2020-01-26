@@ -27,8 +27,8 @@ export const ActivityHandler = {
     // Ensure that an activity with the same zoneId does not already exist
     await DbHelperService.exists('activity', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
-        MongoService.insertOne('activity', data)
-        ResponseService.create('Added new activity to collection', res);
+        MongoService.insertOne('activity', data);
+        ResponseService.create({ activityId: data.activityId }, res);
       } else {
         ResponseService.bad('Activity in that zone already exists', res);
       }
