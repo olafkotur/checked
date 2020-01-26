@@ -51,7 +51,7 @@ function checkCollision(zones: any) {
         }
     }
 
-    return false
+    return false;
 }
 
 export default checkCollision;

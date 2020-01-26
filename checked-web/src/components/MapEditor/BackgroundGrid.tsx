@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './CSS/background.css'
+import './CSS/background.css';
 import BgColumn from './BgColumn';
 import BgRow from './BgRow';
 
-var col: any[] = [];
-var row: any[] = [];
+const col: any[] = [];
+const row: any[] = [];
 
 const BackgroundGrid = () => {
     genCol();
@@ -24,18 +24,18 @@ const BackgroundGrid = () => {
 };
 
 function genCol() {
-    const loop = Math.floor(window.innerWidth / 25)
+    const loop = Math.floor(window.innerWidth / 25);
   
     for (let i = 0; i < loop; i++) {
-        col[col.length] = <BgColumn key={i} />
+        col[col.length] = <BgColumn key={i} />;
         
     }
 }
 
 function genRow() {
-    const loop = Math.floor(window.innerHeight / 25)
+    const loop = Math.floor(window.innerHeight / 25);
     for (let i = 0; i < loop; i++) {
-        row[row.length] = <BgRow key={i}/>
+        row[row.length] = <BgRow key={i}/>;
 
     }
 }
