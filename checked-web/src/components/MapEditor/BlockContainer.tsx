@@ -38,12 +38,6 @@ function createID(){
 
 function newZone() {
     console.log("button pressed");
-    const mystyle = {
-        color: "white",
-        backgroundColor: "DodgerBlue",
-        padding: "10px",
-        fontFamily: "Arial"
-    };
     //zones[zones.length] = <ZoneBlock  key={(zones.length + 1).toString()} name={(zones.length + 1).toString()} id={(zones.length + 1)}  />;
     zones[zones.length] = <ZoneBlock key={(zones.length + 1).toString()} name={(zones.length + 1).toString()} id={(zones.length + 1)} />;
     //const zones =  document.getElementsByClassName("zoneBlock")

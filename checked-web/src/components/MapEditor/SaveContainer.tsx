@@ -30,22 +30,27 @@ function save() {
     if (checkCollision(zones) === false) { 
 
         for (let i = 0; i < zones.length; i++) {
+            // Uses HTML Div
             const zone = zones[i];
-
             const rect = zone.getBoundingClientRect();
             const backgroundStyle = window.getComputedStyle(zone, null).getPropertyValue("background-color");
+           
+            // Create Json
             const zoneJson = {
-                id: zone.id,
-                name: zone.getAttribute('data-name'),
+                id: zone.getAttribute('data-dbid'),
+                name: zone.id,
                 width: rect.width,
                 height: rect.height,
                 x: rect.x,
                 y: rect.y,
                 color: backgroundStyle,
             };
-            console.log(zoneJson)
-
+            toSend[toSend.length] = zoneJson;
+            
         }
+        console.log(toSend);
+        const requestData = '{"data" : ' + JSON.stringify(toSend) + '}';
+        console.log(requestData);
     }
     else {
         alert("zones cannot intersect")

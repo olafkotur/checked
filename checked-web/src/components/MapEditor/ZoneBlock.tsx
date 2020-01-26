@@ -40,12 +40,12 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div className="zoneBlock"  >
+            <div className="zoneBlock" id = {this.state.value} data-dbid = {"Placeholder"} >
                 {/* <h1 className="zoneTitle">Zone {this.state.color}</h1> */}
 
                 <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e) }}>
 
-                    <input onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={"Zone " + this.props.name} />
+                    <input id = {this.props.name + "Title"} onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={"Zone " + this.props.name} />
 
 
                 </form>
