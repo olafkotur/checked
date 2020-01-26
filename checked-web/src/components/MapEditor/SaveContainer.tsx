@@ -33,18 +33,20 @@ async function save(): Promise<void> {
                 name: zone.id,
                 width: rect.width,
                 height: rect.height,
-                x: rect.x,
-                y: rect.y,
+                xValue: rect.x - 75,
+                yValue: rect.y - 200,
                 color: backgroundStyle,
             };
-            
+            console.log(rect.x);
+            // it should always not be null
             if(id != null){
-             await ZoneService.saveZone(zoneJson,parseInt(id));
+             await ZoneService.updateZone(zoneJson,parseInt(id));
             }
+           
         }
     }
     else {
-        alert("zones cannot intersect");
+        alert("zones cannot intersect, your work has NOT been saved");
     }
 }
 

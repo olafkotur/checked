@@ -15,6 +15,7 @@ interface IProps {
     name: string;
     id: number;
     dbid: number;
+    pos: any;
 }
 
 
@@ -22,7 +23,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { value: "Zone " + this.props.name };
+        this.state = { value: this.props.name };
 
         this.myChangeHandler = this.myChangeHandler.bind(this);
         this.mySubmitHandler = this.mySubmitHandler.bind(this);
@@ -42,7 +43,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <div className="zoneBlock" id = {this.state.value} data-dbid = {this.props.dbid} >
+            <div className="zoneBlock" style={{width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} id = {this.state.value} data-dbid = {this.props.dbid} >
                 {/* <h1 className="zoneTitle">Zone {this.state.color}</h1> */}
 
                 <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
