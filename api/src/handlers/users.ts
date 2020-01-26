@@ -9,29 +9,36 @@ import { IUserResponse } from '../types/response';
 export const UserHandler = {
 
   createUser: async (req: express.Request, res: express.Response) => {
-    const hashedPassword: string = AuthService.hashValue(req.body.password);
+    const hashedPassword: string = AuthService.hashValue(req.body.password || '');
 
     const data: IDbUser = {
       userId: await DbHelperService.assignAvailableId('users', 'userId'),
-      username: req.body.username,
+      email: req.body.email || '',
       password: hashedPassword,
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
 
-    // Check that a user with the same username does not exist
-    await DbHelperService.exists('users', { username: req.body.username }).then((exists: boolean) => {
+    // Ensure valid email and password is provided
+    if (data.email === '' || !data.email.includes('@')) {
+      ResponseService.bad('Please enter a valid email address', res);
+      return false;
+    }
+
+    // Check that a user with the same email does not exist
+    await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
         ResponseService.create('Created new user', res);
       } else {
-        ResponseService.bad('Username already taken', res);
+        ResponseService.bad('Email address already taken', res);
       }
     });
+    return true;
   },
 
   deleteUser: async (req: express.Request, res: express.Response) => {
-    const userId: number = parseInt(req.params.userId);
+    const userId: number = parseInt(req.params.userId || '0');
 
     // Ensure that the user exists before attempting to delte
     await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
@@ -45,7 +52,7 @@ export const UserHandler = {
   },
 
   getUser: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
+    const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId || '0')} );
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -53,7 +60,7 @@ export const UserHandler = {
 
     const formatted: IUserResponse = {
       userId: data.userId,
-      username: data.username,
+      email: data.email,
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -72,7 +79,7 @@ export const UserHandler = {
     const formatted: IUserResponse[] = data.map((user: IDbUser) => {
       return {
         userId: user.userId,
-        username: user.username,
+        email: user.email,
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }
@@ -83,22 +90,25 @@ export const UserHandler = {
   },
 
   login: async (req: express.Request, res: express.Response) => {
-    const hashedPassword: string = AuthService.hashValue(req.body.password);
+    const hashedPassword: string = AuthService.hashValue(req.body.password || '');
 
-    const data: any = await MongoService.findOne('users', { username: req.body.username });
+    const data: any = await MongoService.findOne('users', { email: req.body.email || '' });
     if (data === null) {
-      ResponseService.unauthorized('Username or password is incorrect', res);
+      ResponseService.unauthorized('Email address or password is incorrect', res);
       return false;
     }
 
     // Check if credentials are correct
-    if (data.username === req.body.username) {
+    if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        ResponseService.ok('User logged in', res);
+        ResponseService.ok(`User logged in with ${data.email}`, res);
+        return true;
       }
     }
 
-    return true;
+    // Default to unauthorized
+    ResponseService.unauthorized('Email address or password is incorrect', res);
+    return false;
   }
 
 }

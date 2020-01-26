@@ -36,7 +36,7 @@ export interface ILocationResponse {
 
 export interface IUserResponse {
   userId: number,
-  username: string,
+  email: string,
   createdAt: number,
   lastUpdated: number
 }

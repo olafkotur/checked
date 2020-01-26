@@ -9,6 +9,7 @@ import { UserHandler } from './handlers/users';
 import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
 
+const cors = require('cors');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
@@ -17,9 +18,8 @@ const app: express.Application = express();
 async function main() {
   await MongoService.connect();
 
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(cors());
 
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);
