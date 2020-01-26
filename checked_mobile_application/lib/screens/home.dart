@@ -56,7 +56,26 @@ class _HomeState extends State<Home> {
         children: <Widget>[
           DragBox(Offset(0.0, 0.0), 'Zone 1', Colors.orange[400]),
           DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
-          DragBox(Offset(100.0, 0.0), 'Zone 3', Colors.orange[700]),
+          DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
+          Positioned(
+            left: 0.0,
+            bottom: 0.0,
+            child: DragTarget(
+              builder: (
+                BuildContext context,
+                List<dynamic> accepted,
+                List<dynamic> rejected,
+              ) {
+                return Container(
+                  width: 500.0,
+                  height: 100.0,
+                  decoration: BoxDecoration(
+                    color: accepted.isEmpty ? deletedColor : Colors.red[400],
+                  ),
+                );
+              },
+            ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
