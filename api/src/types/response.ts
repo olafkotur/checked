@@ -30,6 +30,11 @@ export interface ILocationResponse {
  export interface IZoneResponse {
   zoneId: number,
   name: number,
+  width: number,
+  height: number,
+  xValue: number,
+  yValue: number,
+  color: string,
   createdAt: number,
   lastUpdated: number,
 }

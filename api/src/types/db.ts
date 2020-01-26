@@ -14,6 +14,11 @@ export interface IDbLocation {
 export interface IDbZone {
   zoneId: number,
   name: number,
+  width: number,
+  height: number,
+  xValue: number,
+  yValue: number,
+  color: string,
   createdAt: Date,
   lastUpdated: Date,
 }

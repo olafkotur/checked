@@ -30,7 +30,7 @@ export const LiveHandler = {
       }
     });
 
-    ResponseService.create('Added to collection', res);
+    ResponseService.ok('Added to collection', res);
     return true;
   },
 

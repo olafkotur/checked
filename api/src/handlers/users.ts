@@ -29,7 +29,7 @@ export const UserHandler = {
     await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
-        ResponseService.create('Created new user', res);
+        ResponseService.create({ userId: data.userId }, res);
       } else {
         ResponseService.bad('Email address already taken', res);
       }
@@ -101,7 +101,7 @@ export const UserHandler = {
     // Check if credentials are correct
     if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        ResponseService.ok(`User logged in with ${data.email}`, res);
+        ResponseService.ok(`User logged in as ${data.email}`, res);
         return true;
       }
     }

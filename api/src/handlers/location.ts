@@ -25,7 +25,7 @@ export const LocationHandler = {
       }
     });
 
-    ResponseService.create('Added to collection', res);
+    ResponseService.ok('Added to collection', res);
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
