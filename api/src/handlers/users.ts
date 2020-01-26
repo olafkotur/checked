@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth';
 import { ResponseService } from '../services/response';
 import { IDbUser } from '../types/db';
 import { IUserResponse } from '../types/response';
+import { EmailService } from '../services/email';
 
 export const UserHandler = {
 
@@ -31,10 +32,16 @@ export const UserHandler = {
       if (!exists) {
         MongoService.insertOne('users', data)
         ResponseService.create({ userId: data.userId }, res);
+
+        // Send Verification email
+        const body: string = EmailService.generateRegistrationBody();
+        EmailService.send('Email Verification', data.email, body);
+
       } else {
         ResponseService.bad('Email address already taken', res);
       }
     });
+
     return true;
   },
 
