@@ -11,7 +11,7 @@ class _LandingState extends State<Landing> {
   @override
   initState() {
     super.initState();
-    new Timer(const Duration(seconds: 2), moveToNextScreen);
+    new Timer(const Duration(seconds: 3), moveToNextScreen);
   }
 
   @override
