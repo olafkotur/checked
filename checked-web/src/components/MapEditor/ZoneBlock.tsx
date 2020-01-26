@@ -41,7 +41,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
         console.log(this.state.value);
     };
 
-    handleClick = (event:any): void => {
+    handleClick = (event: any): void => {
         console.log("clicked");
         
     };
@@ -53,7 +53,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
                 <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
 
-                    <input id = {this.props.name + "Title"} onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={"Zone " + this.props.name} />
+                    <input id = {this.props.name + "Title"} onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={this.props.name} />
 
 
                 </form>
