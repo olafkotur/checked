@@ -17,7 +17,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: false };
+		this.state = { authorised: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 	}
 
