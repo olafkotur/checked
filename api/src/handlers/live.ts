@@ -10,23 +10,23 @@ export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
     // Safeguard to ensure extra unwanted collections aren't created
-    if (!DbHelperService.isValidLiveCollection(req.body.type)) {
+    if (!DbHelperService.isValidLiveCollection(req.body.type || '')) {
       ResponseService.bad('Invalid collection name', res);
       return false;
     }
 
     const data: IDbLive = {
-      sensorId: parseInt(req.body.sensorId),
+      sensorId: parseInt(req.body.sensorId || '0'),
       value: parseInt(req.body.value),
       createdAt: new Date(),
     };
 
     // Update only if reading with same sensorId exists
-    await DbHelperService.exists(req.body.type, { sensorId: data.sensorId }).then((exists: boolean) => {
+    await DbHelperService.exists(req.body.type || '', { sensorId: data.sensorId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.updateOne(req.body.type, { sensorId: data.sensorId }, data);
+        MongoService.updateOne(req.body.type || '', { sensorId: data.sensorId }, data);
       } else {
-        MongoService.insertOne(req.body.type, data)
+        MongoService.insertOne(req.body.type || '', data)
       }
     });
 
@@ -35,7 +35,7 @@ export const LiveHandler = {
   },
 
   getSingleLiveData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne(req.params.type, { sensorId: parseInt(req.params.sensorId) });
+    const data: any = await MongoService.findOne(req.params.type || '', { sensorId: parseInt(req.params.sensorId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -53,7 +53,7 @@ export const LiveHandler = {
   },
 
   getLiveData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany(req.params.type, {});
+    const data: any = await MongoService.findMany(req.params.type || '', {});
     if (data === null) {
       ResponseService.data([], res);
       return false;

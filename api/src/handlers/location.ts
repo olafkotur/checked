@@ -10,9 +10,9 @@ export const LocationHandler = {
 
   uploadLocationData: async (req: express.Request, res: express.Response) => {
     const data: IDbLocation = {
-      sensorId: parseInt(req.body.sensorId),
-      xValue: parseInt(req.body.xValue),
-      yValue: parseInt(req.body.yValue),
+      sensorId: parseInt(req.body.sensorId || '0'),
+      xValue: parseInt(req.body.xValue || '0'),
+      yValue: parseInt(req.body.yValue || '0'),
       createdAt: new Date()
     };
 
@@ -29,7 +29,7 @@ export const LocationHandler = {
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId) });
+    const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;

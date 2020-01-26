@@ -14,7 +14,7 @@ export const MiscHandler = {
 
   resetDatabase: async (req: express.Request, res: express.Response) => {
     // Safeguard to ensure this isn't trigerred accidentally
-    if (req.params.code !== process.env.PURGE_CODE) {
+    if (req.params.code || '' !== process.env.PURGE_CODE) {
       ResponseService.unauthorized('Invalid purge code', res);
       return false;
     } 

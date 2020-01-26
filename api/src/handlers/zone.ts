@@ -57,7 +57,7 @@ export const ZoneHandler = {
   },
 
   deleteZone: async (req: express.Request, res: express.Response) => {
-    const zoneId: number = parseInt(req.params.zoneId);
+    const zoneId: number = parseInt(req.params.zoneId || '0');
 
     // Ensure that the zone exists before attempting to delte
     await DbHelperService.exists('zones', { zoneId }).then((exists: boolean) => {
@@ -71,7 +71,7 @@ export const ZoneHandler = {
   },
 
   getSingleZoneData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('zones', { zoneId: parseInt(req.params.zoneId) });
+    const data: any = await MongoService.findOne('zones', { zoneId: parseInt(req.params.zoneId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
