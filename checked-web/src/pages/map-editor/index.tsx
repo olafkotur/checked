@@ -1,10 +1,10 @@
 import React from 'react';
 // import ZoneBlock from './MapEditor/ZoneBlock'
 
-import EditorContainer from '../../components/MapEditor/EditorContainer';
+
 import BackgroundGrid from '../../components/MapEditor/BackgroundGrid';
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardHeader, CardContent, Typography, Avatar, Button, IconButton, Divider } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Typography, Avatar, Button, IconButton, Divider, Grid } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import "../../components/MapEditor/CSS/EditorCard.css";
 import { Add, GridOn, Delete, ColorLens, Save } from '@material-ui/icons';
@@ -57,7 +57,7 @@ async function save(): Promise<void> {
                 width: rect.width,
                 height: rect.height,
                 xValue: rect.x - 75,
-                yValue: rect.y - 200,
+                yValue: rect.y - 150, // This will need to change if you change elements above the editor
                 color: backgroundStyle,
             };
             console.log(rect.x);
@@ -140,31 +140,33 @@ class MapEditor extends React.Component<RouteComponentProps, {}> {
 
         return (
             <Card className="editorCard" id="editorCard">
-                <CardHeader title="Room Layout Editor" avatar={<GridOn />}>
+                <CardHeader className = "editorHeader"title={<h1 className="editorCardTitle">Room Layout Editor</h1>} avatar={<GridOn fontSize = "large"  />}>
 
                 </CardHeader>
 
                 <Divider />
 
-                <Toolbar >
-                    <IconButton onClick={() => { newZone();}}aria-label="Add new zone">
-                        <Add />
-                    </IconButton>
+                <Toolbar className = "cardToolbar">
+                    
+                    <IconButton edge="start" size='small' onClick={() => { newZone();}}aria-label="Add new zone">
+                            <Add />
+                        </IconButton>
 
-                    <IconButton aria-label="Add new zone">
-                        <ColorLens />
-                    </IconButton>
+                    <IconButton size='small' aria-label="Add new zone">
+                            <ColorLens />
+                        </IconButton>
 
-                    <Divider orientation="vertical" variant="middle"  />
+                        <Divider orientation="vertical" variant="middle" />
 
-                    <IconButton onClick={() => { clearZones(); }} aria-label="Add new zone">
-                        <Delete />
-                    </IconButton>
+                    <IconButton size='small' onClick={() => { clearZones(); }} aria-label="Add new zone">
+                            <Delete />
+                        </IconButton>
 
 
-                    <IconButton onClick={() => { save(); }} aria-label="Add new zone">
-                        <Save />
-                    </IconButton>
+                        <IconButton size = 'small' onClick={() => { save(); }} aria-label="Add new zone">
+                            <Save />
+                        </IconButton>
+                   
                 </Toolbar> 
                 <Divider />
                 <CardContent className="editorContent"> 
