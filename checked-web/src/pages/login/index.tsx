@@ -10,8 +10,6 @@ interface IState {
     username: string;
     password: string;
     cardCSS: string;
-    signUpCardCSS: string;
-    signUp: boolean;
     snackbarOpen: boolean;
     snackbarMessage: string;
     showLoader: boolean;
@@ -28,9 +26,6 @@ export class Login extends React.Component<IProps, IState> {
         this.state = {
             username: '',
             password: '',
-            cardCSS: 'signInCardOnScreen',
-            signUpCardCSS: 'signUpCardOffScreen',
-            signUp: false,
             snackbarOpen: false,
             snackbarMessage: '',
             showLoader: false,
@@ -98,7 +93,7 @@ export class Login extends React.Component<IProps, IState> {
 
         return (
             <div className="tiledBackground vcenterParent overflow-hidden">
-                <Card className={'col-md-4 offset-md-4 col-sm-8 offset-sm-2 col-10 offset-1 pr-5 pl-5 vcenterChild signInCard ' + this.state.cardCSS}>
+                <Card className="col-md-4 offset-md-4 col-sm-8 offset-sm-2 col-10 offset-1 pr-5 pl-5 vcenterChild signInCard signInCardOnScreen">
                     <CardContent>
                         <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
                             <img src={Logo} className="logo mb-4 mt-5" alt="logo" />
