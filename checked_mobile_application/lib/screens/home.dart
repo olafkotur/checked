@@ -78,10 +78,44 @@ class DragBox extends StatefulWidget {
 }
 
 class _DragBoxState extends State<DragBox> {
+  Offset position = Offset(0.0, 0.0);
+
+  @override
+  void initState() {
+    super.initState();
+    position = widget.initPos;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Positioned(
+      left: position.dx,
+      top: position.dy,
+      child: Draggable(
+        data: widget.itemColor,
+        child: Container(
+          width: 100.0,
+          height: 100.0,
+          color: widget.itemColor,
+          child: Center(
+            child: Text(
+              widget.label,
+              style: TextStyle(
+                color: Colors.white,
+                decoration: TextDecoration.none,
+                fontSize: 20.0,
+              ),
+            ),
+          ),
+        ),
+
+        onDraggableCanceled: (velocity, offset) {
+          setState(() {
+            position = offset;
+          });
+        },
+        feedback: 
+      )
     );
   }
 }
