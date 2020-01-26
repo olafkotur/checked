@@ -9,7 +9,6 @@ import Logo from '../../media/checkedLogo.jpg';
 interface IState {
     username: string;
     password: string;
-    cardCSS: string;
     snackbarOpen: boolean;
     snackbarMessage: string;
     showLoader: boolean;
