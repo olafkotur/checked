@@ -54,7 +54,9 @@ class _HomeState extends State<Home> {
       ),
       body: Stack(
         children: <Widget>[
-
+          DragBox(Offset(0.0, 0.0), 'Zone 1', Colors.orange[400]),
+          DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
+          DragBox(Offset(100.0, 0.0), 'Zone 3', Colors.orange[700]),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -115,16 +117,16 @@ class _DragBoxState extends State<DragBox> {
           });
         },
         feedback: Container(
-          width: 100.0,
-          height: 100.0,
-          color: widget.itemColor,
+          width: 120.0,
+          height: 120.0,
+          color: widget.itemColor.withOpacity(0.5),
           child: Center(
             child: Text(
               widget.label,
               style: TextStyle(
                 color: Colors.white,
                 decoration: TextDecoration.none,
-                fontSize: 20.0,
+                fontSize: 18.0,
               ),
             ),
           ),
