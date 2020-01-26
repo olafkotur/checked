@@ -7,6 +7,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Color deletedColor = Colors.red[200];
+  Color deletedColorBackground = Colors.red[400];
 
   // This is going to be data retrieved from the api - TODP
   final List<String> _listViewData = [
@@ -61,9 +62,12 @@ class _HomeState extends State<Home> {
             left: 0.0,
             bottom: 0.0,
             child: DragTarget(
-              onAccept: (Color color) {
-                deletedColor = Colors.red[400];
-              },
+              // onAccept: (Color color) {
+              //   deletedColor = Colors.red[400];
+              // },
+              // onLeave: (Color color) {
+              //   deletedColor = Colors.red[200];
+              // },
               builder: (
                 BuildContext context,
                 List<dynamic> accepted,
