@@ -1,0 +1,51 @@
+.zoneBlock {
+  width: 100px;
+  height: 100px;
+  background-color: #ff9e00;
+  /* margin-top: 5px; */
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.zoneBlock:hover {
+  /* border: 3px solid #ffffff83; */
+  border: 3px solid white;
+}
+
+.zoneForm {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.zoneTitle::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.zoneTitle:focus {
+    outline: none;
+}
+
+.zoneTitle {
+  -webkit-appearance: none;
+  font-size: 15pt;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  padding-left: 3px;
+  position: absolute;
+  color: white;
+  border-width: 0px;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  height: calc(100px/3);
+  /* background-color: green; */
+}
+
+
+
+
+

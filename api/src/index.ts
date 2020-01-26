@@ -7,6 +7,7 @@ import { MiscHandler } from './handlers/misc';
 import { ZoneHandler } from './handlers/zone';
 import { UserHandler } from './handlers/users';
 import { MemberHandler } from './handlers/members';
+import { ActivityHandler } from './handlers/activity';
 
 require('dotenv').config();
 
@@ -31,7 +32,7 @@ async function main() {
   app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
 
   // Zone handlers
-  app.post('/api/zones/add', ZoneHandler.addZone);
+  app.post('/api/zones/create', ZoneHandler.createZone);
   app.post('/api/zones/update/:zoneId', ZoneHandler.updateZone);
   app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
   app.get('/api/zones', ZoneHandler.getZoneData);
@@ -41,15 +42,22 @@ async function main() {
   app.post('/api/users/create', UserHandler.createUser);
   app.post('/api/users/login', UserHandler.login);
   app.delete('/api/users/delete/:userId', UserHandler.deleteUser);
-  app.get('/api/users/:userId', UserHandler.getSingleUser);
+  app.get('/api/users/:userId', UserHandler.getUser);
   app.get('/api/users', UserHandler.getUsers);
 
   // Member handlers
   app.post('/api/members/create', MemberHandler.createMember);
   app.delete('/api/members/delete/:memberId', MemberHandler.deleteMember);
-  app.get('/api/members/:memberId', MemberHandler.getSingleMember);
+  app.get('/api/members/:memberId', MemberHandler.getMember);
   app.get('/api/members', MemberHandler.getMembers);
   app.get('/api/members/user/:adminUsername', MemberHandler.getMembersByUser);
+
+  // Activity handlers
+  app.post('/api/activity/create', ActivityHandler.createActivity);
+  app.delete('/api/activity/delete/:activityId', ActivityHandler.deleteActivity);
+  app.get('/api/activity/:activityId', ActivityHandler.getActivity);
+  app.get('/api/activity', ActivityHandler.getActivities);
+  app.get('/api/activity/zone/:zoneId', ActivityHandler.getActivitiesByZone);
 
   // Misc handlers
   app.get('/api/ping', MiscHandler.getPingResponse);

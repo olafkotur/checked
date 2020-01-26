@@ -2,6 +2,7 @@ import React from 'react';
 import { Router } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
+import MapEditor from './components/MapEditor';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './muiTheme';
@@ -27,13 +28,7 @@ class App extends React.Component<{}, IState> {
 
 	render(): JSX.Element {
 
-		const Meme = (props: any): JSX.Element => {
-			return (
-				<div className="dashContainer">
-					meme
-				</div>
-			);
-		};
+
 
 		if (this.state.authorised) {
 			return (
@@ -41,6 +36,7 @@ class App extends React.Component<{}, IState> {
 					<MenuBar />
 					<Router>
 						<Meme path='/' />
+            <Editor path="editor"/>
 					</Router>
 				</ThemeProvider>
 			);
@@ -52,8 +48,6 @@ class App extends React.Component<{}, IState> {
 			);
 		}
 	}
-
-  	
 };
 
 export default App;

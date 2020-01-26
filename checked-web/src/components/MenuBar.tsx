@@ -80,6 +80,10 @@ class MenuBar extends React.Component<{}, IState> {
                                     <ListItemIcon><Icon /></ListItemIcon>
                                     <ListItemText>Memes1</ListItemText>
                                 </ListItem>
+                                <ListItem button onClick={(): any => navigate('editor')} key={'placeholder'} >
+                                    <ListItemIcon><Icon /></ListItemIcon>
+                                    <ListItemText>Map Editor</ListItemText>
+                                </ListItem>
 
                             </List>
                             <Divider />

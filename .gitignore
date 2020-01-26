@@ -6,8 +6,13 @@ api/db/*
 
 # SCHEDULER
 scheduler/node_modules
+scheduler/build
 
-#CHECKED-WEB
+# MOCKER
+mocker/node_modules
+mocker/build
+
+# CHECKED-WEB
 checked-web/node_modules
 
 # MISC

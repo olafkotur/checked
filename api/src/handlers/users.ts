@@ -12,7 +12,7 @@ export const UserHandler = {
     const hashedPassword: string = AuthService.hashValue(req.body.password);
 
     const data: IDbUser = {
-      userId: await DbHelperService.assignUserId(),
+      userId: await DbHelperService.assignAvailableId('users', 'userId'),
       username: req.body.username,
       password: hashedPassword,
       createdAt: new Date(),
@@ -44,7 +44,7 @@ export const UserHandler = {
     });
   },
 
-  getSingleUser: async (req: express.Request, res: express.Response) => {
+  getUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId)} );
     if (data === null) {
       ResponseService.data({}, res);
