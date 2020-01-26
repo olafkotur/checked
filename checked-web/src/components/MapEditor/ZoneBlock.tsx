@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
 import './CSS/ZoneBlock.css';
-
+import ColorPicker from './ColorPicker';
 
 
 
@@ -41,9 +41,14 @@ class ZoneBlock extends React.Component<IProps, IState> {
         console.log(this.state.value);
     };
 
+    handleClick = (event:any): void => {
+        console.log("clicked");
+        
+    };
+
     render() {
         return (
-            <div className="zoneBlock" style={{width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} id = {this.state.value} data-dbid = {this.props.dbid} >
+            <div className="zoneBlock" onClick={this.handleClick} style={{width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} id = {this.state.value} data-dbid = {this.props.dbid} >
                 {/* <h1 className="zoneTitle">Zone {this.state.color}</h1> */}
 
                 <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
