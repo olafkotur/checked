@@ -1,7 +1,7 @@
 import interact from "interactjs";
 
 const gridSnap = 25;
-const minSize = 50
+const minSize = 50;
 
 
 interact(".zoneBlock")
