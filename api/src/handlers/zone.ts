@@ -11,7 +11,12 @@ export const ZoneHandler = {
   createZone: async (req: express.Request, res: express.Response) => {
     const data: IDbZone = {
       zoneId: await DbHelperService.assignAvailableId('zones', 'zoneId'),
-      name: req.body.name,
+      name: req.body.name || '',
+      width: parseInt(req.body.width || '100'),
+      height: parseInt(req.body.height || '100'),
+      xValue: parseInt(req.body.xValue || '0'),
+      yValue: parseInt(req.body.yValue || '0'),
+      color: req.body.color || 'rgb(255, 158, 0)',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -30,7 +35,12 @@ export const ZoneHandler = {
   updateZone: async (req: express.Request, res: express.Response) => {
     const data: IDbZone = {
       zoneId: parseInt(req.params.zoneId),
-      name: req.body.name,
+      name: req.body.name || '',
+      width: parseInt(req.body.width || '100'),
+      height: parseInt(req.body.height || '100'),
+      xValue: parseInt(req.body.xValue || '0'),
+      yValue: parseInt(req.body.yValue || '0'),
+      color: req.body.color || 'rgb(255, 158, 0)',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -71,6 +81,11 @@ export const ZoneHandler = {
     const formatted: IZoneResponse = {
       zoneId: data.zoneId,
       name: data.name,
+      width: data.width,
+      height: data.height,
+      xValue: data.xValue,
+      yValue: data.yValue,
+      color: data.color,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix(),
     };
@@ -91,6 +106,11 @@ export const ZoneHandler = {
       return {
         zoneId: val.zoneId,
         name: val.name,
+        width: val.width,
+        height: val.height,
+        xValue: val.xValue,
+        yValue: val.yValue,
+        color: val.color,
         createdAt: moment(val.createdAt).unix(),
         lastUpdated: moment(val.lastUpdated).unix(),
       }
