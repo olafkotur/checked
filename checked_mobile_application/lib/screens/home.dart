@@ -44,7 +44,7 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.settings,
+              Icons.edit,
               color: Colors.black,
             ),
             onPressed: () {
@@ -65,9 +65,9 @@ class _HomeState extends State<Home> {
               // onAccept: (Color color) {
               //   deletedColor = Colors.red[400];
               // },
-              // onLeave: (Color color) {
-              //   deletedColor = Colors.red[200];
-              // },
+              onLeave: (Color color) {
+                deletedColor = Colors.red[200];
+              },
               builder: (
                 BuildContext context,
                 List<dynamic> accepted,
@@ -141,15 +141,23 @@ class _DragBoxState extends State<DragBox> {
           width: 100.0,
           height: 100.0,
           color: widget.itemColor,
-          child: Center(
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.none,
-                fontSize: 20.0,
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    widget.label,
+                    style: TextStyle(
+                      color: Colors.white,
+                      decoration: TextDecoration.none,
+                      fontSize: 15.0,
+                      
+                    ),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
         ),
         onDraggableCanceled: (velocity, offset) {
