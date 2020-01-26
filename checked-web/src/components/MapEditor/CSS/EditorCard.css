@@ -1,0 +1,16 @@
+:root {
+  --Primary: #ff9e00;
+  --Dark: #cf6e00;
+  --Light: #ffb718;
+  --TextDark: #131313;
+  --TextMuted: #888888;
+  --borderStyle: 1px solid rgba(0, 0, 0, 0.12);
+
+}
+
+.editorCard{
+    width: calc(100% - 90px);
+    height: 100%;
+    margin-top: 75px;
+    margin-left: 75px;
+}
