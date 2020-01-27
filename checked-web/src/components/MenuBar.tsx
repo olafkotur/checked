@@ -74,15 +74,15 @@ class MenuBar extends React.Component<{}, IState> {
                             <List>
                                 <ListItem button onClick={(): any => navigate('/')} key={'placeholder'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Memes</ListItemText>
+                                    <ListItemText className="menuText">Memes</ListItemText>
                                 </ListItem>
                                 <ListItem button onClick={(): any => navigate('meme')} key={'placeholder1'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Memes1</ListItemText>
+                                    <ListItemText className="menuText">Memes1</ListItemText>
                                 </ListItem>
                                 <ListItem button onClick={(): any => navigate('editor')} key={'placeholder'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Map Editor</ListItemText>
+                                    <ListItemText className="menuText">Map Editor</ListItemText>
                                 </ListItem>
 
                             </List>
