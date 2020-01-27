@@ -38,13 +38,10 @@ async function newZone(): Promise<void> {
 
 async function save(): Promise<void> {
     console.log("saving now");
-
     const zones = document.getElementsByClassName("zoneBlock");
     const toSend = [];
-
     // checks if the zones are not overlapping (reused from 330)
     if (checkCollision(zones) === false) {
-
         for (let i = 0; i < zones.length; i++) {
             // Uses HTML Div
             const zone = zones[i];
@@ -65,7 +62,6 @@ async function save(): Promise<void> {
             if (id != null) {
                 await ZoneService.updateZone(zoneJson, parseInt(id));
             }
-
         }
     }
     else {
@@ -80,104 +76,80 @@ function clearZonesArr(): void {
 
 function clearZones(): void {
     console.log("button pressed");
-
-    //const zones = document.getElementsByClassName("zoneBlock");
     const zones = document.getElementsByClassName("zoneBlock");
     const elementParent = document.getElementById('mainEditor');
-
-
-
     if (elementParent != null && zones != null) {
         console.log(zones.length);
         ReactDOM.unmountComponentAtNode(elementParent);
         clearZonesArr();
     }
-
 }
 
 
 
 function buildZone(DBZone: any): void {
     console.log(DBZone);
-
     const pos = {
         width: DBZone.width,
         height: DBZone.height,
         xValue: DBZone.xValue,
         yValue: DBZone.yValue,
     };
-
     zones[zones.length] = <ZoneBlock key={(zones.length + 1).toString()} name={DBZone.name} id={(zones.length + 1)} dbid={DBZone.zoneId} pos={pos} />;
 }
 
 async function loadZones(): Promise<void> {
-
     const response = await ZoneService.loadZones();
     console.log(response.result.length);
-
     for (let i = 0; i < response.result.length; i++) {
         buildZone(response.result[i]);
-
     }
-
     ReactDOM.render(
         <div id="blocksContainer">
             {zones}
         </div>,
         document.getElementById('mainEditor')
     );
-
 }
 
 class MapEditor extends React.Component<RouteComponentProps, {}> {
-
-    
     
     render(): JSX.Element {
 
         loadZones();
 
-
         return (
             <Card className="editorCard" id="editorCard">
-                <CardHeader className = "editorHeader"title={<h1 className="editorCardTitle">Room Layout Editor</h1>} avatar={<GridOn fontSize = "large"  />}>
-
-                </CardHeader>
+                <CardHeader className = "editorHeader"title={<h1 className="editorCardTitle">Room Layout Editor</h1>} avatar={<GridOn fontSize = "large"  />}/>
 
                 <Divider />
 
                 <Toolbar className = "cardToolbar">
                     
-                    <IconButton edge="start" size='small' onClick={() => { newZone();}}aria-label="Add new zone">
-                            <Add />
-                        </IconButton>
+                    <IconButton edge="start" size='small' onClick={(): void => { newZone();}}aria-label="Add new zone">
+                        <Add />
+                    </IconButton>
 
-                    <IconButton size='small' aria-label="Add new zone">
-                            <ColorLens />
-                        </IconButton>
+                    <IconButton size='small' aria-label="Change color">
+                        <ColorLens />
+                    </IconButton>
 
-                        <Divider orientation="vertical" variant="middle" />
+                    <Divider orientation="vertical" variant="middle" />
 
-                    <IconButton size='small' onClick={() => { clearZones(); }} aria-label="Add new zone">
-                            <Delete />
-                        </IconButton>
+                    <IconButton size='small' onClick={(): void => { clearZones(); }} aria-label="Clear zones">
+                        <Delete />
+                    </IconButton>
 
-
-                        <IconButton size = 'small' onClick={() => { save(); }} aria-label="Add new zone">
-                            <Save />
-                        </IconButton>
+                    <IconButton size='small' onClick={(): void => { save(); }} aria-label="Save">
+                        <Save />
+                    </IconButton>
                    
                 </Toolbar> 
                 <Divider />
                 <CardContent className="editorContent"> 
-                   
                     <BackgroundGrid />
                     <MainEditor />
-                        
                 </CardContent>
-                
-                {/* <EditorContainer />
-                <BackgroundGrid /> */}
             </Card>
         );
     }
