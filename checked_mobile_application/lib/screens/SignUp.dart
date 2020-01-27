@@ -231,12 +231,13 @@ class _SignUpState extends State<SignUp> {
                                 _formKey.currentState.validate();
                                 _formKey.currentState.save();
                                 var client = http.Client();
-                                String body = 'email=$_email&password=$_password&companyName=$_company';
-                                print(body);
+                                String _url = "http://checked-api.herokuapp.com/api/users/create";
+                                String _body = 'email=$_email&password=$_password&companyName=$_company';
+                                print(_body);
                                 final encoding = Encoding.getByName('utf-8');
 
                                 try{
-                                var response = await http.post("http://checked-api.herokuapp.com/api/users/create", body:body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
+                                var response = await http.post(_url, body:_body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
                                 print(response.body);
                                 }finally{
                                   client.close();

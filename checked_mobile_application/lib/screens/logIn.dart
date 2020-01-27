@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class SignIn extends StatefulWidget {
   @override
@@ -7,6 +9,8 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
+  String _email = "";
+  String _password = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +44,7 @@ class _SignInState extends State<SignIn> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 70.0),
                 child: Container(
-                  height: 350,
+                  height: 370,
                   constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width,
                   ),
@@ -57,8 +61,13 @@ class _SignInState extends State<SignIn> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          child: TextFormField(
+                            onChanged: (String val) => setState(()=> _email = val),
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter your Email";
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -80,17 +89,23 @@ class _SignInState extends State<SignIn> {
                         ),
                         SizedBox(height: 4,),
                         Container(
-                          height: 40.0,
-                          child: TextField(
+                          child: TextFormField(
+                            obscureText: true,
+                            onChanged: (String val)=> setState(()=>_password = val),
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Eneter your Password";
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
                                  color: Colors.grey,
-                                 width: 2.0
+                                 width: 2.0,
                                 ),
-                                borderRadius: BorderRadius.circular(5)
-                              )
+                                borderRadius: BorderRadius.circular(5),
+                              ),
                             ),
                           ),
                         ),
@@ -113,7 +128,19 @@ class _SignInState extends State<SignIn> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             GestureDetector(
-                              onTap: (){print("Login animation // loading screen");},
+                              onTap: () async {
+                                _formKey.currentState.validate();
+                                _formKey.currentState.save();
+                                var client = http.Client();
+                                String _url = "http://checked-api.herokuapp.com/api/users/login";
+                                String _body = 'email=$_email&password=$_password';
+                                try{
+                                  var response = await http.post(_url, body:_body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
+                                  print(response.body);
+                                }finally{
+                                  client.close();
+                                }
+                              },
                               child: Container(
                                 height: 50,
                                 width: 150,
@@ -142,7 +169,9 @@ class _SignInState extends State<SignIn> {
                             Text("Don't have an account?"),
                             SizedBox(width: 2.0,),
                             GestureDetector(
-                              onTap: (){},
+                              onTap: (){
+
+                              },
                               child: Text("Register now",style: 
                                 TextStyle(
                                   decoration: TextDecoration.underline,
