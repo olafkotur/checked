@@ -26,6 +26,10 @@ export const UserHandler = {
       ResponseService.bad('Please enter a valid email address', res);
       return false;
     }
+    if (data.password.length < 6) {
+      ResponseService.bad('Password must be at least 6 characters', res);
+      return false;
+    }
 
     // Check that a user with the same email does not exist
     await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
