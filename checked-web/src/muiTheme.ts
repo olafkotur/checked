@@ -1,5 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import zIndex from '@material-ui/core/styles/zIndex';
 
 const theme = createMuiTheme({
     palette: {
@@ -47,11 +46,6 @@ const theme = createMuiTheme({
                 height: '30px',
             }
         },
-        MuiAppBar: {
-            root: {
-                boxShadow: 'none'
-            }
-        },
         MuiTabs: {
             indicator: {
                 height: '99%',
@@ -73,10 +67,8 @@ const theme = createMuiTheme({
                     backgroundColor: '#000000'
                 },
                 zIndex: 100,
+                outline: 'none !important'
             },
-            selected: {
-                backgroundColor: '#ff9e00'
-            }
         },
     }
 });

@@ -24,13 +24,13 @@ export class Dashboard extends React.Component<RouteComponentProps, IState> {
                 <Grid container spacing={3} >
                     <Grid item xs={12} >
                         <Card className="dashCard">
-                            <Grid container spacing={1}>
-                                <Grid item xs={12} >
-                                    <CardHeader title="Dashboard" avatar={<DashboardRounded className="w-100 h-100" />} className="mutedBlack mt-1">
+                            <Grid container spacing={0}>
+                                <Grid item xs={12} className="border-top border-muted">
+                                    <CardHeader title="Dashboard" avatar={<DashboardRounded className="w-100 h-100" />} className="mutedBlack mt-2">
                                     </CardHeader>
                                 </Grid>
-                                <Grid item xs={12} >
-                                    <CardContent>
+                                <Grid item xs={12}>
+                                    <CardContent className="pt-1">
                                         <DashTabs />
                                     </CardContent>
                                 </Grid>

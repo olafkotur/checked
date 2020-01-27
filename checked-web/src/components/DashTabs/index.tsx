@@ -14,6 +14,8 @@ class DashTabs extends React.Component<{}, IState> {
     }
 
     handleChange = (event: any, newValue: number): void => this.setState({tabValue: newValue});
+
+    handleChangeIndex = (index: number): void => this.setState({ tabValue: index });
     
     render(): JSX.Element {
 
@@ -25,11 +27,10 @@ class DashTabs extends React.Component<{}, IState> {
                     component="div"
                     role="tabpanel"
                     hidden={value !== index}
-                    id={`simple-tabpanel-${index}`}
-                    aria-labelledby={`simple-tab-${index}`}
+                    id={`tabpanel-${index}`}
                     {...other}
                 >
-                    <Box p={3}>{children}</Box>
+                    <Box p={0} style={{ height: '70vh', minHeight: '500px'}}>{children}</Box>
                 </Typography>
             );
         }
@@ -37,19 +38,15 @@ class DashTabs extends React.Component<{}, IState> {
         return (
             <div>
                 <TabPanel value={this.state.tabValue} index={0}>
-                    Item One
+                        meme
                 </TabPanel>
                 <TabPanel value={this.state.tabValue} index={1}>
                     Item Two
                 </TabPanel>
-                <TabPanel value={this.state.tabValue} index={2}>
-                    Item Three
-                </TabPanel>
-                <AppBar position="static" color="inherit">
+                <AppBar position="static" color="inherit" style={{boxShadow: 'none'}}>
                     <Tabs value={this.state.tabValue} onChange={this.handleChange} variant="fullWidth" >
-                        <Tab label="Item One" />
-                        <Tab label="Item Two" />
-                        <Tab label="Item Three" />
+                        <Tab label="Location" />
+                        <Tab label="Temperature" />
                     </Tabs>
                 </AppBar>
             </div>
