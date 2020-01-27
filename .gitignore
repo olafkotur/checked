@@ -16,7 +16,7 @@ mocker/build
 checked-web/node_modules
 
 # MISC
-.vscode/*
 *.DS_Store
 *.env
 *.exe
+*.log

@@ -1,0 +1,16 @@
+@baseUrl = https://checked-api.herokuapp.com/api/
+
+### @name createUser
+POST {{baseUrl}}users/create HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+username=bigMeme
+&password=bigMeme
+
+
+### @name login
+POST {{baseUrl}}users/login HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+username=bigMeme
+&password=bigMeme

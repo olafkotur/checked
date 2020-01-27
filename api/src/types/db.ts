@@ -1,11 +1,13 @@
 export interface IDbLive {
   sensorId: number,
+  userId: number,
   value: number,
   createdAt: Date
 }
 
 export interface IDbLocation {
   sensorId: number,
+  userId: number,
   xValue: number,
   yValue: number,
   createdAt: Date
@@ -13,15 +15,22 @@ export interface IDbLocation {
 
 export interface IDbZone {
   zoneId: number,
+  userId: number,
   name: number,
+  width: number,
+  height: number,
+  xValue: number,
+  yValue: number,
+  color: string,
   createdAt: Date,
   lastUpdated: Date,
 }
 
 export interface IDbUser {
   userId: number,
-  username: string,
-  password: string
+  email: string,
+  password: string,
+  companyName: string,
   createdAt: Date,
   lastUpdated: Date
 }

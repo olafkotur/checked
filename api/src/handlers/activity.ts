@@ -11,8 +11,8 @@ export const ActivityHandler = {
   createActivity: async (req: express.Request, res: express.Response) => {
     const data: IDbActivity = {
       activityId: await DbHelperService.assignAvailableId('activity', 'activityId'),
-      name: req.body.name,
-      zoneId: parseInt(req.body.zoneId),
+      name: req.body.name || '',
+      zoneId: parseInt(req.body.zoneId || '0'),
       createdAt: new Date(),
       lastUpdated: new Date()
     };
@@ -27,8 +27,8 @@ export const ActivityHandler = {
     // Ensure that an activity with the same zoneId does not already exist
     await DbHelperService.exists('activity', { zoneId: data.zoneId }).then((exists: boolean) => {
       if (!exists) {
-        MongoService.insertOne('activity', data)
-        ResponseService.create('Added new activity to collection', res);
+        MongoService.insertOne('activity', data);
+        ResponseService.create({ activityId: data.activityId }, res);
       } else {
         ResponseService.bad('Activity in that zone already exists', res);
       }
@@ -38,7 +38,7 @@ export const ActivityHandler = {
   },
 
   deleteActivity: async (req: express.Request, res: express.Response) => {
-    const activityId: number = parseInt(req.params.activityId);
+    const activityId: number = parseInt(req.params.activityId || '0');
 
     // Ensure that the activity exists before attempting to delete
     await DbHelperService.exists('activity', { activityId: activityId }).then((exists: boolean) => {
@@ -52,7 +52,7 @@ export const ActivityHandler = {
   },
 
   getActivity: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('activity', { activityId: parseInt(req.params.activityId) });
+    const data: any = await MongoService.findOne('activity', { activityId: parseInt(req.params.activityId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -94,7 +94,7 @@ export const ActivityHandler = {
   },
 
   getActivitiesByZone: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany('activity', { zoneId: parseInt(req.params.zoneId) });
+    const data: any = await MongoService.findMany('activity', { zoneId: parseInt(req.params.zoneId || '0') });
     if (data === null) {
       ResponseService.data([], res);
       return false;

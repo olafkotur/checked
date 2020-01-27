@@ -14,13 +14,13 @@ export const ResponseService = {
     res.send(response);
   },
 
-  create: (msg: string, res: express.Response) => {
-    const response: IResponse = {
+  create: (data: any, res: express.Response) => {
+    const response: IDataResponse = {
       code: 201,
       status: 'created',
       date: moment().format('MMMM Do YYYY, h:mm:ss a'),
       unix: moment().unix(),
-      message: msg,
+      result: data,
     };
     res.send(response);
   },

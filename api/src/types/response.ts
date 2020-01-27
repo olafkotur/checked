@@ -16,12 +16,14 @@ export interface IDataResponse {
 
 export interface ILiveResponse {
  sensorId: number,
+ userId: number,
  value: number,
  time: number 
 }
 
 export interface ILocationResponse {
   sensorId: number,
+  userId: number,
   xValue: number,
   yValue: number,
   time: number 
@@ -29,14 +31,21 @@ export interface ILocationResponse {
 
  export interface IZoneResponse {
   zoneId: number,
+  userId: number,
   name: number,
+  width: number,
+  height: number,
+  xValue: number,
+  yValue: number,
+  color: string,
   createdAt: number,
   lastUpdated: number,
 }
 
 export interface IUserResponse {
   userId: number,
-  username: string,
+  email: string,
+  companyName: string,
   createdAt: number,
   lastUpdated: number
 }

@@ -9,6 +9,7 @@ import { UserHandler } from './handlers/users';
 import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
 
+const cors = require('cors');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
@@ -17,9 +18,8 @@ const app: express.Application = express();
 async function main() {
   await MongoService.connect();
 
-  app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(cors());
 
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);
@@ -37,6 +37,7 @@ async function main() {
   app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
   app.get('/api/zones', ZoneHandler.getZoneData);
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
+  app.get('/api/zones/users/:userId', ZoneHandler.getZonesByUser);
 
   // User handlers
   app.post('/api/users/create', UserHandler.createUser);
