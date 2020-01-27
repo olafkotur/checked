@@ -42,6 +42,13 @@ export const ZoneHandler = {
   },
 
   updateZone: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.body.userId || '0');
+    const exists: boolean = await DbHelperService.exists('users', { userId });
+    if (!exists) {
+      ResponseService.bad('Cannot create a zone without a valid user id', res);
+      return false;
+    }
+
     const data: IDbZone = {
       zoneId: parseInt(req.params.zoneId || '0'),
       userId: parseInt(req.body.userId || '0'),
@@ -64,6 +71,7 @@ export const ZoneHandler = {
         ResponseService.notFound('Zone does not exist', res);
       }
     });
+    return true;
   },
 
   deleteZone: async (req: express.Request, res: express.Response) => {

@@ -1,11 +1,13 @@
 export interface IDbLive {
   sensorId: number,
+  userId: number,
   value: number,
   createdAt: Date
 }
 
 export interface IDbLocation {
   sensorId: number,
+  userId: number,
   xValue: number,
   yValue: number,
   createdAt: Date

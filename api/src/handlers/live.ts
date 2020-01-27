@@ -15,8 +15,16 @@ export const LiveHandler = {
       return false;
     }
 
+    const userId: number = parseInt(req.body.userId || '0');
+    const exists: boolean = await DbHelperService.exists('users', { userId });
+    if (!exists) {
+      ResponseService.bad('Cannot add live data without a valid user id', res);
+      return false;
+    }
+
     const data: IDbLive = {
       sensorId: parseInt(req.body.sensorId || '0'),
+      userId,
       value: parseInt(req.body.value),
       createdAt: new Date(),
     };
@@ -44,6 +52,7 @@ export const LiveHandler = {
     // Converts to client friendly format
     const formatted: ILiveResponse = {
       sensorId: data.sensorId,
+      userId: data.userId,
       value: data.value,
       time: moment(data.createdAt).unix(),
     };
@@ -63,6 +72,7 @@ export const LiveHandler = {
     const formatted: ILiveResponse[] = data.map((val: any) => {
       return {
         sensorId: val.sensorId,
+        userId: val.userId,
         value: val.value,
         time: moment(val.createdAt).unix(),
       }
