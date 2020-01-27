@@ -38,7 +38,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ],
               ),
-              SizedBox(height: 15.0,),
+              SizedBox(height: 10.0,),
               Text("Checked", 
                 style: TextStyle(
                   fontSize: 35.0,
@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 40.0,),
+              SizedBox(height: 25.0,),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 60.0),
                 child: Container(
@@ -142,13 +142,14 @@ class _SignUpState extends State<SignUp> {
                         Text("Password",style: 
                           TextStyle(
                             fontSize: 17.0,
-                            fontWeight: FontWeight.w300
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                         SizedBox(height: 4,),
                         Container(
                           child: TextFormField(
                             onChanged: (String val) => setState(() => _password = val),
+                            obscureText: true,
                             validator: (value){
                               if(value.isEmpty){
                                 return "Enter your password";
@@ -185,6 +186,7 @@ class _SignUpState extends State<SignUp> {
                                 return "Password must be at less 8 characters long";
                               }
                             },
+                            obscureText: true,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -280,7 +282,7 @@ class _SignUpState extends State<SignUp> {
                             )
                           ],
                         ),
-                        SizedBox(height: 40.0,)
+                        SizedBox(height: 20.0,)
                       ],
                     ),
                   ),
