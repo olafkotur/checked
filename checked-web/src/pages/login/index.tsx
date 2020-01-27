@@ -50,7 +50,7 @@ export class Login extends React.Component<IProps, IState> {
                 this.toggleSnackbar();
             });
             this.setState({ showLoader: false });
-        }, 1000);
+        }, 1500);
     };
 
     handleSignUp(email: string, password: string): void {
@@ -68,7 +68,7 @@ export class Login extends React.Component<IProps, IState> {
                 this.toggleSnackbar();
             });;
             this.setState({ showLoader: false });
-        }, 1000);
+        }, 2500);
     }
 
     handleKeyDown(event: any): void {
