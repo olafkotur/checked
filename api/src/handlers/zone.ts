@@ -9,8 +9,16 @@ import { IZoneResponse } from '../types/response';
 export const ZoneHandler = {
 
   createZone: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.body.userId || '0');
+    const exists: boolean = await DbHelperService.exists('users', { userId });
+    if (!exists) {
+      ResponseService.bad('Cannot create a zone without a valid user id', res);
+      return false;
+    }
+
     const data: IDbZone = {
       zoneId: await DbHelperService.assignAvailableId('zones', 'zoneId'),
+      userId,
       name: req.body.name || '',
       width: parseInt(req.body.width || '100'),
       height: parseInt(req.body.height || '100'),
@@ -30,11 +38,13 @@ export const ZoneHandler = {
         ResponseService.bad('Zone already exists', res);
       }
     });
+    return true;
   },
 
   updateZone: async (req: express.Request, res: express.Response) => {
     const data: IDbZone = {
-      zoneId: parseInt(req.params.zoneId),
+      zoneId: parseInt(req.params.zoneId || '0'),
+      userId: parseInt(req.body.userId || '0'),
       name: req.body.name || '',
       width: parseInt(req.body.width || '100'),
       height: parseInt(req.body.height || '100'),
@@ -80,6 +90,7 @@ export const ZoneHandler = {
     // Converts to client friendly format
     const formatted: IZoneResponse = {
       zoneId: data.zoneId,
+      userId: data.userId,
       name: data.name,
       width: data.width,
       height: data.height,
@@ -105,6 +116,35 @@ export const ZoneHandler = {
     const formatted: IZoneResponse[] = data.map((val: IDbZone) => {
       return {
         zoneId: val.zoneId,
+        userId: val.userId,
+        name: val.name,
+        width: val.width,
+        height: val.height,
+        xValue: val.xValue,
+        yValue: val.yValue,
+        color: val.color,
+        createdAt: moment(val.createdAt).unix(),
+        lastUpdated: moment(val.lastUpdated).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
+  getZonesByUser: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.params.userId || '0');
+    const data: any = await MongoService.findMany('zones', { userId });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    // Converts to client friendly format
+    const formatted: IZoneResponse[] = data.map((val: IDbZone) => {
+      return {
+        zoneId: val.zoneId,
+        userId: val.userId,
         name: val.name,
         width: val.width,
         height: val.height,

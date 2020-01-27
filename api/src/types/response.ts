@@ -29,6 +29,7 @@ export interface ILocationResponse {
 
  export interface IZoneResponse {
   zoneId: number,
+  userId: number,
   name: number,
   width: number,
   height: number,

@@ -13,6 +13,7 @@ export interface IDbLocation {
 
 export interface IDbZone {
   zoneId: number,
+  userId: number,
   name: number,
   width: number,
   height: number,
