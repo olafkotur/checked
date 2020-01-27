@@ -10,7 +10,7 @@ export const MemberHandler = {
 
   createMember: async (req: express.Request, res: express.Response) => {
     // Check if admin user exists before assigning them a member
-    const admin: any = await MongoService.findOne('users', { username: req.body.adminUsername })
+    const admin: any = await MongoService.findOne('users', { username: req.body.adminUsername || '' })
     if (admin === null) {
       ResponseService.notFound('Admin user does not exist', res);
       return false;
@@ -18,9 +18,9 @@ export const MemberHandler = {
 
     const data: IDbMember = {
       memberId: await DbHelperService.assignAvailableId('members', 'memberId'),
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      adminUsername: req.body.adminUsername,
+      firstName: req.body.firstName || '',
+      lastName: req.body.lastName || '',
+      adminUsername: req.body.adminUsername || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -31,7 +31,7 @@ export const MemberHandler = {
   },
 
   deleteMember: async (req: express.Request, res: express.Response) => {
-    const memberId: number = parseInt(req.params.memberId);
+    const memberId: number = parseInt(req.params.memberId || '0');
 
     // Ensure that the member exists before attempting to delte
     await DbHelperService.exists('members', { memberId }).then((exists: boolean) => {
@@ -45,7 +45,7 @@ export const MemberHandler = {
   },
 
   getMember: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('members', { memberId: parseInt(req.params.memberId) });
+    const data: any = await MongoService.findOne('members', { memberId: parseInt(req.params.memberId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -88,7 +88,7 @@ export const MemberHandler = {
   },
 
   getMembersByUser: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany('members', { adminUsername: req.params.adminUsername });
+    const data: any = await MongoService.findMany('members', { adminUsername: req.params.adminUsername || '' });
     console.log(data);
     if (data === null) {
       ResponseService.data([], res);

@@ -9,10 +9,18 @@ import { ILocationResponse } from '../types/response';
 export const LocationHandler = {
 
   uploadLocationData: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.body.userId || '0');
+    const exists: boolean = await DbHelperService.exists('users', { userId });
+    if (!exists) {
+      ResponseService.bad('Cannot add live data without a valid user id', res);
+      return false;
+    }
+
     const data: IDbLocation = {
-      sensorId: parseInt(req.body.sensorId),
-      xValue: parseInt(req.body.xValue),
-      yValue: parseInt(req.body.yValue),
+      sensorId: parseInt(req.body.sensorId || '0'),
+      userId,
+      xValue: parseInt(req.body.xValue || '0'),
+      yValue: parseInt(req.body.yValue || '0'),
       createdAt: new Date()
     };
 
@@ -26,10 +34,11 @@ export const LocationHandler = {
     });
 
     ResponseService.ok('Added to collection', res);
+    return true;
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId) });
+    const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -38,6 +47,7 @@ export const LocationHandler = {
     // Converts to client friendly format
     const formatted: ILocationResponse = {
       sensorId: data.sensorId,
+      userId: data.userId,
       xValue: data.xValue,
       yValue: data.yValue,
       time: moment(data.createdAt).unix(),
@@ -58,6 +68,7 @@ export const LocationHandler = {
     const formatted: IDbLocation = data.map((val: any) => {
       return {
         sensorId: val.sensorId,
+        userId: val.userId,
         xValue: val.xValue,
         yValue: val.yValue,
         time: moment(val.createdAt).unix(),
