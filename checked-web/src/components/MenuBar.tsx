@@ -72,15 +72,11 @@ class MenuBar extends React.Component<{}, IState> {
                             className={this.state.drawerClass}
                         >
                             <List>
-                                <ListItem button onClick={(): any => navigate('/')} key={'placeholder'} >
+                                <ListItem button onClick={(): any => navigate('/')} key={'Dashboard'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Memes</ListItemText>
+                                    <ListItemText>Dashboard</ListItemText>
                                 </ListItem>
-                                <ListItem button onClick={(): any => navigate('meme')} key={'placeholder1'} >
-                                    <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Memes1</ListItemText>
-                                </ListItem>
-                                <ListItem button onClick={(): any => navigate('editor')} key={'placeholder'} >
+                                <ListItem button onClick={(): any => navigate('editor')} key={'MapEditor'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
                                     <ListItemText>Map Editor</ListItemText>
                                 </ListItem>

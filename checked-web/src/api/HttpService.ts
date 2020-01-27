@@ -26,7 +26,6 @@ export const HttpService = {
         };
         return new Promise((resolve: any, reject: any) => {
             request.post(options, (error: Error, _res: any, body: any) => {
-                console.log('body', body);
                 if (error) {
                     reject();
                 }

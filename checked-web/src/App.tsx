@@ -3,6 +3,7 @@ import { Router } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
+import { Dashboard } from './pages/dashboard';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './muiTheme';
@@ -17,7 +18,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: true }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 	}
 
@@ -30,12 +31,16 @@ class App extends React.Component<{}, IState> {
 
 		if (this.state.authorised) {
 			return (
-				<ThemeProvider theme={theme}>
-					<MenuBar />
-					<Router>
-            			<MapEditor path="editor"/>
-					</Router>
-				</ThemeProvider>
+				<div className="background">
+					<ThemeProvider theme={theme}>
+						<MenuBar />
+						<Router>
+							<MapEditor path="editor"/>
+							<Dashboard path="/" />
+						</Router>
+					</ThemeProvider>
+				</div>
+
 			);
 		} else {
 			return (
