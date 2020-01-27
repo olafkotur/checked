@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import zIndex from '@material-ui/core/styles/zIndex';
 
 const theme = createMuiTheme({
     palette: {
@@ -7,6 +8,9 @@ const theme = createMuiTheme({
             light: '#FFB718',
             dark: '#DF7E00',
             contrastText: '#ffffff',
+        },
+        secondary: {
+            main: '#ffffff'
         },
         error: {
             main: '#f44336',
@@ -29,6 +33,52 @@ const theme = createMuiTheme({
             textTransform: 'none'
         },
     },
+    overrides: {
+        MuiCardHeader: {
+            title: {
+                fontFamily: 'Montserrat, sans-serif',
+                fontWeight: 700,
+                letterSpacing: '0.1em',
+                fontSize: '140%',
+            },
+            avatar: {
+                marginLeft: '10px',
+                width: '30px',
+                height: '30px',
+            }
+        },
+        MuiAppBar: {
+            root: {
+                boxShadow: 'none'
+            }
+        },
+        MuiTabs: {
+            indicator: {
+                height: '99%',
+                top: 0,
+                zIndex: 0,
+                backgroundColor: '#ff9e00'
+            }
+        },
+        MuiTab: {
+            root: {
+                backgroundColor: '#fff',
+                border: '#FF9E00',
+                borderLeftWidth: '0px',
+                borderRightWidth: '0px',
+                borderTopWidth: '2px',
+                borderBottomWidth: '2px',
+                borderStyle: 'solid',
+                '&active': {
+                    backgroundColor: '#000000'
+                },
+                zIndex: 100,
+            },
+            selected: {
+                backgroundColor: '#ff9e00'
+            }
+        },
+    }
 });
 
 export default theme;

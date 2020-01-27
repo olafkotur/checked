@@ -20,6 +20,10 @@ code {
   padding-top: 85px;
 }
 
+.mutedBlack {
+  color: #313131 !important;
+}
+
 .montserrat {
   font-family: 'Montserrat', sans-serif !important;
   font-weight: 700 !important;
@@ -30,6 +34,14 @@ code {
 
 .tiledBackground {
   background-image: url('./media/spikes.png');
+  background-repeat: repeat;
+  height: 100vh;
+  width: 100%;
+}
+
+.background {
+  background-image: url('./media/spikes.png');
+  background-size: 300px 300px;
   background-repeat: repeat;
   height: 100vh;
   width: 100%;
@@ -130,4 +142,15 @@ code {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* ===== DASHBOARD ===== */
+
+.dashCard {
+  height: 100%;
+  display: flex;
+}
+
+.MuiTab-root.Mui-selected {
+  background-color: transparent !important;
 }

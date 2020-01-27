@@ -35,6 +35,7 @@ export class Login extends React.Component<IProps, IState> {
     }
 
     handleSignIn(email: string, password: string): void {
+
         this.setState({showLoader: true});
         setTimeout(() => {        
             UserService.login(email, password).then((res) => {
