@@ -78,7 +78,7 @@ class MenuBar extends React.Component<{}, IState> {
                                 </ListItem>
                                 <ListItem button onClick={(): any => navigate('editor')} key={'MapEditor'} >
                                     <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText>Map Editor</ListItemText>
+                                    <ListItemText className="menuText">Map Editor</ListItemText>
                                 </ListItem>
 
                             </List>

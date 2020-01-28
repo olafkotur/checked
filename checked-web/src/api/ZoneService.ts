@@ -1,17 +1,20 @@
 import { HttpService } from "./HttpService";
 
 export const ZoneService = {
-  createZone: async (name: string, width: number, height: number, xValue: number, yValue: number, color: string): Promise<any> => {
+  createZone: async (name: string, width: number, height: number, xValue: number, yValue: number, color: string, userId: number): Promise<any> => {
     const uri = "zones/create";
     const body = {
+      userId,
       name,
       width,
       height,
       xValue,
       yValue,
-      color
+      color,
+      
     };
     return await HttpService.post(uri, body).then((res: any) => {
+      // console.log(res);
       return res.result.zoneId;
     });
   },
@@ -26,6 +29,13 @@ export const ZoneService = {
 
   loadZones: async (): Promise<any> => {
     const uri = "zones";
+    return await HttpService.get(uri).then((res) => {
+      return res;
+    });
+  },
+
+   loadZonesByUser: async (userID: number): Promise<any> => {
+    const uri = "zones/users/" + userID.toString();
     return await HttpService.get(uri).then((res) => {
       return res;
     });

@@ -19,16 +19,6 @@
   white-space: nowrap;
 }
 
-.mainEditor {
-   width: calc(100% - 90px);
-  height: calc(100vh - 175px);
-  background-color: transparent;
-  border: none;
-  position: absolute;
-  overflow: hidden;
-  /* background-color: red; */
-}
-
 .editorContainer {
   width: calc(100% - 85px);
   height: calc(100% - 85px);

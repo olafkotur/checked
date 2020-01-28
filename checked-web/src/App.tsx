@@ -12,19 +12,23 @@ import './index.css';
 
 interface IState {
 	authorised: boolean;
+	userID: number;
 }
 
 class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: true }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: true, userID: 1 }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 	}
 
 	setAuthorised(authState: boolean): void {
 		this.setState({authorised: authState});
-		return;
+	};
+
+	setUserID(userID: number): void {
+		this.setState({ userID });
 	};
 
 	render(): JSX.Element {
@@ -35,17 +39,18 @@ class App extends React.Component<{}, IState> {
 					<ThemeProvider theme={theme}>
 						<MenuBar />
 						<Router>
-							<MapEditor path="editor"/>
+							<MapEditor path="editor" userID={this.state.userID} />
 							<Dashboard path="/" />
 						</Router>
 					</ThemeProvider>
 				</div>
 
+
 			);
 		} else {
 			return (
 				<ThemeProvider theme={theme}>
-					<Login setAuthorised={this.setAuthorised} />
+					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID}/>
 				</ThemeProvider>
 			);
 		}

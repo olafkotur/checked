@@ -16,6 +16,7 @@ interface IState {
 
 interface IProps {
     setAuthorised(authState: boolean): void;
+    setUserID(userID: number): void;
 }
 
 export class Login extends React.Component<IProps, IState> {
@@ -41,6 +42,7 @@ export class Login extends React.Component<IProps, IState> {
             UserService.login(email, password).then((res) => {
                 if (res.status === 'ok') {
                     this.props.setAuthorised(true);
+                    this.props.setUserID(res.result.userId);
                 } else {
                     this.setState({ snackbarMessage: res.message.toString() });
                     this.toggleSnackbar();
@@ -59,6 +61,7 @@ export class Login extends React.Component<IProps, IState> {
             UserService.createUser(email, password).then((res) => {
                 if (res.status === 'created') {
                     this.props.setAuthorised(true);
+                    this.props.setUserID(res.result.userId);
                 } else {
                     this.setState({ snackbarMessage: res.message.toString() });
                     this.toggleSnackbar();

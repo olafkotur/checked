@@ -89,6 +89,10 @@ code {
   color: #131313;
 }
 
+.menuText {
+  white-space: nowrap;
+}
+
 .topBar {
   background: #ffffff;
 }
@@ -158,4 +162,15 @@ code {
 
 .MuiTab-root.Mui-selected {
   background-color: transparent !important;
+}
+
+/* ===== MAP EDITOR ===== */
+
+.mainEditor {
+  width: calc(100% - 90px);
+  height: calc(100vh - 175px);
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  overflow: hidden;
 }
