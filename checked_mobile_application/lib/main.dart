@@ -1,5 +1,6 @@
 import 'package:checked_mobile_application/screens/SignUp.dart';
 import 'package:checked_mobile_application/screens/authenticate.dart';
+import 'package:checked_mobile_application/screens/home.dart';
 import 'package:checked_mobile_application/screens/landing.dart';
 import 'package:checked_mobile_application/screens/logIn.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
