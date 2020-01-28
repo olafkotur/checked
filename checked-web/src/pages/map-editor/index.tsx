@@ -52,6 +52,7 @@ class MapEditor extends React.Component<IProps, IState> {
         this.handleColorChange = this.handleColorChange.bind(this);
         this.handleColorClick = this.handleColorClick.bind(this);
         this.determineTextColor = this.determineTextColor.bind(this);
+        this.hexToRgb = this.hexToRgb.bind(this);
     }
 
     componentWillMount(): void {
@@ -73,7 +74,7 @@ class MapEditor extends React.Component<IProps, IState> {
         if (this.state.selectedZone != null) {
             this.setState({ pickerColor: color });
             this.state.selectedZone.setBackground(color);
-            this.state.selectedZone.setTextColor(this.determineTextColor(color))
+            this.state.selectedZone.setTextColor(this.determineTextColor(color));
         }
        
     }
@@ -239,10 +240,15 @@ class MapEditor extends React.Component<IProps, IState> {
 
     }
 
-    determineTextColor(color: any){
-        console.log(color)
+    determineTextColor(color: any): string{
+        console.log(color);
+        let rgb = color;
 
-        var rgb = color;
+        if(rgb.includes("#")){
+           rgb = this.hexToRgb(rgb);
+        }
+
+        
 
         rgb = rgb.replace(/[^\d,]/g, '').split(',');
 
@@ -255,13 +261,22 @@ class MapEditor extends React.Component<IProps, IState> {
 
         if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
             console.log("Black");
-            return "#000000"
+            return "#000000";
         }
         else {
             console.log("White");
-            return "#ffffff"
+            return "#ffffff";
         }
 
+    }
+
+   hexToRgb(hex: string): any {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
     }
 
     async buildZone(DBZone: any): Promise<void> {
