@@ -4,6 +4,17 @@ api/node_modules
 api/db/*
 !api/db/doNotRemove
 
+# SCHEDULER
+scheduler/node_modules
+scheduler/build
+
+# MOCKER
+mocker/node_modules
+mocker/build
+
+# CHECKED-WEB
+checked-web/node_modules
+
 # MISC
 .vscode/*
 *.DS_Store
