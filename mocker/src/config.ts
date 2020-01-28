@@ -1,13 +1,20 @@
 export const config = {
   default: {
-    username: 'mocker',
-    password: 'bigmemes69',
-    activityName: 'Mocked Activity',
-    zoneName: 'Mocked Zone',
-    memberFirstName: 'Mocked',
-    memberLastName: 'Member',
     numberOfZones: 3,
-    numberOfMembers: 10
+    numberOfMembers: 10,
+    user: {
+      email: 'mocker@mocker.com',
+      password: 'bigmemes69',
+      companyName: 'Mocker Ltd.',
+    },
+    zone: {
+      name: 'Mocked Zone',
+      color: 'rgb(255, 158, 0)',
+    },
+    member: {
+      firstName: 'Mocked',
+      lastName: 'Member'
+    }
   },
   rules: {
     live: '*/10 * * * * *',
