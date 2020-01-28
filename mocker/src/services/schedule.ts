@@ -2,9 +2,10 @@ import schedule from 'node-schedule';
 import { HttpService } from '../services/http';
 import { config } from '../config';
 import { HelperService } from './helper';
+import { IApiIds } from '../types';
 
 export const ScheduleService = {
-  live: (domain: string) => {
+  live: (domain: string, ids: IApiIds) => {
     schedule.scheduleJob(config.rules.live, async () => {
       let body: object = {};
 
@@ -13,18 +14,20 @@ export const ScheduleService = {
         // Repeat for each member
         for (let i = 0; i < config.default.numberOfMembers; i++) {
           body = {
+            userId: ids.user,
             type: col,
             value: HelperService.randomInt(config.minValues.temperature, config.maxValues.temperature),
-            sensorId: i + 1,
+            memberId: ids.member[i]
           }
 
           await HttpService.post(domain + '/api/live/upload', body);
         }
+        console.log(`ScheduleLive: Uploaded live ${col} data for each member`);
       });
     });
   },
 
-  location: (domain: string) => {
+  location: (domain: string, ids: IApiIds) => {
     schedule.scheduleJob(config.rules.location, async () => {
       let body: object = {};
 
@@ -38,6 +41,7 @@ export const ScheduleService = {
 
         await HttpService.post(domain + '/api/location/upload', body);
       }
+      console.log(`ScheduleLive: Uploaded location data for each member`);
     });
   }
 }
