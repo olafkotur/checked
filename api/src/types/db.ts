@@ -54,7 +54,6 @@ export interface IDbActivity {
 
 export interface IDbAssembly {
   isActive: boolean,
-  memberId: number,
   zoneId: number,
   createdAt: Date,
   lastUpdated: Date,

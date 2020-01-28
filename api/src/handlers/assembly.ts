@@ -12,7 +12,6 @@ export const AssemblyHandler = {
   createPoint: async (req: express.Request, res: express.Response) => {
     const data: IDbAssembly = {
       isActive: true,
-      memberId: parseInt(req.body.memberId || '0'),
       zoneId: parseInt(req.body.zoneId || '0'),
       createdAt: new Date(),
       lastUpdated: new Date()
@@ -25,17 +24,10 @@ export const AssemblyHandler = {
       return false;
     }
 
-    // Ensure that the member exists before continuing
-    const memberExists: boolean = await DbHelperService.exists('members', { memberId: data.memberId });
-    if (!memberExists) {
-      ResponseService.bad('Cannot create an assembly point without a valid member id', res);
-      return false;
-    }
-
     // Attempt to update an assembly point, otherwise create a new one
-    const exists: boolean = await DbHelperService.exists('assembly', { memberId: data.memberId });
+    const exists: boolean = await DbHelperService.exists('assembly', { zoneId: data.zoneId });
     if (exists) {
-      MongoService.updateOne('assembly', { memberId: data.memberId }, data);
+      MongoService.updateOne('assembly', { zoneId: data.zoneId }, data);
       ResponseService.ok('Updated existing assembly point', res);
     } else {
       MongoService.insertOne('assembly', data);
@@ -45,31 +37,21 @@ export const AssemblyHandler = {
   },
 
   updatePoint: async (req: express.Request, res: express.Response) => {
-    // Ensure that the zone exists before continuing
-    const zoneId: number = parseInt(req.params.zoneId || '0');
-    const memberId: number = parseInt(req.body.memberId || '0');
-    const assemblyExists: boolean = await DbHelperService.exists('assembly', { zoneId, memberId });
-    if (!assemblyExists) {
-      ResponseService.bad('There is no existing assembly point for that member in that zone', res);
-      return false;
-    }
-
-    // Ensure that the member exists before continuing
-    const memberExists: boolean = await DbHelperService.exists('members', { memberId });
-    if (!memberExists) {
-      ResponseService.bad('Cannot update an assembly point without a valid member id', res);
-      return false;
-    }
-
-    const formatted: IDbAssembly = {
+    const data: IDbAssembly = {
       isActive: req.body.isActive === 'true',
-      memberId,
-      zoneId,
+      zoneId: parseInt(req.params.zoneId || '0'),
       createdAt: new Date(),
       lastUpdated: new Date()
     };
 
-    MongoService.updateOne('assembly', { memberId }, formatted);
+    // Ensure that the zone exists before continuing
+    const exists: boolean = await DbHelperService.exists('assembly', { zoneId: data.zoneId });
+    if (!exists) {
+      ResponseService.bad('There is no existing assembly point for that in that zone', res);
+      return false;
+    }
+
+    MongoService.updateOne('assembly', { zoneId: data.zoneId }, data);
     ResponseService.ok('Updated existing assembly point', res);
     return true;
   },
@@ -85,7 +67,6 @@ export const AssemblyHandler = {
     const formatted: IAssemblyResponse[] = data.map((val: IDbAssembly) => {
       return {
         isActive: val.isActive,
-        memberId: val.memberId,
         zoneId: val.zoneId,
         createdAt: moment(val.createdAt).unix(),
         lastUpdated: moment(val.lastUpdated).unix(),
