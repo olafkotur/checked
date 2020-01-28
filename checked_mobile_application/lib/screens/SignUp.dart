@@ -247,6 +247,7 @@ class _SignUpState extends State<SignUp> {
                                   // users get 
                                   print("hello");
                                   service.postSignup(_email, _password, _company);
+                                  widget.toggleView();
                                 }
                               },
                               child: Container(

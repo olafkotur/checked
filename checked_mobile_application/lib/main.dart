@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home: Authenticate(),
+      home: Landing(),
     );
   }
 }
