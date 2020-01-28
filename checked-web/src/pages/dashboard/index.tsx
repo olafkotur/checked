@@ -25,14 +25,14 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     componentDidMount(): void {
-        this.getZones();
-        const zoneInterval = setInterval(() => this.getZones(), 5000);
-        this.state.intervals.push(zoneInterval);
+        this.getZones(); // call once initially so no wait for 5secs
+        const zoneInterval = setInterval(() => this.getZones(), 5000); // setInterval on get zones function and assign the result to a const
+        this.state.intervals.push(zoneInterval); // push interbval on to array for cleanup later
     }
 
     componentWillUnmount(): void {
-        this.state.intervals.forEach((interval) => {
-            clearInterval(interval);
+        this.state.intervals.forEach((interval) => { // for each interval we have created (this is for futureproofing if we add extra stuff)
+            clearInterval(interval); // clear the interval
         });
     }
 
