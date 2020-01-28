@@ -1,13 +1,15 @@
 import React from 'react';
 import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import ZoneVisualisation from './ZoneVisualisation';
+import {IZone} from '../../../types';
+import { Speed, MyLocation } from '@material-ui/icons';
 
 interface IState {
     tabValue: number;
 }
 
 interface IProps {
-    zoneData: Array<object>;
+    zoneData: Array<IZone>;
 }
 
 class DashTabs extends React.Component<IProps, IState> {
@@ -43,15 +45,15 @@ class DashTabs extends React.Component<IProps, IState> {
         return (
             <div>
                 <TabPanel value={this.state.tabValue} index={0}>
-                    <ZoneVisualisation zoneData={this.props.zoneData} />
+                    <ZoneVisualisation zoneData={this.props.zoneData} type='location'/>
                 </TabPanel>
                 <TabPanel value={this.state.tabValue} index={1}>
-                    
+                    <ZoneVisualisation zoneData={this.props.zoneData} type='temperature' />
                 </TabPanel>
                 <AppBar position="static" color="inherit" style={{boxShadow: 'none'}}>
                     <Tabs value={this.state.tabValue} onChange={this.handleChange} variant="fullWidth" >
-                        <Tab label="Location" />
-                        <Tab label="Temperature" />
+                        <Tab label="Location" icon={<MyLocation className="mr-2 mt-1"/>}/>
+                        <Tab label="Temperature" icon={<Speed className="mr-2 mt-1"/>}/>
                     </Tabs>
                 </AppBar>
             </div>

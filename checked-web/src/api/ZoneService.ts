@@ -35,7 +35,7 @@ export const ZoneService = {
   },
 
    loadZonesByUser: async (userID: number): Promise<any> => {
-    const uri = "zones/users/" + userID.toString();
+     const uri = "zones/activity/users/" + userID.toString();
     return await HttpService.get(uri).then((res) => {
       return res;
     });

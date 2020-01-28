@@ -29,6 +29,13 @@ code {
   opacity: 0.85 !important;
 }
 
+.fontMontserrat {
+  font-family: 'Montserrat', sans-serif !important;
+  letter-spacing: 2px !important;
+  margin-bottom: -10px !important;
+  font-weight: 600 !important;
+}
+
 .montserrat {
   font-family: 'Montserrat', sans-serif !important;
   font-weight: 700 !important;
@@ -178,8 +185,16 @@ code {
   background-color: transparent !important;
 }
 
-.zoneVisContainer {
-  background-color: red;
+/* parent */
+.zoneVisContainer { 
+  background-color: transparent;
+  position: relative;
+}
+/* child */
+.zoneVisZone {
+  position: absolute;
+  z-index: 101;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* ===== MAP EDITOR ===== */
