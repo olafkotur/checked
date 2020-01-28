@@ -1,15 +1,22 @@
+import 'package:checked_mobile_application/screens/SignUp.dart';
+import 'package:checked_mobile_application/services/user_services.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:get_it/get_it.dart';
 
 
 class SignUp extends StatefulWidget {
+
+  final Function toggleView;
+  SignUp({this.toggleView});
+
   @override
   _SignUpState createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
+
+  UserServices get service => GetIt.I<UserServices>();
 
   var url = 'checked-api.herokuapp.com/api/users/create';
 
@@ -110,8 +117,11 @@ class _SignUpState extends State<SignUp> {
                           //height: 40.0,
                           child: TextFormField(
                             validator: (value){
+                              if(value != _email){
+                                return "Email doesn't match";
+                              }
                               if(value.isEmpty){
-                                return "Enter your email";
+                                return "Enter your Email";
                               }
                               String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
                                 "\\@" +
@@ -210,6 +220,11 @@ class _SignUpState extends State<SignUp> {
                         Container(
                           child: TextFormField(
                             onChanged: (String val) => setState(() => _company = val),
+                            validator: (value){
+                              if(value.isEmpty){
+                                return "Enter Company name";
+                              }
+                            },
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(5),
                               border: OutlineInputBorder(
@@ -228,21 +243,11 @@ class _SignUpState extends State<SignUp> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () async {
-                                _formKey.currentState.validate();
-                                _formKey.currentState.save();
-                                var client = http.Client();
-                                String _url = "http://checked-api.herokuapp.com/api/users/create";
-                                String _body = 'email=$_email&password=$_password&companyName=$_company';
-                                print(_body);
-                                final encoding = Encoding.getByName('utf-8');
-
-                                try{
-                                var response = await http.post(_url, body:_body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
-                                print(response.body);
-                                }finally{
-                                  client.close();
+                                if(_formKey.currentState.validate()){
+                                  // users get 
+                                  print("hello");
+                                  service.postSignup(_email, _password, _company);
                                 }
-
                               },
                               child: Container(
                                 height: 50,
@@ -273,7 +278,7 @@ class _SignUpState extends State<SignUp> {
                             SizedBox(width: 2.0,),
                             GestureDetector(
                               onTap: (){
-                                print(_email);
+                                widget.toggleView();
                               },
                               child: Text("Log in here",style: 
                                 TextStyle(

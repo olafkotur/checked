@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:get_it/get_it.dart';
+import 'package:checked_mobile_application/services/user_services.dart';
+
 
 class SignIn extends StatefulWidget {
+
+  final Function toggleView;
+  SignIn({this.toggleView});
+
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+
+    UserServices get service => GetIt.I<UserServices>();
+
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
@@ -129,16 +137,9 @@ class _SignInState extends State<SignIn> {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () async {
-                                _formKey.currentState.validate();
-                                _formKey.currentState.save();
-                                var client = http.Client();
-                                String _url = "http://checked-api.herokuapp.com/api/users/login";
-                                String _body = 'email=$_email&password=$_password';
-                                try{
-                                  var response = await http.post(_url, body:_body, headers:{"Content-Type":"application/x-www-form-urlencoded"});
-                                  print(response.body);
-                                }finally{
-                                  client.close();
+                                if(_formKey.currentState.validate()){
+                                  print("button clicked");
+                                  service.postLogIn(_email, _password);
                                 }
                               },
                               child: Container(
@@ -170,7 +171,7 @@ class _SignInState extends State<SignIn> {
                             SizedBox(width: 2.0,),
                             GestureDetector(
                               onTap: (){
-
+                                widget.toggleView();
                               },
                               child: Text("Register now",style: 
                                 TextStyle(

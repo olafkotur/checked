@@ -1,7 +1,9 @@
 class User{
-  String userID;
-  String userEmail;
-  String userCompany;
+  String userId;
+  
+  User({this.userId});
 
-  User({this.userID,this.userEmail,this.userCompany});
+  factory User.fromJson(Map<String, dynamic> json){
+    return User(userId: json["userID"]);
+  }
 }
