@@ -18,6 +18,15 @@ export const ActivityService = {
       // console.log(res);
       return res;
     });
+  },
+
+  deleteActivity: async ( activityId: number): Promise<any> => {
+    const uri = "activity/delete/" + activityId;
+ 
+    return await HttpService.delete(uri).then((res: any) => {
+      // console.log(res);
+      return res;
+    });
   }
 
 };

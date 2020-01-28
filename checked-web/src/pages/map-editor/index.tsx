@@ -69,7 +69,7 @@ class MapEditor extends React.Component<IProps, IState> {
 
 
     async newZone(): Promise<void> {
-        console.log(this.props);
+    //    console.log(this.props);
         const dbid = await ZoneService.createZone((this.state.zones.length + 1).toString(), 100, 100, 0, 0, "rgb(255, 158, 0)", this.props.userID);
         const pos = {
             width: 100,
@@ -87,12 +87,6 @@ class MapEditor extends React.Component<IProps, IState> {
                                         />;
         
         this.setState({zones: tempZones});
-        // ReactDOM.render(
-        //     <div id="blocksContainer">
-        //         {this.state.zones}
-        //     </div>,
-        //     document.getElementById('mainEditor')
-        // );
     }
 
     async save(): Promise<void> {
@@ -109,30 +103,36 @@ class MapEditor extends React.Component<IProps, IState> {
                 const activity = zone.getAttribute('data-activity');
                 if (id != null && activity != null){
                     const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(id));
-                
-                    console.log(activitiesDB.result);
+                    
+                    
+                    // console.log(activitiesDB.result[0].activityId);
                     // Create Json
-
+                    
                 
                     if (activity === '') {
-                        console.log('empty activity');
+                        // console.log('empty activity');
                         if (activitiesDB.result.length  > 0 ) {
-                            console.log('delete activity');
+                            // console.log('delete activity');
+                            const activityID = activitiesDB.result[0].activityId;
+                            await ActivityService.deleteActivity(parseInt(activityID));
                         }
                         else{
-                            console.log('do nothing');
+                            // console.log('do nothing');
                         }
 
                     }
                     else{
                         // user added an activity
-                        console.log(activity);
+                        // console.log(activity);
                         if (activitiesDB.result.length == 0 ){
-                            console.log('add activity');
-                            console.log(await ActivityService.createActivity(activity,parseInt(id)));
+                            // console.log('add activity');
+                            await ActivityService.createActivity(activity,parseInt(id));
                         }
                         else{
-                            console.log('update activity');
+                            // console.log('update activity');
+                            const activityID = activitiesDB.result[0].activityId;
+                            await ActivityService.deleteActivity(parseInt(activityID));
+                            await ActivityService.createActivity(activity, parseInt(activityID));
                         }
 
                     }
@@ -148,7 +148,7 @@ class MapEditor extends React.Component<IProps, IState> {
                         color: backgroundStyle
                     };
 
-                    console.log(rect.x);
+                    // console.log(rect.x);
                     
                         await ZoneService.updateZone(zoneJson, parseInt(id));
                 }
@@ -162,7 +162,7 @@ class MapEditor extends React.Component<IProps, IState> {
     async loadZones(): Promise<void> {
         const response = await ZoneService.loadZonesByUser(this.props.userID);
         for (let i = 0; i < response.result.length; i++) {
-            this.buildZone(response.result[i]);
+           await this.buildZone(response.result[i]);
         }
     }
 
@@ -171,6 +171,9 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     async buildZone(DBZone: any): Promise<void> {
+
+        console.log(DBZone);
+
         const pos = {
             width: DBZone.width,
             height: DBZone.height,
@@ -182,7 +185,7 @@ class MapEditor extends React.Component<IProps, IState> {
 
         const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(DBZone.zoneId));
 
-        console.log(activitiesDB.result.length);
+        console.log(activitiesDB);
         
         if (activitiesDB.result.length > 0 ){
             console.log(activitiesDB.result[0].name);
