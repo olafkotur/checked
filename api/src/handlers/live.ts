@@ -23,16 +23,16 @@ export const LiveHandler = {
     }
 
     const data: IDbLive = {
-      sensorId: parseInt(req.body.sensorId || '0'),
+      memberId: parseInt(req.body.memberId || '0'),
       userId,
       value: parseInt(req.body.value),
       createdAt: new Date(),
     };
 
-    // Update only if reading with same sensorId exists
-    await DbHelperService.exists(req.body.type || '', { sensorId: data.sensorId }).then((exists: boolean) => {
+    // Update only if reading with same member exists
+    await DbHelperService.exists(req.body.type || '', { memberId: data.memberId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.updateOne(req.body.type || '', { sensorId: data.sensorId }, data);
+        MongoService.updateOne(req.body.type || '', { memberId: data.memberId }, data);
       } else {
         MongoService.insertOne(req.body.type || '', data)
       }
@@ -43,7 +43,7 @@ export const LiveHandler = {
   },
 
   getSingleLiveData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne(req.params.type || '', { sensorId: parseInt(req.params.sensorId || '0') });
+    const data: any = await MongoService.findOne(req.params.type || '', { memberId: parseInt(req.params.memberId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -51,7 +51,7 @@ export const LiveHandler = {
 
     // Converts to client friendly format
     const formatted: ILiveResponse = {
-      sensorId: data.sensorId,
+      memberId: data.memberId,
       userId: data.userId,
       value: data.value,
       time: moment(data.createdAt).unix(),
@@ -71,7 +71,7 @@ export const LiveHandler = {
     // Converts to client friendly format
     const formatted: ILiveResponse[] = data.map((val: any) => {
       return {
-        sensorId: val.sensorId,
+        memberId: val.memberId,
         userId: val.userId,
         value: val.value,
         time: moment(val.createdAt).unix(),

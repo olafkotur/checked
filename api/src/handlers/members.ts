@@ -10,7 +10,7 @@ export const MemberHandler = {
 
   createMember: async (req: express.Request, res: express.Response) => {
     // Check if admin user exists before assigning them a member
-    const admin: any = await MongoService.findOne('users', { username: req.body.adminUsername || '' })
+    const admin: any = await MongoService.findOne('users', { userId: parseInt(req.body.userId || '')})
     if (admin === null) {
       ResponseService.notFound('Admin user does not exist', res);
       return false;
@@ -18,9 +18,9 @@ export const MemberHandler = {
 
     const data: IDbMember = {
       memberId: await DbHelperService.assignAvailableId('members', 'memberId'),
+      userId: parseInt(req.body.userId || '0'),
       firstName: req.body.firstName || '',
       lastName: req.body.lastName || '',
-      adminUsername: req.body.adminUsername || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -53,9 +53,9 @@ export const MemberHandler = {
 
     const formatted: IMemberResponse =  {
       memberId: data.memberId,
+      userId: data.userId,
       firstName: data.firstName,
       lastName: data.lastName,
-      adminUsername: data.adminUsername,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix()
 
@@ -75,9 +75,9 @@ export const MemberHandler = {
     const formatted: IMemberResponse[] = data.map((member: IDbMember) => {
       return {
         memberId: member.memberId,
+        userId: member.userId,
         firstName: member.firstName,
         lastName: member.lastName,
-        adminUsername: member.adminUsername,
         createdAt: moment(data.createdAt).unix(),
         lastUpdated: moment(data.lastUpdated).unix()
       }
@@ -88,8 +88,7 @@ export const MemberHandler = {
   },
 
   getMembersByUser: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany('members', { adminUsername: req.params.adminUsername || '' });
-    console.log(data);
+    const data: any = await MongoService.findMany('members', { userId: parseInt(req.params.userId || '')});
     if (data === null) {
       ResponseService.data([], res);
       return false;
@@ -98,9 +97,9 @@ export const MemberHandler = {
     const formatted: IMemberResponse[] = data.map((member: IDbMember) => {
       return {
         memberId: member.memberId,
+        userId: member.userId,
         firstName: member.firstName,
         lastName: member.lastName,
-        adminUsername: member.adminUsername,
         createdAt: moment(data.createdAt).unix(),
         lastUpdated: moment(data.lastUpdated).unix()
       }

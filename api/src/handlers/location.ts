@@ -17,17 +17,17 @@ export const LocationHandler = {
     }
 
     const data: IDbLocation = {
-      sensorId: parseInt(req.body.sensorId || '0'),
+      memberId: parseInt(req.body.memberId || '0'),
       userId,
       xValue: parseInt(req.body.xValue || '0'),
       yValue: parseInt(req.body.yValue || '0'),
       createdAt: new Date()
     };
 
-    // Update only if reading with same sensorId exists
-    await DbHelperService.exists('location', { sensorId: data.sensorId }).then((exists: boolean) => {
+    // Update only if reading with same memberId exists
+    await DbHelperService.exists('location', { memberId: data.memberId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.updateOne('location', { sensorId: data.sensorId }, data);
+        MongoService.updateOne('location', { memberId: data.memberId }, data);
       } else {
         MongoService.insertOne('location', data);
       }
@@ -38,7 +38,7 @@ export const LocationHandler = {
   },
 
   getSingleLocationData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne('location', { sensorId: parseInt(req.params.sensorId || '0') });
+    const data: any = await MongoService.findOne('location', { memberId: parseInt(req.params.memberId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -46,7 +46,7 @@ export const LocationHandler = {
 
     // Converts to client friendly format
     const formatted: ILocationResponse = {
-      sensorId: data.sensorId,
+      memberId: data.memberId,
       userId: data.userId,
       xValue: data.xValue,
       yValue: data.yValue,
@@ -67,7 +67,7 @@ export const LocationHandler = {
     // Converts to client friendly format
     const formatted: IDbLocation = data.map((val: any) => {
       return {
-        sensorId: val.sensorId,
+        memberId: val.memberId,
         userId: val.userId,
         xValue: val.xValue,
         yValue: val.yValue,

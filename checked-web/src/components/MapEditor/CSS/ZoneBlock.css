@@ -6,10 +6,6 @@
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.zoneBlock:hover {
-  /* border: 3px solid #ffffff83; */
-  border: 3px solid white;
-}
 
 .zoneForm {
   margin: 0px;
@@ -23,7 +19,7 @@
 }
 
 .zoneTitle:focus {
-    outline: none;
+  outline: none;
 }
 
 .zoneTitle {
@@ -40,11 +36,32 @@
   border: none;
   width: 100%;
   background-color: transparent;
-  height: calc(100px/3);
+  height: calc((100px / 3) - 5px);
   /* background-color: green; */
+  margin: 0px;
+  /* border-bottom:  1px solid rgba(0, 0, 0, 0.12);; */
 }
 
+.activityInput {
+    -webkit-appearance: none;
+  border: none;
+  background-color: transparent;
+  margin-top: calc((100px / 3) - 5px);
+  height: calc((100px / 3) - 10px);
+  width: calc(100%);
+  color: rgba(255, 255, 255, 0.726);
+  font-size: 15pt;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  padding-left: 3px;
+  border-width: 0px;
+}
 
+.activityInput:focus {
+  outline: none;
+}
 
-
-
+.activityInput::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
