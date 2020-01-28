@@ -2,7 +2,7 @@ import React from 'react';
 
 // import BackgroundGrid from '../../components/MapEditor/BackgroundGrid';
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardHeader, CardContent,  IconButton, Divider } from '@material-ui/core';
+import { Card, CardHeader, CardContent, IconButton, Divider, Tooltip } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import "../../components/MapEditor/CSS/EditorCard.css";
 import { Add, GridOn, Delete, ColorLens, Save } from '@material-ui/icons';
@@ -27,7 +27,7 @@ interface IProps {
     userID: number;
 }
 
-interface IProps extends RouteComponentProps{
+interface IProps extends RouteComponentProps {
     userID: number;
 }
 
@@ -35,7 +35,7 @@ class MapEditor extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { zones: [], col: [], row: []};
+        this.state = { zones: [], col: [], row: [] };
         this.clearZones = this.clearZones.bind(this);
         this.newZone = this.newZone.bind(this);
         this.genBg = this.genBg.bind(this);
@@ -65,7 +65,7 @@ class MapEditor extends React.Component<IProps, IState> {
         }
     }
 
-  
+
 
 
     async newZone(): Promise<void> {
@@ -78,15 +78,15 @@ class MapEditor extends React.Component<IProps, IState> {
             yValue: 0,
         };
         const tempZones = this.state.zones;
-        tempZones[tempZones.length] = <ZoneBlock 
-                                        key={(this.state.zones.length + 1).toString()} 
-                                        name={"Zone " + (this.state.zones.length + 1).toString()} 
-                                        id={(this.state.zones.length + 1)} 
-                                        dbid={dbid} pos={pos} 
-                                        activity = ""
-                                        />;
-        
-        this.setState({zones: tempZones});
+        tempZones[tempZones.length] = <ZoneBlock
+            key={(this.state.zones.length + 1).toString()}
+            name={"Zone " + (this.state.zones.length + 1).toString()}
+            id={(this.state.zones.length + 1)}
+            dbid={dbid} pos={pos}
+            activity=""
+        />;
+
+        this.setState({ zones: tempZones });
         // ReactDOM.render(
         //     <div id="blocksContainer">
         //         {this.state.zones}
@@ -107,31 +107,31 @@ class MapEditor extends React.Component<IProps, IState> {
                 const backgroundStyle = window.getComputedStyle(zone, null).getPropertyValue("background-color");
                 const id = zone.getAttribute('data-dbid');
                 const activity = zone.getAttribute('data-activity');
-                if (id != null && activity != null){
+                if (id != null && activity != null) {
                     const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(id));
-                
+
                     console.log(activitiesDB.result);
                     // Create Json
 
-                
+
                     if (activity === '') {
                         console.log('empty activity');
-                        if (activitiesDB.result.length  > 0 ) {
+                        if (activitiesDB.result.length > 0) {
                             console.log('delete activity');
                         }
-                        else{
+                        else {
                             console.log('do nothing');
                         }
 
                     }
-                    else{
+                    else {
                         // user added an activity
                         console.log(activity);
-                        if (activitiesDB.result.length == 0 ){
+                        if (activitiesDB.result.length == 0) {
                             console.log('add activity');
-                            console.log(await ActivityService.createActivity(activity,parseInt(id)));
+                            console.log(await ActivityService.createActivity(activity, parseInt(id)));
                         }
-                        else{
+                        else {
                             console.log('update activity');
                         }
 
@@ -149,8 +149,8 @@ class MapEditor extends React.Component<IProps, IState> {
                     };
 
                     console.log(rect.x);
-                    
-                        await ZoneService.updateZone(zoneJson, parseInt(id));
+
+                    await ZoneService.updateZone(zoneJson, parseInt(id));
                 }
             }
         }
@@ -167,7 +167,7 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     clearZones(): void {
-        this.setState({zones: []});
+        this.setState({ zones: [] });
     }
 
     async buildZone(DBZone: any): Promise<void> {
@@ -183,64 +183,73 @@ class MapEditor extends React.Component<IProps, IState> {
         const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(DBZone.zoneId));
 
         console.log(activitiesDB.result.length);
-        
-        if (activitiesDB.result.length > 0 ){
+
+        if (activitiesDB.result.length > 0) {
             console.log(activitiesDB.result[0].name);
             activity = activitiesDB.result[0].name;
         }
 
         const tempZones = this.state.zones;
-        tempZones[tempZones.length] = <ZoneBlock 
-                                        key={(tempZones.length + 1).toString()} 
-                                        name={DBZone.name} 
-                                        id={(tempZones.length + 1)} 
-                                        dbid={DBZone.zoneId} 
-                                        pos={pos} 
-                                        activity = {activity}
-                                    />;
-        this.setState({zones: tempZones});
+        tempZones[tempZones.length] = <ZoneBlock
+            key={(tempZones.length + 1).toString()}
+            name={DBZone.name}
+            id={(tempZones.length + 1)}
+            dbid={DBZone.zoneId}
+            pos={pos}
+            activity={activity}
+        />;
+        this.setState({ zones: tempZones });
     }
-    
+
     render(): JSX.Element {
 
         return (
             <Card className="editorCard" id="editorCard">
-                <CardHeader className = "editorHeader"title={<h1 className="editorCardTitle">Room Layout Editor</h1>} avatar={<GridOn fontSize = "large"  />}/>
+                <CardHeader title="Map Editor" avatar={<GridOn className="w-100 h-100" />} className="mutedBlack mt-2">
+                </CardHeader>
 
                 <Divider />
 
-                <Toolbar className = "cardToolbar">
-                    
-                    <IconButton edge="start" size='small' onClick={this.newZone} aria-label="Add new zone">
-                        <Add />
-                    </IconButton>
+                <Toolbar className="cardToolbar pt-2 pb-2">
 
-                    <IconButton size='small' aria-label="Change color">
-                        <ColorLens />
-                    </IconButton>
+                    <Tooltip title="Add Zone">
+                        <IconButton edge="start" size='small' onClick={this.newZone} aria-label="Add new zone" className="ml-3">
+                            <Add />
+                        </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Colour Picker">
+                        <IconButton size='small' aria-label="Change color" className="ml-2">
+                            <ColorLens />
+                        </IconButton>
+                    </Tooltip>
 
                     <Divider orientation="vertical" variant="middle" />
 
-                    <IconButton size='small' onClick={this.clearZones} aria-label="Clear zones">
-                        <Delete />
-                    </IconButton>
+                    <Tooltip title="Delete Zone">
+                        <IconButton size='small' onClick={this.clearZones} aria-label="Clear zones">
+                            <Delete />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton size='small' onClick={this.save} aria-label="Save">
-                        <Save />
-                    </IconButton>
-                   
-                </Toolbar> 
+                    <Tooltip title="Save Layout">
+                        <IconButton size='small' onClick={this.save} aria-label="Save" className="ml-2">
+                            <Save />
+                        </IconButton>
+                    </Tooltip>
+
+                </Toolbar>
                 <Divider />
-                <CardContent className="editorContent"> 
+                <CardContent className="editorContent">
                     {/* <BackgroundGrid /> */}
-                     <div className="BgContainer" key="BGC">
+                    <div className="BgContainer" key="BGC">
                         <div className="colsDiv" key="ColsDiv">
-                                    {this.state.col}
+                            {this.state.col}
                         </div>
                         <div className="colsDiv" key="RowsDiv">
-                                    {this.state.row}
+                            {this.state.row}
                         </div>
-                                
+
                     </div>
 
                     <div className="mainEditor" id="mainEditor">
