@@ -52,9 +52,9 @@ export interface IUserResponse {
 
 export interface IMemberResponse {
   memberId: number,
+  userId: number,
   firstName: string,
   lastName: string,
-  adminUsername: string,
   createdAt: number,
   lastUpdated: number
 }

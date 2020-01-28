@@ -37,9 +37,9 @@ export interface IDbUser {
 
 export interface IDbMember {
   memberId: number,
+  userId: number,
   firstName: string,
   lastName: string,
-  adminUsername: string,
   createdAt: Date,
   lastUpdated: Date
 }

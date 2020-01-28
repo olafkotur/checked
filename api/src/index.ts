@@ -53,7 +53,7 @@ async function main() {
   app.delete('/api/members/delete/:memberId', MemberHandler.deleteMember);
   app.get('/api/members/:memberId', MemberHandler.getMember);
   app.get('/api/members', MemberHandler.getMembers);
-  app.get('/api/members/user/:adminUsername', MemberHandler.getMembersByUser);
+  app.get('/api/members/users/:userId', MemberHandler.getMembersByUser);
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);
@@ -63,8 +63,9 @@ async function main() {
   app.get('/api/activity/zone/:zoneId', ActivityHandler.getActivitiesByZone);
 
   // Assembly handlers
-  app.get('/api/assembly/:zoneId', AssemblyHandler.getPoints);
   app.post('/api/assembly/create', AssemblyHandler.createPoint);
+  app.post('/api/assembly/update/:zoneId', AssemblyHandler.updatePoint);
+  app.get('/api/assembly/:zoneId', AssemblyHandler.getPoints);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
