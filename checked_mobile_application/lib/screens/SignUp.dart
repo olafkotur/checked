@@ -24,6 +24,24 @@ class _SignUpState extends State<SignUp> {
   String _password = "";
   String _company = "";
 
+  Future<void> signUpSuccessfulAlert(BuildContext context, SignUp goBack) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Congratulations!'),
+          content: const Text('You have successfully signed up!'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () { Navigator.of(context).pop(); },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +265,7 @@ class _SignUpState extends State<SignUp> {
                                   // users get 
                                   print("hello");
                                   service.postSignup(_email, _password, _company);
-                                  widget.toggleView();
+                                  signUpSuccessfulAlert(context, widget.toggleView());
                                 }
                               },
                               child: Container(
