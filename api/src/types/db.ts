@@ -1,12 +1,12 @@
 export interface IDbLive {
-  sensorId: number,
+  memberId: number,
   userId: number,
   value: number,
   createdAt: Date
 }
 
 export interface IDbLocation {
-  sensorId: number,
+  memberId: number,
   userId: number,
   xValue: number,
   yValue: number,
@@ -37,9 +37,9 @@ export interface IDbUser {
 
 export interface IDbMember {
   memberId: number,
+  userId: number,
   firstName: string,
   lastName: string,
-  adminUsername: string,
   createdAt: Date,
   lastUpdated: Date
 }
@@ -50,4 +50,11 @@ export interface IDbActivity {
   zoneId: number
   createdAt: Date,
   lastUpdated: Date
+}
+
+export interface IDbAssembly {
+  isActive: boolean,
+  zoneId: number,
+  createdAt: Date,
+  lastUpdated: Date,
 }

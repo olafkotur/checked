@@ -48,3 +48,9 @@ Be sure to edit the save function yValue to acomidate
 
 }
 
+.colorPicker{
+
+    position: absolute;
+    z-index: 5;
+}
+

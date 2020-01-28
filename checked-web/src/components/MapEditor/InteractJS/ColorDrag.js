@@ -4,37 +4,14 @@ const gridSnap = 25;
 const minSize = 50;
 
 
-interact(".zoneBlock")
-  .resizable({
-    // resize from all edges and corners
-    edges: { left: true, right: true, bottom: true, top: true },
-
-    modifiers: [
-      // keep the edges inside the parent
-      interact.modifiers.restrictEdges({
-        outer: "parent"
-      }),
-      interact.modifiers.snap({
-        targets: [interact.createSnapGrid({ x: gridSnap, y: gridSnap })],
-        range: Infinity,
-        relativePoints: [{ x: 0, y: 0 }]
-      }),
-
-      // minimum size
-      interact.modifiers.restrictSize({
-        min: { width: minSize, height: minSize }
-      })
-    ],
-
-    inertia: false
-  })
+interact(".colorPicker")
   .draggable({
     // enable inertial throwing
     inertia: false,
     // keep the element within the area of it's parent
     modifiers: [
       interact.modifiers.restrictRect({
-        restriction: "parent",
+        restriction: "none",
         endOnly: false
       }),
       interact.modifiers.snap({

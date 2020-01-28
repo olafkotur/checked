@@ -115,7 +115,7 @@ export const UserHandler = {
     // Check if credentials are correct
     if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        ResponseService.ok(`User logged in as ${data.email}`, res);
+        ResponseService.data({ userId: data.userId }, res);
         return true;
       }
     }

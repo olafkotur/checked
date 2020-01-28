@@ -9,16 +9,22 @@ import { Add, GridOn, Delete, ColorLens, Save } from '@material-ui/icons';
 import ZoneBlock from '../../components/MapEditor/ZoneBlock';
 import { ZoneService } from '../../api/ZoneService';
 import '../../components/MapEditor/InteractJS/DragZone.js';
+
 import checkCollision from '../../components/MapEditor/collisionDetection';
 import BgColumn from '../../components/MapEditor/BgColumn';
 import BgRow from '../../components/MapEditor/BgRow';
 import { ActivityService } from '../../api/ActivityService';
+import { SketchPicker } from 'react-color';
+import ReactDOM from 'react-dom';
 
 
 interface IState {
     zones: Array<any>;
     col: Array<any>;
     row: Array<any>;
+    selectedZone?: any;
+    pickerColor: any;
+    displayColorPicker: any;
 }
 
 
@@ -33,13 +39,19 @@ interface IProps extends RouteComponentProps {
 
 class MapEditor extends React.Component<IProps, IState> {
 
+
     constructor(props: any) {
         super(props);
-        this.state = { zones: [], col: [], row: [] };
+        this.state = { zones: [], col: [], row: [], pickerColor: "#FF9E00", displayColorPicker: "d-none" };
         this.clearZones = this.clearZones.bind(this);
         this.newZone = this.newZone.bind(this);
         this.genBg = this.genBg.bind(this);
         this.save = this.save.bind(this);
+        this.setSelectedZone = this.setSelectedZone.bind(this);
+        this.deleteZone = this.deleteZone.bind(this);
+        this.handleColorChange = this.handleColorChange.bind(this);
+        this.handleColorClick = this.handleColorClick.bind(this);
+        this.determineTextColor = this.determineTextColor.bind(this);
     }
 
     componentWillMount(): void {
@@ -51,25 +63,57 @@ class MapEditor extends React.Component<IProps, IState> {
         this.clearZones();
     }
 
+    setSelectedZone(zone: any): void {
+        this.setState({ selectedZone: zone });
+        // this.setState({ pickerColor: zone.state.backgroundColor.hex });
+    }
+
+    handleColorChange = (color: any): void => {
+        console.log(this.state.selectedZone);
+        if (this.state.selectedZone != null) {
+            this.setState({ pickerColor: color });
+            this.state.selectedZone.setBackground(color);
+            this.state.selectedZone.setTextColor(this.determineTextColor(color))
+        }
+       
+    }
+
+    handleColorClick = (): void => {
+
+        if (this.state.displayColorPicker === "") {
+            this.setState({ displayColorPicker: "d-none" });
+        }
+        else {
+            this.setState({ displayColorPicker: "" });
+        }
+
+
+    };
+
     genBg(): void {
         const loop = Math.floor((window.innerWidth / 25) - 4);
+        const tempCols = this.state.col;
+        const tempRows = this.state.row;
 
         for (let i = 0; i < loop; i++) {
-            this.state.col[this.state.col.length] = <BgColumn key={"Col" + i} />;
-
+            tempCols[tempCols.length] = <BgColumn key={"Col" + i} />;
         }
+
         const loop2 = (Math.floor(window.innerHeight / 25) - 7);
         for (let i = 0; i < loop2; i++) {
-            this.state.row[this.state.row.length] = <BgRow key={"Row" + i} />;
+            tempRows[tempRows.length] = <BgRow key={"Row" + i} />;
 
         }
+
+        this.setState({ row: tempRows });
+        this.setState({ col: tempCols });
     }
 
 
 
 
     async newZone(): Promise<void> {
-        console.log(this.props);
+        //    console.log(this.props);
         const dbid = await ZoneService.createZone((this.state.zones.length + 1).toString(), 100, 100, 0, 0, "rgb(255, 158, 0)", this.props.userID);
         const pos = {
             width: 100,
@@ -84,15 +128,12 @@ class MapEditor extends React.Component<IProps, IState> {
             id={(this.state.zones.length + 1)}
             dbid={dbid} pos={pos}
             activity=""
+            backgroundColor="#FF9E00"
+            setSelectedZone={this.setSelectedZone}
+            textColor="white"
         />;
 
         this.setState({ zones: tempZones });
-        // ReactDOM.render(
-        //     <div id="blocksContainer">
-        //         {this.state.zones}
-        //     </div>,
-        //     document.getElementById('mainEditor')
-        // );
     }
 
     async save(): Promise<void> {
@@ -109,30 +150,31 @@ class MapEditor extends React.Component<IProps, IState> {
                 const activity = zone.getAttribute('data-activity');
                 if (id != null && activity != null) {
                     const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(id));
-
-                    console.log(activitiesDB.result);
+                    // console.log(activitiesDB.result[0].activityId);
                     // Create Json
-
-
                     if (activity === '') {
-                        console.log('empty activity');
+                        // console.log('empty activity');
                         if (activitiesDB.result.length > 0) {
-                            console.log('delete activity');
-                        }
-                        else {
-                            console.log('do nothing');
+                            // console.log('delete activity');
+                            const activityID = activitiesDB.result[0].activityId;
+                            await ActivityService.deleteActivity(parseInt(activityID));
+                        } else {
+                            // console.log('do nothing');
                         }
 
                     }
                     else {
                         // user added an activity
-                        console.log(activity);
-                        if (activitiesDB.result.length == 0) {
-                            console.log('add activity');
-                            console.log(await ActivityService.createActivity(activity, parseInt(id)));
+                        // console.log(activity);
+                        if (activitiesDB.result.length === 0) {
+                            // console.log('add activity');
+                            await ActivityService.createActivity(activity, parseInt(id));
                         }
                         else {
-                            console.log('update activity');
+                            // console.log('update activity');
+                            const activityID = activitiesDB.result[0].activityId;
+                            await ActivityService.deleteActivity(parseInt(activityID));
+                            await ActivityService.createActivity(activity, parseInt(activityID));
                         }
 
                     }
@@ -148,7 +190,7 @@ class MapEditor extends React.Component<IProps, IState> {
                         color: backgroundStyle
                     };
 
-                    console.log(rect.x);
+                    // console.log(rect.x);
 
                     await ZoneService.updateZone(zoneJson, parseInt(id));
                 }
@@ -162,7 +204,7 @@ class MapEditor extends React.Component<IProps, IState> {
     async loadZones(): Promise<void> {
         const response = await ZoneService.loadZonesByUser(this.props.userID);
         for (let i = 0; i < response.result.length; i++) {
-            this.buildZone(response.result[i]);
+            await this.buildZone(response.result[i]);
         }
     }
 
@@ -170,7 +212,56 @@ class MapEditor extends React.Component<IProps, IState> {
         this.setState({ zones: [] });
     }
 
+    deleteZone(): void {
+        console.log('deleteing zone');
+        if (this.state.selectedZone != null) {
+
+            const selectedZone = this.state.selectedZone;
+
+            const tempZones: any = [];
+
+            for (let i = 0; i < this.state.zones.length; i++) {
+                const zone = this.state.zones[i];
+
+                if (zone.props.dbid !== selectedZone.props.dbid) {
+                    tempZones[tempZones.length] = zone;
+                }
+            }
+            this.setState({ zones: tempZones });
+            ZoneService.deleteZone(selectedZone.props.dbid);
+
+        }
+
+    }
+
+    determineTextColor(color: any){
+        console.log(color)
+
+        var rgb = color;
+
+        rgb = rgb.replace(/[^\d,]/g, '').split(',');
+
+        const red = parseInt(rgb[0]);
+        const green = parseInt(rgb[1]);
+        const blue = parseInt(rgb[2]);
+        console.log(red);
+        console.log(green);
+        console.log(blue);
+
+        if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
+            console.log("Black");
+            return "#000000"
+        }
+        else {
+            console.log("White");
+            return "#ffffff"
+        }
+    }
+
     async buildZone(DBZone: any): Promise<void> {
+
+        // console.log(DBZone);
+
         const pos = {
             width: DBZone.width,
             height: DBZone.height,
@@ -181,14 +272,13 @@ class MapEditor extends React.Component<IProps, IState> {
         let activity = '';
 
         const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(DBZone.zoneId));
-
-        console.log(activitiesDB.result.length);
+        // console.log(activitiesDB);
 
         if (activitiesDB.result.length > 0) {
-            console.log(activitiesDB.result[0].name);
+            // console.log(activitiesDB.result[0].name);
             activity = activitiesDB.result[0].name;
         }
-
+console.log(DBZone);
         const tempZones = this.state.zones;
         tempZones[tempZones.length] = <ZoneBlock
             key={(tempZones.length + 1).toString()}
@@ -197,11 +287,33 @@ class MapEditor extends React.Component<IProps, IState> {
             dbid={DBZone.zoneId}
             pos={pos}
             activity={activity}
+            setSelectedZone={this.setSelectedZone}
+            backgroundColor={DBZone.color}
+            
+            textColor = {this.determineTextColor(DBZone.color)}
         />;
         this.setState({ zones: tempZones });
     }
 
     render(): JSX.Element {
+
+        const presetCol = [
+            '#FF9E00',
+            '#F5A623',
+            '#F8E71C',
+            '#8B572A',
+            '#7ED321',
+            '#417505',
+            '#BD10E0',
+            '#9013FE',
+            '#4A90E2',
+            '#50E3C2',
+            '#B8E986',
+            '#000000',
+            '#4A4A4A',
+            '#9B9B9B',
+            '#FFFFFF'
+        ];
 
         return (
             <Card className="editorCard" id="editorCard">
@@ -220,14 +332,16 @@ class MapEditor extends React.Component<IProps, IState> {
 
                     <Tooltip title="Colour Picker">
                         <IconButton size='small' aria-label="Change color" className="ml-2">
-                            <ColorLens />
+                            <ColorLens onClick={this.handleColorClick}/>
                         </IconButton>
                     </Tooltip>
 
-                    <Divider orientation="vertical" variant="middle" />
 
+
+                    <Divider orientation="vertical" variant="middle" />
+                  
                     <Tooltip title="Delete Zone">
-                        <IconButton size='small' onClick={this.clearZones} aria-label="Clear zones">
+                        <IconButton size='small' onClick={this.deleteZone} aria-label="Clear zones">
                             <Delete />
                         </IconButton>
                     </Tooltip>
@@ -251,10 +365,20 @@ class MapEditor extends React.Component<IProps, IState> {
                         </div>
 
                     </div>
+                    <div className={this.state.displayColorPicker}>
+                        <div className="colorPicker">
+                            <SketchPicker presetColors={presetCol} color={this.state.pickerColor} onChange={this.handleColorChange} />
+                        </div>
+                    </div>
+
+
 
                     <div className="mainEditor" id="mainEditor">
+
                         {this.state.zones}
+
                     </div>
+
                 </CardContent>
             </Card>
         );
