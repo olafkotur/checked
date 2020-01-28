@@ -37,6 +37,7 @@ async function main() {
   app.delete('/api/zones/delete/:zoneId', ZoneHandler.deleteZone);
   app.get('/api/zones', ZoneHandler.getZoneData);
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
+  app.get('/api/zones/users/:userId', ZoneHandler.getZonesByUser);
 
   // User handlers
   app.post('/api/users/create', UserHandler.createUser);

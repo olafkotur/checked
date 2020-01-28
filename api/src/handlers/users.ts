@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth';
 import { ResponseService } from '../services/response';
 import { IDbUser } from '../types/db';
 import { IUserResponse } from '../types/response';
+import { EmailService } from '../services/email';
 
 export const UserHandler = {
 
@@ -15,6 +16,7 @@ export const UserHandler = {
       userId: await DbHelperService.assignAvailableId('users', 'userId'),
       email: req.body.email || '',
       password: hashedPassword,
+      companyName: req.body.companyName || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -24,16 +26,26 @@ export const UserHandler = {
       ResponseService.bad('Please enter a valid email address', res);
       return false;
     }
+    if (data.password.length < 6) {
+      ResponseService.bad('Password must be at least 6 characters', res);
+      return false;
+    }
 
     // Check that a user with the same email does not exist
     await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
         ResponseService.create({ userId: data.userId }, res);
+
+        // Send Verification email
+        const body: string = EmailService.generateRegistrationBody();
+        EmailService.send('Email Verification', data.email, body);
+
       } else {
         ResponseService.bad('Email address already taken', res);
       }
     });
+
     return true;
   },
 
@@ -61,6 +73,7 @@ export const UserHandler = {
     const formatted: IUserResponse = {
       userId: data.userId,
       email: data.email,
+      companyName: data.companyName || '',
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -80,6 +93,7 @@ export const UserHandler = {
       return {
         userId: user.userId,
         email: user.email,
+        companyName: user.companyName,
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }
