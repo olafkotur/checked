@@ -11,6 +11,7 @@ import DashTabs from '../../components/Dashboard/DashTabs';
 interface IState {
     zones: Array<object>;
     loaded: boolean;
+    intervals: Array<any>;
 }
 
 interface IProps extends RouteComponentProps {
@@ -20,10 +21,22 @@ export class Dashboard extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = {zones: [], loaded: false};
+        this.state = {zones: [], loaded: false, intervals: []};
     }
 
     componentDidMount(): void {
+        this.getZones();
+        const zoneInterval = setInterval(() => this.getZones(), 5000);
+        this.state.intervals.push(zoneInterval);
+    }
+
+    componentWillUnmount(): void {
+        this.state.intervals.forEach((interval) => {
+            clearInterval(interval);
+        });
+    }
+
+    getZones(): void {
         ZoneService.loadZonesByUser(this.props.userID).then((res) => {
             this.setState({
                 zones: res.result,
@@ -35,6 +48,8 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
+
+        console.log(this.state.zones);
 
         return (
             <div className="dashContainer">
@@ -52,7 +67,7 @@ export class Dashboard extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                            <DashTabs />
+                                            <DashTabs zoneData={this.state.zones}/>
                                         </CardContent>
                                     </Grid>
                                 </Grid>

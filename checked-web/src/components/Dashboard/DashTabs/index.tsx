@@ -5,7 +5,11 @@ interface IState {
     tabValue: number;
 }
 
-class DashTabs extends React.Component<{}, IState> {
+interface IProps {
+    zoneData: Array<object>;
+}
+
+class DashTabs extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
@@ -38,10 +42,10 @@ class DashTabs extends React.Component<{}, IState> {
         return (
             <div>
                 <TabPanel value={this.state.tabValue} index={0}>
-                        meme
+                    
                 </TabPanel>
                 <TabPanel value={this.state.tabValue} index={1}>
-                    Item Two
+                    
                 </TabPanel>
                 <AppBar position="static" color="inherit" style={{boxShadow: 'none'}}>
                     <Tabs value={this.state.tabValue} onChange={this.handleChange} variant="fullWidth" >
