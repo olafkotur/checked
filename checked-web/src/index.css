@@ -7,6 +7,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  outline-width: 0px !important;
+  outline: none !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -20,12 +25,16 @@ code {
   padding-top: 85px;
 }
 
+.mutedBlack {
+  opacity: 0.85 !important;
+}
+
 .montserrat {
   font-family: 'Montserrat', sans-serif !important;
   font-weight: 700 !important;
   font-size: 200% !important;
   letter-spacing: 6px !important;
-  color: #313131 !important;
+  opacity: 0.9 !important;
 }
 
 .tiledBackground {
@@ -33,6 +42,28 @@ code {
   background-repeat: repeat;
   height: 100vh;
   width: 100%;
+}
+
+.background {
+  background-image: url('./media/spikes.png');
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.backgroundDark {
+  background-image: url('./media/spikesDark.png');
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 .vcenterParent {
@@ -48,10 +79,10 @@ code {
 /* ===== MENUBAR ===== */
 
 .topBarLogo {
-  width: 50px;
-  height: 50px;
-  transform: translateX(10px);
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  transform: translateX(5px);
+  border-radius: 5px;
 }
 
 .drawer {
@@ -69,7 +100,7 @@ code {
 }
 
 .menuIcon {
-  color: #131313;
+  opacity: 0.9;
 }
 
 .menuText {
@@ -136,14 +167,29 @@ code {
   margin-right: auto;
 }
 
+/* ===== DASHBOARD ===== */
+
+.dashCard {
+  height: 100%;
+  display: flex;
+}
+
+.MuiTab-root.Mui-selected {
+  background-color: transparent !important;
+}
+
+.zoneVisContainer {
+  background-color: red;
+}
 
 /* ===== MAP EDITOR ===== */
 
 .mainEditor {
   width: calc(100% - 90px);
-  height: calc(100vh - 175px);
+  height: calc(100vh - 214px);
   background-color: transparent;
   border: none;
   position: absolute;
   overflow: hidden;
+  
 }

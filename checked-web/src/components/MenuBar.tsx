@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText } from '@material-ui/core/';
-import { Info as Icon, Menu } from '@material-ui/icons/';
+import { Info as Icon, Menu, Brightness4, Brightness7, Dashboard, Map } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
 import Logo from '../media/checkedLogo.jpg';
@@ -17,17 +17,20 @@ interface IState {
     drawerClass: string;
     dimmerClass: string;
     open: boolean;
+    themeIcon: JSX.Element;
+    darkTheme: boolean;
 }
 
-// interface IProps {
-// }
+interface IProps {
+    setDarkMode(darkMode: boolean): void;
+}
 
-class MenuBar extends React.Component<{}, IState> {
+class MenuBar extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
 
-        this.state = { drawerOpen: false, drawerClass: 'drawer drawerClosed', dimmerClass: 'dimmer fadeOut', open: false };
+        this.state = { drawerOpen: false, drawerClass: 'drawer drawerClosed', dimmerClass: 'dimmer fadeOut', open: false, themeIcon: <Brightness4 />, darkTheme: false };
     }
 
     toggleDrawer = (): void => {
@@ -40,6 +43,16 @@ class MenuBar extends React.Component<{}, IState> {
 
     setOpen = (): void => {
         this.setState({ open: true });
+    };
+
+    setDarkMode = (): void => {
+        if(this.state.darkTheme){
+            this.setState({ themeIcon: <Brightness4 />, darkTheme: false });
+            this.props.setDarkMode(false);
+        } else {
+            this.setState({ themeIcon: <Brightness7 />, darkTheme: true });
+            this.props.setDarkMode(true);
+        }
     };
 
     render(): JSX.Element {
@@ -57,6 +70,10 @@ class MenuBar extends React.Component<{}, IState> {
                             </Typography>
                         </div>
 
+                        <IconButton onClick={this.setDarkMode} className="mr-1">
+                            {this.state.themeIcon}
+                        </IconButton>
+
                         <div aria-label="logo">
                             <img src={Logo} className="topBarLogo" alt="logo" />
                         </div>
@@ -72,16 +89,12 @@ class MenuBar extends React.Component<{}, IState> {
                             className={this.state.drawerClass}
                         >
                             <List>
-                                <ListItem button onClick={(): any => navigate('/')} key={'placeholder'} >
-                                    <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText className="menuText">Memes</ListItemText>
+                                <ListItem button onClick={(): any => navigate('/')} key={'Dashboard'} >
+                                    <ListItemIcon><Dashboard /></ListItemIcon>
+                                    <ListItemText>Dashboard</ListItemText>
                                 </ListItem>
-                                <ListItem button onClick={(): any => navigate('meme')} key={'placeholder1'} >
-                                    <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText className="menuText">Memes1</ListItemText>
-                                </ListItem>
-                                <ListItem button onClick={(): any => navigate('editor')} key={'placeholder'} >
-                                    <ListItemIcon><Icon /></ListItemIcon>
+                                <ListItem button onClick={(): any => navigate('editor')} key={'MapEditor'} >
+                                    <ListItemIcon><Map /></ListItemIcon>
                                     <ListItemText className="menuText">Map Editor</ListItemText>
                                 </ListItem>
 

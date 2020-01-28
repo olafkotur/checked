@@ -1,15 +1,14 @@
 const request = require('request');
 
 export const HttpService = {
-  get: (uri: string): Promise<void> => {
-    return new Promise((resolve: any, reject: any) => {
-      request.get({ uri }, (error: Error) => {
+  get: async (uri: string): Promise<void> => {
+    return await new Promise((resolve: any, reject: any) => {
+      request.get({ uri }, (error: Error, _response: any, body: any) => {
         if (error) {
           console.error(error);
           reject();
         }
-        console.log(`HttpService: Get request made to: ${uri}`);
-        resolve();
+        resolve(JSON.parse(body));
       });
     });
   },
@@ -23,14 +22,13 @@ export const HttpService = {
       }
     };
 
-    return new Promise((resolve: any, reject: any) => {
-      request.post(options, (error: Error) => {
+    return await new Promise((resolve: any, reject: any) => {
+      request.post(options, (error: Error, _response: any, body: any) => {
         if (error) {
           console.error(error);
           reject();
         }
-        console.log(`HttpService: Post request made to: ${uri}`);
-        resolve();
+        resolve(JSON.parse(body));
       });
     });
   },

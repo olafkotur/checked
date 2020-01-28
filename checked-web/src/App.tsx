@@ -3,23 +3,27 @@ import { Router } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
+import { Dashboard } from './pages/dashboard';
 
 import { ThemeProvider } from '@material-ui/core/styles';
-import theme from './muiTheme';
+import {LightTheme, DarkTheme} from './muiTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 interface IState {
 	authorised: boolean;
 	userID: number;
+	darkTheme: boolean;
 }
 
 class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: true, userID: 1 }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: true, userID: 1, darkTheme: true }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
+		this.setDarkMode = this.setDarkMode.bind(this);
+		this.setUserID = this.setUserID.bind(this);
 	}
 
 	setAuthorised(authState: boolean): void {
@@ -30,20 +34,43 @@ class App extends React.Component<{}, IState> {
 		this.setState({ userID });
 	};
 
+	setDarkMode(darkMode: boolean): void {
+		this.setState({darkTheme: darkMode});
+	}
+
+
 	render(): JSX.Element {
 
 		if (this.state.authorised) {
-			return (
-				<ThemeProvider theme={theme}>
-					<MenuBar />
-					<Router>
-						<MapEditor path="editor" userID={this.state.userID}/>
-					</Router>
-				</ThemeProvider>
-			);
+			if(this.state.darkTheme){
+				return (
+					<div className="backgroundDark">
+						<ThemeProvider theme={DarkTheme}>
+							<MenuBar setDarkMode={this.setDarkMode} />
+							<Router>
+								<MapEditor path="editor" userID={this.state.userID} />
+								<Dashboard path="/" userID={this.state.userID} />
+							</Router>
+						</ThemeProvider>
+					</div>
+				);
+			} else {
+				return (
+					<div className="background">
+						<ThemeProvider theme={LightTheme}>
+							<MenuBar setDarkMode={this.setDarkMode} />
+							<Router>
+								<MapEditor path="editor" userID={this.state.userID} />
+								<Dashboard path="/" userID={this.state.userID} />
+							</Router>
+						</ThemeProvider>
+					</div>
+				);
+			}
+
 		} else {
 			return (
-				<ThemeProvider theme={theme}>
+				<ThemeProvider theme={LightTheme}>
 					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID}/>
 				</ThemeProvider>
 			);

@@ -28,7 +28,7 @@ Be sure to edit the save function yValue to acomidate
 
 .cardToolbar{
     padding-left: 5px !important;
-    height: 30px;
+    height: 40px;
     min-height: 0px !important;
 }
 
@@ -40,11 +40,18 @@ Be sure to edit the save function yValue to acomidate
     margin-left: 75px;
     overflow: hidden;
     background-color: transparent;
+
 }
 
 .editorContent {
     padding: 0px !important;
     overflow: hidden;
 
+}
+
+.colorPicker{
+
+    position: absolute;
+    z-index: 5;
 }
 
