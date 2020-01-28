@@ -15,14 +15,14 @@ export interface IDataResponse {
 }
 
 export interface ILiveResponse {
- sensorId: number,
+ memberId: number,
  userId: number,
  value: number,
  time: number 
 }
 
 export interface ILocationResponse {
-  sensorId: number,
+  memberId: number,
   userId: number,
   xValue: number,
   yValue: number,
