@@ -37,7 +37,7 @@ class App extends React.Component<{}, IState> {
 				<ThemeProvider theme={theme}>
 					<MenuBar />
 					<Router>
-            			<MapEditor path="editor"/>
+						<MapEditor path="editor" userID={this.state.userID}/>
 					</Router>
 				</ThemeProvider>
 			);

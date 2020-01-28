@@ -1,28 +1,32 @@
 import React from 'react';
-// import ZoneBlock from './MapEditor/ZoneBlock'
-
 
 import BackgroundGrid from '../../components/MapEditor/BackgroundGrid';
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardHeader, CardContent, Typography, Avatar, Button, IconButton, Divider, Grid } from '@material-ui/core';
+import { Card, CardHeader, CardContent,  IconButton, Divider } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import "../../components/MapEditor/CSS/EditorCard.css";
 import { Add, GridOn, Delete, ColorLens, Save } from '@material-ui/icons';
-import MainEditor from '../../components/MapEditor/MainEditor';
 import ZoneBlock from '../../components/MapEditor/ZoneBlock';
 import { ZoneService } from '../../api/ZoneService';
-import ReactDOM from 'react-dom';
 import '../../components/MapEditor/InteractJS/DragZone.js';
 import checkCollision from '../../components/MapEditor/collisionDetection';
 interface IState {
     zones: Array<any>;
 }
 
-class MapEditor extends React.Component<RouteComponentProps, IState> {
+interface IProps {
+    userID: number;
+}
+
+interface IProps extends RouteComponentProps{
+    userID: number;
+}
+
+class MapEditor extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { zones: [] };
+        this.state = { zones: []};
         this.clearZones = this.clearZones.bind(this);
     }
 
@@ -57,7 +61,6 @@ class MapEditor extends React.Component<RouteComponentProps, IState> {
     async save(): Promise<void> {
         console.log("saving now");
         const zones = document.getElementsByClassName("zoneBlock");
-        const toSend = [];
         // checks if the zones are not overlapping (reused from 330)
         if (checkCollision(zones) === false) {
             for (let i = 0; i < zones.length; i++) {
@@ -88,7 +91,7 @@ class MapEditor extends React.Component<RouteComponentProps, IState> {
     }
 
     async loadZones(): Promise<void> {
-        const response = await ZoneService.loadZones();
+        const response = await ZoneService.loadZonesByUser(this.props.userID);
         console.log(response.result.length);
         for (let i = 0; i < response.result.length; i++) {
             this.buildZone(response.result[i]);
@@ -117,7 +120,7 @@ class MapEditor extends React.Component<RouteComponentProps, IState> {
                                     />;
         this.setState({zones: tempZones});
     }
- 
+    
     render(): JSX.Element {
 
         return (
