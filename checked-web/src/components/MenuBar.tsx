@@ -70,7 +70,7 @@ class MenuBar extends React.Component<IProps, IState> {
                             </Typography>
                         </div>
 
-                        <IconButton onClick={this.setDarkMode}>
+                        <IconButton onClick={this.setDarkMode} className="mr-1">
                             {this.state.themeIcon}
                         </IconButton>
 
