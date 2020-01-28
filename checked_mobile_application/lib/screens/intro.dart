@@ -70,7 +70,7 @@ class _IntroState extends State<Intro> {
                 ],   
               ),
               SizedBox(
-                height: 290.0,
+                height: 200.0,
               ),
               Text("Already have an account? Log in here",
                 style: TextStyle(
