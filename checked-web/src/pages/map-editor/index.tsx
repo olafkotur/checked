@@ -74,7 +74,7 @@ class MapEditor extends React.Component<IProps, IState> {
         if (this.state.selectedZone != null) {
             this.setState({ pickerColor: color });
             this.state.selectedZone.setBackground(color);
-            this.state.selectedZone.setTextColor(this.determineTextColor(color));
+            // this.state.selectedZone.setTextColor(this.determineTextColor(color));
         }
        
     }
@@ -129,7 +129,7 @@ class MapEditor extends React.Component<IProps, IState> {
             id={(this.state.zones.length + 1)}
             dbid={dbid} pos={pos}
             activity=""
-            backgroundColor="#FF9E00"
+            backgroundColor="rgb(255, 158, 0)"
             setSelectedZone={this.setSelectedZone}
             textColor="white"
         />;
@@ -187,7 +187,7 @@ class MapEditor extends React.Component<IProps, IState> {
                         width: rect.width,
                         height: rect.height,
                         xValue: rect.x - 75,
-                        yValue: rect.y - 150, // This will need to change if you change elements above the editor
+                        yValue: rect.y - 190, // This will need to change if you change elements above the editor
                         color: backgroundStyle
                     };
 
@@ -236,13 +236,13 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     determineTextColor(color: any): string{
-        console.log(color);
+       
+
+       
+
         let rgb = color;
 
-        if(rgb.includes("#")){
-           rgb = this.hexToRgb(rgb);
-        }
-
+      
         
 
         rgb = rgb.replace(/[^\d,]/g, '').split(',');
@@ -256,12 +256,13 @@ class MapEditor extends React.Component<IProps, IState> {
 
         if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
             console.log("Black");
-            return "#000000";
+            return "rgb(0, 0, 0)";
         }
         else {
             console.log("White");
-            return "#ffffff";
+            return "rgb(255, 255, 255)";
         }
+        
     }
 
    hexToRgb(hex: string): any {

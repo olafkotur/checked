@@ -186,9 +186,10 @@ code {
 
 .mainEditor {
   width: calc(100% - 90px);
-  height: calc(100vh - 175px);
+  height: calc(100vh - 214px);
   background-color: transparent;
   border: none;
   position: absolute;
   overflow: hidden;
+  
 }

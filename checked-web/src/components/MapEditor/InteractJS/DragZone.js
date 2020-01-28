@@ -38,7 +38,7 @@ interact(".zoneBlock")
         endOnly: false
       }),
       interact.modifiers.snap({
-        targets: [interact.createSnapGrid({ x: 25, y: 25 })],
+        targets: [interact.createSnapGrid({ x: gridSnap, y: gridSnap })],
         range: Infinity,
         relativePoints: [{ x: 0, y: 0 }]
       })
