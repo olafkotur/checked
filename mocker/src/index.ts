@@ -24,6 +24,7 @@ async function main() {
   }).then((res: any) => {
     if (res.code === 201) {
       ids.user = res.result.userId;
+      console.log('CreateUser: Successfully created a new user');
     } else {
       console.error('CreateUser: Error user already exists');
     }
@@ -42,6 +43,7 @@ async function main() {
     }).then((res: any) => {
       if (res.code === 201) {
         ids.zone.push(res.result.zoneId);
+        console.log('CreateZone: Successfully created a new zone');
       } else {
         console.error('CreateZone: Error could not create a new zone');
       }
@@ -57,6 +59,7 @@ async function main() {
     }).then((res: any) => {
       if (res.code === 201) {
         ids.member.push(res.result.memberId);
+        console.log('CreateMember: Successfully created a new member');
       } else {
         console.error('CreateMember: Error could not create a new member');
       }
