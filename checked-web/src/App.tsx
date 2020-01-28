@@ -40,7 +40,7 @@ class App extends React.Component<{}, IState> {
 						<MenuBar />
 						<Router>
 							<MapEditor path="editor" userID={this.state.userID} />
-							<Dashboard path="/" />
+							<Dashboard path="/" userID={this.state.userID} />
 						</Router>
 					</ThemeProvider>
 				</div>

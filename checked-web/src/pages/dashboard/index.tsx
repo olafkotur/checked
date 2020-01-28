@@ -12,7 +12,11 @@ interface IState {
     zones: Array<object>;
     loaded: boolean;
 }
-export class Dashboard extends React.Component<RouteComponentProps, IState> {
+
+interface IProps extends RouteComponentProps {
+    userID: number;
+}
+export class Dashboard extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
