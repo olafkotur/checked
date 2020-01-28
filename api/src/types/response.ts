@@ -66,3 +66,13 @@ export interface IActivityResponse {
   createdAt: number,
   lastUpdated: number
 }
+
+export interface IZoneWithActivityResponse extends IZoneResponse {
+  activity: IActivityResponse
+}
+
+// export interface IAssemblyResponse {
+//   memberId: number,
+//   zoneId: number,
+
+// }

@@ -38,6 +38,7 @@ async function main() {
   app.get('/api/zones', ZoneHandler.getZoneData);
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
   app.get('/api/zones/users/:userId', ZoneHandler.getZonesByUser);
+  app.get('/api/zones/activity/users/:userId', ZoneHandler.getZonesWithActivityByUser);
 
   // User handlers
   app.post('/api/users/create', UserHandler.createUser);
@@ -60,9 +61,11 @@ async function main() {
   app.get('/api/activity', ActivityHandler.getActivities);
   app.get('/api/activity/zone/:zoneId', ActivityHandler.getActivitiesByZone);
 
+  // Assembly handlers
+
   // Misc handlers
+  app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
   app.get('/api/ping', MiscHandler.getPingResponse);
-  app.get('/api/docs', MiscHandler.getDocumentation);
   app.get('/api/danger/purge/:code', MiscHandler.resetDatabase);
 
   app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
