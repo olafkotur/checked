@@ -26,7 +26,7 @@ code {
 }
 
 .mutedBlack {
-  color: #313131 !important;
+  opacity: 0.85 !important;
 }
 
 .montserrat {
@@ -34,7 +34,7 @@ code {
   font-weight: 700 !important;
   font-size: 200% !important;
   letter-spacing: 6px !important;
-  color: #313131 !important;
+  opacity: 0.9 !important;
 }
 
 .tiledBackground {
@@ -46,6 +46,14 @@ code {
 
 .background {
   background-image: url('./media/spikes.png');
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  height: 100vh;
+  width: 100%;
+}
+
+.backgroundDark {
+  background-image: url('./media/spikesDark.png');
   background-size: 300px 300px;
   background-repeat: repeat;
   height: 100vh;
@@ -65,10 +73,10 @@ code {
 /* ===== MENUBAR ===== */
 
 .topBarLogo {
-  width: 50px;
-  height: 50px;
-  transform: translateX(10px);
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  transform: translateX(5px);
+  border-radius: 5px;
 }
 
 .drawer {
@@ -86,7 +94,7 @@ code {
 }
 
 .menuIcon {
-  color: #131313;
+  opacity: 0.9;
 }
 
 .menuText {

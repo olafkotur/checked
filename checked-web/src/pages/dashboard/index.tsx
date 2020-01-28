@@ -6,7 +6,7 @@ import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { DashboardRounded } from '@material-ui/icons';
 
-import DashTabs from '../../components/DashTabs';
+import DashTabs from '../../components/Dashboard/DashTabs';
 
 interface IState {
     zones: Array<object>;
@@ -24,7 +24,7 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     componentDidMount(): void {
-        ZoneService.loadZones().then((res) => {
+        ZoneService.loadZonesByUser(this.props.userID).then((res) => {
             this.setState({
                 zones: res.result,
                 loaded: true
