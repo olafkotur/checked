@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import React from 'react';
 import './CSS/ZoneBlock.css';
-import ColorPicker from './ColorPicker';
+
 
 
 
 
 interface IState {
     value: string;
+    activity: string;
     
 
 }
@@ -16,6 +17,7 @@ interface IProps {
     id: number;
     dbid: number;
     pos: any;
+    activity: string;
 }
 
 
@@ -23,7 +25,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { value: this.props.name };
+        this.state = { value: this.props.name, activity: this.props.activity };
 
         this.myChangeHandler = this.myChangeHandler.bind(this);
         this.mySubmitHandler = this.mySubmitHandler.bind(this);
@@ -54,7 +56,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
                 <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
 
                     <input id = {this.props.name + "Title"} onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={this.props.name} />
-
+                    {/* <input placeholder = { this.props.activity}> </input> */}
 
                 </form>
 
