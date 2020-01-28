@@ -4,7 +4,7 @@ import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
 import { IDbZone } from '../types/db';
-import { IZoneResponse } from '../types/response';
+import { IZoneResponse, IZoneWithActivityResponse } from '../types/response';
 
 export const ZoneHandler = {
 
@@ -81,6 +81,7 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('zones', { zoneId });
+        MongoService.deleteOne('activity', { zoneId });
         ResponseService.ok('Deleted existing zone', res);
       } else {
         ResponseService.notFound('Zone does not exist', res);
@@ -159,6 +160,48 @@ export const ZoneHandler = {
         xValue: val.xValue,
         yValue: val.yValue,
         color: val.color,
+        createdAt: moment(val.createdAt).unix(),
+        lastUpdated: moment(val.lastUpdated).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
+  getZonesWithActivityByUser: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.params.userId || '0');
+    
+    // Get zones data
+    const data: any = await MongoService.findMany('zones', { userId });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    const activities: any = await MongoService.findMany('activity', {});
+    const getActivityByZone = (zoneId: number) => {
+      const activity: any = activities.filter((act: any) => act.zoneId === zoneId);
+      return activity.length > 0 ? {
+        activityId: activity[0].activityId,
+        name: activity[0].name,
+        createdAt: activity[0].createdAt,
+        lastUpdated: activity[0].lastUpdated,
+      } : {};
+    };
+
+    // Converts to client friendly format
+    const formatted: IZoneWithActivityResponse[] = data.map((val: IDbZone) => {
+      return {
+        zoneId: val.zoneId,
+        userId: val.userId,
+        name: val.name,
+        width: val.width,
+        height: val.height,
+        xValue: val.xValue,
+        yValue: val.yValue,
+        color: val.color,
+        activity: getActivityByZone(val.zoneId),
         createdAt: moment(val.createdAt).unix(),
         lastUpdated: moment(val.lastUpdated).unix(),
       }

@@ -15,14 +15,14 @@ export interface IDataResponse {
 }
 
 export interface ILiveResponse {
- sensorId: number,
+ memberId: number,
  userId: number,
  value: number,
  time: number 
 }
 
 export interface ILocationResponse {
-  sensorId: number,
+  memberId: number,
   userId: number,
   xValue: number,
   yValue: number,
@@ -52,9 +52,9 @@ export interface IUserResponse {
 
 export interface IMemberResponse {
   memberId: number,
+  userId: number,
   firstName: string,
   lastName: string,
-  adminUsername: string,
   createdAt: number,
   lastUpdated: number
 }
@@ -65,4 +65,15 @@ export interface IActivityResponse {
   zoneId: number
   createdAt: number,
   lastUpdated: number
+}
+
+export interface IZoneWithActivityResponse extends IZoneResponse {
+  activity: IActivityResponse
+}
+
+export interface IAssemblyResponse {
+  isActive: boolean,
+  zoneId: number,
+  createdAt: number,
+  lastUpdated: number,
 }
