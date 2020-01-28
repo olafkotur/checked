@@ -34,7 +34,8 @@ export const ScheduleService = {
       // Repeat for each member
       for (let i = 0; i < config.default.numberOfMembers; i++) {
         body = {
-          sensorId: i + 1,
+          userId: ids.user,
+          memberId: ids.member[i],
           xValue: HelperService.randomInt(config.minValues.coords, config.maxValues.coords),
           yValue: HelperService.randomInt(config.minValues.coords, config.maxValues.coords),
         }
