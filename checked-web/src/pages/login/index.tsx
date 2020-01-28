@@ -7,7 +7,7 @@ import UseAnimations from 'react-useanimations';
 
 import Logo from '../../media/checkedLogo.jpg';
 interface IState {
-    username: string;
+    email: string;
     password: string;
     snackbarOpen: boolean;
     snackbarMessage: string;
@@ -24,21 +24,22 @@ export class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             snackbarOpen: false,
             snackbarMessage: '',
             showLoader: false,
         };
-        this.handleUsername = this.handleUsername.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.toggleSnackbar = this.toggleSnackbar.bind(this);
     }
 
-    handleSignIn(username: string, password: string): void {
+    handleSignIn(email: string, password: string): void {
+
         this.setState({showLoader: true});
         setTimeout(() => {        
-            UserService.login(username, password).then((res) => {
+            UserService.login(email, password).then((res) => {
                 if (res.status === 'ok') {
                     this.props.setAuthorised(true);
                     this.props.setUserID(res.result.userId);
@@ -51,13 +52,13 @@ export class Login extends React.Component<IProps, IState> {
                 this.toggleSnackbar();
             });
             this.setState({ showLoader: false });
-        }, 1000);
+        }, 1500);
     };
 
-    handleSignUp(username: string, password: string): void {
+    handleSignUp(email: string, password: string): void {
         this.setState({ showLoader: true });
         setTimeout(() => {
-            UserService.createUser(username, password).then((res) => {
+            UserService.createUser(email, password).then((res) => {
                 if (res.status === 'created') {
                     this.props.setAuthorised(true);
                     this.props.setUserID(res.result.userId);
@@ -70,17 +71,17 @@ export class Login extends React.Component<IProps, IState> {
                 this.toggleSnackbar();
             });;
             this.setState({ showLoader: false });
-        }, 1000);
+        }, 2500);
     }
 
     handleKeyDown(event: any): void {
         if (event.keyCode === 13) {
-            this.handleSignIn(this.state.username, this.state.password);
+            this.handleSignIn(this.state.email, this.state.password);
         }
     }
 
-    handleUsername(event: any): void {
-        this.setState({ username: event.target.value });
+    handleEmail(event: any): void {
+        this.setState({ email: event.target.value });
     };
 
     handlePassword(event: any): void {
@@ -119,12 +120,12 @@ export class Login extends React.Component<IProps, IState> {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
+                                id="email"
+                                label="Email"
+                                name="email"
                                 autoFocus
                                 className="mt-1 mb-3"
-                                onChange={this.handleUsername}
+                                onChange={this.handleEmail}
                             />
                             <TextField
                                 variant="outlined"
@@ -145,8 +146,8 @@ export class Login extends React.Component<IProps, IState> {
                                 variant="contained"
                                 color="primary"
                                 className="mt-3"
-                                onClick={(): void => this.handleSignIn(this.state.username, this.state.password)}
-                                disabled={this.state.username.length < 3 || this.state.password.length < 6}
+                                onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
+                                disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                             >
                                 Sign In
                             </Button>
@@ -156,8 +157,8 @@ export class Login extends React.Component<IProps, IState> {
                                 variant="outlined"
                                 color="primary"
                                 className="mt-3"
-                                onClick={(): void => this.handleSignUp(this.state.username, this.state.password)}
-                                disabled={this.state.username.length < 3 || this.state.password.length < 6}
+                                onClick={(): void => this.handleSignUp(this.state.email, this.state.password)}
+                                disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                             >
                                 Sign Up
                             </Button>

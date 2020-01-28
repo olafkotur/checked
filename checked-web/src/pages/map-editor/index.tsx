@@ -2,7 +2,7 @@ import React from 'react';
 
 // import BackgroundGrid from '../../components/MapEditor/BackgroundGrid';
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardHeader, CardContent, IconButton, Divider } from '@material-ui/core';
+import { Card, CardHeader, CardContent, IconButton, Divider, Tooltip } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import "../../components/MapEditor/CSS/EditorCard.css";
 import { Add, GridOn, Delete, ColorLens, Save } from '@material-ui/icons';
@@ -150,20 +150,15 @@ class MapEditor extends React.Component<IProps, IState> {
                 const activity = zone.getAttribute('data-activity');
                 if (id != null && activity != null) {
                     const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(id));
-
-
                     // console.log(activitiesDB.result[0].activityId);
                     // Create Json
-
-
                     if (activity === '') {
                         // console.log('empty activity');
                         if (activitiesDB.result.length > 0) {
                             // console.log('delete activity');
                             const activityID = activitiesDB.result[0].activityId;
                             await ActivityService.deleteActivity(parseInt(activityID));
-                        }
-                        else {
+                        } else {
                             // console.log('do nothing');
                         }
 
@@ -261,7 +256,6 @@ class MapEditor extends React.Component<IProps, IState> {
             console.log("White");
             return "#ffffff"
         }
-
     }
 
     async buildZone(DBZone: any): Promise<void> {
@@ -278,7 +272,6 @@ class MapEditor extends React.Component<IProps, IState> {
         let activity = '';
 
         const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(DBZone.zoneId));
-
         // console.log(activitiesDB);
 
         if (activitiesDB.result.length > 0) {
@@ -324,41 +317,45 @@ console.log(DBZone);
 
         return (
             <Card className="editorCard" id="editorCard">
-                <CardHeader className="editorHeader" title={<h1 className="editorCardTitle">Room Layout Editor</h1>} avatar={<GridOn fontSize="large" />} />
+                <CardHeader title="Map Editor" avatar={<GridOn className="w-100 h-100" />} className="mutedBlack mt-2">
+                </CardHeader>
 
                 <Divider />
 
-                <Toolbar className="cardToolbar">
+                <Toolbar className="cardToolbar pt-2 pb-2">
 
-                    <IconButton edge="start" size='small' onClick={this.newZone} aria-label="Add new zone">
-                        <Add />
-                    </IconButton>
+                    <Tooltip title="Add Zone">
+                        <IconButton edge="start" size='small' onClick={this.newZone} aria-label="Add new zone" className="ml-3">
+                            <Add />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton size='small' aria-label="Change color">
-                        <ColorLens onClick={this.handleColorClick} />
-                    </IconButton>
+                    <Tooltip title="Colour Picker">
+                        <IconButton size='small' aria-label="Change color" className="ml-2">
+                            <ColorLens onClick={this.handleColorClick}/>
+                        </IconButton>
+                    </Tooltip>
 
 
 
                     <Divider orientation="vertical" variant="middle" />
+                  
+                    <Tooltip title="Delete Zone">
+                        <IconButton size='small' onClick={this.deleteZone} aria-label="Clear zones">
+                            <Delete />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton size='small' onClick={this.deleteZone} aria-label="Clear zones">
-                        <Delete />
-                    </IconButton>
-
-                    <IconButton size='small' onClick={this.save} aria-label="Save">
-                        <Save />
-                    </IconButton>
-
-
+                    <Tooltip title="Save Layout">
+                        <IconButton size='small' onClick={this.save} aria-label="Save" className="ml-2">
+                            <Save />
+                        </IconButton>
+                    </Tooltip>
 
                 </Toolbar>
                 <Divider />
                 <CardContent className="editorContent">
                     {/* <BackgroundGrid /> */}
-
-
-
                     <div className="BgContainer" key="BGC">
                         <div className="colsDiv" key="ColsDiv">
                             {this.state.col}

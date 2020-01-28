@@ -14,3 +14,8 @@ Content-Type: application/x-www-form-urlencoded
 
 username=bigMeme
 &password=bigMeme
+
+
+### @name getZonesByUser
+GET {{baseUrl}}zones/users/1 HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
