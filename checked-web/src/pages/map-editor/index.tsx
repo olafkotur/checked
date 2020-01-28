@@ -13,12 +13,14 @@ import checkCollision from '../../components/MapEditor/collisionDetection';
 import BgColumn from '../../components/MapEditor/BgColumn';
 import BgRow from '../../components/MapEditor/BgRow';
 import { ActivityService } from '../../api/ActivityService';
+import ReactDOM from 'react-dom';
 
 
 interface IState {
     zones: Array<any>;
     col: Array<any>;
     row: Array<any>;
+    selectedZone?: any;
 }
 
 
@@ -40,6 +42,8 @@ class MapEditor extends React.Component<IProps, IState> {
         this.newZone = this.newZone.bind(this);
         this.genBg = this.genBg.bind(this);
         this.save = this.save.bind(this);
+        this.setSelectedZone = this.setSelectedZone.bind(this);
+        this.deleteZone = this.deleteZone.bind(this);
     }
 
     componentWillMount(): void {
@@ -50,6 +54,11 @@ class MapEditor extends React.Component<IProps, IState> {
     componentWillUnmount(): void {
         this.clearZones();
     }
+
+    setSelectedZone(zone: any): void{
+        this.setState({selectedZone: zone});
+    }
+    
 
     genBg(): void {
         const loop = Math.floor((window.innerWidth / 25) - 4);
@@ -89,6 +98,7 @@ class MapEditor extends React.Component<IProps, IState> {
                                         id={(this.state.zones.length + 1)} 
                                         dbid={dbid} pos={pos} 
                                         activity = ""
+                                        setSelectedZone={this.setSelectedZone}
                                         />;
         
         this.setState({zones: tempZones});
@@ -175,6 +185,28 @@ class MapEditor extends React.Component<IProps, IState> {
         this.setState({zones: []});
     }
 
+    deleteZone(): void {
+        console.log('deleteing zone');
+        if (this.state.selectedZone != null) {
+            
+            const selectedZone = this.state.selectedZone;
+
+            const tempZones: any = [];
+
+            for (let i = 0; i < this.state.zones.length; i++) {
+                const zone = this.state.zones[i];
+
+                if (zone.props.dbid !== selectedZone.props.dbid) {
+                    tempZones[tempZones.length] = zone;
+                }
+            }
+            this.setState({zones: tempZones});
+            ZoneService.deleteZone(selectedZone.props.dbid);
+
+        }
+
+    }
+
     async buildZone(DBZone: any): Promise<void> {
 
         console.log(DBZone);
@@ -205,6 +237,7 @@ class MapEditor extends React.Component<IProps, IState> {
                                         dbid={DBZone.zoneId} 
                                         pos={pos} 
                                         activity = {activity}
+                                        setSelectedZone={this.setSelectedZone}
                                     />;
         this.setState({zones: tempZones});
     }
@@ -229,7 +262,7 @@ class MapEditor extends React.Component<IProps, IState> {
 
                     <Divider orientation="vertical" variant="middle" />
 
-                    <IconButton size='small' onClick={this.clearZones} aria-label="Clear zones">
+                    <IconButton size='small' onClick={this.deleteZone} aria-label="Clear zones">
                         <Delete />
                     </IconButton>
 

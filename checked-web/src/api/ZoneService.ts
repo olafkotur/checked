@@ -39,6 +39,13 @@ export const ZoneService = {
     return await HttpService.get(uri).then((res) => {
       return res;
     });
+  },
+
+  deleteZone: async (zoneID: number): Promise<any> => {
+    const uri = "zones/delete/" + zoneID.toString();
+    return await HttpService.delete(uri).then((res) => {
+      return res;
+    });
   }
 
 };

@@ -18,6 +18,7 @@ interface IProps {
     dbid: number;
     pos: any;
     activity: string;
+    setSelectedZone(zone: any): void;
 }
 
 
@@ -49,7 +50,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
     };
 
     handleClick = (event: any): void => {
-        console.log("clicked");
+        this.props.setSelectedZone(this);
         
     };
 
