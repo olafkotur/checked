@@ -81,6 +81,7 @@ export const ZoneHandler = {
     await DbHelperService.exists('zones', { zoneId }).then((exists: boolean) => {
       if (exists) {
         MongoService.deleteOne('zones', { zoneId });
+        MongoService.deleteOne('activity', { zoneId });
         ResponseService.ok('Deleted existing zone', res);
       } else {
         ResponseService.notFound('Zone does not exist', res);
