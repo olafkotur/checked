@@ -8,6 +8,7 @@ import { ZoneHandler } from './handlers/zone';
 import { UserHandler } from './handlers/users';
 import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
+import { AssemblyHandler } from './handlers/assembly';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -62,6 +63,8 @@ async function main() {
   app.get('/api/activity/zone/:zoneId', ActivityHandler.getActivitiesByZone);
 
   // Assembly handlers
+  app.get('/api/assembly/:zoneId', AssemblyHandler.getPoints);
+  app.post('/api/assembly/create', AssemblyHandler.createPoint);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

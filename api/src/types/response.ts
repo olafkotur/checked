@@ -71,8 +71,10 @@ export interface IZoneWithActivityResponse extends IZoneResponse {
   activity: IActivityResponse
 }
 
-// export interface IAssemblyResponse {
-//   memberId: number,
-//   zoneId: number,
-
-// }
+export interface IAssemblyResponse {
+  isActive: boolean,
+  memberId: number,
+  zoneId: number,
+  createdAt: number,
+  lastUpdated: number,
+}
