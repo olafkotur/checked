@@ -1,6 +1,6 @@
 
 // This was taken from 330 (Slightly altered to fit typescript)
-function checkCollision(zones: any) {
+function checkCollision(zones: any): boolean {
 
     for (let i = 0; i < zones.length; i++) {
         const thisZone = zones[i];

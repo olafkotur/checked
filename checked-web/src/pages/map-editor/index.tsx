@@ -53,16 +53,21 @@ class MapEditor extends React.Component<IProps, IState> {
 
     genBg(): void {
         const loop = Math.floor((window.innerWidth / 25) - 4);
+        const tempCols = this.state.col;
+        const tempRows = this.state.row;
 
         for (let i = 0; i < loop; i++) {
-            this.state.col[this.state.col.length] = <BgColumn key={"Col" + i} />;
-
+            tempCols[tempCols.length] = <BgColumn key={"Col" + i} />;
         }
+       
         const loop2 = (Math.floor(window.innerHeight / 25) - 7);
         for (let i = 0; i < loop2; i++) {
-            this.state.row[this.state.row.length] = <BgRow key={"Row" + i} />;
+            tempRows[tempRows.length] = <BgRow key={"Row" + i} />;
 
         }
+
+        this.setState({ row: tempRows });
+        this.setState({ col: tempCols });
     }
 
   
@@ -124,7 +129,7 @@ class MapEditor extends React.Component<IProps, IState> {
                     else{
                         // user added an activity
                         // console.log(activity);
-                        if (activitiesDB.result.length == 0 ){
+                        if (activitiesDB.result.length === 0 ){
                             // console.log('add activity');
                             await ActivityService.createActivity(activity,parseInt(id));
                         }
