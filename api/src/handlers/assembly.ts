@@ -41,10 +41,35 @@ export const AssemblyHandler = {
       MongoService.insertOne('assembly', data);
       ResponseService.ok('Added new assembly point', res);
     }
-
+    return true;
   },
 
-  updatePoint: async (req: express.Request, res: express.Response) => {},
+  updatePoint: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('assembly', { zoneId: parseInt(req.params.zoneId || '0') });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    // Ensure that the member exists before continuing
+    const memberExists: boolean = await DbHelperService.exists('members', { memberId: data.memberId });
+    if (!memberExists) {
+      ResponseService.bad('Cannot create an assembly point without a valid member id', res);
+      return false;
+    }
+
+    const formatted: IDbAssembly = {
+      isActive: req.params.isActive === 'true',
+      memberId: data.memberId,
+      zoneId: data.zoneId,
+      createdAt: data.createdAt,
+      lastUpdated: new Date()
+    };
+
+    MongoService.updateOne('assembly', { memberId: data.memberId }, formatted);
+    ResponseService.ok('Updated existing assembly point', res);
+    return true;
+  },
 
   getPoints: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('assembly', { zoneId: parseInt(req.params.zoneId || '0') });
@@ -69,30 +94,3 @@ export const AssemblyHandler = {
   },
 
 };
-
-// const data: IDbActivity = {
-//   activityId: await DbHelperService.assignAvailableId('activity', 'activityId'),
-//   name: req.body.name || '',
-//   zoneId: parseInt(req.body.zoneId || '0'),
-//   createdAt: new Date(),
-//   lastUpdated: new Date()
-// };
-
-// // Ensure that the zone exists before continuing
-// const zoneExists: boolean = await DbHelperService.exists('zones', { zoneId: data.zoneId });
-// if (!zoneExists) {
-//   ResponseService.bad('Cannot create an activity without a valid zone id', res);
-//   return false;
-// }
-
-// // Ensure that an activity with the same zoneId does not already exist
-// await DbHelperService.exists('activity', { zoneId: data.zoneId }).then((exists: boolean) => {
-//   if (!exists) {
-//     MongoService.insertOne('activity', data);
-//     ResponseService.create({ activityId: data.activityId }, res);
-//   } else {
-//     ResponseService.bad('Activity in that zone already exists', res);
-//   }
-// });
-
-// return true;
