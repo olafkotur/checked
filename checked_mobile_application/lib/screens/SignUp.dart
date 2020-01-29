@@ -1,4 +1,6 @@
+import 'package:checked_mobile_application/module/loading.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
+import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,6 +19,12 @@ class _SignUpState extends State<SignUp> {
   UserServices get service => GetIt.I<UserServices>();
 
   var url = 'checked-api.herokuapp.com/api/users/create';
+
+  APIResponse _apiresponse;
+
+  bool _isloading = false;
+
+  String errorMessage = "";
 
   String _email = "";
   String _password = "";
@@ -43,7 +51,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isloading? Loading() : Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
           top: true,
@@ -211,6 +219,9 @@ class _SignUpState extends State<SignUp> {
                               }else if(value.length < 8){
                                 return "Password must be at less 8 characters long";
                               }
+                              if(value != _password){
+                                return "Password doesn't match";
+                              }
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -253,17 +264,38 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 35.0,),
+                        SizedBox(height: 17.5,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(errorMessage, style: 
+                              TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 17.5,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             GestureDetector(
                               onTap: () async {
                                 if(_formKey.currentState.validate()){
+                                  setState(() => _isloading = true);
                                   // users get 
-                                  print("hello");
-                                  service.postSignup(_email, _password, _company);
-                                  signUpSuccessfulAlert(context, widget.toggleView());
+                                  _apiresponse = await service.postSignup(_email, _password, _company);
+                                  if(!_apiresponse.error){
+                                    setState(() => _isloading = false);
+                                    signUpSuccessfulAlert(context, widget.toggleView());
+                                  }else if(_apiresponse.error){
+                                    setState(() {
+                                      errorMessage = _apiresponse.errorMessage;
+                                      print(_apiresponse.errorMessage);
+                                      _isloading = false;
+                                    });
+                                  }
                                 }
                               },
                               child: Container(

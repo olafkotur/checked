@@ -24,6 +24,8 @@ class UserServices{
         print(jsonData);
         if(jsonData["code"] == 201){
           return APIResponse(data:jsonData["result"], error: false);
+        }else if(jsonData["code"] == 400){
+          return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
         }
       }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
 
