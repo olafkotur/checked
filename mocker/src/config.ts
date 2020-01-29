@@ -17,8 +17,8 @@ export const config = {
     }
   },
   rules: {
-    live: '*/2 * * * * *',
-    location: '*/15 * * * * *',
+    live: '*/5 * * * * *',
+    location: '*/10 * * * * *',
   },
   types: {
     liveData: ['temperature'],

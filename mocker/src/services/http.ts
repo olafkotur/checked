@@ -28,7 +28,12 @@ export const HttpService = {
           console.error(error);
           reject();
         }
-        resolve(JSON.parse(body));
+        try {
+          const formatted: any = JSON.parse(body);
+          resolve(formatted);
+        } catch(e) {
+          resolve({});
+        }
       });
     });
   },

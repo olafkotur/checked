@@ -20,6 +20,7 @@ export const ScheduleService = {
             memberId: ids.member[i]
           }
 
+          console.log(body);
           await HttpService.post(domain + '/api/live/upload', body);
         }
         console.log(`ScheduleLive: Uploaded live ${col} data for each member`);
@@ -42,7 +43,6 @@ export const ScheduleService = {
         };
 
         console.log(body);
-
         await HttpService.post(domain + '/api/location/upload', body);
       }
       console.log(`ScheduleLive: Uploaded location data for each member`);
