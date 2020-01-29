@@ -1,4 +1,6 @@
+import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -8,6 +10,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Color deletedColor = Colors.red[200];
   Color deletedColorBackground = Colors.red[400];
+
+  ZoneServices get service => GetIt.I<ZoneServices>();
 
   // This is going to be data retrieved from the api - TODP
   final List<String> _listViewData = [
