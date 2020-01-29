@@ -1,8 +1,6 @@
-import 'package:checked_mobile_application/screens/SignUp.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
 
 class SignUp extends StatefulWidget {
 

@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/module/loading.dart';
+import 'package:checked_mobile_application/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
+import 'package:http/http.dart';
 
 
 class SignIn extends StatefulWidget {
@@ -14,15 +20,26 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
 
-    UserServices get service => GetIt.I<UserServices>();
+  UserServices get service => GetIt.I<UserServices>();
+
+  APIResponse _apiresponse;
+
+  bool _isloading = false;
+
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return _isloading ? Loading() : Scaffold(
+      body: SingleChildScrollView(
         child: SafeArea(
           top: true,
           bottom: false,
@@ -50,9 +67,9 @@ class _SignInState extends State<SignIn> {
               ),
               SizedBox(height: 40.0,),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 70.0),
+                padding: const EdgeInsets.symmetric(horizontal: 66.0),
                 child: Container(
-                  height: 370,
+                  height: 500,
                   constraints: BoxConstraints(
                     minWidth: MediaQuery.of(context).size.width,
                   ),
@@ -102,7 +119,7 @@ class _SignInState extends State<SignIn> {
                             onChanged: (String val)=> setState(()=>_password = val),
                             validator: (value){
                               if(value.isEmpty){
-                                return "Eneter your Password";
+                                return "Enter your Password";
                               }
                             },
                             decoration: InputDecoration(
@@ -131,15 +148,40 @@ class _SignInState extends State<SignIn> {
                             )
                           ],
                         ),
-                        SizedBox(height: 40.0,),
+                        SizedBox(height: 20,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(errorMessage, style: 
+                              TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.0,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             GestureDetector(
                               onTap: () async {
                                 if(_formKey.currentState.validate()){
-                                  print("button clicked");
-                                  service.postLogIn(_email, _password);
+                                  setState(() => _isloading = true);
+                                  _apiresponse = await service.postLogIn(_email, _password);
+                                  if(!_apiresponse.error){
+                                    print(_apiresponse.data["userId"]);
+                                    setState(() {
+                                      _isloading = false;
+                                      errorMessage = _apiresponse.errorMessage;
+                                      Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_apiresponse.data["userId"])));
+                                    });
+                                  }else if(_apiresponse.error){
+                                    setState(() {
+                                      _isloading = false;
+                                      errorMessage = _apiresponse.errorMessage;
+                                    });
+                                  }
                                 }
                               },
                               child: Container(
@@ -167,7 +209,11 @@ class _SignInState extends State<SignIn> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text("Don't have an account?"),
+                            Text("Don't have an account?",style: 
+                              TextStyle(
+                                fontSize: 12,
+                              ),
+                            ),
                             SizedBox(width: 2.0,),
                             GestureDetector(
                               onTap: (){
@@ -175,6 +221,7 @@ class _SignInState extends State<SignIn> {
                               },
                               child: Text("Register now",style: 
                                 TextStyle(
+                                  fontSize: 12,
                                   decoration: TextDecoration.underline,
                                 ),
                               ),
