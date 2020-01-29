@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+
+  int userId;
+
+  Home({this.userId});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -22,15 +27,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      leading: IconButton(
-          icon: Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-          onPressed: () {
-            // do something
-          },
-        ),
         title: SizedBox(
           width: 100.0,
           height: 50.0,
@@ -53,6 +49,117 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            DrawerHeader(
+              child: Text(""),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomLeft,
+                  end: Alignment.topRight,
+                  colors: <Color>[ Colors.orange[600], Colors.orangeAccent]
+                )
+              ),
+            ),
+            InkWell(
+              onTap: (){},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Icon(Icons.wb_sunny),
+                      ),
+                      Text("Temperature",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600
+                        )
+                      ,),
+                    ],
+                  ),
+                  Icon(Icons.arrow_right),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            InkWell(
+              onTap: (){},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Icon(Icons.directions_run),
+                      ),
+                      Text("Activity",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600
+                        )
+                      ,),
+                    ],
+                  ),
+                  Icon(Icons.arrow_right),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            InkWell(
+              onTap: (){},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Icon(Icons.map),
+                      ),
+                      Text("Location",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600
+                        )
+                      ,),
+                    ],
+                  ),
+                  Icon(Icons.arrow_right),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            InkWell(
+              onTap: (){
+                setState(() => widget.userId = 0);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Icon(Icons.exit_to_app),
+                      ),
+                      Text("SignOut",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600
+                        )
+                      ,),
+                    ],
+                  ),
+                  Icon(Icons.arrow_right),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
       body: Container(
         constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
@@ -74,7 +181,7 @@ class _HomeState extends State<Home> {
                 // onAccept: (Color color) {
                 //   deletedColor = Colors.red[400];
                 // },
-                onLeave: (Color color) {
+                onLeave: (Color) {
                   deletedColor = Colors.red[200];
                 },
                 builder: (
@@ -91,6 +198,7 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding: const EdgeInsets.only(left: 15.0),
                           child: IconButton(
+                            onPressed: (){},
                             icon: Icon(
                               Icons.delete,
                               color: accepted.isEmpty ? deletedColor : Colors.red[400],

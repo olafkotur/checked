@@ -23,7 +23,7 @@ class UserServices{
         var jsonData = json.decode(data.body);
         print(jsonData);
         if(jsonData["code"] == 201){
-          return APIResponse(data:jsonData["result"]);
+          return APIResponse(data:jsonData["result"], error: false);
         }
       }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
 
@@ -32,17 +32,16 @@ class UserServices{
   // signin a user and return a response
   Future<APIResponse> postLogIn(String _email, String _password) async {
   String _body = 'email=$_email&password=$_password';
-  print(_body);
   dynamic jsonData;
   
   return http.post(API+signInEndpoint,body: _body ,headers: headers)
     .then((data){
       var jsonData = json.decode(data.body);
-      print(jsonData);
-      print((jsonData["result"]));
       if(jsonData["code"] == 200){
         return APIResponse(data:jsonData["result"]);
-      }
+      }else if(jsonData["code"] == 401){
+          return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+        }
     }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
 }
