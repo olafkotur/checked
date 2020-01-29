@@ -1,6 +1,7 @@
 export interface IDbLive {
   memberId: number,
   userId: number,
+  zoneId: number,
   value: number,
   createdAt: Date
 }
@@ -8,6 +9,7 @@ export interface IDbLive {
 export interface IDbLocation {
   memberId: number,
   userId: number,
+  zoneId: number,
   xValue: number,
   yValue: number,
   createdAt: Date

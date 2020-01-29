@@ -22,9 +22,14 @@ export const LiveHandler = {
       return false;
     }
 
+    // Fetch location data to figure out the zone
+    const memberId: number = parseInt(req.body.memberId || '0');
+    const location: any = await MongoService.findOne('location', { memberId });
+    
     const data: IDbLive = {
-      memberId: parseInt(req.body.memberId || '0'),
+      memberId,
       userId,
+      zoneId: location.zoneId,
       value: parseInt(req.body.value),
       createdAt: new Date(),
     };
@@ -42,7 +47,7 @@ export const LiveHandler = {
     return true;
   },
 
-  getSingleLiveData: async (req: express.Request, res: express.Response) => {
+  getLiveDataByMember: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne(req.params.type || '', { memberId: parseInt(req.params.memberId || '0') });
     if (data === null) {
       ResponseService.data({}, res);
@@ -53,6 +58,7 @@ export const LiveHandler = {
     const formatted: ILiveResponse = {
       memberId: data.memberId,
       userId: data.userId,
+      zoneId: data.zoneId,
       value: data.value,
       time: moment(data.createdAt).unix(),
     };
@@ -66,17 +72,41 @@ export const LiveHandler = {
     if (data === null) {
       ResponseService.data([], res);
       return false;
-    } 
+    }
 
     // Converts to client friendly format
     const formatted: ILiveResponse[] = data.map((val: any) => {
       return {
         memberId: val.memberId,
         userId: val.userId,
+        zoneId: val.zoneId,
         value: val.value,
         time: moment(val.createdAt).unix(),
-      }
+      };
     });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
+  getLiveDataByZone: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany(req.params.type || '', { zoneId: parseInt(req.params.zoneId || '0') });
+    if (data === null || data.length <= 0) {
+      ResponseService.data({}, res);
+      return false;
+    }
+
+    // Calculate an average of all the temperature readings
+    let valueSum: number = 0;
+    data.forEach((val: any) => valueSum += val.value);
+
+    // Converts to client friendly format
+    const formatted: ILiveResponse = {
+      userId: data[0].userId,
+      zoneId: data[0].zoneId,
+      value: Math.round(valueSum / data.length),
+      time: moment(data[0].createdAt).unix(),
+    }
 
     ResponseService.data(formatted, res);
     return true;

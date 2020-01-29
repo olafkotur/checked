@@ -25,12 +25,14 @@ async function main() {
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);
   app.get('/api/live/:type', LiveHandler.getLiveData);
-  app.get('/api/live/:type/:sensorId', LiveHandler.getSingleLiveData);
+  app.get('/api/live/:type/:memberId', LiveHandler.getLiveDataByMember);
+  app.get('/api/live/:type/zones/:zoneId', LiveHandler.getLiveDataByZone);
 
   // Location handlers
   app.post('/api/location/upload', LocationHandler.uploadLocationData);
   app.get('/api/location', LocationHandler.getLocationData);
-  app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
+  app.get('/api/location/:memberId', LocationHandler.getSingleLocationData);
+  app.get('/api/location/users/:userId', LocationHandler.getLocationByUser);
 
   // Zone handlers
   app.post('/api/zones/create', ZoneHandler.createZone);

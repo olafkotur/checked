@@ -132,8 +132,8 @@ export const DarkTheme = createMuiTheme({
                 height: '99%',
                 top: 0,
                 zIndex: 0,
-                backgroundColor: '#DF7E00'
-            }
+                backgroundColor: '#DF7E00',
+            },
         },
         MuiTab: {
             root: {
@@ -145,13 +145,17 @@ export const DarkTheme = createMuiTheme({
                 borderBottomWidth: '2px',
                 borderStyle: 'solid',
                 zIndex: 100,
-                outline: 'none !important'
+                outline: 'none !important',
             },
             textColorInherit: {
                 fontWeight: 700,
                 letterSpacing: '3px',
-                fontSize: '97.5%',
-                opacity: 0.95
+                fontSize: '97.5% !important',
+                opacity: 0.95,
+            },
+            wrapper: {
+                flexDirection: 'row',
+                justifyContent: 'center'
             }
         },
     }
