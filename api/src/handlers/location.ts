@@ -19,6 +19,7 @@ export const LocationHandler = {
     const data: IDbLocation = {
       memberId: parseInt(req.body.memberId || '0'),
       userId,
+      zoneId: parseInt(req.body.zoneId || '0'),
       xValue: parseInt(req.body.xValue || '0'),
       yValue: parseInt(req.body.yValue || '0'),
       createdAt: new Date()
@@ -48,6 +49,7 @@ export const LocationHandler = {
     const formatted: ILocationResponse = {
       memberId: data.memberId,
       userId: data.userId,
+      zoneId: data.zoneId,
       xValue: data.xValue,
       yValue: data.yValue,
       time: moment(data.createdAt).unix(),
@@ -69,6 +71,7 @@ export const LocationHandler = {
       return {
         memberId: val.memberId,
         userId: val.userId,
+        zoneId: val.zoneId,
         xValue: val.xValue,
         yValue: val.yValue,
         time: moment(val.createdAt).unix(),
@@ -78,4 +81,28 @@ export const LocationHandler = {
     ResponseService.data(formatted, res);
     return true;
   },
+
+  getLocationByUser: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('location', { userId: parseInt(req.params.userId || '0') });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    } 
+
+    // Converts to client friendly format
+    const formatted: IDbLocation = data.map((val: any) => {
+      return {
+        memberId: val.memberId,
+        userId: val.userId,
+        zoneId: val.zoneId,
+        xValue: val.xValue,
+        yValue: val.yValue,
+        time: moment(val.createdAt).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
 }

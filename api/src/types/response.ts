@@ -15,8 +15,9 @@ export interface IDataResponse {
 }
 
 export interface ILiveResponse {
- memberId: number,
+ memberId?: number,
  userId: number,
+ zoneId: number,
  value: number,
  time: number 
 }
@@ -24,6 +25,7 @@ export interface ILiveResponse {
 export interface ILocationResponse {
   memberId: number,
   userId: number,
+  zoneId: number,
   xValue: number,
   yValue: number,
   time: number 
