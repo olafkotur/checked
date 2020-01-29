@@ -24,9 +24,9 @@ class MyApp extends StatelessWidget {
       title: 'Checked',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.orange,
+        primaryColor: Colors.orange[600],
         accentColor: Colors.amber,
-        accentColorBrightness: Brightness.light
+        accentColorBrightness: Brightness.light,
       ),darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
