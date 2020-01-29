@@ -62,7 +62,7 @@ class Zone extends React.Component<IProps, IState> {
             returnArr.push(
                 <Grid item xs={12}>
                     <Typography className="w-100 text-center mt-2">
-                        Alerting all members in zone {this.props.zone.zoneId}
+                        Alerting all members in Zone {this.props.zone.zoneId}
                     </Typography>
                 </Grid>
             );
@@ -77,7 +77,7 @@ class Zone extends React.Component<IProps, IState> {
             returnArr.push(
                 <Grid item xs={12}>
                     <Typography className="w-100 text-center mt-2">
-                        Assemble members in this zone?
+                        Assemble members in Zone {this.props.zone.zoneId}?
                     </Typography>
                 </Grid>
             );
