@@ -81,4 +81,28 @@ export const LocationHandler = {
     ResponseService.data(formatted, res);
     return true;
   },
+
+  getLocationByUser: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('location', { userId: parseInt(req.params.userId || '0') });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    } 
+
+    // Converts to client friendly format
+    const formatted: IDbLocation = data.map((val: any) => {
+      return {
+        memberId: val.memberId,
+        userId: val.userId,
+        zoneId: val.zoneId,
+        xValue: val.xValue,
+        yValue: val.yValue,
+        time: moment(val.createdAt).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
+  },
+
 }

@@ -32,6 +32,7 @@ async function main() {
   app.post('/api/location/upload', LocationHandler.uploadLocationData);
   app.get('/api/location', LocationHandler.getLocationData);
   app.get('/api/location/:sensorId', LocationHandler.getSingleLocationData);
+  app.get('/api/location/users/:userId', LocationHandler.getLocationByUser);
 
   // Zone handlers
   app.post('/api/zones/create', ZoneHandler.createZone);
