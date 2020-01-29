@@ -75,6 +75,10 @@ export const LightTheme = createMuiTheme({
                 letterSpacing: '3px',
                 fontSize: '97.5%',
                 opacity: 0.95
+            },
+            wrapper: {
+                flexDirection: 'row',
+                justifyContent: 'center'
             }
         },
     }
@@ -84,7 +88,7 @@ export const DarkTheme = createMuiTheme({
     palette: {
         type: 'dark',
         primary: {
-            main: '#FF9E00',
+            main: '#EF8E00',
             light: '#FFB718',
             dark: '#DF7E00',
             contrastText: '#ffffff',

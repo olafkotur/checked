@@ -10,6 +10,7 @@ export interface IZone {
     yValue: number;
     zoneId: number;
     activity: IActivity;
+    reading?: number;
 }
 
 export interface IActivity {
@@ -17,4 +18,13 @@ export interface IActivity {
     name?: string;
     createdAt?: Date;
     lastUpdated?: Date;
+}
+
+export interface IMember {
+    memberId: number;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    createdAt: number;
+    lastUpdated: number;
 }

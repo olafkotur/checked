@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ZoneService } from '../../api/ZoneService';
+import {LocationService} from '../../api/LocationService';
 import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
@@ -11,6 +12,7 @@ import DashTabs from '../../components/Dashboard/DashTabs';
 
 interface IState {
     zones: Array<IZone>;
+    locations: Array<any>;
     loaded: boolean;
     intervals: Array<any>;
 }
@@ -22,13 +24,18 @@ export class Dashboard extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = {zones: [], loaded: false, intervals: []};
+        this.state = {zones: [], locations: [], loaded: false, intervals: []};
     }
 
     componentDidMount(): void {
         this.getZones(); // call once initially so no wait for 5secs
+        this.getLocations();
+
         //const zoneInterval = setInterval(() => this.getZones(), 5000); // setInterval on get zones function and assign the result to a const
         //this.state.intervals.push(zoneInterval); // push interbval on to array for cleanup later
+
+        //const locationInterval = setInterval(() => this.getZones(), 5000); // setInterval on get locations function and assign the result to a const
+        //this.state.intervals.push(locationInterval); // push interbval on to array for cleanup later
     }
 
     componentWillUnmount(): void {
@@ -37,9 +44,17 @@ export class Dashboard extends React.Component<IProps, IState> {
         });
     }
 
+    getLocations(): void {
+        LocationService.getAllMemberLocationsByUser(this.props.userID).then((res) => {
+            this.setState({locations: res.result});
+            
+        }).catch(() => {
+            console.error('Error loading Zone Data.');
+        });
+    }
+
     getZones(): void {
         ZoneService.loadZonesByUser(this.props.userID).then((res) => {
-            console.log(res);
             this.setState({
                 zones: res.result,
                 loaded: true
@@ -50,6 +65,7 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
+        console.log(this.state);
         return (
             <div className="dashContainer">
                 <Grid container spacing={3} >
@@ -66,7 +82,7 @@ export class Dashboard extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                            <DashTabs zoneData={this.state.zones}/>
+                                            <DashTabs zoneData={this.state.zones} locationData={this.state.locations} userID={this.props.userID}/>
                                         </CardContent>
                                     </Grid>
                                 </Grid>
