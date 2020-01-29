@@ -13,20 +13,22 @@ class ZoneServices {
   static const headers = {
     'Content-Type':'application/x-www-form-urlencoded'
   };
-  static const ZONES_BY_USER_ENDPOINT = 'zones/users/1'; // Change this to the userId passed by login
+  static const ZONES_BY_USER_ENDPOINT = 'zones/users/'; // Change this to the userId passed by login
 
   // Get all zones by user
-  Future<Zone> getZonesByUser() async {
-    final response =
-        await http.get(API_URL + ZONES_BY_USER_ENDPOINT);
+  Future<APIResponse> getZonesByUser(int _userId) async {
+    dynamic jsonData;
 
-    if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
-      print(response.body);
-      return Zone.fromJson(json.decode(response.body));
-    } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load zones');
-    }
+    return http.get(API_URL + ZONES_BY_USER_ENDPOINT + _userId.toString())
+      .then((data){
+        var jsonData = json.decode(data.body);
+
+        if (jsonData["code"] == 200) {
+          // If server returns an OK response, parse the JSON.
+          return APIResponse(data: jsonData["result"], error: false);
+        } else  if (jsonData["code"] == 400) {
+          return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+        }
+      }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
 }

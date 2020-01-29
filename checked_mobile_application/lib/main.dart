@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home: Home(),
+      home: Landing(),
     );
   }
 }

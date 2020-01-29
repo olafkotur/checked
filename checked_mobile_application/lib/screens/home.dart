@@ -1,4 +1,8 @@
+import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/module/zone.dart';
+import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Home extends StatefulWidget {
 
@@ -14,14 +18,21 @@ class _HomeState extends State<Home> {
   Color deletedColor = Colors.red[200];
   Color deletedColorBackground = Colors.red[400];
 
-  // This is going to be data retrieved from the api - TODP
-  final List<String> _listViewData = [
-    "A List View with many Text - Here's one!",
-    "A List View with many Text - Here's another!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more more!",
-  ];
+  ZoneServices get service => GetIt.I<ZoneServices>();
+  APIResponse _apiresponse;
+
+  _asyncMethod() async {
+    _apiresponse = await service.getZonesByUser(widget.userId);
+    print(_apiresponse.data);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _asyncMethod();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +51,12 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.edit,
+              Icons.refresh,
               color: Colors.black,
             ),
-            onPressed: () {
-              // do something
+            onPressed: () async {
+              _apiresponse = await service.getZonesByUser(widget.userId);
+              // print(_apiresponse.data[1]["name"]);
             },
           ),
         ],
@@ -171,8 +183,9 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
-            DragBox(Offset(0.0, 0.0), 'Zone 1', Colors.orange[400]),
-            DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
+            //Zone(widget.userId, "Ball", 100, 100, 0, 0, Colors.amber),
+            //DragBox(Offset(0.0, 0.0), _apiresponse.data[1]["name"], Colors.orange[400]),
+            //DragBox(Offset(100.0, 0.0), _apiresponse.data[2]["name"], Colors.orange[600]),
             DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
             Positioned(
               left: 0.0,
