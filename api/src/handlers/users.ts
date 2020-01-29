@@ -35,7 +35,11 @@ export const UserHandler = {
     await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
       if (!exists) {
         MongoService.insertOne('users', data)
-        ResponseService.create({ userId: data.userId }, res);
+        ResponseService.create({
+          userId: data.userId,
+          email: data.email,
+          companyName: data.companyName
+        }, res);
 
         // Send Verification email
         const body: string = EmailService.generateRegistrationBody();
@@ -115,7 +119,11 @@ export const UserHandler = {
     // Check if credentials are correct
     if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        ResponseService.data({ userId: data.userId }, res);
+        ResponseService.data({ 
+          userId: data.userId,
+          email: data.email,
+          companyName: data.companyName
+        }, res);
         return true;
       }
     }
