@@ -115,7 +115,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                     <Typography variant="h6" className="ml-1 mt-1 fontMontserrat text-right border-bottom border-muted" >
                         Members
                     </Typography>
-                    <List className="membersList">
+                    <List className="membersList mt-2 mb-2">
                         {this.getMembersList()}
                     </List>
                 </Grid>
