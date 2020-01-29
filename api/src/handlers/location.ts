@@ -19,6 +19,7 @@ export const LocationHandler = {
     const data: IDbLocation = {
       memberId: parseInt(req.body.memberId || '0'),
       userId,
+      zoneId: parseInt(req.body.zoneId || '0'),
       xValue: parseInt(req.body.xValue || '0'),
       yValue: parseInt(req.body.yValue || '0'),
       createdAt: new Date()
@@ -48,6 +49,7 @@ export const LocationHandler = {
     const formatted: ILocationResponse = {
       memberId: data.memberId,
       userId: data.userId,
+      zoneId: data.zoneId,
       xValue: data.xValue,
       yValue: data.yValue,
       time: moment(data.createdAt).unix(),
@@ -69,6 +71,7 @@ export const LocationHandler = {
       return {
         memberId: val.memberId,
         userId: val.userId,
+        zoneId: val.zoneId,
         xValue: val.xValue,
         yValue: val.yValue,
         time: moment(val.createdAt).unix(),
