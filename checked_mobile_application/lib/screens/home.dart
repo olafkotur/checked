@@ -1,6 +1,9 @@
+import 'package:checked_mobile_application/module/zone.dart';
 import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'dart:async' show Future;
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   @override
@@ -13,14 +16,12 @@ class _HomeState extends State<Home> {
 
   ZoneServices get service => GetIt.I<ZoneServices>();
 
-  // This is going to be data retrieved from the api - TODP
-  final List<String> _listViewData = [
-    "A List View with many Text - Here's one!",
-    "A List View with many Text - Here's another!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more more!",
-  ];
+  // Future loadZone() async {
+  //   String jsonString = await service.getZonesByUser());
+  //   final jsonResponse = json.decode(jsonString);
+  //   Student student = new Student.fromJson(jsonResponse);
+  //   print(student.studentScores);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +69,9 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
-            DragBox(Offset(0.0, 0.0), 'Zone 1', Colors.orange[400]),
-            DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
-            DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
+            Zone(1, "Ball", 120, 120, 0, 0, Colors.amber),
+            //DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
+            //DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
             Positioned(
               left: 0.0,
               bottom: 0.0,
@@ -121,80 +122,6 @@ class _HomeState extends State<Home> {
           color: Colors.white,
         ),
       ),
-    );
-  }
-}
-
-class DragBox extends StatefulWidget {
-  final Offset initPos;
-  final String label;
-  final Color itemColor;
-
-  DragBox(this.initPos, this.label, this.itemColor);
-
-  @override
-  _DragBoxState createState() => _DragBoxState();
-}
-
-class _DragBoxState extends State<DragBox> {
-  Offset position = Offset(0.0, 0.0);
-
-  @override
-  void initState() {
-    super.initState();
-    position = widget.initPos;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      left: position.dx,
-      top: position.dy,
-      child: Draggable(
-        data: widget.itemColor,
-        child: Container(
-          width: 100.0,
-          height: 100.0,
-          color: widget.itemColor,
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    widget.label,
-                    style: TextStyle(
-                      color: Colors.white,
-                      decoration: TextDecoration.none,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        onDraggableCanceled: (velocity, offset) {
-          setState(() {
-            position = offset;
-          });
-        },
-        feedback: Container(
-          width: 120.0,
-          height: 120.0,
-          color: widget.itemColor.withOpacity(0.5),
-          child: Center(
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                color: Colors.white,
-                decoration: TextDecoration.none,
-                fontSize: 18.0,
-              ),
-            ),
-          ),
-        ),
-      )
     );
   }
 }

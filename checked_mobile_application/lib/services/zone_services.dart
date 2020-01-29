@@ -22,7 +22,7 @@ class ZoneServices {
 
     if (response.statusCode == 200) {
       // If server returns an OK response, parse the JSON.
-      print(json.decode(response.body));
+      print(response.body.)
       return Zone.fromJson(json.decode(response.body));
     } else {
       // If that response was not OK, throw an error.
