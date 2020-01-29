@@ -4,6 +4,7 @@ import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
 import { Dashboard } from './pages/dashboard';
+import { MemberManagement } from './pages/member-management';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import {LightTheme, DarkTheme} from './muiTheme';
@@ -20,7 +21,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: true, userID: 1, darkTheme: true }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: false, userID: -1, darkTheme: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
@@ -50,6 +51,7 @@ class App extends React.Component<{}, IState> {
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
+								<MemberManagement path="members" userID={this.state.userID} />
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -62,6 +64,7 @@ class App extends React.Component<{}, IState> {
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
+								<MemberManagement path="members" userID={this.state.userID} />
 							</Router>
 						</ThemeProvider>
 					</div>

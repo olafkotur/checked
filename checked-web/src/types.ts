@@ -19,3 +19,12 @@ export interface IActivity {
     createdAt?: Date;
     lastUpdated?: Date;
 }
+
+export interface IMember {
+    memberId: number;
+    userId: number;
+    firstName: string;
+    lastName: string;
+    createdAt: number;
+    lastUpdated: number;
+}

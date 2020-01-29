@@ -248,3 +248,28 @@ code {
   overflow: hidden;
   
 }
+
+
+/* ===== MEMBER MANAGEMENT ===== */ 
+
+.memberManager {
+  min-height: 500px;
+  max-height: 700px;
+}
+
+.memberAvatar {
+  min-height: 100px;
+  min-width: 100px;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.memberDeleteBtn {
+  background-color: #e63c30 !important;
+  color: #fff !important;
+}
+
+.memberDeleteBtn:hover {
+  background-color: #b82a20 !important;
+}

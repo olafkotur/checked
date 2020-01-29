@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Paper, Grid, Typography, Popover, Button, IconButton, Box } from "@material-ui/core";
+import { Paper, Grid, Typography, Popover, IconButton, Box } from "@material-ui/core";
 import { Speed, LocationOn as Location, Close, NotificationsNone, NotificationsActive } from "@material-ui/icons";
 import { IZone } from '../../../types';
 
