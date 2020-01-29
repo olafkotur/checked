@@ -5,11 +5,12 @@ import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { DashboardRounded } from '@material-ui/icons';
+import {IZone} from '../../types';
 
 import DashTabs from '../../components/Dashboard/DashTabs';
 
 interface IState {
-    zones: Array<object>;
+    zones: Array<IZone>;
     loaded: boolean;
     intervals: Array<any>;
 }
@@ -26,8 +27,8 @@ export class Dashboard extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         this.getZones(); // call once initially so no wait for 5secs
-        const zoneInterval = setInterval(() => this.getZones(), 5000); // setInterval on get zones function and assign the result to a const
-        this.state.intervals.push(zoneInterval); // push interbval on to array for cleanup later
+        //const zoneInterval = setInterval(() => this.getZones(), 5000); // setInterval on get zones function and assign the result to a const
+        //this.state.intervals.push(zoneInterval); // push interbval on to array for cleanup later
     }
 
     componentWillUnmount(): void {
@@ -38,6 +39,7 @@ export class Dashboard extends React.Component<IProps, IState> {
 
     getZones(): void {
         ZoneService.loadZonesByUser(this.props.userID).then((res) => {
+            console.log(res);
             this.setState({
                 zones: res.result,
                 loaded: true
@@ -48,9 +50,6 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
-
-        console.log(this.state.zones);
-
         return (
             <div className="dashContainer">
                 <Grid container spacing={3} >
