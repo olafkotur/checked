@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017/';
+const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/';
 
 let database: any = null;
 
@@ -21,6 +21,7 @@ export const MongoService = {
     if (error) {
       throw error;
     }
+    console.log('MongoService: Added 1 document');
     });
   },
 
@@ -29,6 +30,16 @@ export const MongoService = {
     if (error) {
       throw error;
     }
+    console.log(`MongoService: Added ${data.length} documents`);
+    });
+  },
+
+  updateOne: async (collection: string, query: any, data: any) => {
+    await database.collection(collection).replaceOne(query, data, (error: Error) => {
+    if (error) {
+      throw error;
+    }
+    console.log('MongoService: Updated 1 document');
     });
   },
 
@@ -69,4 +80,9 @@ export const MongoService = {
       }
     });
   },
+
+  deleteEverything: async () => {
+    await database.dropDatabase();
+    console.log('MongoService: Purge requested, database reset to default');
+  }
 }
