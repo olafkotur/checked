@@ -5,7 +5,7 @@ import { IApiIds } from './types';
 
 require('dotenv').config();
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 
 async function main() {
@@ -34,7 +34,7 @@ async function main() {
       xValue: 500,
       yValue: 200,
     }
-  ]
+  ];
 
   // Create new mock user
   await HttpService.post(DOMAIN + '/api/users/create', {
