@@ -66,7 +66,7 @@ export class Dashboard extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                            <DashTabs zoneData={this.state.zones}/>
+                                            <DashTabs zoneData={this.state.zones} userID={this.props.userID}/>
                                         </CardContent>
                                     </Grid>
                                 </Grid>

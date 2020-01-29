@@ -13,6 +13,7 @@ interface IState {
 interface IProps {
     zoneData: Array<IZone>;
     type: 'temperature' | 'location';
+    userID: number;
 }
 
 
@@ -31,15 +32,11 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
         this.state = { zoneData: this.props.zoneData, popoverArray, anchorArray };
     }
 
-    componentDidMount(): void {
-
-    }
-
     populateTempZones(): Array<JSX.Element> {
         const tempRenderedZones: Array<JSX.Element> = [];
         this.props.zoneData.forEach((zone, index) => {
             tempRenderedZones.push(
-                <Zone zone={zone} type='temperature' key={index}/>
+                <Zone zone={zone} type='temperature' key={index} userID={this.props.userID}/>
             );
         });
         return tempRenderedZones;
@@ -49,7 +46,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
         const tempRenderedZones: Array<JSX.Element> = [];
         this.props.zoneData.forEach((zone, index) => {
             tempRenderedZones.push(
-                <Zone zone={zone} type='location' key={index} />
+                <Zone zone={zone} type='location' key={index} userID={this.props.userID}/>
             );
         });
         return tempRenderedZones;

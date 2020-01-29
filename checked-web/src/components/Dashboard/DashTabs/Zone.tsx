@@ -5,17 +5,25 @@ import { Speed, LocationOn as Location, Close, NotificationsNone, NotificationsA
 import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
+import { LiveService } from '../../../api/LiveService';
+import { LocationService } from '../../../api/LocationService';
 
 interface IProps {
     zone: IZone;
     type: 'temperature' | 'location';
     key: any;
+    userID: number;
+}
+
+interface IZoneWithReading extends IZone {
+    reading?: number;
 }
 
 interface IState {
     anchorEl: (Element|null);
     open: boolean;
     ringing: boolean;
+    zone: IZoneWithReading | {};
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -23,11 +31,24 @@ class Zone extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { anchorEl: null, open: false, ringing: false};
+        this.state = { anchorEl: null, open: false, ringing: false, zone: {}};
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.toggleAssemble = this.toggleAssemble.bind(this);
+    }
+
+    componentDidMount(): void {
+
+        if(this.props.type === 'temperature') {
+            LiveService.getLiveDataByZone(this.props.zone.zoneId, this.props.type).then((res) => {
+                console.log(res);
+            });
+        } else if(this.props.type ==='location') {
+            LocationService.getAllMemberLocationsByUser(this.props.userID).then((res) => {
+                console.log(res);
+            });
+        }
     }
 
     handleClick(event: React.MouseEvent): void {
@@ -60,14 +81,14 @@ class Zone extends React.Component<IProps, IState> {
 
         if(this.state.ringing){
             returnArr.push(
-                <Grid item xs={12}>
+                <Grid item xs={12} key={0}>
                     <Typography className="w-100 text-center mt-2">
                         Alerting all members in Zone {this.props.zone.zoneId}
                     </Typography>
                 </Grid>
             );
             returnArr.push(
-                <Grid className="mb-3 text-center" item xs={12}>
+                <Grid className="mb-3 text-center" item xs={12} key={1}>
                     <IconButton onClick={this.toggleAssemble} size="medium" color="primary">
                         <NotificationsActive fontSize="large" className="assembleActive"/>
                     </IconButton>
@@ -75,14 +96,14 @@ class Zone extends React.Component<IProps, IState> {
             );
         } else {
             returnArr.push(
-                <Grid item xs={12}>
+                <Grid item xs={12} key={3}>
                     <Typography className="w-100 text-center mt-2">
                         Assemble members in Zone {this.props.zone.zoneId}?
                     </Typography>
                 </Grid>
             );
             returnArr.push(
-                <Grid className="mb-3 text-center" item xs={12}>
+                <Grid className="mb-3 text-center" item xs={12} key={2}>
                     <IconButton onClick={this.toggleAssemble} size="medium">
                         <NotificationsNone fontSize="large"/>
                     </IconButton>
@@ -165,7 +186,7 @@ class Zone extends React.Component<IProps, IState> {
 
                             <Grid item xs={10}>
                             </Grid>
-                            <Grid item xs={2} alignItems="center" justify="flex-end" >
+                            <Grid item xs={2} >
                                 <IconButton onClick={this.handleClose} className="ml-3" size="small" >
                                     <Close fontSize="small"/>
                                 </IconButton>

@@ -10,6 +10,7 @@ interface IState {
 
 interface IProps {
     zoneData: Array<IZone>;
+    userID: number;
 }
 
 class DashTabs extends React.Component<IProps, IState> {
@@ -45,10 +46,10 @@ class DashTabs extends React.Component<IProps, IState> {
         return (
             <div>
                 <TabPanel value={this.state.tabValue} index={0}>
-                    <ZoneVisualisation zoneData={this.props.zoneData} type='location'/>
+                    <ZoneVisualisation zoneData={this.props.zoneData} type='location' userID={this.props.userID}/>
                 </TabPanel>
                 <TabPanel value={this.state.tabValue} index={1}>
-                    <ZoneVisualisation zoneData={this.props.zoneData} type='temperature' />
+                    <ZoneVisualisation zoneData={this.props.zoneData} type='temperature' userID={this.props.userID} />
                 </TabPanel>
                 <AppBar position="static" color="inherit" style={{boxShadow: 'none'}}>
                     <Tabs value={this.state.tabValue} onChange={this.handleChange} variant="fullWidth" >
