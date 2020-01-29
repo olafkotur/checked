@@ -13,7 +13,7 @@ class Zone {
   factory Zone.fromJson(Map<String, dynamic> json) {
     return Zone(
       //zoneId: json['zoneId'],
-      userId: json['userId'],
+      userId: json['result[0].userId'],
       name: json['name'],
       width: json['width'],
       height: json['height'],

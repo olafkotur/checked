@@ -52,7 +52,7 @@ class _HomeState extends State<Home> {
               color: Colors.black,
             ),
             onPressed: () {
-              // do something
+              service.getZonesByUser();
             },
           ),
         ],
@@ -76,7 +76,7 @@ class _HomeState extends State<Home> {
               bottom: 0.0,
               child: DragTarget(
                 // onAccept: (Color color) {
-                //   deletedColor = Colors.red[400];
+                //   // Add http DELETE request here
                 // },
                 onLeave: (Color color) {
                   deletedColor = Colors.red[200];
@@ -95,6 +95,7 @@ class _HomeState extends State<Home> {
                         Padding(
                           padding: const EdgeInsets.only(left: 15.0),
                           child: IconButton(
+                            onPressed: () {},
                             icon: Icon(
                               Icons.delete,
                               color: accepted.isEmpty ? deletedColor : Colors.red[400],
@@ -112,13 +113,13 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {},
         backgroundColor: Colors.green,
         tooltip: 'Add a new zone',
         child: Icon(
           Icons.add,
           color: Colors.white,
-          ),
+        ),
       ),
     );
   }

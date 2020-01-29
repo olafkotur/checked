@@ -4,11 +4,13 @@ import 'package:checked_mobile_application/screens/home.dart';
 import 'package:checked_mobile_application/screens/landing.dart';
 import 'package:checked_mobile_application/screens/logIn.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
+import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 void setupLocator(){
   GetIt.instance.registerLazySingleton(() => UserServices());
+  GetIt.instance.registerLazySingleton(() => ZoneServices());
 }
 
 void main(){
