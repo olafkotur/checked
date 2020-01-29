@@ -7,15 +7,11 @@ export const LiveService = {
         await HttpService.get(uri).then((res) => {
             return res;
         });
-        return {};
     },
 
-    getLiveDataByZone: async (zoneID: number, type: 'temperature'): Promise<any> => {
-        const uri = 'live/' + type + '/' + zoneID.toString();
-        await HttpService.get(uri).then((res) => {
-            return res;
-        });
-        return {};
+    getLiveTempDataByZone: async (zoneID: number): Promise<any> => {
+        const uri = 'live/temperature/' + zoneID.toString();
+        return await HttpService.get(uri);
     }
     
 };

@@ -4,9 +4,7 @@ export const LocationService = {
 
     getAllMemberLocationsByUser: async ( userId: number): Promise<any> => {
         const uri = 'location/users/' + userId.toString();
-        await HttpService.get(uri).then((res) => {
-            return res;
-        });
-        return {};
+        return await HttpService.get(uri);
+            
     },
 };

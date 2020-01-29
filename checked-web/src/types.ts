@@ -10,6 +10,7 @@ export interface IZone {
     yValue: number;
     zoneId: number;
     activity: IActivity;
+    reading?: number;
 }
 
 export interface IActivity {

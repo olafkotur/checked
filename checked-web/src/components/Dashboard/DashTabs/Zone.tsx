@@ -6,16 +6,12 @@ import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
 import { LiveService } from '../../../api/LiveService';
-import { LocationService } from '../../../api/LocationService';
 
 interface IProps {
     zone: IZone;
     type: 'temperature' | 'location';
     key: any;
     userID: number;
-}
-
-interface IZoneWithReading extends IZone {
     reading?: number;
 }
 
@@ -23,7 +19,7 @@ interface IState {
     anchorEl: (Element|null);
     open: boolean;
     ringing: boolean;
-    zone: IZoneWithReading | {};
+    reading: (number|string);
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -31,7 +27,14 @@ class Zone extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { anchorEl: null, open: false, ringing: false, zone: {}};
+        let reading;
+        if(this.props.reading){
+            reading = this.props.reading;
+        } else {
+            reading = '0';
+        }
+
+        this.state = { anchorEl: null, open: false, ringing: false, reading };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -39,14 +42,9 @@ class Zone extends React.Component<IProps, IState> {
     }
 
     componentDidMount(): void {
-
         if(this.props.type === 'temperature') {
-            LiveService.getLiveDataByZone(this.props.zone.zoneId, this.props.type).then((res) => {
-                console.log(res);
-            });
-        } else if(this.props.type ==='location') {
-            LocationService.getAllMemberLocationsByUser(this.props.userID).then((res) => {
-                console.log(res);
+            LiveService.getLiveTempDataByZone(this.props.zone.zoneId).then((res) => {
+                this.setState({ reading: res.result.value });
             });
         }
     }
@@ -121,10 +119,10 @@ class Zone extends React.Component<IProps, IState> {
 
         if(this.props.type === 'temperature'){
             symbol = <Speed className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = 10 + '°C';
+            reading = this.state.reading + '°C';
         } else if (this.props.type === 'location'){
             symbol = <Location className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = 10;
+            reading = this.state.reading;
         }
 
         const popoverContent = this.getPopoverContent();

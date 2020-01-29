@@ -196,7 +196,7 @@ code {
 /* child */
 .zoneVisZone {
   position: absolute;
-  z-index: 101;
+  z-index: 0;
   border: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: 0.2s;
@@ -229,6 +229,12 @@ code {
   100% {
     transform: rotate(-20deg);
   }
+}
+
+.membersList {
+  max-height: 675px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* ===== MAP EDITOR ===== */
