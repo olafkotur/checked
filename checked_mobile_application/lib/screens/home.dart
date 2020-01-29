@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -162,7 +162,6 @@ class _DragBoxState extends State<DragBox> {
                       color: Colors.white,
                       decoration: TextDecoration.none,
                       fontSize: 15.0,
-                      
                     ),
                   ),
                 ],
