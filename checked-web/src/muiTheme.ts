@@ -75,6 +75,10 @@ export const LightTheme = createMuiTheme({
                 letterSpacing: '3px',
                 fontSize: '97.5%',
                 opacity: 0.95
+            },
+            wrapper: {
+                flexDirection: 'row',
+                justifyContent: 'center'
             }
         },
     }

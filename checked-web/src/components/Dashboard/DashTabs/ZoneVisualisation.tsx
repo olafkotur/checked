@@ -1,16 +1,18 @@
 
 import React from 'react';
-import {IZone} from '../../../types';
-import { Grid, Typography } from '@material-ui/core';
+import { IZone } from '../../../types';
+import { Grid, Typography, Popover, Button, Paper } from '@material-ui/core';
 import { Person, Speed } from '@material-ui/icons';
+import Zone from './Zone';
 interface IState {
     zoneData: Array<IZone>;
-    renderedZones: Array<JSX.Element>;
+    popoverArray: Array<any>;
+    anchorArray: Array<(HTMLElement|null)>;
 }
 
 interface IProps {
     zoneData: Array<IZone>;
-    type: 'temperature' |  'location';
+    type: 'temperature' | 'location';
 }
 
 
@@ -18,89 +20,55 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { zoneData: this.props.zoneData, renderedZones: [] };
+
+        const popoverArray: Array<boolean> = [];
+        const anchorArray: Array<(HTMLElement | null)> = [];
+        props.zoneData.forEach((zone: IZone, index: number) => {
+            popoverArray[index] = false;
+            anchorArray[index] = null;
+        });
+
+        this.state = { zoneData: this.props.zoneData, popoverArray, anchorArray };
     }
 
     componentDidMount(): void {
-        switch (this.props.type) {
-            case 'temperature':
-                this.populateTempZones();
-                return;
-            case 'location':
-                this.populateLocationZones();
-                return;
-        }
+
     }
 
-    populateTempZones(): void {
+    populateTempZones(): Array<JSX.Element> {
         const tempRenderedZones: Array<JSX.Element> = [];
-        this.props.zoneData.forEach((zone) => {
+        this.props.zoneData.forEach((zone, index) => {
             tempRenderedZones.push(
-                <div className="zoneVisZone" style={{ width: zone.width, height: zone.height, top: zone.yValue, left: zone.xValue, backgroundColor: zone.color }}>
-                    <Grid container spacing={0} className="h-100 ml-2">
-                        <Grid item xs={12}>
-                            <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack" >
-                                {zone.name}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="subtitle1" className="ml-1 mutedBlack font-italic" >
-                                {zone.activity.name || ''}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className="h-100 w-100 d-flex flex-row align-items-center">
-                                <Speed className="d-flex align-self-center mr-1 ml-1" fontSize="default" />
-                                <Typography variant="subtitle1" className="mutedBlack font-bold d-flex align-self-center" >
-                                    10°C
-                                </Typography>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
+                <Zone zone={zone} type='temperature' key={index}/>
             );
         });
-        this.setState({ renderedZones: tempRenderedZones });
+        return tempRenderedZones;
     };
 
-    populateLocationZones(): void {
+    populateLocationZones(): Array<JSX.Element>  {
         const tempRenderedZones: Array<JSX.Element> = [];
-        this.props.zoneData.forEach((zone) => {
+        this.props.zoneData.forEach((zone, index) => {
             tempRenderedZones.push(
-                <div className="zoneVisZone" style={{width: zone.width, height: zone.height, top: zone.yValue, left: zone.xValue, backgroundColor: zone.color }}>
-                    <Grid container spacing={0} className="h-100 ml-2">
-                        <Grid item xs={12}>
-                            <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack" >
-                                {zone.name}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="subtitle1" className="ml-1 mutedBlack font-italic" >
-                                {zone.activity.name || ''}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className="h-100 w-100 d-flex flex-row align-items-center">
-                                <Person className="d-flex align-self-center" fontSize="large"/>
-                                <Typography variant="subtitle1" className="mutedBlack font-bold d-flex align-self-center" >
-                                    10
-                                </Typography>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
+                <Zone zone={zone} type='location' key={index} />
             );
         });
-        this.setState({renderedZones: tempRenderedZones});
+        return tempRenderedZones;
     }
 
     render(): JSX.Element {
 
+        let renderedZones: Array<JSX.Element> = [];
+
+        if(this.props.type === 'temperature'){
+            renderedZones = this.populateTempZones();
+        } else if (this.props.type === 'location'){
+            renderedZones = this.populateLocationZones();
+        }
         return (
             <Grid container spacing={0}>
                 <Grid item xs={10}>
                     <div className="zoneVisContainer h-100 w-100">
-                        {this.state.renderedZones}
+                        {renderedZones}
                     </div>
                 </Grid>
                 <Grid item xs={2}>
