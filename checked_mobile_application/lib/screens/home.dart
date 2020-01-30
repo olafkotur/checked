@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
 
   _asyncMethod() async {
     _apiresponse = await service.getZonesByUser(widget.userId);
-    print(_apiresponse.data[1]);
+    //print(_apiresponse.data[1]);
   }
 
   @override
@@ -102,7 +102,7 @@ class _HomeState extends State<Home> {
             SizedBox(height: 30,),
             InkWell(
               onTap: (){
-
+                
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

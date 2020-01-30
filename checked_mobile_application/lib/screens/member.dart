@@ -1,4 +1,5 @@
 import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/screens/home.dart';
 import 'package:checked_mobile_application/services/member_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -65,7 +66,9 @@ class _MemberState extends State<Member> {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:widget.userId)));
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
