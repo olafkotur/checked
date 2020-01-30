@@ -1,4 +1,8 @@
+import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/module/zone.dart';
+import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class Home extends StatefulWidget {
 
@@ -14,15 +18,22 @@ class _HomeState extends State<Home> {
   Color deletedColor = Colors.red[200];
   Color deletedColorBackground = Colors.red[400];
 
-  // This is going to be data retrieved from the api - TODP
-  final List<String> _listViewData = [
-    "A List View with many Text - Here's one!",
-    "A List View with many Text - Here's another!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more!",
-    "A List View with many Text - Here's more more!",
-  ];
+  ZoneServices get service => GetIt.I<ZoneServices>();
+  APIResponse _apiresponse;
 
+  _asyncMethod() async {
+    _apiresponse = await service.getZonesByUser(widget.userId);
+    print(_apiresponse.data[1]);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _asyncMethod();
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +51,12 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.edit,
+              Icons.refresh,
               color: Colors.black,
             ),
-            onPressed: () {
-              // do something
+            onPressed: () async {
+              _apiresponse = await service.getZonesByUser(widget.userId);
+              for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _apiresponse.data[0]["name"], Colors.orange[400]);
             },
           ),
         ],
@@ -63,7 +75,9 @@ class _HomeState extends State<Home> {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -171,9 +185,10 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
-            DragBox(Offset(0.0, 0.0), 'Zone 1', Colors.orange[400]),
-            DragBox(Offset(100.0, 0.0), 'Zone 2', Colors.orange[600]),
-            DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
+            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _apiresponse.data[0]["name"], Colors.orange[400]),
+            //Zone(widget.userId, "Ball", 100, 100, 0, 0, Colors.amber),
+            //DragBox(Offset(0.0, 0.0), _apiresponse.data[1]["name"], Colors.orange[400]),
+            //DragBox(Offset(100.0, 0.0), _apiresponse.data[2]["name"], Colors.orange[600]),
             Positioned(
               left: 0.0,
               bottom: 0.0,
@@ -230,10 +245,12 @@ class _HomeState extends State<Home> {
 
 class DragBox extends StatefulWidget {
   final Offset initPos;
+  final double width;
+  final double height;
   final String label;
   final Color itemColor;
 
-  DragBox(this.initPos, this.label, this.itemColor);
+  DragBox(this.initPos, this.width, this.height, this.label, this.itemColor);
 
   @override
   _DragBoxState createState() => _DragBoxState();
@@ -246,6 +263,11 @@ class _DragBoxState extends State<DragBox> {
   void initState() {
     super.initState();
     position = widget.initPos;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        // Here you can write your code for open new view
+      });
+    });
   }
 
   @override
@@ -256,8 +278,8 @@ class _DragBoxState extends State<DragBox> {
       child: Draggable(
         data: widget.itemColor,
         child: Container(
-          width: 100.0,
-          height: 100.0,
+          width: widget.width,
+          height: widget.height,
           color: widget.itemColor,
           child: Column(
             children: <Widget>[
@@ -269,8 +291,7 @@ class _DragBoxState extends State<DragBox> {
                     style: TextStyle(
                       color: Colors.white,
                       decoration: TextDecoration.none,
-                      fontSize: 15.0,
-                      
+                      fontSize: 15.0
                     ),
                   ),
                 ],
