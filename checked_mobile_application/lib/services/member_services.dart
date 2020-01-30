@@ -12,8 +12,6 @@ class MembersServices{
 
   static const createMemberEndpoint = "/members/create";
 
-
-  // signup a user and return a response
   Future<APIResponse> postCreateMember(String _userId, String _firstName, String _lastName) async {
     String _body = 'userId=$_userId&firstName=$_firstName&companyName=$_lastName';
 

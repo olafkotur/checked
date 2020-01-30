@@ -1,8 +1,12 @@
+import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/services/member_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class Member extends StatefulWidget {
-  Member({Key key}) : super(key: key);
+  int userId;
+
+  Member({this.userId});
 
   @override
   _MemberState createState() => _MemberState();
@@ -11,6 +15,12 @@ class Member extends StatefulWidget {
 class _MemberState extends State<Member> {
 
   final _formKey = GlobalKey<FormState>();
+
+  
+  MembersServices get service => GetIt.I<MembersServices>();
+
+  APIResponse _apiresponse;
+
   String _firstName = "";
   String _lastName = "";
 
@@ -148,9 +158,9 @@ class _MemberState extends State<Member> {
             SizedBox(height: 30,),
             InkWell(
               onTap: (){
-                // setState(() => widget.userId = 0);
-                // Navigator.pop(context);
-                // Navigator.pop(context);
+                setState(() => widget.userId = 0);
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -266,7 +276,9 @@ class _MemberState extends State<Member> {
                         GestureDetector(
                           onTap: () async {
                             if(_formKey.currentState.validate()){
-                              
+                              _apiresponse = await service.postCreateMember(widget.userId.toString(), _firstName, _lastName);
+                              print(_apiresponse.data);
+
                             }
                           },
                           child: Container(

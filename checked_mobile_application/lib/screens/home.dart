@@ -1,5 +1,6 @@
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/module/zone.dart';
+import 'package:checked_mobile_application/screens/member.dart';
 import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -74,6 +75,31 @@ class _HomeState extends State<Home> {
                 )
               ),
             ),
+            InkWell(
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => Member(userId:widget.userId)));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal:8.0),
+                        child: Icon(Icons.group_add),
+                      ),
+                      Text("Add Members",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600
+                        )
+                      ,),
+                    ],
+                  ),
+                  Icon(Icons.arrow_right),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
             InkWell(
               onTap: (){
 
