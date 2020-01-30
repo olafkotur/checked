@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
       _asyncMethod();
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
             ),
             onPressed: () async {
               _apiresponse = await service.getZonesByUser(widget.userId);
-              // print(_apiresponse.data[1]["name"]);
+              for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _apiresponse.data[0]["name"], Colors.orange[400]);
             },
           ),
         ],
@@ -75,7 +75,9 @@ class _HomeState extends State<Home> {
               ),
             ),
             InkWell(
-              onTap: (){},
+              onTap: (){
+
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -183,7 +185,7 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
-            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), _apiresponse.data[0]["name"], Colors.orange[400]),
+            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _apiresponse.data[0]["name"], Colors.orange[400]),
             //Zone(widget.userId, "Ball", 100, 100, 0, 0, Colors.amber),
             //DragBox(Offset(0.0, 0.0), _apiresponse.data[1]["name"], Colors.orange[400]),
             //DragBox(Offset(100.0, 0.0), _apiresponse.data[2]["name"], Colors.orange[600]),
@@ -243,10 +245,12 @@ class _HomeState extends State<Home> {
 
 class DragBox extends StatefulWidget {
   final Offset initPos;
+  final double width;
+  final double height;
   final String label;
   final Color itemColor;
 
-  DragBox(this.initPos, this.label, this.itemColor);
+  DragBox(this.initPos, this.width, this.height, this.label, this.itemColor);
 
   @override
   _DragBoxState createState() => _DragBoxState();
@@ -259,6 +263,11 @@ class _DragBoxState extends State<DragBox> {
   void initState() {
     super.initState();
     position = widget.initPos;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        // Here you can write your code for open new view
+      });
+    });
   }
 
   @override
@@ -269,8 +278,8 @@ class _DragBoxState extends State<DragBox> {
       child: Draggable(
         data: widget.itemColor,
         child: Container(
-          width: 100.0,
-          height: 100.0,
+          width: widget.width,
+          height: widget.height,
           color: widget.itemColor,
           child: Column(
             children: <Widget>[
@@ -282,8 +291,7 @@ class _DragBoxState extends State<DragBox> {
                     style: TextStyle(
                       color: Colors.white,
                       decoration: TextDecoration.none,
-                      fontSize: 15.0,
-                      
+                      fontSize: 15.0
                     ),
                   ),
                 ],
