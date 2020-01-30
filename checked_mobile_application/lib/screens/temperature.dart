@@ -5,17 +5,17 @@ import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class Home extends StatefulWidget {
+class Temperature extends StatefulWidget {
 
   int userId;
 
-  Home({this.userId});
+  Temperature();
 
   @override
-  _HomeState createState() => _HomeState();
+  _TempState createState() => _TempState();
 }
 
-class _HomeState extends State<Home> {
+class _TempState extends State<Temperature> {
   Color deletedColor = Colors.red[200];
   Color deletedColorBackground = Colors.red[400];
 

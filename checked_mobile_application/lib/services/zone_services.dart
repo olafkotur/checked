@@ -13,13 +13,31 @@ class ZoneServices {
   static const headers = {
     'Content-Type':'application/x-www-form-urlencoded'
   };
-  static const ZONES_BY_USER_ENDPOINT = 'zones/users/'; // Change this to the userId passed by login
+  static const ZONES_BY_USER_ENDPOINT = 'zones/users/';
+  static const TEMPERATURE_BY_ZONE_ENDPOINT = 'live/temperature/zones/';
 
   // Get all zones by user
   Future<APIResponse> getZonesByUser(int _userId) async {
     dynamic jsonData;
 
     return http.get(API_URL + ZONES_BY_USER_ENDPOINT + _userId.toString())
+      .then((data){
+        var jsonData = json.decode(data.body);
+
+        if (jsonData["code"] == 200) {
+          // If server returns an OK response, parse the JSON.
+          return APIResponse(data: jsonData["result"], error: false);
+        } else  if (jsonData["code"] == 400) {
+          return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+        }
+      }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
+  }
+
+  // Get temperature live by zone
+  Future<APIResponse> getTemperatureByZone(int _zoneId) async {
+    dynamic jsonData;
+
+    return http.get(API_URL + TEMPERATURE_BY_ZONE_ENDPOINT + _zoneId.toString())
       .then((data){
         var jsonData = json.decode(data.body);
 
