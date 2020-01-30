@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
 
   _asyncMethod() async {
     _apiresponse = await service.getZonesByUser(widget.userId);
-    print(_apiresponse.data);
+    print(_apiresponse.data[1]);
   }
 
   @override
@@ -183,10 +183,10 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
+            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), _apiresponse.data[0]["name"], Colors.orange[400]),
             //Zone(widget.userId, "Ball", 100, 100, 0, 0, Colors.amber),
             //DragBox(Offset(0.0, 0.0), _apiresponse.data[1]["name"], Colors.orange[400]),
             //DragBox(Offset(100.0, 0.0), _apiresponse.data[2]["name"], Colors.orange[600]),
-            DragBox(Offset(200.0, 0.0), 'Zone 3', Colors.orange[700]),
             Positioned(
               left: 0.0,
               bottom: 0.0,
