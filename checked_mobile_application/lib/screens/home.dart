@@ -214,7 +214,7 @@ class _HomeState extends State<Home> {
         ),
         child: Stack(
           children: <Widget>[
-            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _apiresponse.data[0]["name"], Colors.orange[400], _apiresponsetemp.data["value"]),
+            for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), 100.0, 100.0, _["name"], Colors.orange[400], _apiresponsetemp.data["value"]),
             //Zone(widget.userId, "Ball", 100, 100, 0, 0, Colors.amber),
             //DragBox(Offset(0.0, 0.0), _apiresponse.data[1]["name"], Colors.orange[400]),
             //DragBox(Offset(100.0, 0.0), _apiresponse.data[2]["name"], Colors.orange[600]),
