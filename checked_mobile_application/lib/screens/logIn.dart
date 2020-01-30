@@ -87,7 +87,7 @@ class _SignInState extends State<SignIn> {
                         SizedBox(height: 4,),
                         Container(
                           child: TextFormField(
-                            onChanged: (String val) => setState(()=> _email = val),
+                            onChanged: (String val) => setState(() => _email = val),
                             validator: (value){
                               if(value.isEmpty){
                                 return "Enter your Email";
