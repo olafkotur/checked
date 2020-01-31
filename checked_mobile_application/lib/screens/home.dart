@@ -6,11 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class Home extends StatefulWidget {
-
   int userId;
-
   Home({this.userId});
-
+  
   @override
   _HomeState createState() => _HomeState();
 }
