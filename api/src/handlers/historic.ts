@@ -38,14 +38,16 @@ export const HistoricHandler = {
     }
 
     // Convert to a response friendly format
-    const formatted: IHistoricResponse = {
-      userId: data.userId,
-      averageTemperature: data.averageTemperature,
-      membersActive: data.membersActive,
-      zonesCount: data.zonesCount,
-      activitiesCount: data.activitiesCount,
-      createdAt: moment(data.createdAt).unix(),
-    };
+    const formatted: IHistoricResponse[] = data.map((val: any) => {
+      return {
+        userId: val.userId,
+        averageTemperature: val.averageTemperature,
+        membersActive: val.membersActive,
+        zonesCount: val.zonesCount,
+        activitiesCount: val.activitiesCount,
+        createdAt: moment(val.createdAt).unix(),
+      };
+    });
 
     ResponseService.data(formatted, res);
     return true;
