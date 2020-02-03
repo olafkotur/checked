@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText } from '@material-ui/core/';
-import { Info as Icon, Menu, Brightness4, Brightness7, Dashboard, Map } from '@material-ui/icons/';
+import { Info as Icon, Menu, Brightness4, Brightness7, Dashboard, Map, Person } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
 import Logo from '../media/checkedLogo.jpg';
@@ -91,7 +91,11 @@ class MenuBar extends React.Component<IProps, IState> {
                             <List>
                                 <ListItem button onClick={(): any => navigate('/')} key={'Dashboard'} >
                                     <ListItemIcon><Dashboard /></ListItemIcon>
-                                    <ListItemText>Dashboard</ListItemText>
+                                    <ListItemText className="menuText">Dashboard</ListItemText>
+                                </ListItem>
+                                <ListItem button onClick={(): any => navigate('members')} key={'MemberManager'} >
+                                    <ListItemIcon><Person /></ListItemIcon>
+                                    <ListItemText className="menuText">Member Manager</ListItemText>
                                 </ListItem>
                                 <ListItem button onClick={(): any => navigate('editor')} key={'MapEditor'} >
                                     <ListItemIcon><Map /></ListItemIcon>

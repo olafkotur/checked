@@ -187,7 +187,7 @@ class MapEditor extends React.Component<IProps, IState> {
                         width: rect.width,
                         height: rect.height,
                         xValue: rect.x - 75,
-                        yValue: rect.y - 190, // This will need to change if you change elements above the editor
+                        yValue: rect.y - 199, // This will need to change if you change elements above the editor
                         color: backgroundStyle
                     };
 
@@ -390,7 +390,7 @@ console.log(DBZone);
 
 
                     <div className="mainEditor" id="mainEditor">
-
+                        
                         {this.state.zones}
 
                     </div>

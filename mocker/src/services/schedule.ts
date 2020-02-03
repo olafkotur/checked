@@ -20,6 +20,7 @@ export const ScheduleService = {
             memberId: ids.member[i]
           }
 
+          console.log(body);
           await HttpService.post(domain + '/api/live/upload', body);
         }
         console.log(`ScheduleLive: Uploaded live ${col} data for each member`);
@@ -36,11 +37,12 @@ export const ScheduleService = {
         body = {
           userId: ids.user,
           memberId: ids.member[i],
-          zoneId: ids.zone[HelperService.randomInt(1, config.default.numberOfZones)],
+          zoneId: ids.zone[HelperService.randomInt(0, config.default.numberOfZones)],
           xValue: HelperService.randomInt(config.minValues.coords, config.maxValues.coords),
           yValue: HelperService.randomInt(config.minValues.coords, config.maxValues.coords),
-        }
+        };
 
+        console.log(body);
         await HttpService.post(domain + '/api/location/upload', body);
       }
       console.log(`ScheduleLive: Uploaded location data for each member`);

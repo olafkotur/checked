@@ -7,6 +7,7 @@
   z-index: 0;
   overflow: hidden;
   position: absolute;
+  padding-top: 1px;
   /* background-color: blue; */
   /* border: 1px solid rgba(0, 0, 0, 0.12); */
   /* height: calc(100% - 125px); */

@@ -1,12 +1,11 @@
 import { ScheduleService } from './services/schedule';
 import { HttpService } from './services/http';
-import { HelperService } from './services/helper';
 import { config } from './config';
 import { IApiIds } from './types';
 
 require('dotenv').config();
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 
 async function main() {
@@ -14,7 +13,28 @@ async function main() {
     user: 1,
     zone: [],
     member: []
-  }
+  };
+
+  const zoneDetails = [
+    {
+      width: 200,
+      height: 300,
+      xValue: 50,
+      yValue: 50,
+    },
+    {
+      width: 300,
+      height: 350,
+      xValue: 400,
+      yValue: 150,
+    },
+    {
+      width: 500,
+      height: 500,
+      xValue: 500,
+      yValue: 200,
+    }
+  ];
 
   // Create new mock user
   await HttpService.post(DOMAIN + '/api/users/create', {
@@ -35,10 +55,10 @@ async function main() {
     await HttpService.post(DOMAIN + '/api/zones/create', {
       userId: ids.user,
       name: config.default.zone.name,
-      width: HelperService.randomInt(50, 200),
-      height: HelperService.randomInt(50, 200),
-      xValue: HelperService.randomInt(0, 300),
-      yValue: HelperService.randomInt(0, 300),
+      width: zoneDetails[i].width,
+      height: zoneDetails[i].height,
+      xValue: zoneDetails[i].xValue,
+      yValue: zoneDetails[i].yValue,
       color: config.default.zone.color
     }).then((res: any) => {
       if (res.code === 201) {
@@ -54,7 +74,7 @@ async function main() {
   for (let i = 0; i < config.default.numberOfMembers; i++) {
     await HttpService.post(DOMAIN + '/api/members/create', {
       userId: ids.user,
-      firstName: config.default.member.firstName,
+      firstName: config.default.member.firstName + ` ${i+1}`,
       lastName: config.default.member.lastName
     }).then((res: any) => {
       if (res.code === 201) {

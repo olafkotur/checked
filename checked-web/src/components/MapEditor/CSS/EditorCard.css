@@ -28,7 +28,8 @@ Be sure to edit the save function yValue to acomidate
 
 .cardToolbar{
     padding-left: 5px !important;
-    height: 40px;
+    /* Was 40px */
+    height: 51px; 
     min-height: 0px !important;
 }
 
