@@ -11,6 +11,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.status(200);
     res.send(response);
   },
 
@@ -22,6 +23,7 @@ export const ResponseService = {
       unix: moment().unix(),
       result: data,
     };
+    res.status(201);
     res.send(response);
   },
 
@@ -33,6 +35,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.status(400);
     res.send(response);
   },
 
@@ -44,6 +47,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.status(401);
     res.send(response);
   },
 
@@ -55,6 +59,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.status(403);
     res.send(response);
   },
 
@@ -66,6 +71,7 @@ export const ResponseService = {
       unix: moment().unix(),
       message: msg,
     };
+    res.status(404);
     res.send(response);
   },
 
@@ -77,10 +83,12 @@ export const ResponseService = {
       unix: moment().unix(),
       result: data,
     };
+    res.status(200);
     res.send(response);
   },
 
   redirect: (uri: string, res: express.Response) => {
+    res.status(301);
     res.redirect(uri);
   },
 
