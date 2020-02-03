@@ -1,4 +1,5 @@
 export interface IDbLive {
+  dataType: string,
   memberId: number,
   userId: number,
   zoneId: number,

@@ -9,12 +9,6 @@ import { ILiveResponse } from '../types/response';
 export const LiveHandler = {
 
   uploadLiveData: async (req: express.Request, res: express.Response) => {
-    // Safeguard to ensure extra unwanted collections aren't created
-    if (!DbHelperService.isValidLiveCollection(req.body.type || '')) {
-      ResponseService.bad('Invalid collection name', res);
-      return false;
-    }
-
     const userId: number = parseInt(req.body.userId || '0');
     const exists: boolean = await DbHelperService.exists('users', { userId });
     if (!exists) {
@@ -27,6 +21,7 @@ export const LiveHandler = {
     const location: any = await MongoService.findOne('location', { memberId });
     
     const data: IDbLive = {
+      dataType: req.body.type,
       memberId,
       userId,
       zoneId: location.zoneId,
@@ -34,12 +29,12 @@ export const LiveHandler = {
       createdAt: new Date(),
     };
 
-    // Update only if reading with same member exists
-    await DbHelperService.exists(req.body.type || '', { memberId: data.memberId }).then((exists: boolean) => {
+    // Update only if reading with same member and data type exists
+    await DbHelperService.exists('live', { memberId: data.memberId, dataType: data.dataType }).then((exists: boolean) => {
       if (exists) {
-        MongoService.updateOne(req.body.type || '', { memberId: data.memberId }, data);
+        MongoService.updateOne('live', { memberId: data.memberId, dataType: data.dataType }, data);
       } else {
-        MongoService.insertOne(req.body.type || '', data)
+        MongoService.insertOne('live', data)
       }
     });
 
@@ -48,7 +43,7 @@ export const LiveHandler = {
   },
 
   getLiveDataByMember: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findOne(req.params.type || '', { memberId: parseInt(req.params.memberId || '0') });
+    const data: any = await MongoService.findOne('live', { memberId: parseInt(req.params.memberId || '0'), dataType: req.params.type });
     if (data === null) {
       ResponseService.data({}, res);
       return false;
@@ -56,6 +51,7 @@ export const LiveHandler = {
 
     // Converts to client friendly format
     const formatted: ILiveResponse = {
+      dataType: data.dataType,
       memberId: data.memberId,
       userId: data.userId,
       zoneId: data.zoneId,
@@ -68,7 +64,7 @@ export const LiveHandler = {
   },
 
   getLiveData: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany(req.params.type || '', {});
+    const data: any = await MongoService.findMany('live', { dataType: req.params.type });
     if (data === null) {
       ResponseService.data([], res);
       return false;
@@ -77,6 +73,7 @@ export const LiveHandler = {
     // Converts to client friendly format
     const formatted: ILiveResponse[] = data.map((val: any) => {
       return {
+        dataType: val.dataType,
         memberId: val.memberId,
         userId: val.userId,
         zoneId: val.zoneId,
@@ -90,7 +87,7 @@ export const LiveHandler = {
   },
 
   getLiveDataByZone: async (req: express.Request, res: express.Response) => {
-    const data: any = await MongoService.findMany(req.params.type || '', { zoneId: parseInt(req.params.zoneId || '0') });
+    const data: any = await MongoService.findMany('live', { zoneId: parseInt(req.params.zoneId || '0'), dataType: req.params.type });
     if (data === null || data.length <= 0) {
       ResponseService.data({}, res);
       return false;
@@ -102,6 +99,7 @@ export const LiveHandler = {
 
     // Converts to client friendly format
     const formatted: ILiveResponse = {
+      dataType: data[0].dataType,
       userId: data[0].userId,
       zoneId: data[0].zoneId,
       value: Math.round(valueSum / data.length),
