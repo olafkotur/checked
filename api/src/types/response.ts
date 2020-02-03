@@ -79,3 +79,12 @@ export interface IAssemblyResponse {
   createdAt: number,
   lastUpdated: number,
 }
+
+export interface IHistoricResponse {
+  userId: number,
+  averageTemperature: number,
+  membersActive: number,
+  zonesCount: number,
+  activitiesCount: number,
+  createdAt: number
+}

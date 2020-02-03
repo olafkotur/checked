@@ -1,8 +1,10 @@
 import express from 'express';
+import moment from 'moment';
 import { DbHelperService } from '../services/dbHelper';
 import { ResponseService } from '../services/response';
-import { IDbHistoric } from '../types/db';
 import { MongoService } from '../services/mongo';
+import { IDbHistoric } from '../types/db';
+import { IHistoricResponse } from '../types/response';
 
 export const HistoricHandler = {
 
@@ -13,7 +15,6 @@ export const HistoricHandler = {
       ResponseService.bad('Cannot add historic data without a valid user id', res);
       return false;
     }
-
 
     const data: IDbHistoric = {
       userId,
@@ -27,6 +28,28 @@ export const HistoricHandler = {
     MongoService.insertOne('historic' || '', data);
     ResponseService.ok('Added to collection', res);
     return true;
+  },
+
+  getHistoricByUser: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findMany('historic', { userId: parseInt(req.params.userId || '0') });
+    if (data === null || data.length <= 0) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    // Convert to a response friendly format
+    const formatted: IHistoricResponse = {
+      userId: data.userId,
+      averageTemperature: data.averageTemperature,
+      membersActive: data.membersActive,
+      zonesCount: data.zonesCount,
+      activitiesCount: data.activitiesCount,
+      createdAt: moment(data.createdAt).unix(),
+    };
+
+    ResponseService.data(formatted, res);
+    return true;
+
   },
 
 };
