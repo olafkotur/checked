@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/module/loading.dart';
+import 'package:checked_mobile_application/screens/consumerlogin.dart';
 import 'package:checked_mobile_application/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -206,6 +207,35 @@ class _SignInState extends State<SignIn> {
                           ],
                         ),
                         SizedBox(height: 20.0),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(context,MaterialPageRoute(builder: (context) => ConsumerLogin()));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                height: 50,
+                                width: 150,
+                                child: Center(
+                                  child: Text("Parent View",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 23.0,
+                                    ),
+                                  )
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[600],
+                                  border: Border.all(
+                                    width: 1
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 20.0,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
