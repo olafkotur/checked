@@ -1,5 +1,5 @@
-import {checkCollision, compareTwoRects} from '../components/MapEditor/collisionDetection';
-import React from 'react';
+import {compareTwoRects} from '../components/MapEditor/collisionDetection';
+
 
 it('Colision Was Detected Same Values', () => {
 
@@ -186,6 +186,36 @@ it('Colision Was Detected Different Width', () => {
     expect(compareTwoRects(rect1, rect2)).toBeTruthy();
 });
 
+it('Colision Was Detected Smaller Inside Center', () => {
+    const rectHeight = 200;
+    const rectWidth = 200;
+
+
+
+    const rect1 = {
+        width: rectWidth / 4, 
+        height: rectHeight / 4,
+        top: 75,
+        left: 75,
+        bottom: 125,
+        right: 125,
+    };
+
+    const rect2 = {
+        width: rectHeight,
+        height: rectHeight,
+        top: 0,
+        left: 0,
+        bottom: rectHeight,
+        right: rectWidth,
+    };
+
+    expect(compareTwoRects(rect1, rect2)).toBeTruthy();
+});
+
+// NO colision detected ----------------------------------------------------------------------------------------------------------------------------------
+
+
 it('Colision Not Detected Left', () => {
 
     const left = 400;
@@ -197,6 +227,106 @@ it('Colision Not Detected Left', () => {
         left: left,
         bottom: 150,
         right: left + 150,
+    };
+
+    const rect2 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 0,
+        bottom: 150,
+        right: 150,
+    };
+
+    expect(compareTwoRects(rect1, rect2)).toBeFalsy();
+});
+
+it('Colision Not Detected Right', () => {
+
+    const right = 400;
+
+    const rect1 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: right - 150,
+        bottom: 150,
+        right: right,
+    };
+
+    const rect2 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 0,
+        bottom: 150,
+        right: 150,
+    };
+
+    expect(compareTwoRects(rect1, rect2)).toBeFalsy();
+});
+
+it('Colision Not Detected Top', () => {
+
+    const top = 400;
+
+    const rect1 = {
+        width: 150,
+        height: 150,
+        top: top,
+        left: 0,
+        bottom: top + 150,
+        right: 0,
+    };
+
+    const rect2 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 0,
+        bottom: 150,
+        right: 150,
+    };
+
+    expect(compareTwoRects(rect1, rect2)).toBeFalsy();
+});
+
+it('Colision Not Detected Bottom', () => {
+
+    const Bottom = 400;
+
+    const rect1 = {
+        width: 150,
+        height: 150,
+        top: Bottom - 150,
+        left: 0,
+        bottom: Bottom,
+        right: 150,
+    };
+
+    const rect2 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 0,
+        bottom: 150,
+        right: 150,
+    };
+
+    expect(compareTwoRects(rect1, rect2)).toBeFalsy();
+});
+
+it('Colision Not Detected Side Right', () => {
+
+    const Bottom = 400;
+
+    const rect1 = {
+        width: 150,
+        height: 150,
+        top: 0,
+        left: 150,
+        bottom: 150,
+        right: 300,
     };
 
     const rect2 = {
