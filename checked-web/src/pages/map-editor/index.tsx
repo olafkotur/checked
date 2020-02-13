@@ -10,7 +10,7 @@ import ZoneBlock from '../../components/MapEditor/ZoneBlock';
 import { ZoneService } from '../../api/ZoneService';
 import '../../components/MapEditor/InteractJS/DragZone.js';
 
-import checkCollision from '../../components/MapEditor/collisionDetection';
+import {checkCollision} from '../../components/MapEditor/collisionDetection';
 import BgColumn from '../../components/MapEditor/BgColumn';
 import BgRow from '../../components/MapEditor/BgRow';
 import { ActivityService } from '../../api/ActivityService';
@@ -77,18 +77,15 @@ class MapEditor extends React.Component<IProps, IState> {
             // this.state.selectedZone.setTextColor(this.determineTextColor(color));
         }
        
-    }
+    };
 
     handleColorClick = (): void => {
-
         if (this.state.displayColorPicker === "") {
             this.setState({ displayColorPicker: "d-none" });
         }
         else {
             this.setState({ displayColorPicker: "" });
         }
-
-
     };
 
     genBg(): void {

@@ -9,6 +9,7 @@ import { UserHandler } from './handlers/users';
 import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
 import { AssemblyHandler } from './handlers/assembly';
+import { HistoricHandler } from './handlers/historic';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -27,6 +28,10 @@ async function main() {
   app.get('/api/live/:type', LiveHandler.getLiveData);
   app.get('/api/live/:type/:memberId', LiveHandler.getLiveDataByMember);
   app.get('/api/live/:type/zones/:zoneId', LiveHandler.getLiveDataByZone);
+
+  // Historic handlers
+  app.post('/api/historic/upload', HistoricHandler.uploadHistoricalData);
+  app.get('/api/historic/:userId', HistoricHandler.getHistoricByUser);
 
   // Location handlers
   app.post('/api/location/upload', LocationHandler.uploadLocationData);

@@ -21,7 +21,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: false, userID: -1, darkTheme: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: true, userID: 1, darkTheme: false }; // SET THIS TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);

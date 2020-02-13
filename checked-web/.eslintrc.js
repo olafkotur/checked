@@ -10,6 +10,7 @@ module.exports = {
         es6: true,
         browser: true,
         node: true,
+        jest: true,
     },
     rules: {
         "no-const-assign": 2,

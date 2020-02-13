@@ -15,11 +15,12 @@ export interface IDataResponse {
 }
 
 export interface ILiveResponse {
- memberId?: number,
- userId: number,
- zoneId: number,
- value: number,
- time: number 
+  dataType: string,
+  memberId?: number,
+  userId: number,
+  zoneId: number,
+  value: number,
+  time: number 
 }
 
 export interface ILocationResponse {
@@ -78,4 +79,13 @@ export interface IAssemblyResponse {
   zoneId: number,
   createdAt: number,
   lastUpdated: number,
+}
+
+export interface IHistoricResponse {
+  userId: number,
+  averageTemperature: number,
+  membersActive: number,
+  zonesCount: number,
+  activitiesCount: number,
+  createdAt: number
 }

@@ -1,4 +1,5 @@
 export interface IDbLive {
+  dataType: string,
   memberId: number,
   userId: number,
   zoneId: number,
@@ -59,4 +60,13 @@ export interface IDbAssembly {
   zoneId: number,
   createdAt: Date,
   lastUpdated: Date,
+}
+
+export interface IDbHistoric {
+  userId: number,
+  averageTemperature: number,
+  membersActive: number,
+  zonesCount: number,
+  activitiesCount: number,
+  createdAt: Date
 }
