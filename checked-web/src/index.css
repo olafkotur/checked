@@ -283,10 +283,12 @@ code {
     resize: none;
     border: 0px none;
     border-right: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    padding: 10px;
 }
 
-.trafficButton{
-  color: green;
-}
+
+
+
 
 
