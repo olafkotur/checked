@@ -274,3 +274,19 @@ code {
 .memberDeleteBtn:hover {
   background-color: #b82a20 !important;
 }
+
+/* ===== COMMENT BOX ===== */
+
+.commentBox{
+    width: 100%;
+    height: 100%;
+    resize: none;
+    border: 0px none;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.trafficButton{
+  color: green;
+}
+
+
