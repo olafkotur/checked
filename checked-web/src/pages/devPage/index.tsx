@@ -2,7 +2,7 @@ import React from 'react';
 import { MemberService } from '../../api/MemberService';
 import { RouteComponentProps } from '@reach/router';
 import {IMember} from '../../types';
-import CommentBox from '../../components/MemberManager/comments/commentBox';
+import CommentBox from '../../components/MemberManager/comments/CommentBox';
 
 interface IState {
     members: Array<IMember>;
@@ -29,7 +29,8 @@ export class DevPage extends React.Component<IProps, IState> {
 
     render(): JSX.Element {
         return (
-           <CommentBox/>
+        //    <CommentBox/>
+        <h1>hello</h1>
         );
     }
 }

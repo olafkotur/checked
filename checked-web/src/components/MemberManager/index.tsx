@@ -1,9 +1,11 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, Toolbar, CardContent, CardHeader, Divider } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import {MemberService} from '../../api/MemberService';
+import CommentBox from './comments/CommentBox';
+
 
 interface IState {
     currentMember: number;
@@ -285,15 +287,46 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={7}>
-
-                            FEEDBACK LIST HERE
+                        <Grid item xs={7}> 
+                            {/* @note Feeback list goes here  */}
+                            {/* <div style={{width:"100%", height:"100%", backgroundColor:"red"}}> */}
+                                
+                               
+                                <CardHeader title={"Comment Feed"} action={
+                                    
+                                    <IconButton >
+                                        <Add onClick={this.addComment()} />
+                                    </IconButton>
+                                } />
+                                <Divider />
+                                    <CardContent >
+                                        <List className="pr-3 pl-2 memberList" style={{ width: "100%"}}>
+                                            {this.getFeedList()}
+                                        </List>
+                                    </CardContent>          
+                                
+                            {/* </div> */}
+                           
 
                         </Grid>
                     </Grid>
                 </div>
             );
         }
+    }
+
+    getFeedList(): any {
+        const comments = [];
+        for (let i = 0; i < 10; i++) {
+            comments[comments.length] = <CommentBox radioVal="3" textContent="this is example text" new={false} timeStamp="12/12/2020" />
+            
+        }
+        return (comments);
+    }
+
+    addComment(): any {
+
+        return(null);
     }
 
     render(): JSX.Element {

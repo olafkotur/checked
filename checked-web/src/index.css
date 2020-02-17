@@ -305,7 +305,9 @@ code {
     padding: 10px;
 }
 
-
+.commentItem{
+  width: 100%;
+}
 
 
 
