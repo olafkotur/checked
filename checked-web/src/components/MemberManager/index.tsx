@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import {MemberService} from '../../api/MemberService';
@@ -8,6 +9,7 @@ interface IState {
     currentMember: number;
     firstName: string;
     lastName: string;
+    overseers: Array<object>;
 }
 
 interface IProps {
@@ -20,7 +22,16 @@ class MemberManager extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { currentMember: -1, firstName: '', lastName: '' };
+        this.state = { 
+            currentMember: -1,
+            firstName: '', 
+            lastName: '',
+            overseers: [
+                { name: 'Parent McParentson', email: 'this@memes.com' },
+                { name: 'Parent McParentson2', email: 'this2@memes.com' },
+                { name: 'Parent McParentson3', email: 'this3@memes.com' },
+            ]
+        };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
@@ -199,12 +210,11 @@ class MemberManager extends React.Component<IProps, IState> {
             );
         } else {
             return (
-                <Card className="w-100 h-100" raised>
-                    <Grid container spacing={0}>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6} className="text-center">
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} className="mt-5 mb-3">
+                <div className="w-100 h-100">
+                    <Grid container spacing={2} className="p-4 h-100">
+                        <Grid item xs={5} className="text-center border-right pr-5">
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} className="mt-3 mb-3">
                                     <Avatar className="memberAvatar">
                                         <Person fontSize="large" className="w-100 h-100 m-1" />
                                     </Avatar>
@@ -214,7 +224,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         Member ID: {this.state.currentMember}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} className="mt-2">
+                                <Grid item xs={6} className="mt-2">
                                     <TextField
                                         variant="outlined"
                                         value={this.state.firstName}
@@ -227,7 +237,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         onChange={this.handleFirstName}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={6} className="mt-2">
                                     <TextField
                                         variant="outlined"
                                         value={this.state.lastName}
@@ -238,6 +248,16 @@ class MemberManager extends React.Component<IProps, IState> {
                                         label="Last Name"
                                         name="lastName"
                                         onChange={this.handleLastName}
+                                    />
+                                </Grid>
+                                {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
+                                <Grid item xs={12}> 
+                                    <Autocomplete
+                                        options={this.state.overseers}
+                                        getOptionLabel={(option: any): string => option.name}
+                                        renderInput={(params: any): any => (
+                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
+                                        )}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -265,9 +285,13 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item xs={7}>
+
+                            FEEDBACK LIST HERE
+
+                        </Grid>
                     </Grid>
-                </Card>
+                </div>
             );
         }
     }
@@ -276,8 +300,8 @@ class MemberManager extends React.Component<IProps, IState> {
 
         return (
             <Grid container spacing={0} className="memberManager mt-3">
-                <Grid item xs={3} className="border-right border-muted">
-                    <List className="pr-3 pl-2 overflow-scroll">
+                <Grid item xs={2} className="border-right border-muted">
+                    <List className="pr-3 pl-2 memberList">
                         <ListItem alignItems="center" className="border-bottom border-muted p-0">
                             <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
                                 <ListItemAvatar>
@@ -292,7 +316,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={2} className="pl-1">
-                                        <Add className="vcenterChild mr-4" fontSize="small" />
+                                        <Add className="vcenterChild ml-2" fontSize="small" />
                                     </Grid>
                                 </Grid>
                             </Button>
@@ -300,7 +324,7 @@ class MemberManager extends React.Component<IProps, IState> {
                         {this.getMembersList()}
                     </List>
                 </Grid>
-                <Grid item xs={9} className="p-2 pl-4">
+                <Grid item xs={10} className="p-2 pl-4">
                     {this.getSelectedMember()}
                 </Grid>
             </Grid>
