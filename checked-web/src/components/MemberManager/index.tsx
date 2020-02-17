@@ -287,7 +287,7 @@ class MemberManager extends React.Component<IProps, IState> {
                         </Grid>
                         <Grid item xs={7}>
 
-                            {/* FEEDBACK LIST HERE */}
+                            FEEDBACK LIST HERE
 
                         </Grid>
                     </Grid>
