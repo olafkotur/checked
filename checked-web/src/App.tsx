@@ -5,6 +5,7 @@ import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
 import { Dashboard } from './pages/dashboard';
 import { MemberManagement } from './pages/member-management';
+import {DevPage} from './pages/devPage';
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import {LightTheme, DarkTheme} from './muiTheme';
@@ -52,6 +53,7 @@ class App extends React.Component<{}, IState> {
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
+								<DevPage path="devPage" userID={this.state.userID}/>
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -65,6 +67,7 @@ class App extends React.Component<{}, IState> {
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
+								<DevPage path="devPage" userID={this.state.userID} />
 							</Router>
 						</ThemeProvider>
 					</div>
