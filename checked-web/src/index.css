@@ -254,8 +254,26 @@ code {
 /* ===== MEMBER MANAGEMENT ===== */ 
 
 .memberManager {
-  min-height: 500px;
-  max-height: 700px;
+  min-height: 700px;
+  max-height: calc(100vh - 25vh);
+}
+
+.memberList { 
+  max-height: calc(100vh - 25vh);
+  overflow-y: scroll;
+}
+
+.memberList::-webkit-scrollbar {
+  width: 5px;
+}
+
+.memberList::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.memberList::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #313131;
 }
 
 .memberAvatar {
