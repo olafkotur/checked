@@ -232,14 +232,22 @@ code {
   }
 }
 
-.dashMemberList {
-  position: absolute !important;
-  right: 0 !important;
-}
-
 .dashOverviewIcon {
   opacity: 0.7;
 }
+
+.dashMemberList {
+  position: absolute !important;
+  right: 0;
+  top: 0;
+  height: calc(100vh - 235px) !important;
+  box-shadow: -5px 0 5px -5px rgba(255, 255, 255, 0.651);
+}
+
+.dashMemberHeight {
+  max-height: calc(100vh - 280px) !important;
+}
+
 
 .dashOverviewButton {
   min-width: 155px !important;
@@ -308,4 +316,17 @@ code {
 
 .memberDeleteBtn:hover {
   background-color: #b82a20 !important;
+}
+
+
+/* ===== ZONES ===== */
+
+.zoneIcon {
+  background-color: #ff9e00;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  color: #fff;
+  padding-top: 1px;
+  transform: translate(-4px, -3px);
 }

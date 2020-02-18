@@ -2,7 +2,7 @@ import React from 'react';
 
 import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
+import { Card, CardContent, Grid, CardHeader, Typography } from '@material-ui/core';
 import { DashboardRounded } from '@material-ui/icons';
 import { IZone } from '../../types';
 
@@ -37,7 +37,7 @@ export class Zone extends React.Component<IProps, IState> {
                             {this.state.loaded &&
                                 <Grid container spacing={0} >
                                     <Grid item xs={12}>
-                                    <CardHeader title={this.props.zoneDetails.name} avatar={<span className="w-100 h-100"><strong>{this.props.zoneDetails.zoneId}</strong></span>} className="mutedBlack mt-2">
+                                    <CardHeader title={this.props.zoneDetails.name} avatar={<div className="zoneIcon"><Typography variant="h6" className="w-100 h-100 text-center"><b>{this.props.zoneDetails.zoneId}</b></Typography></div>} className="mutedBlack mt-2">
                                         </CardHeader>
                                     </Grid>
                                     <Grid item xs={12}>

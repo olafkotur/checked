@@ -164,7 +164,7 @@ class Zone extends React.Component<IProps, IState> {
                                 </IconButton>
                             </Grid>
 
-                            <Typography variant="h6" className="w-100 text-center pb-3 border-bottom mx-4">
+                            <Typography variant="h6" className="w-100 text-center pb-4 border-bottom mx-4">
                                 {this.props.zone.name} Overview
                             </Typography>
 
