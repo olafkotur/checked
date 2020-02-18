@@ -192,6 +192,8 @@ code {
 .zoneVisContainer { 
   background-color: transparent;
   position: relative;
+  width: calc(100% - 90px);
+  height: calc(100vh - 214px);
 }
 /* child */
 .zoneVisZone {

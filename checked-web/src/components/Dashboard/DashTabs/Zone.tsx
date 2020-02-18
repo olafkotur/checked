@@ -9,17 +9,15 @@ import { LiveService } from '../../../api/LiveService';
 
 interface IProps {
     zone: IZone;
-    type: 'temperature' | 'location';
     key: any;
     userID: number;
-    reading?: number;
+
 }
 
 interface IState {
     anchorEl: (Element|null);
     open: boolean;
     ringing: boolean;
-    reading: (number|string);
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -27,26 +25,12 @@ class Zone extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        let reading;
-        if(this.props.reading){
-            reading = this.props.reading;
-        } else {
-            reading = '0';
-        }
 
-        this.state = { anchorEl: null, open: false, ringing: false, reading };
+        this.state = { anchorEl: null, open: false, ringing: false };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.toggleAssemble = this.toggleAssemble.bind(this);
-    }
-
-    componentDidMount(): void {
-        if(this.props.type === 'temperature') {
-            LiveService.getLiveTempDataByZone(this.props.zone.zoneId).then((res) => {
-                this.setState({ reading: res.result.value });
-            });
-        }
     }
 
     handleClick(event: React.MouseEvent): void {
@@ -116,14 +100,6 @@ class Zone extends React.Component<IProps, IState> {
 
         let symbol;
         let reading;
-
-        if(this.props.type === 'temperature'){
-            symbol = <Speed className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = this.state.reading + '°C';
-        } else if (this.props.type === 'location'){
-            symbol = <Location className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = this.state.reading;
-        }
 
         const popoverContent = this.getPopoverContent();
 
