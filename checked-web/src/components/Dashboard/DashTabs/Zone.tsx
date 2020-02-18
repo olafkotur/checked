@@ -6,6 +6,8 @@ import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
 import { navigate } from '@reach/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
     zone: IZone;
@@ -183,7 +185,7 @@ class Zone extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12} key={0} className="w-100 text-center mt-2">
                                         <Icon >
-                                            <Speed fontSize="large" className="dashOverviewIcon" />
+                                            <FontAwesomeIcon icon={faThermometerHalf} className="dashOverviewIcon" />
                                         </Icon>
                                     </Grid>
                                 </Grid>
@@ -204,7 +206,7 @@ class Zone extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12} key={0} className="w-100 text-center mt-2">
                                         <Icon >
-                                            <Person fontSize="large" className="dashOverviewIcon" />
+                                            <FontAwesomeIcon icon={faUser} className="dashOverviewIcon" />
                                         </Icon>
                                     </Grid>
                                 </Grid>
@@ -225,7 +227,7 @@ class Zone extends React.Component<IProps, IState> {
                                     </Grid>
                                     <Grid item xs={12} key={0} className="w-100 text-center mt-2">
                                         <Icon >
-                                            <Brightness7 fontSize="large" className="dashOverviewIcon" />
+                                            <FontAwesomeIcon icon={faSun} className="dashOverviewIcon" />
                                         </Icon>
                                     </Grid>
                                 </Grid>
@@ -236,7 +238,7 @@ class Zone extends React.Component<IProps, IState> {
                             <Grid item xs={2} key={9}>
                             </Grid>
                             <Grid item xs={4} key={10}>
-                                <Button variant="contained" className="dashOverviewButton" color="primary" onClick={(): any => navigate(this.props.zone.zoneId)}>
+                                <Button disableElevation variant="contained" className="dashOverviewButton" color="primary" onClick={(): any => navigate(this.props.zone.zoneId)}>
                                     Detailed View
                                 </Button>
                             </Grid>
