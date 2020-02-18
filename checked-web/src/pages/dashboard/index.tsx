@@ -65,7 +65,6 @@ export class Dashboard extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
-        console.log(this.state);
         return (
             <div className="dashContainer">
                 <Grid container spacing={3} >
