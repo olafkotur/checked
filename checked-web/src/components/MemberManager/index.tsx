@@ -1,10 +1,11 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, Toolbar, CardContent, CardHeader, Divider } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import {MemberService} from '../../api/MemberService';
 import CommentBox from './comments/CommentBox';
+import { CommentService } from '../../api/CommentService';
 
 
 interface IState {
@@ -12,6 +13,8 @@ interface IState {
     firstName: string;
     lastName: string;
     overseers: Array<object>;
+    comments: Array<any>;
+    editingComment: boolean;
 }
 
 interface IProps {
@@ -32,7 +35,9 @@ class MemberManager extends React.Component<IProps, IState> {
                 { name: 'Parent McParentson', email: 'this@memes.com' },
                 { name: 'Parent McParentson2', email: 'this2@memes.com' },
                 { name: 'Parent McParentson3', email: 'this3@memes.com' },
-            ]
+            ],
+            comments: [],
+            editingComment: false,
         };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
@@ -40,6 +45,9 @@ class MemberManager extends React.Component<IProps, IState> {
         this.setAddNewMember = this.setAddNewMember.bind(this);
         this.handleFirstName = this.handleFirstName.bind(this);
         this.handleLastName = this.handleLastName.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+        this.addComment = this.addComment.bind(this);
+        this.saveComment = this.saveComment.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -54,7 +62,9 @@ class MemberManager extends React.Component<IProps, IState> {
                 lastUpdated: 0,
             };
         }
-        this.setState({currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName});
+
+        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment:false});
+        this.getFeedList("meme");
     }
 
     setAddNewMember(): void {
@@ -287,21 +297,21 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={7}> 
-                            {/* @note Feeback list goes here  */}
-                            {/* <div style={{width:"100%", height:"100%", backgroundColor:"red"}}> */}
+                        <Grid item xs={7} > 
+                            {/* Comment feed here */}
+                            {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
                                 
                                
                                 <CardHeader title={"Comment Feed"} action={
                                     
                                     <IconButton >
-                                        <Add onClick={this.addComment()} />
+                                        <Add onClick={this.addComment} />
                                     </IconButton>
                                 } />
                                 <Divider />
                                     <CardContent >
                                         <List className="pr-3 pl-2 memberList" style={{ width: "100%"}}>
-                                            {this.getFeedList()}
+                                            {this.state.comments}
                                         </List>
                                     </CardContent>          
                                 
@@ -315,19 +325,138 @@ class MemberManager extends React.Component<IProps, IState> {
         }
     }
 
-    getFeedList(): any {
-        const comments = [];
-        for (let i = 0; i < 10; i++) {
-            comments[comments.length] = <CommentBox radioVal="3" textContent="this is example text" new={false} timeStamp="12/12/2020" />
+    formatAMPM(date: Date): string {
+        let hours = date.getHours();
+        let minutes: any = date.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const strTime = hours + ':' + minutes +  ampm;
+        return strTime;
+    }
+
+   async getFeedList(name: string): Promise<void> {
+
+       const serverInfo = await CommentService.getComments(this.state.currentMember.toString());
+        console.log(serverInfo);
+        const commentsTmp = [];
+        if(serverInfo.length > 0){
+        for (let i = 0; i < serverInfo.length; i++) {
+            const comment = serverInfo[i];
+            
+            // const timeStamp = new Date(comment.createdAt);
+
+            const dateTmp = new Date(comment.createdAt*1000);
+
+            console.log(dateTmp);
+
+            const date =  dateTmp.getDate(); //Current Date
+            const month =  dateTmp.getMonth() + 1; //Current Month
+            const year =  dateTmp.getFullYear(); //Current Year
+            const hours =  dateTmp.getHours(); //Current Hours
+            const min = ('0' + dateTmp.getMinutes()).slice(-2);; //Current Minutes
+
+            const timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+
+
+
+            console.log(comment);
+            commentsTmp[commentsTmp.length] = <CommentBox
+                 key={comment.commentId}
+                 dbid = {comment.commentId}
+                 radioVal={comment.rating.toString()}
+                 textContent={comment.value} 
+                 new={false} 
+                 timeStamp={timeStamp} 
+                 deleteThisComment = { this.deleteComment }
+                 saveThisComment = {this.saveComment}
+                />;
+        }
+    }
+
+        this.setState({ comments: commentsTmp.reverse() });
+        // console.log(this.state.comments);
+    }
+
+    deleteComment(commentBox: any): void {
+        console.log("i have been called");
+
+        if (commentBox != null) {
+
+            
+
+            const tempComments: any = [];
+
+            for (let i = 0; i < this.state.comments.length; i++) {
+                const commentBoxTmp = this.state.comments[i];
+
+                if (commentBoxTmp.props.dbid !== commentBox.props.dbid) {
+                    tempComments[tempComments.length] = commentBoxTmp;
+                }
+            }
+            this.setState({ comments: tempComments,  editingComment: false});
             
         }
-        return (comments);
+
+
+
     }
 
-    addComment(): any {
+    addComment(): void {
 
-        return(null);
+
+        if(!this.state.editingComment){
+            
+        
+            const tempComments: any = [];
+            
+
+            // Create the new comment
+            tempComments[0] = <CommentBox
+                key={0}
+                dbid={0} 
+                radioVal="0"
+                textContent={""}
+                new={true}
+                timeStamp="New Comment"
+                deleteThisComment={this.deleteComment}
+                saveThisComment={this.saveComment}
+            />;
+            
+            // add the rest of them
+            for (let i = 0; i < this.state.comments.length; i++) {
+                tempComments[tempComments.length] = this.state.comments[i];
+            }
+            this.setState({ comments: tempComments, editingComment: true });
+        }
+        else{
+            alert("you can only add one comment at a time");
+        }
     }
+
+    async saveComment(commentBox: any): Promise<void>{
+        console.log("Saving Now");
+
+
+        const body = {
+            memberId: this.state.currentMember,
+            rating: parseInt(commentBox.state.radio),
+            value: commentBox.state.commentVal,
+        };
+
+        console.log(body);
+
+        await CommentService.saveComment(body);
+        
+        await this.deleteComment(commentBox);
+        this.setState({ comments: [0] });
+        await this.getFeedList("meme");
+
+
+
+    }
+
 
     render(): JSX.Element {
 

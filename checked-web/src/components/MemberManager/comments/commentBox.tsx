@@ -17,6 +17,9 @@ interface IProps extends RouteComponentProps {
    timeStamp: string;
    textContent: string;
    radioVal: string;
+   dbid: number;
+   deleteThisComment(commentBox: any): void;
+   saveThisComment(commentBox: any): void;
 }
 
 const cardStyle = {
@@ -65,7 +68,6 @@ const amberLight = createMuiTheme({
             },
         }
     },
-
 });
 
 const greenLight = createMuiTheme({
@@ -92,11 +94,21 @@ export class CommentBox extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
         this.state = {commentVal: this.props.textContent, radio:this.props.radioVal};
+
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
 
     
     
+    handleDelete(event: any): void{
+        console.log("delete me");
+        this.props.deleteThisComment(this);
+    }
 
+    handleSave(event: any): void{
+        this.props.saveThisComment(this);
+    }
 
     commentChangeHandler= (event: any): void => {
             this.setState({ commentVal: event.target.value});
@@ -120,7 +132,7 @@ export class CommentBox extends React.Component<IProps, IState> {
         if(!this.props.new){
             return(
             <IconButton >
-                <Delete />
+                    <Delete onClick={this.handleDelete} />
             </IconButton>
             );
         }
@@ -129,12 +141,12 @@ export class CommentBox extends React.Component<IProps, IState> {
                 <Grid container>
                     <Grid item>
                         <IconButton >
-                            <Save />
+                            <Save onClick={this.handleSave}/>
                         </IconButton>
                     </Grid>
                     <Grid item>
                         <IconButton >
-                            <Delete />
+                            <Delete onClick={this.handleDelete}/>
                         </IconButton>
                     </Grid>
                 </Grid>
@@ -143,17 +155,17 @@ export class CommentBox extends React.Component<IProps, IState> {
     };
 
 
-    // use this for saving
-    getTimeStamp(): string{
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
-        const hours = new Date().getHours(); //Current Hours
-        const min = new Date().getMinutes(); //Current Minutes
+    // // use this for saving
+    // getTimeStamp(): string{
+    //     const date = new Date().getDate(); //Current Date
+    //     const month = new Date().getMonth() + 1; //Current Month
+    //     const year = new Date().getFullYear(); //Current Year
+    //     const hours = new Date().getHours(); //Current Hours
+    //     const min = new Date().getMinutes(); //Current Minutes
 
-        return (date + '/' + month + '/' + year + ' ' + hours + ':' + min);
+    //     return (date + '/' + month + '/' + year + ' ' + hours + ':' + min);
 
-    };
+    // };
 
 
     render(): JSX.Element {

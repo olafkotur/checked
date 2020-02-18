@@ -233,14 +233,8 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     determineTextColor(color: any): string{
-       
-
-       
-
+  
         let rgb = color;
-
-      
-        
 
         rgb = rgb.replace(/[^\d,]/g, '').split(',');
 
