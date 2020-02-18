@@ -1,8 +1,6 @@
 import React from 'react';
-import { AppBar, Tabs, Tab, Typography, Box } from "@material-ui/core";
 import ZoneVisualisation from './ZoneVisualisation';
 import {IZone} from '../../../types';
-import { Speed, MyLocation } from '@material-ui/icons';
 
 interface IState {
     tabValue: number;
@@ -15,11 +13,6 @@ interface IProps {
 }
 
 class DashTabs extends React.Component<IProps, IState> {
-
-    constructor(props: any) {
-        super(props);
-    }
-
     
     render(): JSX.Element {
 

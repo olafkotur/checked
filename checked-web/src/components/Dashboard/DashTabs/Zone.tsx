@@ -1,11 +1,10 @@
 import React from 'react';
 
 import { Paper, Grid, Typography, Popover, IconButton, Box, Icon, Button } from "@material-ui/core";
-import { Speed, LocationOn as Location, Close, NotificationsNone, NotificationsActive, Person, Brightness7 } from "@material-ui/icons";
+import { Speed, Close, NotificationsNone, NotificationsActive, Person, Brightness7 } from "@material-ui/icons";
 import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
-import { LiveService } from '../../../api/LiveService';
 import { navigate } from '@reach/router';
 
 interface IProps {
@@ -84,7 +83,7 @@ class Zone extends React.Component<IProps, IState> {
         );
 
         popoverContent.push(
-            <Grid item xs={4} key={0} className="border-right pt-4 pb-4">
+            <Grid item xs={4} key={1} className="border-right pt-4 pb-4">
                 <Grid container spacing={0}>
                     <Grid item xs={12}>
                         <Typography variant="h6" className="w-100 text-center">
@@ -107,7 +106,7 @@ class Zone extends React.Component<IProps, IState> {
         );
 
         popoverContent.push(
-            <Grid item xs={4} key={0} className="pt-4 pb-4">
+            <Grid item xs={4} key={2} className="pt-4 pb-4">
                 <Grid container spacing={0}>
                     <Grid item xs={12}>
                         <Typography variant="h6" className="w-100 text-center">
@@ -135,13 +134,13 @@ class Zone extends React.Component<IProps, IState> {
         });
 
         popoverContent.push(
-            <Grid xs={2}>
+            <Grid item xs={2} key={9}>
 
             </Grid>
         );
 
         popoverContent.push(
-            <Grid item xs={4}>
+            <Grid item xs={4} key={10}>
                 <Button variant="contained" className="dashOverviewButton" color="primary">
                     Detailed View
                 </Button>
@@ -149,7 +148,7 @@ class Zone extends React.Component<IProps, IState> {
         );
 
         popoverContent.push(
-            <Grid item xs={4}>
+            <Grid item xs={4} key={11}>
                 <Button variant="outlined" className="dashOverviewButton" color="primary" onClick={(): any => navigate('editor')} key={'MapEditor'}>
                     Edit Zones
                 </Button>

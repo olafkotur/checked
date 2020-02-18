@@ -93,9 +93,9 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                 <Grid item xs={12}>
                     <div className="zoneVisContainer">
                         {renderedZones}
-                        <div className="dashMemberList">
+                        <List className="dashMemberList">
                             {this.getMembersList()}
-                        </div>
+                        </List>
                     </div>
                 </Grid>
             </Grid>
