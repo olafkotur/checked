@@ -37,7 +37,7 @@ export class Zone extends React.Component<IProps, IState> {
                             {this.state.loaded &&
                                 <Grid container spacing={0} >
                                     <Grid item xs={12}>
-                                        <CardHeader title={this.props.zoneDetails.name} avatar={<DashboardRounded className="w-100 h-100" />} className="mutedBlack mt-2">
+                                    <CardHeader title={this.props.zoneDetails.name} avatar={<span className="w-100 h-100"><strong>{this.props.zoneDetails.zoneId}</strong></span>} className="mutedBlack mt-2">
                                         </CardHeader>
                                     </Grid>
                                     <Grid item xs={12}>

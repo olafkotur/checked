@@ -56,108 +56,6 @@ class Zone extends React.Component<IProps, IState> {
         }
     }
 
-    getPopoverContent(): Array<JSX.Element> {
-        const popoverContent: Array<JSX.Element> = [];
-
-        popoverContent.push(
-            <Grid item xs={4} key={0} className="border-right pt-4 pb-4">
-                <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Typography variant="h6" className="w-100 text-center">
-                            {this.props.zone.data?.currentTemp || '20'}°C
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} className="text-center">
-                        <Typography className="w-100 text-center" variant="caption">
-                            <i className="text-center">Current Temperature</i>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
-                        <Icon >
-                            <Speed fontSize="large" className="dashOverviewIcon" />
-                        </Icon>
-                    </Grid>
-                </Grid>
-            </Grid>
-        );
-
-        popoverContent.push(
-            <Grid item xs={4} key={1} className="border-right pt-4 pb-4">
-                <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Typography variant="h6" className="w-100 text-center">
-                            {this.props.zone.data?.currentCount || '0'}
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} className="text-center">
-                        <Typography className="w-100 text-center" variant="caption">
-                            <i className="text-center">Members Present</i>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
-                        <Icon >
-                            <Person fontSize="large" className="dashOverviewIcon" />
-                        </Icon>
-                    </Grid>
-                </Grid>
-            </Grid>
-        );
-
-        popoverContent.push(
-            <Grid item xs={4} key={2} className="pt-4 pb-4">
-                <Grid container spacing={0}>
-                    <Grid item xs={12}>
-                        <Typography variant="h6" className="w-100 text-center">
-                            {/* {this.props.zone.data?.currentLight || '0'} TODO: */} 0
-                        </Typography>
-                    </Grid>
-
-                    <Grid item xs={12} className="text-center">
-                        <Typography className="w-100 text-center" variant="caption">
-                            <i className="text-center">Light Level</i>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
-                        <Icon >
-                            <Brightness7 fontSize="large" className="dashOverviewIcon" />
-                        </Icon>
-                    </Grid>
-                </Grid>
-            </Grid>
-        );
-
-
-        this.getZoneAlertButton().forEach(element => {
-            popoverContent.push(element);
-        });
-
-        popoverContent.push(
-            <Grid item xs={2} key={9}>
-
-            </Grid>
-        );
-
-        popoverContent.push(
-            <Grid item xs={4} key={10}>
-                <Button variant="contained" className="dashOverviewButton" color="primary">
-                    Detailed View
-                </Button>
-            </Grid>
-        );
-
-        popoverContent.push(
-            <Grid item xs={4} key={11}>
-                <Button variant="outlined" className="dashOverviewButton" color="primary" onClick={(): any => navigate('editor')} key={'MapEditor'}>
-                    Edit Zones
-                </Button>
-            </Grid>
-        );
-
-        return popoverContent;
-    }
-
     getZoneAlertButton(): Array<JSX.Element> {
 
         const returnArr: Array<JSX.Element> = [];
@@ -201,8 +99,6 @@ class Zone extends React.Component<IProps, IState> {
 
         let symbol;
         let reading;
-
-        const popoverContent = this.getPopoverContent();
 
         return (
             <div className="zoneVisZone"
@@ -263,12 +159,92 @@ class Zone extends React.Component<IProps, IState> {
                             <Grid item xs={11}>
                             </Grid>
                             <Grid item xs={1} >
-                                <IconButton onClick={this.handleClose} className="mr-3" size="small" >
+                                <IconButton onClick={this.handleClose} className="mr-1 mt-1" size="small" >
                                     <Close fontSize="small" />
                                 </IconButton>
                             </Grid>
 
-                            {popoverContent}
+                            <Typography variant="h6" className="w-100 text-center pb-3 border-bottom mx-4">
+                                {this.props.zone.name} Overview
+                            </Typography>
+
+                            <Grid item xs={4} className="border-right pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {this.props.zone.data?.currentTemp || '?'}°C
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Current Temperature</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <Speed fontSize="large" className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={4} key={1} className="border-right pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {this.props.zone.data?.currentCount || '?'}
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Members Present</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <Person fontSize="large" className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={4} key={2} className="pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {/* {this.props.zone.data?.currentLight || '?'} TODO: */} ?
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Light Level</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <Brightness7 fontSize="large" className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            {this.getZoneAlertButton()}
+
+                            <Grid item xs={2} key={9}>
+                            </Grid>
+                            <Grid item xs={4} key={10}>
+                                <Button variant="contained" className="dashOverviewButton" color="primary" onClick={(): any => navigate(this.props.zone.zoneId)}>
+                                    Detailed View
+                                </Button>
+                            </Grid>
+                            <Grid item xs={4} key={11}>
+                                <Button variant="outlined" className="dashOverviewButton" color="primary" onClick={(): any => navigate('editor')} key={'MapEditor'}>
+                                    Edit Zones
+                                </Button>
+                            </Grid>
 
                         </Grid>
 
