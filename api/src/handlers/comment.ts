@@ -54,8 +54,8 @@ export const CommentHandler = {
         memberId: comment.memberId,
         rating: comment.rating,
         value: comment.value,
-        createdAt: moment(data.createdAt).unix(),
-      }
+        createdAt: moment(comment.createdAt).unix(),
+      };
     });
 
     ResponseService.data(formatted, res);

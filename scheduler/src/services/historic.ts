@@ -1,12 +1,35 @@
 import { HttpService } from './http';
-import { IHistoricResponse } from '../models';
+import { IHistoricResponse, ILiveResponse, IActivityResponse } from '../models';
+
+/* TODO:
+  1. Get the latest data
+  2. Calculate the average temperature
+  3. Get the number of active members
+  4. Count all the active zones
+  5. Count the number of active activities
+  6. Count how many users there are in each zone
+  7. Show which users are in which zone
+*/
 
 export const HistoricService = {
 
   start: async (domain: string): Promise<void> => {
-    const latestData: any = await HistoricService.getLatestData(domain);
-    const formatted: IHistoricResponse = HistoricService.formatData(latestData);
-    await HistoricService.uploadData(domain, formatted);
+    const liveData: any = await HistoricService.getLatestData(domain);
+    const uniqueUsers = HistoricService.getUniqueValues('userId', liveData.result);
+
+    uniqueUsers.forEach(async (userId: number) => {
+      const userData: ILiveResponse[] = liveData.result.filter((live: ILiveResponse) => live.userId === userId);
+      const data: IHistoricResponse = {
+        userId,
+        averageTemperature: HistoricService.calcAverageTemperature(userData),
+        membersActive: HistoricService.calcMembersActive(userData),
+        zonesCount: HistoricService.calcActiveZones(userData),
+        activitiesCount: await HistoricService.calcActivities(userData, domain)
+      };
+      console.log(data);
+    });
+
+    // await HistoricService.uploadData(domain, formatted);
   },
 
   getLatestData: async (domain: string): Promise<any> => {
@@ -14,15 +37,40 @@ export const HistoricService = {
     return data;
   },
 
-  formatData: (_data: any): IHistoricResponse => {
-    return {
-      userId: 1,
-      averageTemperature: 1,
-      membersActive: 1,
-      zonesCount: 1,
-      activitiesCount: 1,
-      createdAt: 1,
-    };
+  getUniqueValues: (type: string, data: ILiveResponse[]): number[] => {
+    const uniques: number[] = [];
+    data.forEach((live: any) => {
+      if (!uniques.includes(live[type])) {
+        uniques.push(live[type]);
+      }
+    });
+    return uniques;
+  },
+
+  calcAverageTemperature: (data: ILiveResponse[]): number => {
+    let sum = 0;
+    data.forEach((live: ILiveResponse) => sum += live.value);
+    return sum / data.length;
+  },
+
+  calcMembersActive: (data: ILiveResponse[]): number => {
+    return HistoricService.getUniqueValues('memberId', data).length;
+  },
+
+  calcActiveZones: (data: ILiveResponse[]): number => {
+    return HistoricService.getUniqueValues('zoneId', data).length;
+  },
+
+  calcActivities: async (data: ILiveResponse[], domain: string): Promise<number> => {
+    const zones: number[] = HistoricService.getUniqueValues('zoneId', data);
+    const activities: any = await HttpService.get(domain + '/api/activity');
+    const valid: IActivityResponse[] = [];
+    activities.result.forEach((activity: IActivityResponse) => {
+      if (zones.includes(activity.zoneId)) {
+        valid.push(activity);
+      }
+    })
+    return valid.length;
   },
 
   uploadData: async (domain: string, data: any): Promise<boolean> => {

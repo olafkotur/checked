@@ -8,5 +8,21 @@ export interface IHistoricResponse {
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
-  createdAt: number
+}
+
+export interface ILiveResponse {
+  dataType: string,
+  memberId?: number,
+  userId: number,
+  zoneId: number,
+  value: number,
+  time: number 
+}
+
+export interface IActivityResponse {
+  activityId: number,
+  name: string,
+  zoneId: number
+  createdAt: number,
+  lastUpdated: number
 }
