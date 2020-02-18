@@ -4,6 +4,7 @@ import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { IDbComment } from '../types/db';
 import { ICommentResponse } from '../types/response';
+import moment from 'moment';
 
 export const CommentHandler = {
   createComment: async (req: express.Request, res: express.Response) => {
@@ -41,11 +42,43 @@ export const CommentHandler = {
   },
 
   getComments: async (req: express.Request, res: express.Response) => {
-    ResponseService.ok('hello', res)
+    const data: any = await MongoService.findMany('comments', { memberId: parseInt(req.params.memberId || '0') });
+    if (data === null) {
+      ResponseService.data([], res);
+      return false;
+    }
+
+    const formatted: ICommentResponse[] = data.map((comment: IDbComment) => {
+      return {
+        commentId: comment.commentId,
+        memberId: comment.memberId,
+        rating: comment.rating,
+        value: comment.value,
+        createdAt: moment(data.createdAt).unix(),
+      }
+    });
+
+    ResponseService.data(formatted, res);
+    return true;
   },
 
   getComment: async (req: express.Request, res: express.Response) => {
+    const data: any = await MongoService.findOne('comments', { commentId: parseInt(req.params.commentId || '0') });
+    if (data === null) {
+      ResponseService.data({}, res);
+      return false;
+    }
 
+    const formatted: ICommentResponse = {
+      commentId: data.commentId,
+      memberId: data.memberId,
+      rating: data.rating,
+      value: data.value,
+      createdAt: moment(data.createdAt).unix(),
+    };
+
+    ResponseService.data(formatted, res);
+    return true;
   },
 };
 
