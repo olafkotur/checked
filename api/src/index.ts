@@ -10,6 +10,7 @@ import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
 import { AssemblyHandler } from './handlers/assembly';
 import { HistoricHandler } from './handlers/historic';
+import { CommentHandler } from './handlers/comment';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -61,6 +62,12 @@ async function main() {
   app.get('/api/members/:memberId', MemberHandler.getMember);
   app.get('/api/members', MemberHandler.getMembers);
   app.get('/api/members/users/:userId', MemberHandler.getMembersByUser);
+
+  // Comment handlers
+  app.post('/api/comment/create', CommentHandler.createComment);
+  app.delete('/api/comment/delete/:commentId', CommentHandler.deleteComment);
+  app.get('/api/comments/:memberId', CommentHandler.getComments);
+  app.get('/api/comment/:commentId', CommentHandler.getComment);
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);

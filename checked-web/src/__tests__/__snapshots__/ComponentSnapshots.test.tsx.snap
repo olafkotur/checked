@@ -1,0 +1,3543 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashTabs Snapshot Test Snapshot Renders 1`] = `
+<div>
+  <div
+    className="MuiTypography-root MuiTypography-body1"
+    hidden={false}
+    id="tabpanel-0"
+    role="tabpanel"
+  >
+    <div
+      className="MuiBox-root MuiBox-root-282"
+      style={
+        Object {
+          "height": "70vh",
+          "minHeight": "500px",
+        }
+      }
+    >
+      <div
+        className="MuiGrid-root MuiGrid-container"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <div
+            className="zoneVisContainer h-100 w-100"
+          />
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+        >
+          <h6
+            className="MuiTypography-root ml-1 mt-1 fontMontserrat text-right border-bottom border-muted MuiTypography-h6"
+          >
+            Members
+          </h6>
+          <ul
+            className="MuiList-root membersList mt-2 mb-2 MuiList-padding"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiTypography-root MuiTypography-body1"
+    hidden={true}
+    id="tabpanel-1"
+    role="tabpanel"
+  >
+    <div
+      className="MuiBox-root MuiBox-root-283"
+      style={
+        Object {
+          "height": "70vh",
+          "minHeight": "500px",
+        }
+      }
+    >
+      <div
+        className="MuiGrid-root MuiGrid-container"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+        >
+          <div
+            className="zoneVisContainer h-100 w-100"
+          />
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2"
+        >
+          <h6
+            className="MuiTypography-root ml-1 mt-1 fontMontserrat text-right border-bottom border-muted MuiTypography-h6"
+          >
+            Members
+          </h6>
+          <ul
+            className="MuiList-root membersList mt-2 mb-2 MuiList-padding"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <header
+    className="MuiPaper-root MuiAppBar-root MuiAppBar-positionStatic MuiAppBar-colorInherit MuiPaper-elevation4"
+    style={
+      Object {
+        "boxShadow": "none",
+      }
+    }
+  >
+    <div
+      className="MuiTabs-root"
+    >
+      <div
+        className="MuiTabs-scroller MuiTabs-fixed"
+        onScroll={[Function]}
+        style={
+          Object {
+            "marginBottom": null,
+            "overflow": "hidden",
+          }
+        }
+      >
+        <div
+          className="MuiTabs-flexContainer"
+          role="tablist"
+        >
+          <button
+            aria-selected={true}
+            className="MuiButtonBase-root MuiTab-root MuiTab-textColorInherit Mui-selected MuiTab-labelIcon MuiTab-fullWidth"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            role="tab"
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiTab-wrapper"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root mr-2 mt-1"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"
+                />
+              </svg>
+              Location
+            </span>
+            <span
+              className="PrivateTabIndicator-root-305 PrivateTabIndicator-colorSecondary-307 MuiTabs-indicator"
+              style={Object {}}
+            />
+          </button>
+          <button
+            aria-selected={false}
+            className="MuiButtonBase-root MuiTab-root MuiTab-textColorInherit MuiTab-labelIcon MuiTab-fullWidth"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onDragLeave={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            onTouchEnd={[Function]}
+            onTouchMove={[Function]}
+            onTouchStart={[Function]}
+            role="tab"
+            tabIndex={0}
+            type="button"
+          >
+            <span
+              className="MuiTab-wrapper"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root mr-2 mt-1"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M20.38 8.57l-1.23 1.85a8 8 0 01-.22 7.58H5.07A8 8 0 0115.58 6.85l1.85-1.23A10 10 0 003.35 19a2 2 0 001.72 1h13.85a2 2 0 001.74-1 10 10 0 00-.27-10.44zm-9.79 6.84a2 2 0 002.83 0l5.66-8.49-8.49 5.66a2 2 0 000 2.83z"
+                />
+              </svg>
+              Temperature
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`Map Editor Snapshot Test Snapshot Renders 1`] = `
+<div
+  className="MuiPaper-root MuiCard-root editorCard MuiPaper-elevation1 MuiPaper-rounded"
+  id="editorCard"
+>
+  <div
+    className="MuiCardHeader-root mutedBlack mt-2"
+  >
+    <div
+      className="MuiCardHeader-avatar"
+    >
+      <svg
+        aria-hidden="true"
+        className="MuiSvgIcon-root w-100 h-100"
+        focusable="false"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM8 20H4v-4h4v4zm0-6H4v-4h4v4zm0-6H4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4zm6 12h-4v-4h4v4zm0-6h-4v-4h4v4zm0-6h-4V4h4v4z"
+        />
+      </svg>
+    </div>
+    <div
+      className="MuiCardHeader-content"
+    >
+      <span
+        className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+      >
+        Map Editor
+      </span>
+    </div>
+  </div>
+  <hr
+    className="MuiDivider-root"
+  />
+  <div
+    className="MuiToolbar-root MuiToolbar-regular cardToolbar pt-2 pb-2 MuiToolbar-gutters"
+  >
+    <button
+      aria-describedby={null}
+      aria-label="Add new zone"
+      className="MuiButtonBase-root MuiIconButton-root ml-3 MuiIconButton-sizeSmall MuiIconButton-edgeStart"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      title="Add Zone"
+      type="button"
+    >
+      <span
+        className="MuiIconButton-label"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+      </span>
+      <span
+        className="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      aria-describedby={null}
+      aria-label="Change color"
+      className="MuiButtonBase-root MuiIconButton-root ml-2 MuiIconButton-sizeSmall"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      title="Colour Picker"
+      type="button"
+    >
+      <span
+        className="MuiIconButton-label"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+          />
+        </svg>
+      </span>
+      <span
+        className="MuiTouchRipple-root"
+      />
+    </button>
+    <hr
+      className="MuiDivider-root MuiDivider-middle MuiDivider-vertical"
+    />
+    <button
+      aria-describedby={null}
+      aria-label="Clear zones"
+      className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      title="Delete Zone"
+      type="button"
+    >
+      <span
+        className="MuiIconButton-label"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+          />
+        </svg>
+      </span>
+      <span
+        className="MuiTouchRipple-root"
+      />
+    </button>
+    <button
+      aria-describedby={null}
+      aria-label="Save"
+      className="MuiButtonBase-root MuiIconButton-root ml-2 MuiIconButton-sizeSmall"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseOver={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      title="Save Layout"
+      type="button"
+    >
+      <span
+        className="MuiIconButton-label"
+      >
+        <svg
+          aria-hidden="true"
+          className="MuiSvgIcon-root"
+          focusable="false"
+          role="presentation"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"
+          />
+        </svg>
+      </span>
+      <span
+        className="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+  <hr
+    className="MuiDivider-root"
+  />
+  <div
+    className="MuiCardContent-root editorContent"
+  >
+    <div
+      className="BgContainer"
+    >
+      <div
+        className="colsDiv"
+      >
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+        <div
+          className="BgColumn"
+        />
+      </div>
+      <div
+        className="colsDiv"
+      >
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+        <div
+          className="BgRow"
+        />
+      </div>
+    </div>
+    <div
+      className="d-none"
+    >
+      <div
+        className="colorPicker"
+      >
+        <div
+          className="sketch-picker "
+          style={
+            Object {
+              "MozBorderRadius": "4px",
+              "MozBoxShadow": "0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)",
+              "OBorderRadius": "4px",
+              "OBoxShadow": "0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)",
+              "WebkitBorderRadius": "4px",
+              "WebkitBoxShadow": "0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)",
+              "background": "#fff",
+              "borderRadius": "4px",
+              "boxShadow": "0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)",
+              "boxSizing": "initial",
+              "msBorderRadius": "4px",
+              "msBoxShadow": "0 0 0 1px rgba(0,0,0,.15), 0 8px 16px rgba(0,0,0,.15)",
+              "padding": "10px 10px 0",
+              "width": 200,
+            }
+          }
+        >
+          <div
+            style={
+              Object {
+                "overflow": "hidden",
+                "paddingBottom": "75%",
+                "position": "relative",
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              onMouseDown={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              style={
+                Object {
+                  "MozBorderRadius": undefined,
+                  "OBorderRadius": undefined,
+                  "WebkitBorderRadius": undefined,
+                  "background": "hsl(37.1764705882353,100%, 50%)",
+                  "borderRadius": undefined,
+                  "bottom": "0px",
+                  "left": "0px",
+                  "msBorderRadius": undefined,
+                  "position": "absolute",
+                  "right": "0px",
+                  "top": "0px",
+                }
+              }
+            >
+              <style>
+                
+          .saturation-white {
+            background: -webkit-linear-gradient(to right, #fff, rgba(255,255,255,0));
+            background: linear-gradient(to right, #fff, rgba(255,255,255,0));
+          }
+          .saturation-black {
+            background: -webkit-linear-gradient(to top, #000, rgba(0,0,0,0));
+            background: linear-gradient(to top, #000, rgba(0,0,0,0));
+          }
+        
+              </style>
+              <div
+                className="saturation-white"
+                style={
+                  Object {
+                    "MozBorderRadius": undefined,
+                    "OBorderRadius": undefined,
+                    "WebkitBorderRadius": undefined,
+                    "borderRadius": undefined,
+                    "bottom": "0px",
+                    "left": "0px",
+                    "msBorderRadius": undefined,
+                    "position": "absolute",
+                    "right": "0px",
+                    "top": "0px",
+                  }
+                }
+              >
+                <div
+                  className="saturation-black"
+                  style={
+                    Object {
+                      "MozBorderRadius": undefined,
+                      "MozBoxShadow": undefined,
+                      "OBorderRadius": undefined,
+                      "OBoxShadow": undefined,
+                      "WebkitBorderRadius": undefined,
+                      "WebkitBoxShadow": undefined,
+                      "borderRadius": undefined,
+                      "bottom": "0px",
+                      "boxShadow": undefined,
+                      "left": "0px",
+                      "msBorderRadius": undefined,
+                      "msBoxShadow": undefined,
+                      "position": "absolute",
+                      "right": "0px",
+                      "top": "0px",
+                    }
+                  }
+                />
+                <div
+                  style={
+                    Object {
+                      "cursor": "default",
+                      "left": "100%",
+                      "position": "absolute",
+                      "top": "0%",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "MozBorderRadius": "50%",
+                        "MozBoxShadow": "0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4)",
+                        "MozTransform": "translate(-2px, -2px)",
+                        "OBorderRadius": "50%",
+                        "OBoxShadow": "0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4)",
+                        "OTransform": "translate(-2px, -2px)",
+                        "WebkitBorderRadius": "50%",
+                        "WebkitBoxShadow": "0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4)",
+                        "WebkitTransform": "translate(-2px, -2px)",
+                        "borderRadius": "50%",
+                        "boxShadow": "0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4)",
+                        "cursor": "hand",
+                        "height": "4px",
+                        "msBorderRadius": "50%",
+                        "msBoxShadow": "0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0,0,0,.3),
+            0 0 1px 2px rgba(0,0,0,.4)",
+                        "msTransform": "translate(-2px, -2px)",
+                        "transform": "translate(-2px, -2px)",
+                        "width": "4px",
+                      }
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="flexbox-fix"
+            style={
+              Object {
+                "display": "flex",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "1",
+                  "WebkitBoxFlex": "1",
+                  "WebkitFlex": "1",
+                  "flex": "1",
+                  "msFlex": "1",
+                  "padding": "4px 0",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "height": "10px",
+                    "overflow": "hidden",
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "MozBorderRadius": undefined,
+                      "MozBoxShadow": undefined,
+                      "OBorderRadius": undefined,
+                      "OBoxShadow": undefined,
+                      "WebkitBorderRadius": undefined,
+                      "WebkitBoxShadow": undefined,
+                      "borderRadius": undefined,
+                      "bottom": "0px",
+                      "boxShadow": undefined,
+                      "left": "0px",
+                      "msBorderRadius": undefined,
+                      "msBoxShadow": undefined,
+                      "position": "absolute",
+                      "right": "0px",
+                      "top": "0px",
+                    }
+                  }
+                >
+                  <div
+                    className="hue-horizontal"
+                    onMouseDown={[Function]}
+                    onTouchMove={[Function]}
+                    onTouchStart={[Function]}
+                    style={
+                      Object {
+                        "MozBorderRadius": undefined,
+                        "OBorderRadius": undefined,
+                        "WebkitBorderRadius": undefined,
+                        "borderRadius": undefined,
+                        "height": "100%",
+                        "msBorderRadius": undefined,
+                        "padding": "0 2px",
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <style>
+                      
+            .hue-horizontal {
+              background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0
+                33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to right, #f00 0%, #ff0
+                17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+
+            .hue-vertical {
+              background: linear-gradient(to top, #f00 0%, #ff0 17%, #0f0 33%,
+                #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to top, #f00 0%, #ff0 17%,
+                #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+          
+                    </style>
+                    <div
+                      style={
+                        Object {
+                          "left": "10.326797385620916%",
+                          "position": "absolute",
+                        }
+                      }
+                    >
+                      <div
+                        style={
+                          Object {
+                            "MozBorderRadius": "1px",
+                            "MozBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "MozTransform": "translateX(-2px)",
+                            "OBorderRadius": "1px",
+                            "OBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "OTransform": "translateX(-2px)",
+                            "WebkitBorderRadius": "1px",
+                            "WebkitBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "WebkitTransform": "translateX(-2px)",
+                            "background": "#fff",
+                            "borderRadius": "1px",
+                            "boxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "height": "8px",
+                            "marginTop": "1px",
+                            "msBorderRadius": "1px",
+                            "msBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "msTransform": "translateX(-2px)",
+                            "transform": "translateX(-2px)",
+                            "width": "4px",
+                          }
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={
+                  Object {
+                    "height": "10px",
+                    "marginTop": "4px",
+                    "overflow": "hidden",
+                    "position": "relative",
+                  }
+                }
+              >
+                <div
+                  style={
+                    Object {
+                      "MozBorderRadius": undefined,
+                      "OBorderRadius": undefined,
+                      "WebkitBorderRadius": undefined,
+                      "borderRadius": undefined,
+                      "bottom": "0px",
+                      "left": "0px",
+                      "msBorderRadius": undefined,
+                      "position": "absolute",
+                      "right": "0px",
+                      "top": "0px",
+                    }
+                  }
+                >
+                  <div
+                    style={
+                      Object {
+                        "MozBorderRadius": undefined,
+                        "OBorderRadius": undefined,
+                        "WebkitBorderRadius": undefined,
+                        "borderRadius": undefined,
+                        "bottom": "0px",
+                        "left": "0px",
+                        "msBorderRadius": undefined,
+                        "overflow": "hidden",
+                        "position": "absolute",
+                        "right": "0px",
+                        "top": "0px",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "MozBorderRadius": undefined,
+                          "MozBoxShadow": undefined,
+                          "OBorderRadius": undefined,
+                          "OBoxShadow": undefined,
+                          "WebkitBorderRadius": undefined,
+                          "WebkitBoxShadow": undefined,
+                          "background": "url(null) center left",
+                          "borderRadius": undefined,
+                          "bottom": "0px",
+                          "boxShadow": undefined,
+                          "left": "0px",
+                          "msBorderRadius": undefined,
+                          "msBoxShadow": undefined,
+                          "position": "absolute",
+                          "right": "0px",
+                          "top": "0px",
+                        }
+                      }
+                    />
+                  </div>
+                  <div
+                    style={
+                      Object {
+                        "MozBorderRadius": undefined,
+                        "MozBoxShadow": undefined,
+                        "OBorderRadius": undefined,
+                        "OBoxShadow": undefined,
+                        "WebkitBorderRadius": undefined,
+                        "WebkitBoxShadow": undefined,
+                        "background": "linear-gradient(to right, rgba(255,158,0, 0) 0%,
+           rgba(255,158,0, 1) 100%)",
+                        "borderRadius": undefined,
+                        "bottom": "0px",
+                        "boxShadow": undefined,
+                        "left": "0px",
+                        "msBorderRadius": undefined,
+                        "msBoxShadow": undefined,
+                        "position": "absolute",
+                        "right": "0px",
+                        "top": "0px",
+                      }
+                    }
+                  />
+                  <div
+                    onMouseDown={[Function]}
+                    onTouchMove={[Function]}
+                    onTouchStart={[Function]}
+                    style={
+                      Object {
+                        "height": "100%",
+                        "margin": "0 3px",
+                        "position": "relative",
+                      }
+                    }
+                  >
+                    <div
+                      style={
+                        Object {
+                          "left": "100%",
+                          "position": "absolute",
+                        }
+                      }
+                    >
+                      <div
+                        style={
+                          Object {
+                            "MozBorderRadius": "1px",
+                            "MozBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "MozTransform": "translateX(-2px)",
+                            "OBorderRadius": "1px",
+                            "OBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "OTransform": "translateX(-2px)",
+                            "WebkitBorderRadius": "1px",
+                            "WebkitBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "WebkitTransform": "translateX(-2px)",
+                            "background": "#fff",
+                            "borderRadius": "1px",
+                            "boxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "height": "8px",
+                            "marginTop": "1px",
+                            "msBorderRadius": "1px",
+                            "msBoxShadow": "0 0 2px rgba(0, 0, 0, .6)",
+                            "msTransform": "translateX(-2px)",
+                            "transform": "translateX(-2px)",
+                            "width": "4px",
+                          }
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "MozBorderRadius": "3px",
+                  "OBorderRadius": "3px",
+                  "WebkitBorderRadius": "3px",
+                  "borderRadius": "3px",
+                  "height": "24px",
+                  "marginLeft": "4px",
+                  "marginTop": "4px",
+                  "msBorderRadius": "3px",
+                  "position": "relative",
+                  "width": "24px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "MozBorderRadius": undefined,
+                    "MozBoxShadow": undefined,
+                    "OBorderRadius": undefined,
+                    "OBoxShadow": undefined,
+                    "WebkitBorderRadius": undefined,
+                    "WebkitBoxShadow": undefined,
+                    "background": "url(null) center left",
+                    "borderRadius": undefined,
+                    "bottom": "0px",
+                    "boxShadow": undefined,
+                    "left": "0px",
+                    "msBorderRadius": undefined,
+                    "msBoxShadow": undefined,
+                    "position": "absolute",
+                    "right": "0px",
+                    "top": "0px",
+                  }
+                }
+              />
+              <div
+                style={
+                  Object {
+                    "MozBorderRadius": "2px",
+                    "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)",
+                    "OBorderRadius": "2px",
+                    "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)",
+                    "WebkitBorderRadius": "2px",
+                    "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)",
+                    "background": "rgba(255,158,0,1)",
+                    "borderRadius": "2px",
+                    "bottom": "0px",
+                    "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)",
+                    "left": "0px",
+                    "msBorderRadius": "2px",
+                    "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)",
+                    "position": "absolute",
+                    "right": "0px",
+                    "top": "0px",
+                  }
+                }
+              />
+            </div>
+          </div>
+          <div
+            className="flexbox-fix"
+            style={
+              Object {
+                "display": "flex",
+                "paddingTop": "4px",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "2",
+                  "WebkitBoxFlex": "2",
+                  "WebkitFlex": "2",
+                  "flex": "2",
+                  "msFlex": "2",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  spellCheck="false"
+                  style={
+                    Object {
+                      "MozBoxShadow": "inset 0 0 0 1px #ccc",
+                      "OBoxShadow": "inset 0 0 0 1px #ccc",
+                      "WebkitBoxShadow": "inset 0 0 0 1px #ccc",
+                      "border": "none",
+                      "boxShadow": "inset 0 0 0 1px #ccc",
+                      "fontSize": "11px",
+                      "msBoxShadow": "inset 0 0 0 1px #ccc",
+                      "padding": "4px 10% 3px",
+                      "width": "80%",
+                    }
+                  }
+                  value="FF9E00"
+                />
+                <span
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "color": "#222",
+                      "display": "block",
+                      "fontSize": "11px",
+                      "paddingBottom": "4px",
+                      "paddingTop": "3px",
+                      "textAlign": "center",
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  hex
+                </span>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "1",
+                  "WebkitBoxFlex": "1",
+                  "WebkitFlex": "1",
+                  "flex": "1",
+                  "msFlex": "1",
+                  "paddingLeft": "6px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  spellCheck="false"
+                  style={
+                    Object {
+                      "MozBoxShadow": "inset 0 0 0 1px #ccc",
+                      "OBoxShadow": "inset 0 0 0 1px #ccc",
+                      "WebkitBoxShadow": "inset 0 0 0 1px #ccc",
+                      "border": "none",
+                      "boxShadow": "inset 0 0 0 1px #ccc",
+                      "fontSize": "11px",
+                      "msBoxShadow": "inset 0 0 0 1px #ccc",
+                      "padding": "4px 10% 3px",
+                      "width": "80%",
+                    }
+                  }
+                  value="255"
+                />
+                <span
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "color": "#222",
+                      "cursor": "ew-resize",
+                      "display": "block",
+                      "fontSize": "11px",
+                      "paddingBottom": "4px",
+                      "paddingTop": "3px",
+                      "textAlign": "center",
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  r
+                </span>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "1",
+                  "WebkitBoxFlex": "1",
+                  "WebkitFlex": "1",
+                  "flex": "1",
+                  "msFlex": "1",
+                  "paddingLeft": "6px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  spellCheck="false"
+                  style={
+                    Object {
+                      "MozBoxShadow": "inset 0 0 0 1px #ccc",
+                      "OBoxShadow": "inset 0 0 0 1px #ccc",
+                      "WebkitBoxShadow": "inset 0 0 0 1px #ccc",
+                      "border": "none",
+                      "boxShadow": "inset 0 0 0 1px #ccc",
+                      "fontSize": "11px",
+                      "msBoxShadow": "inset 0 0 0 1px #ccc",
+                      "padding": "4px 10% 3px",
+                      "width": "80%",
+                    }
+                  }
+                  value="158"
+                />
+                <span
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "color": "#222",
+                      "cursor": "ew-resize",
+                      "display": "block",
+                      "fontSize": "11px",
+                      "paddingBottom": "4px",
+                      "paddingTop": "3px",
+                      "textAlign": "center",
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  g
+                </span>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "1",
+                  "WebkitBoxFlex": "1",
+                  "WebkitFlex": "1",
+                  "flex": "1",
+                  "msFlex": "1",
+                  "paddingLeft": "6px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  spellCheck="false"
+                  style={
+                    Object {
+                      "MozBoxShadow": "inset 0 0 0 1px #ccc",
+                      "OBoxShadow": "inset 0 0 0 1px #ccc",
+                      "WebkitBoxShadow": "inset 0 0 0 1px #ccc",
+                      "border": "none",
+                      "boxShadow": "inset 0 0 0 1px #ccc",
+                      "fontSize": "11px",
+                      "msBoxShadow": "inset 0 0 0 1px #ccc",
+                      "padding": "4px 10% 3px",
+                      "width": "80%",
+                    }
+                  }
+                  value="0"
+                />
+                <span
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "color": "#222",
+                      "cursor": "ew-resize",
+                      "display": "block",
+                      "fontSize": "11px",
+                      "paddingBottom": "4px",
+                      "paddingTop": "3px",
+                      "textAlign": "center",
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  b
+                </span>
+              </div>
+            </div>
+            <div
+              style={
+                Object {
+                  "MozBoxFlex": "1",
+                  "WebkitBoxFlex": "1",
+                  "WebkitFlex": "1",
+                  "flex": "1",
+                  "msFlex": "1",
+                  "paddingLeft": "6px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "position": "relative",
+                  }
+                }
+              >
+                <input
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onKeyDown={[Function]}
+                  spellCheck="false"
+                  style={
+                    Object {
+                      "MozBoxShadow": "inset 0 0 0 1px #ccc",
+                      "OBoxShadow": "inset 0 0 0 1px #ccc",
+                      "WebkitBoxShadow": "inset 0 0 0 1px #ccc",
+                      "border": "none",
+                      "boxShadow": "inset 0 0 0 1px #ccc",
+                      "fontSize": "11px",
+                      "msBoxShadow": "inset 0 0 0 1px #ccc",
+                      "padding": "4px 10% 3px",
+                      "width": "80%",
+                    }
+                  }
+                  value="100"
+                />
+                <span
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "color": "#222",
+                      "cursor": "ew-resize",
+                      "display": "block",
+                      "fontSize": "11px",
+                      "paddingBottom": "4px",
+                      "paddingTop": "3px",
+                      "textAlign": "center",
+                      "textTransform": "capitalize",
+                    }
+                  }
+                >
+                  a
+                </span>
+              </div>
+            </div>
+          </div>
+          <div
+            className="flexbox-fix"
+            style={
+              Object {
+                "borderTop": "1px solid #eee",
+                "display": "flex",
+                "flexWrap": "wrap",
+                "margin": "0 -10px",
+                "padding": "10px 0 0 10px",
+                "position": "relative",
+              }
+            }
+          >
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#FF9E00",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#FF9E00"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#F5A623",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#F5A623"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#F8E71C",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#F8E71C"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#8B572A",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#8B572A"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#7ED321",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#7ED321"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#417505",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#417505"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#BD10E0",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#BD10E0"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#9013FE",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#9013FE"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#4A90E2",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#4A90E2"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#50E3C2",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#50E3C2"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#B8E986",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#B8E986"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#000000",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#000000"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#4A4A4A",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#4A4A4A"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#9B9B9B",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#9B9B9B"
+                />
+              </span>
+            </div>
+            <div
+              style={
+                Object {
+                  "height": "16px",
+                  "margin": "0 10px 10px 0",
+                  "width": "16px",
+                }
+              }
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+              >
+                <div
+                  onClick={[Function]}
+                  onKeyDown={[Function]}
+                  style={
+                    Object {
+                      "MozBorderRadius": "3px",
+                      "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "OBorderRadius": "3px",
+                      "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "WebkitBorderRadius": "3px",
+                      "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "background": "#FFFFFF",
+                      "borderRadius": "3px",
+                      "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "cursor": "pointer",
+                      "height": "100%",
+                      "msBorderRadius": "3px",
+                      "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.15)",
+                      "outline": "none",
+                      "position": "relative",
+                      "width": "100%",
+                    }
+                  }
+                  tabIndex={0}
+                  title="#FFFFFF"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="mainEditor"
+      id="mainEditor"
+    />
+  </div>
+</div>
+`;
+
+exports[`Member Manager Snapshot Test Snapshot Renders 1`] = `
+<div
+  className="MuiGrid-root memberManager mt-3 MuiGrid-container"
+>
+  <div
+    className="MuiGrid-root border-right border-muted MuiGrid-item MuiGrid-grid-xs-2"
+  >
+    <ul
+      className="MuiList-root pr-3 pl-2 memberList MuiList-padding"
+    >
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-3"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root mr-3"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Add New Member
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild ml-2 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 2
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      2
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 3
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      3
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 4
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      4
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 5
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      5
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 6
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      6
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 7
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      7
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 8
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      8
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 9
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      9
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Mocked 10
+                       
+                      Member
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      10
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Meme
+                       
+                      Lad
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      11
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Meme
+                       
+                      Lad2
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      12
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+      <li
+        className="MuiListItem-root border-bottom border-muted p-0 MuiListItem-gutters"
+        disabled={false}
+      >
+        <button
+          className="MuiButtonBase-root MuiButton-root MuiButton-text w-100 h-100 p-2"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiButton-label"
+          >
+            <div
+              className="MuiListItemAvatar-root"
+            >
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                />
+              </svg>
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-container"
+            >
+              <div
+                className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-10"
+              >
+                <div
+                  className="MuiGrid-root MuiGrid-container"
+                >
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Meme
+                       
+                      Lad3
+                    </p>
+                  </div>
+                  <div
+                    className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+                  >
+                    <p
+                      className="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextPrimary MuiTypography-alignLeft"
+                    >
+                      Member ID:  
+                      13
+                       
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="MuiGrid-root pl-1 MuiGrid-item MuiGrid-grid-xs-2"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root vcenterChild p-1 mr-5 MuiSvgIcon-fontSizeSmall"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div
+    className="MuiGrid-root p-2 pl-4 MuiGrid-item MuiGrid-grid-xs-10"
+  >
+    <div
+      className="w-100 h-100 vcenterParent"
+    >
+      <h6
+        className="MuiTypography-root fontMontserrat vcenterChild w-100 text-center MuiTypography-h6"
+      >
+        Choose a member from the list to edit their details.
+      </h6>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`MenuBar Snapshot Test Snapshot Renders 1`] = `
+<div>
+  <header
+    className="MuiPaper-root MuiAppBar-root MuiAppBar-positionFixed MuiAppBar-colorInherit topBar mui-fixed MuiPaper-elevation4"
+    style={
+      Object {
+        "zIndex": 9999,
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters"
+    >
+      <button
+        className="MuiButtonBase-root MuiIconButton-root"
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "transform": "translateX(-20px)",
+          }
+        }
+        tabIndex={0}
+        type="button"
+      >
+        <span
+          className="MuiIconButton-label"
+        >
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root menuIcon"
+            focusable="false"
+            role="presentation"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+            />
+          </svg>
+        </span>
+        <span
+          className="MuiTouchRipple-root"
+        />
+      </button>
+      <div
+        className="text-center w-100"
+      >
+        <h6
+          className="MuiTypography-root pl-3 mr-5 montserrat MuiTypography-h6"
+        >
+          - Checked -
+        </h6>
+      </div>
+      <button
+        className="MuiButtonBase-root MuiIconButton-root mr-1"
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        <span
+          className="MuiIconButton-label"
+        >
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root"
+            focusable="false"
+            role="presentation"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"
+            />
+          </svg>
+        </span>
+        <span
+          className="MuiTouchRipple-root"
+        />
+      </button>
+      <div
+        aria-label="logo"
+      >
+        <img
+          alt="logo"
+          className="topBarLogo"
+          src="checkedLogo.jpg"
+        />
+      </div>
+    </div>
+  </header>
+  <div>
+    <div
+      className="MuiDrawer-root MuiDrawer-docked"
+    >
+      <div
+        className="MuiPaper-root MuiDrawer-paper MuiDrawer-paperAnchorLeft MuiDrawer-paperAnchorDockedLeft MuiPaper-elevation0"
+      >
+        <div
+          className="drawer drawerClosed"
+          role="presentation"
+        >
+          <ul
+            className="MuiList-root MuiList-padding"
+          >
+            <div
+              aria-disabled={false}
+              className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <div
+                className="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="MuiListItemText-root menuText"
+              >
+                <span
+                  className="MuiTypography-root MuiListItemText-primary MuiTypography-body1"
+                >
+                  Dashboard
+                </span>
+              </div>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </div>
+            <div
+              aria-disabled={false}
+              className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <div
+                className="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="MuiListItemText-root menuText"
+              >
+                <span
+                  className="MuiTypography-root MuiListItemText-primary MuiTypography-body1"
+                >
+                  Member Manager
+                </span>
+              </div>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </div>
+            <div
+              aria-disabled={false}
+              className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <div
+                className="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="MuiListItemText-root menuText"
+              >
+                <span
+                  className="MuiTypography-root MuiListItemText-primary MuiTypography-body1"
+                >
+                  Map Editor
+                </span>
+              </div>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </div>
+          </ul>
+          <hr
+            className="MuiDivider-root"
+          />
+          <ul
+            className="MuiList-root MuiList-padding"
+          >
+            <div
+              aria-disabled={true}
+              className="MuiButtonBase-root MuiListItem-root MuiListItem-gutters Mui-disabled MuiListItem-button Mui-disabled"
+              onBlur={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              role="button"
+              tabIndex={-1}
+            >
+              <div
+                className="MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="MuiSvgIcon-root"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                  />
+                </svg>
+              </div>
+              <div
+                className="MuiListItemText-root"
+              >
+                <span
+                  className="MuiTypography-root MuiListItemText-primary MuiTypography-body1"
+                >
+                  Placeholder
+                </span>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="dimmer fadeOut"
+    onClick={[Function]}
+  />
+</div>
+`;
