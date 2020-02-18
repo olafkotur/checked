@@ -192,7 +192,6 @@ code {
 .zoneVisContainer { 
   background-color: transparent;
   position: relative;
-  width: calc(100% - 90px);
   height: calc(100vh - 214px);
 }
 /* child */
@@ -233,10 +232,28 @@ code {
   }
 }
 
-.membersList {
-  max-height: 675px;
-  overflow-x: hidden;
-  overflow-y: auto;
+.dashMemberList {
+  position: absolute !important;
+  right: 0 !important;
+}
+
+.dashOverviewIcon {
+  opacity: 0.7;
+}
+
+.dashOverviewButton {
+  min-width: 155px !important;
+  margin-top: 10px !important;
+  margin-bottom: 30px !important;
+}
+
+.iconBtnFilled {
+  transition: 0.5s !important;
+  transform: scale(0.8);
+}
+
+.iconBtnFilled:hover{
+  transform: scale(0.9);
 }
 
 /* ===== MAP EDITOR ===== */
@@ -248,8 +265,6 @@ code {
   border: none;
   position: absolute;
   overflow: hidden;
-
-  
 }
 
 

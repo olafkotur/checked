@@ -10,7 +10,12 @@ export interface IZone {
     yValue: number;
     zoneId: number;
     activity: IActivity;
-    reading?: number;
+    data?: IZoneData;
+}
+
+export interface IZoneData {
+    currentTemp: number;
+    currentCount: number;
 }
 
 export interface IActivity {

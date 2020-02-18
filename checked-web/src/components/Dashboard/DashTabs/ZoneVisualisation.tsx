@@ -64,7 +64,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
 
 
             membersList.push(
-                <ListItem alignItems="center" className="border-bottom border-muted" key={member.memberId}>
+                <ListItem alignItems="center" className="memberList border-bottom border-muted" key={member.memberId}>
                     <ListItemAvatar>
                         <Person />
                     </ListItemAvatar>
@@ -93,6 +93,9 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                 <Grid item xs={12}>
                     <div className="zoneVisContainer">
                         {renderedZones}
+                        <div className="dashMemberList">
+                            {this.getMembersList()}
+                        </div>
                     </div>
                 </Grid>
             </Grid>
