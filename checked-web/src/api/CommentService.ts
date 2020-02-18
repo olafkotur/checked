@@ -5,7 +5,7 @@ export const CommentService = {
     const uri = "comments/" + memberId;
 
         return await HttpService.get(uri).then((res: any) => {
-            console.log(res);
+            // console.log(res);
             return res.result;
         });
     },
@@ -15,10 +15,19 @@ export const CommentService = {
         const uri = "comment/create";
 
         return await HttpService.post(uri, body).then((res: any) => {
-            console.log(res);
+            // console.log(res);
             return res.result;
         });
     },
+
+    deleteComment: async (commentId: string): Promise<any> => {
+        const uri = "comment/delete/" + commentId;
+
+        return await HttpService.delete(uri).then((res: any) => {
+            // console.log(res);
+            return res;
+        });
+    }
 
 
 

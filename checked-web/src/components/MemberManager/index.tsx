@@ -48,6 +48,7 @@ class MemberManager extends React.Component<IProps, IState> {
         this.deleteComment = this.deleteComment.bind(this);
         this.addComment = this.addComment.bind(this);
         this.saveComment = this.saveComment.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -379,7 +380,7 @@ class MemberManager extends React.Component<IProps, IState> {
         // console.log(this.state.comments);
     }
 
-    deleteComment(commentBox: any): void {
+    async deleteComment(commentBox: any): Promise<void> {
         console.log("i have been called");
 
         if (commentBox != null) {
@@ -394,7 +395,11 @@ class MemberManager extends React.Component<IProps, IState> {
                 if (commentBoxTmp.props.dbid !== commentBox.props.dbid) {
                     tempComments[tempComments.length] = commentBoxTmp;
                 }
+                else{
+                    await CommentService.deleteComment(commentBox.props.dbid.toString());
+                }
             }
+           
             this.setState({ comments: tempComments,  editingComment: false});
             
         }
