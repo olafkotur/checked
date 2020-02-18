@@ -2,7 +2,7 @@
 import React from 'react';
 import { MemberService } from '../../../api/MemberService';
 import { IZone } from '../../../types';
-import { Grid, Typography, List, ListItem, ListItemAvatar } from '@material-ui/core';
+import { Grid, Typography, List, ListItem, ListItemAvatar, Paper } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
 import Zone from './Zone';
 interface IState {
@@ -93,9 +93,14 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                 <Grid item xs={12}>
                     <div className="zoneVisContainer">
                         {renderedZones}
-                        <List className="dashMemberList">
-                            {this.getMembersList()}
-                        </List>
+                        <Paper elevation={0} variant="outlined" className="dashMemberList mt-3 mb-3">
+                            <Typography variant="subtitle1" className="pl-3 mt-2 pb-2 w-100 border-bottom">
+                                <i>Active Members</i>
+                            </Typography>
+                            <List className="h-100 memberList dashMemberHeight">
+                                {this.getMembersList()}
+                            </List>
+                        </Paper>
                     </div>
                 </Grid>
             </Grid>
