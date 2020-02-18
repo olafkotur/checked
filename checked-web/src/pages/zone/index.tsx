@@ -3,7 +3,6 @@ import React from 'react';
 import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader, Typography } from '@material-ui/core';
-import { DashboardRounded } from '@material-ui/icons';
 import { IZone } from '../../types';
 
 interface IState {
