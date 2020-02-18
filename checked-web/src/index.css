@@ -322,11 +322,12 @@ code {
 /* ===== ZONES ===== */
 
 .zoneIcon {
-  background-color: #ff9e00;
+  filter: invert(1);
+  opacity: 1 !important;
   width: 35px;
   height: 35px;
-  border-radius: 100%;
-  color: #fff;
+  border-radius: 100% !important;
+  color: rgb(221, 221, 221);
   padding-top: 1px;
   transform: translate(-4px, -3px);
 }
