@@ -70,3 +70,11 @@ export interface IDbHistoric {
   activitiesCount: number,
   createdAt: Date
 }
+
+export interface IDbComment {
+  commentId: number,
+  memberId: number,
+  rating: number,
+  value: string,
+  createdAt: Date
+}

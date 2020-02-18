@@ -89,3 +89,11 @@ export interface IHistoricResponse {
   activitiesCount: number,
   createdAt: number
 }
+
+export interface ICommentResponse {
+  commentId: number,
+  memberId: number,
+  rating: number,
+  value: string,
+  createdAt: number
+}
