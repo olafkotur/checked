@@ -75,7 +75,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                         </Grid>
                         <Grid item xs={12}>
 
-                            <Typography component="span" variant="body2" color="textPrimary">Zone ID:  {member.zoneId} </Typography>
+                            <Typography component="span" variant="body2" color="textPrimary"><i>Zone:</i>  {this.state.zoneData.find((zone: IZone) => {return zone.zoneId === member.zoneId;})?.name || ('Zone ID: ' + member.zoneId)} </Typography>
                         </Grid>
                     </Grid>
                 </ListItem>
