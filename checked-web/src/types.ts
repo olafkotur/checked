@@ -42,3 +42,21 @@ export interface IMemberLocation {
     yValue: number;
     time: number;
 }
+
+export interface ILink {
+    linkId: number;
+    userId: number;
+    memberId: number;
+    relationship: "Parent";
+    createdAt: number;
+}
+
+export interface IUser {
+    userId: number;
+    email: string;
+    companyName: string;
+    isGuardian: boolean;
+    policyAccepted: boolean;
+    createdAt: Date;
+    lastUpdated: Date;
+}
