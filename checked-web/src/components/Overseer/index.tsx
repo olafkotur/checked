@@ -7,6 +7,7 @@ import { MemberService } from '../../api/MemberService';
 import CommentBox from '../MemberManager/comments/CommentBox';
 import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
+import LightGraph from './LightGraph/LightGraph';
 
 
 
@@ -290,14 +291,22 @@ class Overseer extends React.Component<IProps, IState> {
         const data:  object[]  = [];
 
         this.state.comments.forEach(comment => {
-            
+            data.push(comment.rating);
         });
+        // console.log(data);
 
-        // const renderLineChart = (
+        const graph = <LightGraph 
            
-        // );
+            series = {[
+                {
+                    name: "Score",
+                    data: data
+                }
+            ]}
+        
+        />;
 
-        return (<div></div>);
+        return (graph);
     }
 
 
@@ -315,7 +324,7 @@ class Overseer extends React.Component<IProps, IState> {
     async getFeedList(memberID: number): Promise<void> {
         this.setState({ loadingComments: true });
         const serverInfo = await CommentService.getComments(memberID.toString());
-        console.log(serverInfo);
+        // console.log(serverInfo);
 
         serverInfo.forEach((comment: { new: boolean }) => {
             comment.new = false;
@@ -337,7 +346,7 @@ class Overseer extends React.Component<IProps, IState> {
                 const date = dateTmp.getDate(); //Current Date
                 const month = dateTmp.getMonth() + 1; //Current Month
                 const year = dateTmp.getFullYear(); //Current Year
-                console.log(comment);
+                // console.log(comment);
 
                 let timeStamp = "";
                 if (comment.new) {
@@ -379,7 +388,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     async deleteComment(commentBox: any): Promise<void> {
-        console.log("i have been called");
+        // console.log("i have been called");
 
         if (commentBox != null) {
 
@@ -419,7 +428,7 @@ class Overseer extends React.Component<IProps, IState> {
 
             tempComments.push(newComment);
 
-            console.log(tempComments);
+            // console.log(tempComments);
 
             this.setState({ comments: tempComments, editingComment: true });
         }
@@ -429,7 +438,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     async saveComment(commentBox: any): Promise<void> {
-        console.log("Saving Now");
+        // console.log("Saving Now");
 
 
         const body = {
@@ -438,7 +447,7 @@ class Overseer extends React.Component<IProps, IState> {
             value: commentBox.state.commentVal,
         };
 
-        console.log(body);
+        // console.log(body);
 
         await CommentService.saveComment(body);
 
