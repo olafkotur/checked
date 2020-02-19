@@ -4,12 +4,20 @@ import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
-import { Card, CardContent, Grid, CardHeader, Typography, Paper, Icon } from '@material-ui/core';
-import { IZone } from '../../types';
-import { Speed } from '@material-ui/icons';
+import { Card, CardContent, Grid, CardHeader, Typography, Paper } from '@material-ui/core';
+import { IZone, IMemberLocation } from '../../types';
+import TimeSeriesGraph from '../../components/Zone/TimeSeriesGraph';
+import { HistoryService } from '../../api/HistoryService';
+import { LiveService } from '../../api/LiveService';
+import { LocationService } from '../../api/LocationService';
 
 interface IState {
     loaded: boolean;
+    zoneDetails: IZone;
+    historicalTemp: Array<any>;
+    historicalCount: Array<any>;
+    currentTemp: number;
+    currentCount: number;
 }
 
 interface IProps extends RouteComponentProps {
@@ -20,26 +28,83 @@ export class Zone extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { loaded: false};
+        this.state = { loaded: false, zoneDetails: props.zoneDetails, historicalTemp: [], historicalCount: [], currentCount: 0, currentTemp: 0};
     }
 
     componentDidMount(): void {
-        this.setState({loaded: true});
+        this.getZoneData();
+    }
+
+    getZoneData(): void {
+        let temp: number;
+        let count: number;
+
+        LiveService.getLiveTempDataByZone(this.state.zoneDetails.zoneId).then((res) => {
+            
+            temp = res.result.value;
+
+            LocationService.getAllMemberLocationsByUser(this.props.userID).then((res) => {
+                
+                count = res.result.filter((member: IMemberLocation) => {return member.zoneId === this.state.zoneDetails.zoneId;}).length;
+
+                HistoryService.getHistoricByUser(this.props.userID).then((res) => {
+
+                    const graphDataTemp = this.formatGraphData(res.result, 'temperatures');
+                    const graphDataCount = this.formatGraphData(res.result, "locations");
+                    
+                    this.setState({
+                        currentTemp: temp,
+                        currentCount: count,
+                        historicalTemp: graphDataTemp,
+                        historicalCount: graphDataCount,
+                        loaded: true
+                    });
+                });
+            });
+        });
+    }
+
+    formatGraphData(dataIn: Array<any>, dataType: ("temperatures" | "locations") ): Array<any> {
+        const dataOut: Array<any> = [];
+        console.log(dataIn);
+        if(dataType !== "locations"){
+            dataIn.forEach((log) => {
+                const reading = log[dataType].find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId; }).value;
+                const d = new Date(log.createdAt);
+                const dUnix = d.getTime() * 1000;
+                dataOut.push(
+                    [dUnix, reading]
+                );
+            });
+        } else {
+            dataIn.forEach((log) => {
+                const count = log.locations.find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId;}).members.length;
+                const d = new Date(log.createdAt);
+                const dUnix = d.getTime() * 1000;
+                dataOut.push(
+                    [dUnix, count]
+                );
+            })
+        }
+
+        console.log(dataOut);
+        return dataOut;
     }
 
     render(): JSX.Element {
+
         return (
             <div className="dashContainer">
                 <Grid container spacing={3} >
                     <Grid item xs={12} >
                         <Card className="dashCard">
-                            {/* {!this.state.loaded &&
+                            {!this.state.loaded &&
                                 <UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} />
-                            } */}
+                            }
                             {this.state.loaded &&
                                 <Grid container spacing={0} >
                                     <Grid item xs={12}>
-                                    <CardHeader title={this.props.zoneDetails.name} avatar={<Paper className="zoneIcon"><Typography variant="h6" className="w-100 h-100 text-center"><b>{this.props.zoneDetails.zoneId}</b></Typography></Paper>} className="mutedBlack mt-2">
+                                    <CardHeader title={this.state.zoneDetails.name} avatar={<Paper className="zoneIcon"><Typography variant="h6" className="w-100 h-100 text-center"><b>{this.props.zoneDetails.zoneId}</b></Typography></Paper>} className="mutedBlack mt-2">
                                         </CardHeader>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -52,7 +117,7 @@ export class Zone extends React.Component<IProps, IState> {
                                                         </Grid>
                                                         <Grid item xs={12}>
                                                             <Typography variant="h3" className="w-100 text-center">
-                                                                20°C
+                                                                {this.state.currentTemp}
                                                             </Typography>
                                                         </Grid>
 
@@ -64,7 +129,17 @@ export class Zone extends React.Component<IProps, IState> {
                                                     </Grid>
                                                 </Grid>
                                                 <Grid item xs={10} className="p-3">
-                                                    Graph Memes Here
+                                                    <TimeSeriesGraph
+                                                        name={this.state.zoneDetails.name + ' Temperature History'}
+                                                        data={this.state.historicalTemp}
+                                                        labels={[]}
+                                                        minimumY={0}
+                                                        maximumY={50}
+                                                        width="100%"
+                                                        height="400px"
+                                                        type="temperature"
+                                                        unit={'°C'}
+                                                    />
                                                 </Grid>
                                             </Grid>
                                         <Grid container spacing={0} className="border-bottom  pt-5 pb-5">
@@ -75,7 +150,7 @@ export class Zone extends React.Component<IProps, IState> {
                                                         </Grid>
                                                         <Grid item xs={12}>
                                                             <Typography variant="h3" className="w-100 text-center">
-                                                                19
+                                                                {this.state.currentCount}
                                                             </Typography>
                                                         </Grid>
 
@@ -87,10 +162,19 @@ export class Zone extends React.Component<IProps, IState> {
                                                     </Grid>
                                                 </Grid>
                                                 <Grid item xs={10} className="p-3">
-                                                    Graph Memes Here
+                                                    <TimeSeriesGraph
+                                                        name={this.state.zoneDetails.name + ' Member History'}
+                                                        data={this.state.historicalCount}
+                                                        labels={[]}
+                                                        minimumY={0}
+                                                        maximumY={15}
+                                                        width="100%"
+                                                        height="400px"
+                                                        type="users"
+                                                    />
                                                     </Grid>
                                             </Grid>
-                                        <Grid container spacing={0} className=" pt-5 pb-5">
+                                        {/* <Grid container spacing={0} className=" pt-5 pb-5">
                                                 <Grid item xs={2} className="border-right h-100 p-3">
                                                     <Grid container spacing={0}>
                                                         <Grid item xs={12} key={0} className="text-center">
@@ -112,7 +196,7 @@ export class Zone extends React.Component<IProps, IState> {
                                                 <Grid item xs={10} className="p-3">
                                                     Graph Memes Here
                                                     </Grid>
-                                            </Grid>
+                                            </Grid> */}
                                         </CardContent>
                                     </Grid>
                                 </Grid>

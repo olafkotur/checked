@@ -33,3 +33,12 @@ export interface IMember {
     createdAt: number;
     lastUpdated: number;
 }
+
+export interface IMemberLocation {
+    memberId: number;
+    userId: number;
+    zoneId: number;
+    xValue: number;
+    yValue: number;
+    time: number;
+}
