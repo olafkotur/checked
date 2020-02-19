@@ -14,14 +14,21 @@ export const NotificationService = {
 
   start: async (domain: string) => {
     const users: any = await HttpService.get(`${domain}/api/users`)//;
-    const pending: INotification[] = [];
 
     // Check for notifications for each user
     users.result.forEach(async (user: IUser) => {
+      const pending: INotification[] = [];
       await NotificationService.shouldNotifyTemperature(domain, user).then((n: any) => n ? pending.push(n) : false);
       await NotificationService.shouldNotifyGrouping(domain, user).then((n: any) => n ? pending.push(n) : false);
-      console.log(pending);
+
+      // Sending all notifications for this user
+      pending.forEach(async (notif: INotification) => {
+        await HttpService.post(`${domain}/api/notifications/create`, notif);
+        console.log(`NotificationService: Sent new notification for user ${notif.userId}`);
+      });
     });
+
+    return true;
   },
 
   // Sends notification if the temperature is too low or too high

@@ -1,7 +1,7 @@
 export const config = {
   rules: {
     historic: '*/5 * * * *',
-    notification: '*/5 * * * * *'
+    notification: '*/15 * * * * *'
   },
   warnings: {
     maxTemperature: 35,

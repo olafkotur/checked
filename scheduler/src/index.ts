@@ -23,7 +23,7 @@ async function main() {
   // Historic Service
   schedule.scheduleJob(config.rules.historic, async () => {
     if (status.isRunningHistoric) {
-      return console.log('Scheduler: a historic service is already running - skipping');
+      return console.log(`Scheduler: a historic service is already running - skipping at ${moment().format('HH:mm:ss')}`);
     }
     console.log(`Scheduler: running historic service at ${moment().format('HH:mm:ss')}`);
 
@@ -34,7 +34,7 @@ async function main() {
   // Notification Service
   schedule.scheduleJob(config.rules.notification, async () => {
     if (status.isRunningNotification) {
-      return console.log('Scheduler: a notification service is already running - skipping');
+      return console.log(`Scheduler: a notification service is already running - skipping at ${moment().format('HH:mm:ss')}`);
     }
     console.log(`Scheduler: running notification service at ${moment().format('HH:mm:ss')}`);
 

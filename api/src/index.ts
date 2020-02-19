@@ -81,7 +81,7 @@ async function main() {
   // Comment handlers
   app.post('/api/comment/create', CommentHandler.createComment);
   app.delete('/api/comment/delete/:commentId', CommentHandler.deleteComment);
-  app.get('/api/comments/:memberId', CommentHandler.getComments);
+  app.get('/api/comments/members/:memberId', CommentHandler.getCommentsByMember);
   app.get('/api/comment/:commentId', CommentHandler.getComment);
 
   // Link handlers
