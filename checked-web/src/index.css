@@ -340,3 +340,13 @@ code {
   width: 50px !important;
   margin-bottom: 10px;
 }
+
+.chartLabel {
+  fill: #818181;
+  font-weight: bold;
+}
+
+.apexcharts-tooltip {
+  background: #f3f3f3d5;
+  color: #131313;
+}

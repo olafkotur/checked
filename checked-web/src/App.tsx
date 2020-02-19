@@ -62,7 +62,7 @@ class App extends React.Component<{}, IState> {
 
 		this.state.zones.forEach((zone: IZone) => {
 			renderedZoneRoutes.push(
-				<Zone userID={this.state.userID} zoneDetails={zone} path={zone.zoneId.toString()}/>
+				<Zone userID={this.state.userID} zoneDetails={zone} path={zone.zoneId.toString()} key={zone.zoneId}/>
 			);
 		});
 		return renderedZoneRoutes;

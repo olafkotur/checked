@@ -14,8 +14,7 @@ import { LocationService } from '../../api/LocationService';
 interface IState {
     loaded: boolean;
     zoneDetails: IZone;
-    historicalTemp: Array<any>;
-    historicalCount: Array<any>;
+    historicalData: Array<any>;
     currentTemp: number;
     currentCount: number;
 }
@@ -28,35 +27,31 @@ export class Zone extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { loaded: false, zoneDetails: props.zoneDetails, historicalTemp: [], historicalCount: [], currentCount: 0, currentTemp: 0};
+        this.state = { loaded: false, zoneDetails: props.zoneDetails, historicalData: [], currentCount: 0, currentTemp: 0};
+
     }
 
     componentDidMount(): void {
         this.getZoneData();
+        console.log(this.state.zoneDetails.zoneId, this.state.currentCount, this.state.currentTemp);
     }
 
     getZoneData(): void {
-        let temp: number;
-        let count: number;
+        let count = this.state.currentCount;
 
         LiveService.getLiveTempDataByZone(this.state.zoneDetails.zoneId).then((res) => {
             
-            temp = res.result.value;
+            this.setState({currentTemp: res.result.value});
 
             LocationService.getAllMemberLocationsByUser(this.props.userID).then((res) => {
                 
                 count = res.result.filter((member: IMemberLocation) => {return member.zoneId === this.state.zoneDetails.zoneId;}).length;
+                this.setState({currentCount: count});
 
                 HistoryService.getHistoricByUser(this.props.userID).then((res) => {
-
-                    const graphDataTemp = this.formatGraphData(res.result, 'temperatures');
-                    const graphDataCount = this.formatGraphData(res.result, "locations");
                     
                     this.setState({
-                        currentTemp: temp,
-                        currentCount: count,
-                        historicalTemp: graphDataTemp,
-                        historicalCount: graphDataCount,
+                        historicalData: res.result,
                         loaded: true
                     });
                 });
@@ -66,28 +61,40 @@ export class Zone extends React.Component<IProps, IState> {
 
     formatGraphData(dataIn: Array<any>, dataType: ("temperatures" | "locations") ): Array<any> {
         const dataOut: Array<any> = [];
-        console.log(dataIn);
+
         if(dataType !== "locations"){
             dataIn.forEach((log) => {
-                const reading = log[dataType].find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId; }).value;
-                const d = new Date(log.createdAt);
-                const dUnix = d.getTime() * 1000;
-                dataOut.push(
-                    [dUnix, reading]
-                );
+                const reading = log[dataType].find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId; });
+                let dataPoint: number;
+                if(reading === undefined){
+                    dataPoint = 0;
+                } else {
+                    dataPoint = reading.value;
+                    const d = new Date(log.createdAt);
+                    const dUnix = d.getTime() * 1000;
+                    dataOut.push(
+                        [dUnix, dataPoint]
+                    );
+                }
+
             });
         } else {
             dataIn.forEach((log) => {
-                const count = log.locations.find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId;}).members.length;
-                const d = new Date(log.createdAt);
-                const dUnix = d.getTime() * 1000;
-                dataOut.push(
-                    [dUnix, count]
-                );
-            })
-        }
+                const reading = log.locations.find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId;});
+                let dataPoint: number;
+                if (reading === undefined) {
+                    dataPoint = 0;
+                } else {
+                    dataPoint = reading.members.length; 
+                    const d = new Date(log.createdAt);
+                    const dUnix = d.getTime() * 1000;
+                    dataOut.push(
+                        [dUnix, dataPoint]
+                    );
+                }
 
-        console.log(dataOut);
+            });
+        }
         return dataOut;
     }
 
@@ -110,8 +117,8 @@ export class Zone extends React.Component<IProps, IState> {
                                     <Grid item xs={12}>
                                         <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
                                             <Grid container spacing={0} className="mt-3 border-bottom pt-5 pb-5">
-                                                <Grid item xs={2} className="border-right p-3">
-                                                    <Grid container spacing={0}>
+                                                <Grid item xs={2} className="border-right vcenterParent">
+                                                    <Grid container spacing={0} className="vcenterChild pr-3">
                                                         <Grid item xs={12} key={0} className="text-center">
                                                             <FontAwesomeIcon icon={faThermometerHalf} className="zoneBigIcon"/>
                                                         </Grid>
@@ -131,7 +138,7 @@ export class Zone extends React.Component<IProps, IState> {
                                                 <Grid item xs={10} className="p-3">
                                                     <TimeSeriesGraph
                                                         name={this.state.zoneDetails.name + ' Temperature History'}
-                                                        data={this.state.historicalTemp}
+                                                        data={this.formatGraphData(this.state.historicalData, 'temperatures')}
                                                         labels={[]}
                                                         minimumY={0}
                                                         maximumY={50}
@@ -143,8 +150,8 @@ export class Zone extends React.Component<IProps, IState> {
                                                 </Grid>
                                             </Grid>
                                         <Grid container spacing={0} className="border-bottom  pt-5 pb-5">
-                                                <Grid item xs={2} className="border-right p-3">
-                                                    <Grid container spacing={0}>
+                                            <Grid item xs={2} className="border-right vcenterParent">
+                                                <Grid container spacing={0} className="vcenterChild pr-3">
                                                         <Grid item xs={12} key={0} className="text-center">
                                                             <FontAwesomeIcon icon={faUser} className="zoneBigIcon" />
                                                         </Grid>
@@ -164,7 +171,7 @@ export class Zone extends React.Component<IProps, IState> {
                                                 <Grid item xs={10} className="p-3">
                                                     <TimeSeriesGraph
                                                         name={this.state.zoneDetails.name + ' Member History'}
-                                                        data={this.state.historicalCount}
+                                                        data={this.formatGraphData(this.state.historicalData, 'locations')}
                                                         labels={[]}
                                                         minimumY={0}
                                                         maximumY={15}
@@ -174,29 +181,6 @@ export class Zone extends React.Component<IProps, IState> {
                                                     />
                                                     </Grid>
                                             </Grid>
-                                        {/* <Grid container spacing={0} className=" pt-5 pb-5">
-                                                <Grid item xs={2} className="border-right h-100 p-3">
-                                                    <Grid container spacing={0}>
-                                                        <Grid item xs={12} key={0} className="text-center">
-                                                            <FontAwesomeIcon icon={faSun} className="zoneBigIcon lightGradient" />
-                                                        </Grid>
-                                                        <Grid item xs={12}>
-                                                            <Typography variant="h3" className="w-100 text-center">
-                                                                90
-                                                            </Typography>
-                                                        </Grid>
-
-                                                        <Grid item xs={12} className="text-center">
-                                                            <Typography className="w-100 text-center" variant="caption">
-                                                                <i className="text-center">Current Light</i>
-                                                            </Typography>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                                <Grid item xs={10} className="p-3">
-                                                    Graph Memes Here
-                                                    </Grid>
-                                            </Grid> */}
                                         </CardContent>
                                     </Grid>
                                 </Grid>

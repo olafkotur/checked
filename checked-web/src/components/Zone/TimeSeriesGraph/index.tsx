@@ -210,10 +210,21 @@ class TimeSeriesGraph extends React.Component<IProps, {}> {
                             min: this.props.minimumY,
                             max: this.props.maximumY,
                             forceNiceScale: true,
+                            labels: {
+                                style: {
+                                    cssClass: 'chartLabel'
+                                }
+                            }
                         },
                         xaxis: {
                             type: 'datetime',
-                        }
+                            labels: {
+                                style: {
+                                    cssClass: 'chartLabel'
+                                }
+                            }
+                        },
+                        
                     }}
                     series={[{
                         data: this.props.data
