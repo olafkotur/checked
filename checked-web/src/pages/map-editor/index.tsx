@@ -15,7 +15,6 @@ import BgColumn from '../../components/MapEditor/BgColumn';
 import BgRow from '../../components/MapEditor/BgRow';
 import { ActivityService } from '../../api/ActivityService';
 import { SketchPicker } from 'react-color';
-import ReactDOM from 'react-dom';
 
 
 interface IState {
