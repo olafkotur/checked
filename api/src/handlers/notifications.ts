@@ -76,7 +76,29 @@ export const NotificationHandler = {
     return ResponseService.data(formatted, res);
   },
 
-  subscribe: async (req: express.Request, res: express.Response) => {
-    
+  getLatestByUser: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.params.userId || '0');
+    let data: any = await MongoService.findMany('notifications', { userId });
+    if (data === null) {
+      return ResponseService.data({}, res);
+    }
+
+    // Get the latest notification
+    data = data.sort((a: IDbNotification, b: IDbNotification) => moment(a.createdAt).unix() - moment(b.createdAt).unix());
+    if (data.length <= 0) {
+      return ResponseService.data({}, res);
+    }
+    data = data[0];
+
+    // Convert to response format
+    const formatted: INotificationResponse = {
+      userId: data.userId,
+      notificationId: data.notificationId,
+      priority: data.priority,
+      value: data.value,
+      createdAt: moment(data.createdAt).unix()
+    };
+
+    return ResponseService.data(formatted, res);
   },
 };
