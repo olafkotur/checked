@@ -1,5 +1,15 @@
 export interface IStatus {
-  isRunningHistoric: boolean;
+  isRunningHistoric: boolean
+}
+
+export interface ILocations {
+  zoneId: number,
+  members: number[]
+}
+
+export interface IZoneTemperatures {
+  zoneId: number,
+  value: number
 }
 
 export interface IHistoricResponse {
@@ -8,5 +18,32 @@ export interface IHistoricResponse {
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
-  createdAt: number
+  locations: string,
+  temperatures: string
+}
+
+export interface ILiveResponse {
+  dataType: string,
+  memberId?: number,
+  userId: number,
+  zoneId: number,
+  value: number,
+  time: number 
+}
+
+export interface IActivityResponse {
+  activityId: number,
+  name: string,
+  zoneId: number
+  createdAt: number,
+  lastUpdated: number
+}
+
+export interface ILocationResponse {
+  memberId: number,
+  userId: number,
+  zoneId: number,
+  xValue: number,
+  yValue: number,
+  time: number 
 }

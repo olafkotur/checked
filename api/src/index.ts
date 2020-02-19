@@ -55,6 +55,7 @@ async function main() {
   app.delete('/api/users/delete/:userId', UserHandler.deleteUser);
   app.get('/api/users/:userId', UserHandler.getUser);
   app.get('/api/users', UserHandler.getUsers);
+  app.post('/api/users/update/:userId', UserHandler.updateUser);
 
   // Member handlers
   app.post('/api/members/create', MemberHandler.createMember);

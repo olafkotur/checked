@@ -4,7 +4,7 @@ import { HistoricService } from './services/historic';
 import { config } from './config';
 import { IStatus } from './models';
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 
 const PORT = process.env.PORT || 8081;
@@ -26,7 +26,6 @@ async function main() {
 
     status.isRunningHistoric = true;
     await HistoricService.start(DOMAIN);
-
     status.isRunningHistoric = false;
   });
 
