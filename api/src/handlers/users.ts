@@ -61,9 +61,9 @@ export const UserHandler = {
     const userId: number = parseInt(req.params.userId || '0');
 
     // Ensure that the user exists before attempting to delte
-    await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
+    await DbHelperService.exists('users', { userId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.deleteOne('users', { userId: userId });
+        MongoService.deleteOne('users', { userId });
         ResponseService.ok('Deleted existing user', res);
       } else {
         ResponseService.notFound('User does not exist', res);

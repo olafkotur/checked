@@ -84,7 +84,12 @@ async function main() {
   app.get('/api/comment/:commentId', CommentHandler.getComment);
 
   // Link handlers
-  app.post('/api/link/create', LinkHandler.createLink);
+  app.post('/api/links/create', LinkHandler.createLink);
+  app.delete('/api/links/delete/:linkId', LinkHandler.deleteLink);
+  app.get('/api/links/users/:userId', LinkHandler.getLinksByUser);
+  app.get('/api/links/members/:memberId', LinkHandler.getLinksByMember);
+  app.get('/api/links', LinkHandler.getAllLinks);
+  app.get('/api/links/:linkId', LinkHandler.getLink);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

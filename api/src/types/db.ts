@@ -86,6 +86,7 @@ export interface IDbComment {
 }
 
 export interface IDbLink {
+  linkId: number,
   userId: number,
   memberId: number,
   relationship: number,
