@@ -117,7 +117,7 @@ class TimeSeriesGraph extends React.Component<IProps, {}> {
                     },
                     {
                         offset: 100,
-                        color: '#272791',
+                        color: '#4545ad',
                         opacity: 50
                     },
                 ],

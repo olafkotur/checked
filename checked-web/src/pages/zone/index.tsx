@@ -64,7 +64,7 @@ export class Zone extends React.Component<IProps, IState> {
 
         if(dataType !== "locations"){
             dataIn.forEach((log) => {
-                const reading = log[dataType].find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId; });
+                const reading = log[dataType].find((record: any) => record.zoneId === this.state.zoneDetails.zoneId);
                 let dataPoint: number;
                 if(reading === undefined){
                     dataPoint = 0;
@@ -80,7 +80,7 @@ export class Zone extends React.Component<IProps, IState> {
             });
         } else {
             dataIn.forEach((log) => {
-                const reading = log.locations.find((record: any) => { return record.zoneId === this.state.zoneDetails.zoneId;});
+                const reading = log.locations.find((record: any) => record.zoneId === this.state.zoneDetails.zoneId);
                 let dataPoint: number;
                 if (reading === undefined) {
                     dataPoint = 0;

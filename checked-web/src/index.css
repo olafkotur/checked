@@ -375,7 +375,7 @@ code {
 
 .userGradient {
   background: rgb(28, 181, 224);
-  background: linear-gradient(173deg, rgba(28, 181, 224, 1) 0%, rgba(39, 39, 145, 1) 100%);
+  background: linear-gradient(173deg, rgba(28, 181, 224, 1) 0%, #4545ad 100%);
 }
 
 .chartLabel {
