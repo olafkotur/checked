@@ -8,7 +8,12 @@ module.exports = {
           console.error(error);
           reject();
         }
-        resolve(JSON.parse(body));
+        try {
+          const formatted = JSON.parse(body);
+          resolve(formatted);
+        } catch(e) {
+          resolve({});
+        }
       });
     });
   },
