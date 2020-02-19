@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember, ILink, IUser } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd, DeleteOutlineRounded } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
-import CommentBox from './comments/CommentBox';
+import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';
 import { LiveService } from '../../api/LiveService';
 import UseAnimations from 'react-useanimations';
