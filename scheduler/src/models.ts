@@ -64,3 +64,8 @@ export interface IUser {
   createdAt: number,
   lastUpdated: number
 }
+
+export interface IGrouping {
+  zoneId: number,
+  count: number
+}

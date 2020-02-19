@@ -6,5 +6,6 @@ export const config = {
   warnings: {
     maxTemperature: 35,
     minTemperature: 20,
+    gatheringThreshold: 0.7
   }
 };

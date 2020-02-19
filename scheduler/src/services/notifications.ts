@@ -1,6 +1,6 @@
 import { HttpService } from './http';
 import { config } from '../config';
-import { INotification, IUser, ILiveResponse } from "../models";
+import { INotification, IUser, ILiveResponse, ILocationResponse, IGrouping } from "../models";
 
 export const NotificationService = {
 
@@ -19,6 +19,8 @@ export const NotificationService = {
     // Check for notifications for each user
     users.result.forEach(async (user: IUser) => {
       await NotificationService.shouldNotifyTemperature(domain, user).then((n: any) => n ? pending.push(n) : false);
+      await NotificationService.shouldNotifyGrouping(domain, user).then((n: any) => n ? pending.push(n) : false);
+      console.log(pending);
     });
   },
 
@@ -49,23 +51,38 @@ export const NotificationService = {
     return notification.value ? notification : false;
   },
 
-  // // Sends notification if too many members are gathered in one zone
-  // shouldNotifyGrouping: (domain: string): INotification => {
+  // Sends notification if too many members are gathered in one zone
+  shouldNotifyGrouping: async (domain: string, user: IUser) => {
+    const data: any = await HttpService.get(`${domain}/api/location/users/${user.userId}`);
+    if (data.length === 0) {
+      return false;
+    }
 
-  // },
+    const notification: INotification = {
+      userId: user.userId,
+      priority: 2,
+      value: ''
+    };
 
-  // // Sends notification if a member is not in any zone
-  // shouldNotifyOutofBounds: (domain: string): INotification => {
+    // Get a count of all the members in each zone
+    const count: IGrouping[] = [];
+    data.result.forEach((location: ILocationResponse) => {
+      const existing = count.find((c: IGrouping) => c.zoneId === location.zoneId);
+      if (existing) {
+        count[count.indexOf(existing)].count += 1;
+      } else {
+        count.push({ zoneId: location.zoneId, count: 1 });
+      }
+    });
 
-  // },
+    // Determine whether there is a gathering
+    count.forEach((c: IGrouping) => {
+      if (c.count / data.result.length >= config.warnings.gatheringThreshold) {
+        notification.value = `There seems to be a large gathering of members in zone ${c.zoneId}`;
+      }
+    });
 
-  // // Sends notification if a member has not movement in a while
-  // shouldNotifyNoMovement: (domain: string): INotification => {
+    return notification.value ? notification : false;
+  },
 
-  // },
-
-  // // Sends notification if a member is moving too quick between zones
-  // shouldNotifyFastMovement: (domain: string): INotification => {
-
-  // },
 }
