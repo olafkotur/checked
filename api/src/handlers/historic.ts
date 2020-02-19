@@ -22,8 +22,8 @@ export const HistoricHandler = {
       membersActive: parseInt(req.body.membersActive || '0'),
       zonesCount: parseInt(req.body.zonesCount || '0'),
       activitiesCount: parseInt(req.body.activitiesCount || '0'),
-      locations: JSON.parse(req.body.locations || []),
-      temperatures: JSON.parse(req.body.temperatures || []),
+      locations: JSON.parse(req.body.locations || '[]'),
+      temperatures: JSON.parse(req.body.temperatures || '[]'),
       createdAt: new Date(),
     };
 
