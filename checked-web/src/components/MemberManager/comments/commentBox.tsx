@@ -3,8 +3,6 @@ import { RouteComponentProps } from "@reach/router";
 import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton } from "@material-ui/core";
 import '../../../index.css';
 import { Delete, Save } from "@material-ui/icons";
-import color from "@material-ui/core/colors/amber";
-import { green } from "@material-ui/core/colors";
 
 
 interface IState {
@@ -153,19 +151,6 @@ export class CommentBox extends React.Component<IProps, IState> {
             );
         }
     };
-
-
-    // // use this for saving
-    // getTimeStamp(): string{
-    //     const date = new Date().getDate(); //Current Date
-    //     const month = new Date().getMonth() + 1; //Current Month
-    //     const year = new Date().getFullYear(); //Current Year
-    //     const hours = new Date().getHours(); //Current Hours
-    //     const min = new Date().getMinutes(); //Current Minutes
-
-    //     return (date + '/' + month + '/' + year + ' ' + hours + ':' + min);
-
-    // };
 
 
     render(): JSX.Element {

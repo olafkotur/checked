@@ -349,7 +349,7 @@ class MemberManager extends React.Component<IProps, IState> {
         const serverInfo = await CommentService.getComments(memberID.toString());
         console.log(serverInfo);
 
-        serverInfo.forEach((comment: { new: boolean; }) => {
+        serverInfo.forEach((comment: { new: boolean}) => {
             comment.new = false;
         });
 
@@ -442,7 +442,7 @@ class MemberManager extends React.Component<IProps, IState> {
             const tempComments: any = this.state.comments;
 
             const newComment = {
-                commentId: 4,
+                commentId: 0,
                 rating: 0,
                 value: "",
                 new: true,
@@ -480,7 +480,6 @@ class MemberManager extends React.Component<IProps, IState> {
             const tempComments: any = [];
 
             this.state.comments.forEach(async commentBoxTmp => {
-
                 if (commentBoxTmp.commentId !== commentBox.props.dbid) {
                     tempComments[tempComments.length] = commentBoxTmp;
                 }
