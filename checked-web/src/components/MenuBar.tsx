@@ -12,6 +12,7 @@ import { navigate } from '@reach/router';
 
 import Logo from '../media/checkedLogo.jpg';
 import { IZone } from '../types';
+import Notifications from './Notifications';
 
 interface IState {
     drawerOpen: boolean;
@@ -27,6 +28,7 @@ interface IState {
 interface IProps {
     setDarkMode(darkMode: boolean): void;
     zones: Array<IZone>;
+    userID: number;
 }
 
 class MenuBar extends React.Component<IProps, IState> {
@@ -131,6 +133,8 @@ class MenuBar extends React.Component<IProps, IState> {
                         <IconButton onClick={this.setDarkMode} className="mr-1">
                             {this.state.themeIcon}
                         </IconButton>
+
+                        <Notifications userID={this.props.userID} />
 
                         <div aria-label="logo">
                             <img src={Logo} className="topBarLogo" alt="logo" />

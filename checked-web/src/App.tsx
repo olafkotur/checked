@@ -80,7 +80,7 @@ class App extends React.Component<{}, IState> {
 				return (
 					<div className="backgroundDark">
 						<ThemeProvider theme={DarkTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones}/>
+							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
@@ -95,7 +95,7 @@ class App extends React.Component<{}, IState> {
 				return (
 					<div className="background">
 						<ThemeProvider theme={LightTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones}/>
+							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />

@@ -9,4 +9,11 @@ export const NotificationService = {
         });
     },
 
+    clearNoti: async (notiId: number): Promise<any> => {
+        const uri = "notifications/clear/" + notiId;
+        return await HttpService.get(uri).then((res) => {
+            return res;
+        });
+    }
+
 };
