@@ -21,7 +21,7 @@ code {
 
 .dashContainer {
   margin-right: 15px;
-  margin-left: 72px;
+  margin-left: 75px;
   padding-top: 85px;
 }
 
@@ -66,11 +66,12 @@ code {
   background-image: url('./media/spikesDark.png');
   background-size: 300px 300px;
   background-repeat: repeat;
-  height: 100vh;
-  width: 100%;
+  position: fixed;
   top: 0;
-  bottom: 0;
-  position: absolute;
+  left: 0;
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .vcenterParent {
@@ -81,6 +82,24 @@ code {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.scrollCard {
+  max-height: 790px;
+  overflow-y: scroll;
+}
+
+.styledScrollBar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.styledScrollBar::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.styledScrollBar::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #313131;
 }
 
 /* ===== MENUBAR ===== */
@@ -336,9 +355,27 @@ code {
 }
 
 .zoneBigIcon {
-  height: 50px;
-  width: 50px !important;
+  height: 70px;
+  width: 70px !important;
   margin-bottom: 10px;
+  color: white;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.tempGradient {
+  background: rgb(233, 101, 83);
+  background: linear-gradient(173deg, rgba(233, 101, 83, 1) 0%, rgba(144, 78, 149, 1) 100%);
+}
+
+.lightGradient {
+  background: rgb(242, 201, 76);
+  background: linear-gradient(173deg, rgba(242, 201, 76, 1) 0%, rgba(242, 153, 74, 1) 100%);
+}
+
+.userGradient {
+  background: rgb(28, 181, 224);
+  background: linear-gradient(173deg, rgba(28, 181, 224, 1) 0%, rgba(39, 39, 145, 1) 100%);
 }
 
 .chartLabel {

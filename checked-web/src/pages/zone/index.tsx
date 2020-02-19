@@ -115,12 +115,12 @@ export class Zone extends React.Component<IProps, IState> {
                                         </CardHeader>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                            <Grid container spacing={0} className="mt-3 border-bottom pt-5 pb-5">
+                                        <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted scrollCard styledScrollBar mb-2">
+                                            <Grid container spacing={0} className="mt-3 pt-5 pb-5">
                                                 <Grid item xs={2} className="border-right vcenterParent">
                                                     <Grid container spacing={0} className="vcenterChild pr-3">
                                                         <Grid item xs={12} key={0} className="text-center">
-                                                            <FontAwesomeIcon icon={faThermometerHalf} className="zoneBigIcon"/>
+                                                            <FontAwesomeIcon icon={faThermometerHalf} className="zoneBigIcon tempGradient"/>
                                                         </Grid>
                                                         <Grid item xs={12}>
                                                             <Typography variant="h3" className="w-100 text-center">
@@ -149,11 +149,11 @@ export class Zone extends React.Component<IProps, IState> {
                                                     />
                                                 </Grid>
                                             </Grid>
-                                        <Grid container spacing={0} className="border-bottom  pt-5 pb-5">
+                                        <Grid container spacing={0} className="pt-5 pb-5">
                                             <Grid item xs={2} className="border-right vcenterParent">
                                                 <Grid container spacing={0} className="vcenterChild pr-3">
                                                         <Grid item xs={12} key={0} className="text-center">
-                                                            <FontAwesomeIcon icon={faUser} className="zoneBigIcon" />
+                                                            <FontAwesomeIcon icon={faUser} className="zoneBigIcon userGradient p-3" />
                                                         </Grid>
                                                         <Grid item xs={12}>
                                                             <Typography variant="h3" className="w-100 text-center">
