@@ -1,6 +1,6 @@
 import delay from 'delay';
 import { HttpService } from './http';
-import { IHistoricResponse, ILiveResponse, IActivityResponse, ILocations, ILocationResponse } from '../models';
+import { IHistoricResponse, ILiveResponse, IActivityResponse, ILocations, ILocationResponse, IZoneTemperatures } from '../models';
 
 /* TODO:
   1. Get the latest data
@@ -27,7 +27,8 @@ export const HistoricService = {
         membersActive: HistoricService.calcMembersActive(userData),
         zonesCount: HistoricService.calcActiveZones(userData),
         activitiesCount: await HistoricService.calcActivities(userData, domain),
-        locations: JSON.stringify(await HistoricService.getLocationData(userData, userId, domain))
+        locations: JSON.stringify(await HistoricService.getLocationData(userData, userId, domain)),
+        temperatures: JSON.stringify(await HistoricService.getZoneTemperatures(userData))
       };
       delay(250); // Safety to not overload server
       await HistoricService.uploadData(domain, data);
@@ -93,6 +94,19 @@ export const HistoricService = {
       formatted.push({ zoneId, members});
     });
     return formatted;
+  },
+
+  getZoneTemperatures: async (data: ILiveResponse[]): Promise<IZoneTemperatures[]> => {
+    const temperatures: IZoneTemperatures[] = [];
+    
+    // This is hacky as shit but there's 20 hours left lol
+    data.forEach((live: ILiveResponse) => {
+      const exists = temperatures.find((temp: IZoneTemperatures) => temp.zoneId === live.zoneId);
+      if (!exists) {
+        temperatures.push({ zoneId: live.zoneId, value: live.value});
+      }
+    });
+    return temperatures;
   },
 
   uploadData: async (domain: string, data: any): Promise<boolean> => {

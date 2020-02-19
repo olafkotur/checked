@@ -1,3 +1,5 @@
+import { IZoneTemperatures, ILocations } from "./misc";
+
 export interface IResponse {
   code: number,
   status: string,
@@ -87,10 +89,8 @@ export interface IHistoricResponse {
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
-  locations: {
-    zoneId: number,
-    memebrs: number[]
-  },
+  locations: ILocations[],
+  temperatures: IZoneTemperatures[],
   createdAt: number
 }
 

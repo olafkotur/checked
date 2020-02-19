@@ -7,13 +7,19 @@ export interface ILocations {
   members: number[]
 }
 
+export interface IZoneTemperatures {
+  zoneId: number,
+  value: number
+}
+
 export interface IHistoricResponse {
   userId: number,
   averageTemperature: number,
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
-  locations: string
+  locations: string,
+  temperatures: string
 }
 
 export interface ILiveResponse {

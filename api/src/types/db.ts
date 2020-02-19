@@ -1,3 +1,5 @@
+import { ILocations, IZoneTemperatures } from "./misc";
+
 export interface IDbLive {
   dataType: string,
   memberId: number,
@@ -62,11 +64,6 @@ export interface IDbAssembly {
   lastUpdated: Date,
 }
 
-export interface ILocations {
-  zoneId: number,
-  memebrs: number[]
-}
-
 export interface IDbHistoric {
   userId: number,
   averageTemperature: number,
@@ -74,6 +71,7 @@ export interface IDbHistoric {
   zonesCount: number,
   activitiesCount: number,
   locations: ILocations[],
+  temperatures: IZoneTemperatures[],
   createdAt: Date
 }
 
