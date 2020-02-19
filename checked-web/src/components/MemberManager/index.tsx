@@ -15,8 +15,9 @@ interface IState {
     overseers: Array<object>;
     comments: Array<any>;
     editingComment: boolean;
+    loadingComments: boolean;
+    chaningMember: boolean;
 }
-
 interface IProps {
     members: Array<IMember>;
     userID: number;
@@ -38,6 +39,8 @@ class MemberManager extends React.Component<IProps, IState> {
             ],
             comments: [],
             editingComment: false,
+            loadingComments: false,
+            chaningMember: false,
         };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
@@ -49,6 +52,7 @@ class MemberManager extends React.Component<IProps, IState> {
         this.addComment = this.addComment.bind(this);
         this.saveComment = this.saveComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
+        this.displayComments = this.displayComments.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -65,7 +69,9 @@ class MemberManager extends React.Component<IProps, IState> {
         }
 
         this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment:false});
-        this.getFeedList("meme");
+        // setTimeout()
+        this.getFeedList(memberID);
+        
     }
 
     setAddNewMember(): void {
@@ -311,8 +317,8 @@ class MemberManager extends React.Component<IProps, IState> {
                                 } />
                                 <Divider />
                                     <CardContent >
-                                        <List className="pr-3 pl-2 memberList" style={{ width: "100%"}}>
-                                            {this.state.comments}
+                                        <List className="pr-3 pl-2 commentList" style={{ width: "100%"}}>
+                                            {this.displayComments()}
                                         </List>
                                     </CardContent>          
                                 
@@ -337,47 +343,61 @@ class MemberManager extends React.Component<IProps, IState> {
         return strTime;
     }
 
-   async getFeedList(name: string): Promise<void> {
-
-       const serverInfo = await CommentService.getComments(this.state.currentMember.toString());
+   async getFeedList(memberID: number): Promise<void> {
+        this.setState({loadingComments: true});
+        const serverInfo = await CommentService.getComments(memberID.toString());
         console.log(serverInfo);
-        const commentsTmp = [];
-        if(serverInfo.length > 0){
-        for (let i = 0; i < serverInfo.length; i++) {
-            const comment = serverInfo[i];
-            
-            // const timeStamp = new Date(comment.createdAt);
 
-            const dateTmp = new Date(comment.createdAt*1000);
+        serverInfo.forEach((comment: { new: boolean; }) => {
+            comment.new = false;
+        });
 
-            console.log(dateTmp);
+        this.setState({ comments: serverInfo, loadingComments:false });
+    }
 
-            const date =  dateTmp.getDate(); //Current Date
-            const month =  dateTmp.getMonth() + 1; //Current Month
-            const year =  dateTmp.getFullYear(); //Current Year
-            const hours =  dateTmp.getHours(); //Current Hours
-            const min = ('0' + dateTmp.getMinutes()).slice(-2);; //Current Minutes
+    displayComments(): Array<JSX.Element> {
 
-            const timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+        if(!this.state.loadingComments){
+            const commentsTmp: JSX.Element[] = [];
 
+            // if(!this.state.editingComment){
+            this.state.comments.forEach(comment => {
+               
+                const dateTmp = new Date(comment.createdAt*1000);
+                const date =  dateTmp.getDate(); //Current Date
+                const month =  dateTmp.getMonth() + 1; //Current Month
+                const year =  dateTmp.getFullYear(); //Current Year
+                console.log(comment);
+                
+                let timeStamp =  "";
+                if(comment.new){
+                    timeStamp = "New Comment";
+                }
+                else{
+                    timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+                }
+                
 
-
-            console.log(comment);
-            commentsTmp[commentsTmp.length] = <CommentBox
+                commentsTmp[commentsTmp.length] = <CommentBox
                  key={comment.commentId}
                  dbid = {comment.commentId}
                  radioVal={comment.rating.toString()}
                  textContent={comment.value} 
-                 new={false} 
-                 timeStamp={timeStamp} 
+                 new={comment.new} 
+                 timeStamp={timeStamp } 
                  deleteThisComment = { this.deleteComment }
                  saveThisComment = {this.saveComment}
                 />;
+            });
+               
+            // }
+            return (commentsTmp.reverse());
+            
         }
-    }
+        else{
+            return ([<div><h1> Loading Comments </h1></div>]);
+        }
 
-        this.setState({ comments: commentsTmp.reverse() });
-        // console.log(this.state.comments);
     }
 
     async deleteComment(commentBox: any): Promise<void> {
@@ -385,20 +405,17 @@ class MemberManager extends React.Component<IProps, IState> {
 
         if (commentBox != null) {
 
-            
-
             const tempComments: any = [];
 
-            for (let i = 0; i < this.state.comments.length; i++) {
-                const commentBoxTmp = this.state.comments[i];
+            this.state.comments.forEach(async commentBoxTmp => {
 
-                if (commentBoxTmp.props.dbid !== commentBox.props.dbid) {
+                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
                     tempComments[tempComments.length] = commentBoxTmp;
                 }
                 else{
                     await CommentService.deleteComment(commentBox.props.dbid.toString());
                 }
-            }
+            });
            
             this.setState({ comments: tempComments,  editingComment: false});
             
@@ -413,26 +430,19 @@ class MemberManager extends React.Component<IProps, IState> {
 
         if(!this.state.editingComment){
             
-        
-            const tempComments: any = [];
-            
+            const tempComments: any = this.state.comments;
 
-            // Create the new comment
-            tempComments[0] = <CommentBox
-                key={0}
-                dbid={0} 
-                radioVal="0"
-                textContent={""}
-                new={true}
-                timeStamp="New Comment"
-                deleteThisComment={this.deleteComment}
-                saveThisComment={this.saveComment}
-            />;
-            
-            // add the rest of them
-            for (let i = 0; i < this.state.comments.length; i++) {
-                tempComments[tempComments.length] = this.state.comments[i];
-            }
+            const newComment = {
+                commentId: 4,
+                rating: 0,
+                value: "",
+                new: true,
+            };
+
+            tempComments.push(newComment);
+           
+            console.log(tempComments);
+
             this.setState({ comments: tempComments, editingComment: true });
         }
         else{
@@ -452,14 +462,26 @@ class MemberManager extends React.Component<IProps, IState> {
 
         console.log(body);
 
-        await CommentService.saveComment(body);
+            await CommentService.saveComment(body);
         
-        await this.deleteComment(commentBox);
-        this.setState({ comments: [0] });
-        await this.getFeedList("meme");
+
+            this.setState({ comments: []});
+            await this.getFeedList(this.state.currentMember);
+
+            const tempComments: any = [];
+
+            this.state.comments.forEach(async commentBoxTmp => {
+
+                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                    tempComments[tempComments.length] = commentBoxTmp;
+                }
+            });
+
+            this.setState({ comments: tempComments, editingComment: false });
+            
 
 
-
+        
     }
 
 

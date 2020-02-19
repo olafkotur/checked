@@ -194,7 +194,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                             </Grid>
 
                             <Grid item xs={1}>
-                                <div style={{ height: "100%", paddingLeft:"5px" }}>
+                                <div style={{ height: "100%", paddingLeft:"7px" }}>
                                    
                                         <RadioGroup onChange={this.radioChange} value={this.state.radio} >
                                         <MuiThemeProvider theme={redLight}>

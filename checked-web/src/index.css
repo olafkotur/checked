@@ -309,6 +309,22 @@ code {
   width: 100%;
 }
 
+.commentList { 
+  max-height: calc(100vh - 38vh);
+  overflow-y: scroll;
+}
 
+.commentList::-webkit-scrollbar {
+  width: 5px;
+}
+
+.commentList::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.commentList::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #313131;
+}
 
 
