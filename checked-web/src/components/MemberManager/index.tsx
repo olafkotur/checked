@@ -6,6 +6,7 @@ import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import {MemberService} from '../../api/MemberService';
 import CommentBox from './comments/CommentBox';
 import { CommentService } from '../../api/CommentService';
+import UseAnimations from 'react-useanimations';
 
 
 interface IState {
@@ -358,6 +359,7 @@ class MemberManager extends React.Component<IProps, IState> {
     displayComments(): Array<JSX.Element> {
 
         if(!this.state.loadingComments){
+           
             const commentsTmp: JSX.Element[] = [];
 
             // if(!this.state.editingComment){
@@ -391,11 +393,18 @@ class MemberManager extends React.Component<IProps, IState> {
             });
                
             // }
+
+            if(commentsTmp.length > 0){
             return (commentsTmp.reverse());
-            
+            }
+
+            else{
+                return ([<div style={{textAlign:"center", marginTop:"20%"}}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
+            }
+
         }
         else{
-            return ([<div><h1> Loading Comments </h1></div>]);
+            return ([<div style={{ height:"500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
         }
 
     }
@@ -412,7 +421,7 @@ class MemberManager extends React.Component<IProps, IState> {
                 if (commentBoxTmp.commentId !== commentBox.props.dbid) {
                     tempComments[tempComments.length] = commentBoxTmp;
                 }
-                else{
+                else if(!commentBox.props.new){
                     await CommentService.deleteComment(commentBox.props.dbid.toString());
                 }
             });
