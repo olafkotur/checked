@@ -35,7 +35,7 @@ export class MemberManagement extends React.Component<IProps, IState> {
             <div className="dashContainer">
                 <Grid container spacing={3} >
                     <Grid item xs={12} >
-                        <Card className="dashCard">
+                        <Card className="dashCard" style={{minWidth: '1595px'}}>
                             {!this.state.loaded &&
                                 <UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{transform: 'rotate(-90deg)'}}/>
                             }   

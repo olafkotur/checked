@@ -1,23 +1,29 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, Tooltip } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { IMember } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
-import {MemberService} from '../../api/MemberService';
+import { IMember, ILink, IUser } from '../../types';
+import { Person, ArrowForwardIos, Add, PersonAdd, DeleteOutlineRounded } from '@material-ui/icons';
+import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/CommentBox';
 import { CommentService } from '../../api/CommentService';
+import { LiveService } from '../../api/LiveService';
 import UseAnimations from 'react-useanimations';
+import { LinkService } from '../../api/LinkService';
+import { UserService } from '../../api/UserService';
 
 
 interface IState {
     currentMember: number;
     firstName: string;
     lastName: string;
-    overseers: Array<object>;
+    overseers: Array<ILink>;
     comments: Array<any>;
+    users: Array<IUser>;
     editingComment: boolean;
     loadingComments: boolean;
     chaningMember: boolean;
+    loadingOverseers: boolean;
+    selectedOverseer: number;
 }
 interface IProps {
     members: Array<IMember>;
@@ -29,19 +35,18 @@ class MemberManager extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { 
+        this.state = {
             currentMember: -1,
-            firstName: '', 
+            firstName: '',
             lastName: '',
-            overseers: [
-                { name: 'Parent McParentson', email: 'this@memes.com' },
-                { name: 'Parent McParentson2', email: 'this2@memes.com' },
-                { name: 'Parent McParentson3', email: 'this3@memes.com' },
-            ],
+            overseers: [],
             comments: [],
+            users: [],
             editingComment: false,
             loadingComments: false,
             chaningMember: false,
+            loadingOverseers: false,
+            selectedOverseer: 0
         };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
@@ -54,6 +59,7 @@ class MemberManager extends React.Component<IProps, IState> {
         this.saveComment = this.saveComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.displayComments = this.displayComments.bind(this);
+        this.createLink = this.createLink.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -69,14 +75,15 @@ class MemberManager extends React.Component<IProps, IState> {
             };
         }
 
-        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment:false});
+        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment: false });
         // setTimeout()
         this.getFeedList(memberID);
-        
+        this.getOverseers(memberID);
+        this.getUsers();
     }
 
     setAddNewMember(): void {
-        this.setState({firstName: '', lastName: ''});
+        this.setState({ firstName: '', lastName: '' });
         this.setCurrentMember(-2);
     }
 
@@ -91,9 +98,9 @@ class MemberManager extends React.Component<IProps, IState> {
     handleCreateUser(): void {
         MemberService.createMember(this.props.userID, this.state.firstName, this.state.lastName).then((res) => {
             console.log(res);
-            this.setState({currentMember: -4, firstName: '', lastName: ''});
+            this.setState({ currentMember: -4, firstName: '', lastName: '' });
         }).catch(() => {
-            this.setState({currentMember: -3});
+            this.setState({ currentMember: -3 });
         });
     }
 
@@ -107,6 +114,218 @@ class MemberManager extends React.Component<IProps, IState> {
         }).catch(() => {
             this.setState({ currentMember: -3 });
         });
+    }
+
+    formatAMPM(date: Date): string {
+        let hours = date.getHours();
+        let minutes: any = date.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const strTime = hours + ':' + minutes + ampm;
+        return strTime;
+    }
+
+    async getOverseers(memberID: number): Promise<void> {
+        this.setState({ loadingOverseers: true });
+        const overseers = await LinkService.getOverseersByMember(memberID);
+        this.setState({ overseers: overseers.result, loadingOverseers: false });
+    }
+
+    async getUsers(): Promise<void> {
+        const users = await UserService.getAllUsers();
+        this.setState({ users: users.result, loadingOverseers: false });
+    }
+
+    renderOverseers(): Array<JSX.Element> {
+        const overseers: Array<JSX.Element> = [];
+
+        if (this.state.overseers.length === 0) {
+            overseers.push(
+                <Grid item xs={12} className="pb-3">
+                    <Typography variant="caption">
+                        No assigned overseers.
+                    </Typography>
+                </Grid>
+            );
+            return overseers;
+        }
+
+
+        this.state.overseers.forEach((link) => {
+            const user = this.state.users.find((user) => user.userId === link.userId);
+            overseers.push(
+                <Grid item xs={6}>
+                    <div className="overseer h-100 w-100">
+                        <Grid container spacing={0}>
+                            <Grid item xs={9} className="vcenterParent text-center">
+                                <Typography variant="subtitle2" className="pl-3 vcenterChild">
+                                    {user?.email}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <IconButton onClick={(): Promise<void> => this.deleteLink(link.linkId)}>
+                                    <DeleteOutlineRounded style={{ color: 'white' }} />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                    </div>
+
+                </Grid>
+            );
+        });
+
+        return overseers;
+    }
+
+    async getFeedList(memberID: number): Promise<void> {
+        this.setState({ loadingComments: true });
+        const serverInfo = await CommentService.getComments(memberID.toString());
+
+        serverInfo.forEach((comment: { new: boolean }) => {
+            comment.new = false;
+        });
+
+        this.setState({ comments: serverInfo, loadingComments: false });
+    }
+
+    displayComments(): Array<JSX.Element> {
+
+        if (!this.state.loadingComments) {
+
+            const commentsTmp: JSX.Element[] = [];
+
+            // if(!this.state.editingComment){
+            this.state.comments.forEach(comment => {
+
+                const dateTmp = new Date(comment.createdAt * 1000);
+                const date = dateTmp.getDate(); //Current Date
+                const month = dateTmp.getMonth() + 1; //Current Month
+                const year = dateTmp.getFullYear(); //Current Year
+
+                let timeStamp = "";
+                if (comment.new) {
+                    timeStamp = "New Comment";
+                }
+                else {
+                    timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+                }
+
+
+                commentsTmp[commentsTmp.length] = <CommentBox
+                    key={comment.commentId}
+                    dbid={comment.commentId}
+                    radioVal={comment.rating.toString()}
+                    textContent={comment.value}
+                    new={comment.new}
+                    timeStamp={timeStamp}
+                    deleteThisComment={this.deleteComment}
+                    saveThisComment={this.saveComment}
+                    canDelete={false}
+                />;
+            });
+
+            // }
+
+            if (commentsTmp.length > 0) {
+                return (commentsTmp.reverse());
+            }
+
+            else {
+                return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
+            }
+
+        }
+        else {
+            return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+        }
+
+    }
+
+    async deleteComment(commentBox: any): Promise<void> {
+
+        if (commentBox != null) {
+
+            const tempComments: any = [];
+
+            this.state.comments.forEach(async commentBoxTmp => {
+
+                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                    tempComments[tempComments.length] = commentBoxTmp;
+                }
+                else if (!commentBox.props.new) {
+                    await CommentService.deleteComment(commentBox.props.dbid.toString());
+                }
+            });
+
+            this.setState({ comments: tempComments, editingComment: false });
+
+        }
+
+
+
+    }
+
+    addComment(): void {
+
+
+        if (!this.state.editingComment) {
+
+            const tempComments: any = this.state.comments;
+
+            const newComment = {
+                commentId: 0,
+                rating: 0,
+                value: "",
+                new: true,
+            };
+
+            tempComments.push(newComment);
+
+            this.setState({ comments: tempComments, editingComment: true });
+        }
+        else {
+            alert("you can only add one comment at a time");
+        }
+    }
+
+    async saveComment(commentBox: any): Promise<void> {
+        const body = {
+            memberId: this.state.currentMember,
+            rating: parseInt(commentBox.state.radio),
+            value: commentBox.state.commentVal,
+        };
+
+        await CommentService.saveComment(body);
+
+
+        this.setState({ comments: [] });
+        await this.getFeedList(this.state.currentMember);
+
+        const tempComments: any = [];
+
+        this.state.comments.forEach(async commentBoxTmp => {
+            if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                tempComments[tempComments.length] = commentBoxTmp;
+            }
+        });
+
+        this.setState({ comments: tempComments, editingComment: false });
+
+
+
+
+    }
+
+    async createLink(): Promise<void> {
+        await LinkService.createLink(this.state.selectedOverseer, this.state.currentMember, 'Parent');
+        this.getOverseers(this.state.currentMember);
+    }
+
+    async deleteLink(linkId: number): Promise<void> {
+        await LinkService.deleteLink(linkId);
+        this.getOverseers(this.state.currentMember);
     }
 
     getMembersList(): Array<JSX.Element> {
@@ -142,7 +361,7 @@ class MemberManager extends React.Component<IProps, IState> {
     }
 
     getSelectedMember(): JSX.Element {
-        if(this.state.currentMember === -1){
+        if (this.state.currentMember === -1) {
             return (
                 <div className="w-100 h-100 vcenterParent">
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
@@ -154,7 +373,7 @@ class MemberManager extends React.Component<IProps, IState> {
             return (
                 <div className="w-100 h-100 vcenterParent">
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
-                        Something went wrong.<br/>Please try again.
+                        Something went wrong.<br />Please try again.
                     </Typography>
                 </div>
             );
@@ -174,7 +393,7 @@ class MemberManager extends React.Component<IProps, IState> {
                     </Typography>
                 </div>
             );
-        } else if(this.state.currentMember === -2){
+        } else if (this.state.currentMember === -2) {
             return (
                 <Card className="w-100 h-100" raised>
                     <Grid container spacing={0}>
@@ -183,7 +402,7 @@ class MemberManager extends React.Component<IProps, IState> {
                             <Grid container spacing={3}>
                                 <Grid item xs={12} className="mt-5 mb-3">
                                     <Avatar className="memberAvatar">
-                                        <Person fontSize="large" className="w-100 h-100 m-1"/>
+                                        <Person fontSize="large" className="w-100 h-100 m-1" />
                                     </Avatar>
                                 </Grid>
                                 <Grid item xs={12} className="mt-5">
@@ -232,7 +451,7 @@ class MemberManager extends React.Component<IProps, IState> {
             return (
                 <div className="w-100 h-100">
                     <Grid container spacing={2} className="p-4 h-100">
-                        <Grid item xs={5} className="text-center border-right pr-5">
+                        <Grid item xs={5} className="text-center border-right pr-5 memberList pb-5">
                             <Grid container spacing={1}>
                                 <Grid item xs={12} className="mt-3 mb-3">
                                     <Avatar className="memberAvatar">
@@ -270,17 +489,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         onChange={this.handleLastName}
                                     />
                                 </Grid>
-                                {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
-                                <Grid item xs={12}> 
-                                    <Autocomplete
-                                        options={this.state.overseers}
-                                        getOptionLabel={(option: any): string => option.name}
-                                        renderInput={(params: any): any => (
-                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} className="mb-3">
                                     <Button
                                         type="button"
                                         fullWidth
@@ -292,12 +501,48 @@ class MemberManager extends React.Component<IProps, IState> {
                                         Save
                                     </Button>
                                 </Grid>
-                                <Grid item xs={12}>
+
+                                <Grid item xs={12} className="mt-1">
+                                    <Typography variant="subtitle2" className="mb-4 pt-4 border-top text-center">
+                                        Overseers
+                                    </Typography>
+                                    <Grid container spacing={4}>
+                                        {this.renderOverseers()}
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={10} className=" mb-4">
+                                    <Autocomplete
+                                        options={this.state.users}
+                                        getOptionLabel={(option: IUser): string => 'UserID: ' + option.userId.toString()}
+                                        renderInput={(params: any): any => (
+                                            <TextField
+                                                {...params}
+                                                label="Select User"
+                                                variant="outlined"
+                                                fullWidth
+                                                margin="normal"
+                                                onBlur={(event: any): void => {
+                                                    const value = event.target.value.split(' ')[1];
+                                                    this.setState({selectedOverseer: Number(value) });
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={2} className="vcenterParent mb-4">
+                                    <Tooltip title="Asign new Overseer" className="vcenterChild mt-1">
+                                        <IconButton style={{ backgroundColor: '#ff9e00', color: '#fff' }} onClick={this.createLink}>
+                                            <Add />
+                                        </IconButton>
+                                    </Tooltip>
+                                </Grid>
+
+                                <Grid item xs={12} className="pt-1 border-top">
                                     <Button
                                         type="button"
                                         fullWidth
                                         variant="contained"
-                                        className="mt-3 memberDeleteBtn"
+                                        className="mt-5 memberDeleteBtn "
                                         onClick={(): void => this.handleDeleteUser(this.state.currentMember)}
                                     >
                                         Delete Member
@@ -305,26 +550,26 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={7} > 
+                        <Grid item xs={7} >
                             {/* Comment feed here */}
                             {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
-                                
-                               
-                                <CardHeader title={"Comment Feed"} action={
-                                    
-                                    <IconButton >
-                                        <Add onClick={this.addComment} />
-                                    </IconButton>
-                                } />
-                                <Divider />
-                                    <CardContent >
-                                        <List className="pr-3 pl-2 commentList" style={{ width: "100%"}}>
-                                            {this.displayComments()}
-                                        </List>
-                                    </CardContent>          
-                                
+
+
+                            <CardHeader title={"Comment Feed"} action={
+
+                                <IconButton >
+                                    <Add onClick={this.addComment} />
+                                </IconButton>
+                            } />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+
                             {/* </div> */}
-                           
+
 
                         </Grid>
                     </Grid>
@@ -333,177 +578,16 @@ class MemberManager extends React.Component<IProps, IState> {
         }
     }
 
-    formatAMPM(date: Date): string {
-        let hours = date.getHours();
-        let minutes: any = date.getMinutes();
-        const ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        const strTime = hours + ':' + minutes +  ampm;
-        return strTime;
-    }
-
-   async getFeedList(memberID: number): Promise<void> {
-        this.setState({loadingComments: true});
-        const serverInfo = await CommentService.getComments(memberID.toString());
-        console.log(serverInfo);
-
-        serverInfo.forEach((comment: { new: boolean}) => {
-            comment.new = false;
-        });
-
-        this.setState({ comments: serverInfo, loadingComments:false });
-    }
-
-    displayComments(): Array<JSX.Element> {
-
-        if(!this.state.loadingComments){
-           
-            const commentsTmp: JSX.Element[] = [];
-
-            // if(!this.state.editingComment){
-            this.state.comments.forEach(comment => {
-               
-                const dateTmp = new Date(comment.createdAt*1000);
-                const date =  dateTmp.getDate(); //Current Date
-                const month =  dateTmp.getMonth() + 1; //Current Month
-                const year =  dateTmp.getFullYear(); //Current Year
-                console.log(comment);
-                
-                let timeStamp =  "";
-                if(comment.new){
-                    timeStamp = "New Comment";
-                }
-                else{
-                    timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
-                }
-                
-
-                commentsTmp[commentsTmp.length] = <CommentBox
-                 key={comment.commentId}
-                 dbid = {comment.commentId}
-                 radioVal={comment.rating.toString()}
-                 textContent={comment.value} 
-                 new={comment.new} 
-                 timeStamp={timeStamp } 
-                 deleteThisComment = { this.deleteComment }
-                 saveThisComment = {this.saveComment}
-                 canDelete={false}
-                />;
-            });
-               
-            // }
-
-            if(commentsTmp.length > 0){
-            return (commentsTmp.reverse());
-            }
-
-            else{
-                return ([<div style={{textAlign:"center", marginTop:"20%"}}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
-            }
-
-        }
-        else{
-            return ([<div style={{ height:"500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
-        }
-
-    }
-
-    async deleteComment(commentBox: any): Promise<void> {
-        console.log("i have been called");
-
-        if (commentBox != null) {
-
-            const tempComments: any = [];
-
-            this.state.comments.forEach(async commentBoxTmp => {
-
-                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
-                    tempComments[tempComments.length] = commentBoxTmp;
-                }
-                else if(!commentBox.props.new){
-                    await CommentService.deleteComment(commentBox.props.dbid.toString());
-                }
-            });
-           
-            this.setState({ comments: tempComments,  editingComment: false});
-            
-        }
-
-
-
-    }
-
-    addComment(): void {
-
-
-        if(!this.state.editingComment){
-            
-            const tempComments: any = this.state.comments;
-
-            const newComment = {
-                commentId: 0,
-                rating: 0,
-                value: "",
-                new: true,
-            };
-
-            tempComments.push(newComment);
-           
-            console.log(tempComments);
-
-            this.setState({ comments: tempComments, editingComment: true });
-        }
-        else{
-            alert("you can only add one comment at a time");
-        }
-    }
-
-    async saveComment(commentBox: any): Promise<void>{
-        console.log("Saving Now");
-
-
-        const body = {
-            memberId: this.state.currentMember,
-            rating: parseInt(commentBox.state.radio),
-            value: commentBox.state.commentVal,
-        };
-
-        console.log(body);
-
-            await CommentService.saveComment(body);
-        
-
-            this.setState({ comments: []});
-            await this.getFeedList(this.state.currentMember);
-
-            const tempComments: any = [];
-
-            this.state.comments.forEach(async commentBoxTmp => {
-                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
-                    tempComments[tempComments.length] = commentBoxTmp;
-                }
-            });
-
-            this.setState({ comments: tempComments, editingComment: false });
-            
-
-
-        
-    }
-
-
     render(): JSX.Element {
 
         return (
             <Grid container spacing={0} className="memberManager mt-3">
-                <Grid item xs={2} className="border-right border-muted">
+                <Grid item xs={2} className="border-right border-muted minw-250px">
                     <List className="pr-3 pl-2 memberList">
                         <ListItem alignItems="center" className="border-bottom border-muted p-0">
                             <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
                                 <ListItemAvatar>
-                                    <PersonAdd className="mr-3"/>
+                                    <PersonAdd className="mr-3" />
                                 </ListItemAvatar>
                                 <Grid container spacing={0}>
                                     <Grid item xs={10}>
