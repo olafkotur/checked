@@ -55,7 +55,7 @@ class MapEditor extends React.Component<IProps, IState> {
         this.hexToRgb = this.hexToRgb.bind(this);
     }
 
-    componentWillMount(): void {
+    componentDidMount(): void {
         this.loadZones();
         this.genBg();
     }
@@ -233,14 +233,8 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     determineTextColor(color: any): string{
-       
-
-       
-
+  
         let rgb = color;
-
-      
-        
 
         rgb = rgb.replace(/[^\d,]/g, '').split(',');
 
@@ -344,8 +338,8 @@ console.log(DBZone);
                     </Tooltip>
 
                     <Tooltip title="Colour Picker">
-                        <IconButton size='small' aria-label="Change color" className="ml-2">
-                            <ColorLens onClick={this.handleColorClick}/>
+                        <IconButton size='small' aria-label="Change color" className="ml-2" onClick={this.handleColorClick}>
+                            <ColorLens/>
                         </IconButton>
                     </Tooltip>
 

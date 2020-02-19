@@ -1,13 +1,20 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import {MemberService} from '../../api/MemberService';
+import CommentBox from './comments/CommentBox';
+import { CommentService } from '../../api/CommentService';
+
 
 interface IState {
     currentMember: number;
     firstName: string;
     lastName: string;
+    overseers: Array<object>;
+    comments: Array<any>;
+    editingComment: boolean;
 }
 
 interface IProps {
@@ -20,13 +27,28 @@ class MemberManager extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { currentMember: -1, firstName: '', lastName: '' };
+        this.state = { 
+            currentMember: -1,
+            firstName: '', 
+            lastName: '',
+            overseers: [
+                { name: 'Parent McParentson', email: 'this@memes.com' },
+                { name: 'Parent McParentson2', email: 'this2@memes.com' },
+                { name: 'Parent McParentson3', email: 'this3@memes.com' },
+            ],
+            comments: [],
+            editingComment: false,
+        };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
         this.handleDeleteUser = this.handleDeleteUser.bind(this);
         this.setAddNewMember = this.setAddNewMember.bind(this);
         this.handleFirstName = this.handleFirstName.bind(this);
         this.handleLastName = this.handleLastName.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+        this.addComment = this.addComment.bind(this);
+        this.saveComment = this.saveComment.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -41,7 +63,9 @@ class MemberManager extends React.Component<IProps, IState> {
                 lastUpdated: 0,
             };
         }
-        this.setState({currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName});
+
+        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment:false});
+        this.getFeedList("meme");
     }
 
     setAddNewMember(): void {
@@ -199,12 +223,11 @@ class MemberManager extends React.Component<IProps, IState> {
             );
         } else {
             return (
-                <Card className="w-100 h-100" raised>
-                    <Grid container spacing={0}>
-                        <Grid item xs={3}></Grid>
-                        <Grid item xs={6} className="text-center">
-                            <Grid container spacing={3}>
-                                <Grid item xs={12} className="mt-5 mb-3">
+                <div className="w-100 h-100">
+                    <Grid container spacing={2} className="p-4 h-100">
+                        <Grid item xs={5} className="text-center border-right pr-5">
+                            <Grid container spacing={1}>
+                                <Grid item xs={12} className="mt-3 mb-3">
                                     <Avatar className="memberAvatar">
                                         <Person fontSize="large" className="w-100 h-100 m-1" />
                                     </Avatar>
@@ -214,7 +237,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         Member ID: {this.state.currentMember}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} className="mt-2">
+                                <Grid item xs={6} className="mt-2">
                                     <TextField
                                         variant="outlined"
                                         value={this.state.firstName}
@@ -227,7 +250,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         onChange={this.handleFirstName}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={6} className="mt-2">
                                     <TextField
                                         variant="outlined"
                                         value={this.state.lastName}
@@ -238,6 +261,16 @@ class MemberManager extends React.Component<IProps, IState> {
                                         label="Last Name"
                                         name="lastName"
                                         onChange={this.handleLastName}
+                                    />
+                                </Grid>
+                                {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
+                                <Grid item xs={12}> 
+                                    <Autocomplete
+                                        options={this.state.overseers}
+                                        getOptionLabel={(option: any): string => option.name}
+                                        renderInput={(params: any): any => (
+                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
+                                        )}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -265,19 +298,177 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Grid item xs={3}></Grid>
+                        <Grid item xs={7} > 
+                            {/* Comment feed here */}
+                            {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
+                                
+                               
+                                <CardHeader title={"Comment Feed"} action={
+                                    
+                                    <IconButton >
+                                        <Add onClick={this.addComment} />
+                                    </IconButton>
+                                } />
+                                <Divider />
+                                    <CardContent >
+                                        <List className="pr-3 pl-2 memberList" style={{ width: "100%"}}>
+                                            {this.state.comments}
+                                        </List>
+                                    </CardContent>          
+                                
+                            {/* </div> */}
+                           
+
+                        </Grid>
                     </Grid>
-                </Card>
+                </div>
             );
         }
     }
+
+    formatAMPM(date: Date): string {
+        let hours = date.getHours();
+        let minutes: any = date.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const strTime = hours + ':' + minutes +  ampm;
+        return strTime;
+    }
+
+   async getFeedList(name: string): Promise<void> {
+
+       const serverInfo = await CommentService.getComments(this.state.currentMember.toString());
+        console.log(serverInfo);
+        const commentsTmp = [];
+        if(serverInfo.length > 0){
+        for (let i = 0; i < serverInfo.length; i++) {
+            const comment = serverInfo[i];
+            
+            // const timeStamp = new Date(comment.createdAt);
+
+            const dateTmp = new Date(comment.createdAt*1000);
+
+            console.log(dateTmp);
+
+            const date =  dateTmp.getDate(); //Current Date
+            const month =  dateTmp.getMonth() + 1; //Current Month
+            const year =  dateTmp.getFullYear(); //Current Year
+            const hours =  dateTmp.getHours(); //Current Hours
+            const min = ('0' + dateTmp.getMinutes()).slice(-2);; //Current Minutes
+
+            const timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+
+
+
+            console.log(comment);
+            commentsTmp[commentsTmp.length] = <CommentBox
+                 key={comment.commentId}
+                 dbid = {comment.commentId}
+                 radioVal={comment.rating.toString()}
+                 textContent={comment.value} 
+                 new={false} 
+                 timeStamp={timeStamp} 
+                 deleteThisComment = { this.deleteComment }
+                 saveThisComment = {this.saveComment}
+                />;
+        }
+    }
+
+        this.setState({ comments: commentsTmp.reverse() });
+        // console.log(this.state.comments);
+    }
+
+    async deleteComment(commentBox: any): Promise<void> {
+        console.log("i have been called");
+
+        if (commentBox != null) {
+
+            
+
+            const tempComments: any = [];
+
+            for (let i = 0; i < this.state.comments.length; i++) {
+                const commentBoxTmp = this.state.comments[i];
+
+                if (commentBoxTmp.props.dbid !== commentBox.props.dbid) {
+                    tempComments[tempComments.length] = commentBoxTmp;
+                }
+                else{
+                    await CommentService.deleteComment(commentBox.props.dbid.toString());
+                }
+            }
+           
+            this.setState({ comments: tempComments,  editingComment: false});
+            
+        }
+
+
+
+    }
+
+    addComment(): void {
+
+
+        if(!this.state.editingComment){
+            
+        
+            const tempComments: any = [];
+            
+
+            // Create the new comment
+            tempComments[0] = <CommentBox
+                key={0}
+                dbid={0} 
+                radioVal="0"
+                textContent={""}
+                new={true}
+                timeStamp="New Comment"
+                deleteThisComment={this.deleteComment}
+                saveThisComment={this.saveComment}
+            />;
+            
+            // add the rest of them
+            for (let i = 0; i < this.state.comments.length; i++) {
+                tempComments[tempComments.length] = this.state.comments[i];
+            }
+            this.setState({ comments: tempComments, editingComment: true });
+        }
+        else{
+            alert("you can only add one comment at a time");
+        }
+    }
+
+    async saveComment(commentBox: any): Promise<void>{
+        console.log("Saving Now");
+
+
+        const body = {
+            memberId: this.state.currentMember,
+            rating: parseInt(commentBox.state.radio),
+            value: commentBox.state.commentVal,
+        };
+
+        console.log(body);
+
+        await CommentService.saveComment(body);
+        
+        await this.deleteComment(commentBox);
+        this.setState({ comments: [0] });
+        await this.getFeedList("meme");
+
+
+
+    }
+
 
     render(): JSX.Element {
 
         return (
             <Grid container spacing={0} className="memberManager mt-3">
-                <Grid item xs={3} className="border-right border-muted">
-                    <List className="pr-3 pl-2 overflow-scroll">
+                <Grid item xs={2} className="border-right border-muted">
+                    <List className="pr-3 pl-2 memberList">
                         <ListItem alignItems="center" className="border-bottom border-muted p-0">
                             <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
                                 <ListItemAvatar>
@@ -292,7 +483,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={2} className="pl-1">
-                                        <Add className="vcenterChild mr-4" fontSize="small" />
+                                        <Add className="vcenterChild ml-2" fontSize="small" />
                                     </Grid>
                                 </Grid>
                             </Button>
@@ -300,7 +491,7 @@ class MemberManager extends React.Component<IProps, IState> {
                         {this.getMembersList()}
                     </List>
                 </Grid>
-                <Grid item xs={9} className="p-2 pl-4">
+                <Grid item xs={10} className="p-2 pl-4">
                     {this.getSelectedMember()}
                 </Grid>
             </Grid>

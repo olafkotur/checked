@@ -1,3 +1,5 @@
+import { ILocations, IZoneTemperatures } from "./misc";
+
 export interface IDbLive {
   dataType: string,
   memberId: number,
@@ -34,6 +36,8 @@ export interface IDbUser {
   email: string,
   password: string,
   companyName: string,
+  isGuardian: boolean,
+  policyAccepted: boolean,
   createdAt: Date,
   lastUpdated: Date
 }
@@ -68,5 +72,15 @@ export interface IDbHistoric {
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
+  locations: ILocations[],
+  temperatures: IZoneTemperatures[],
+  createdAt: Date
+}
+
+export interface IDbComment {
+  commentId: number,
+  memberId: number,
+  rating: number,
+  value: string,
   createdAt: Date
 }
