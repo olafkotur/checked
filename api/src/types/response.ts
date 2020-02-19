@@ -111,3 +111,11 @@ export interface ILinkResponse {
   relationship: number,
   createdAt: number,
 }
+
+export interface INotificationResponse {
+  notificationId: number,
+  userId: number,
+  priority: number,
+  value: string,
+  createdAt: number,
+}
