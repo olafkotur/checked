@@ -10,7 +10,7 @@ export const MongoService = {
       if (error) {
         throw error;
       }
-      database = db.db('data')
+      database = await db.db('data')
       console.log(`MongoService: Succesfully connected to database`)
       resolve(true);
     });
@@ -43,7 +43,7 @@ export const MongoService = {
     });
   },
 
-  findOne: async (collection: string, query: any) => {
+  findOne: (collection: string, query: any) => {
     return new Promise((resolve: any) => {
       database.collection(collection).findOne(query, (error: Error, res: any) => {
         if (error) {
@@ -54,7 +54,7 @@ export const MongoService = {
     });
   },
 
-  findMany: async (collection: string, query: any) => {
+  findMany: (collection: string, query: any) => {
     return new Promise((resolve: any) => {
       database.collection(collection).find(query, (error: Error, res: any) => {
         if (error) {
@@ -66,7 +66,7 @@ export const MongoService = {
   },
 
   deleteOne: async (collection: string, query: any) => {
-    database.collection(collection).deleteOne(query, (error: Error) => {
+    await database.collection(collection).deleteOne(query, (error: Error) => {
       if (error) {
         throw error;
       }
@@ -74,7 +74,7 @@ export const MongoService = {
   },
 
   deleteMany: async (collection: string, query: any) => {
-    database.collection(collection).deleteMany(query, (error: Error) => {
+    await database.collection(collection).deleteMany(query, (error: Error) => {
       if (error) {
         throw error;
       }

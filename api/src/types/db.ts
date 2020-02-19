@@ -98,5 +98,6 @@ export interface IDbNotification {
   userId: number,
   priority: number,
   value: string,
+  isCleared: boolean,
   createdAt: Date,
 }
