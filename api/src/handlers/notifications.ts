@@ -84,7 +84,7 @@ export const NotificationHandler = {
     }
 
     // Get the latest notification
-    data = data.sort((a: IDbNotification, b: IDbNotification) => moment(a.createdAt).unix() - moment(b.createdAt).unix());
+    data = data.sort((a: IDbNotification, b: IDbNotification) => moment(b.createdAt).unix() - moment(a.createdAt).unix());
     if (data.length <= 0) {
       return ResponseService.data({}, res);
     }
