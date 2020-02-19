@@ -1,4 +1,6 @@
 import express from 'express';
+import websocket from 'ws';
+import http from 'http';
 import bodyParser from 'body-parser';
 import { MongoService } from './services/mongo';
 import { LiveHandler } from './handlers/live';
@@ -12,12 +14,15 @@ import { AssemblyHandler } from './handlers/assembly';
 import { HistoricHandler } from './handlers/historic';
 import { CommentHandler } from './handlers/comment';
 import { LinkHandler } from './handlers/link';
+import { NotificationHandler } from './handlers/notifications';
 
 const cors = require('cors');
 require('dotenv').config();
 
 const PORT = process.env.PORT || 8080;
 const app: express.Application = express();
+const server: http.Server = http.createServer(app);
+const ws: websocket.Server = new websocket.Server({ server })
 
 async function main() {
   await MongoService.connect();
@@ -90,6 +95,12 @@ async function main() {
   app.get('/api/links/members/:memberId', LinkHandler.getLinksByMember);
   app.get('/api/links', LinkHandler.getAllLinks);
   app.get('/api/links/:linkId', LinkHandler.getLink);
+
+  // Notification handlers
+  app.post('/api/notifications/create', NotificationHandler.createNotification);
+  app.get('/api/notifications/:notificationId', NotificationHandler.getNotification);
+  app.get('/api/notifications/users/:userId', NotificationHandler.getNotificationsByUser);
+  ws.on('connection', NotificationHandler.subscribe);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
