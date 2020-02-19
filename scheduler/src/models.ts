@@ -1,5 +1,6 @@
 export interface IStatus {
-  isRunningHistoric: boolean
+  isRunningHistoric: boolean,
+  isRunningNotification: boolean,
 }
 
 export interface ILocations {
@@ -46,4 +47,20 @@ export interface ILocationResponse {
   xValue: number,
   yValue: number,
   time: number 
+}
+
+export interface INotification {
+  userId: number,
+  priority: number,
+  value: string
+}
+
+export interface IUser {
+  userId: number,
+  email: string,
+  companyName: string,
+  isGuardian: boolean,
+  policyAccepted: boolean,
+  createdAt: number,
+  lastUpdated: number
 }
