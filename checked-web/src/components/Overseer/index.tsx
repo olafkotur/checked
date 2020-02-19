@@ -251,7 +251,7 @@ class Overseer extends React.Component<IProps, IState> {
                                 </Grid>
                                 <Grid item xs={12}>
 
-                                {this.createChart()}
+                               
                                     
                                 </Grid>
                                 
@@ -261,6 +261,7 @@ class Overseer extends React.Component<IProps, IState> {
                                
                                 
                             </Grid>
+                            {this.createChart()}
                         </Grid>
                         <Grid item xs={7} >
                             {/* Comment feed here */}
@@ -288,15 +289,36 @@ class Overseer extends React.Component<IProps, IState> {
 
     createChart(): JSX.Element{
        
-        const data:  object[]  = [];
+        const data:  number[]  = [];
+        const dates: string[] = [];
+
+        let score: number = 0;
 
         this.state.comments.forEach(comment => {
-            data.push(comment.rating);
+
+            const rating = comment.rating;
+
+            if (rating === 1){ // red
+                score = score + -2;
+            } 
+            else if (rating === 2) { // amber
+                score = score + 0;
+            }
+
+            else if (rating === 3) { // amber
+                score = score + 1;
+            }
+            
+
+            data.push(score);
+            dates.push(this.formatAMPM(new Date(comment.createdAt*1000)));
         });
         // console.log(data);
 
         const graph = <LightGraph 
            
+            dates = {dates}
+
             series = {[
                 {
                     name: "Score",

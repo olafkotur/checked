@@ -5,17 +5,18 @@ import Chart from "react-apexcharts";
 
 interface IProps {
     series: any;
+    dates: any;
 }
 
-const options = {
+// const options = {
                 
-    chart: {
-        id: "basic-line"
-    },
-    // xaxis: {
-    //     // categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-    // }
-}
+//     chart: {
+//         id: "basic-line"
+//     },
+//     xaxis: {
+//         categories: this.props.dates,
+//     }
+// };
             
 
 class LightGraph extends React.Component<IProps, {}> {
@@ -27,9 +28,21 @@ class LightGraph extends React.Component<IProps, {}> {
         return (
             <div className="app">
                 <div className="row">
-                    <div className="mixed-chart">
+                    <div className="mixed-chart" style = {{width:"100%"}}>
                         <Chart
-                            options={options}
+                            options={{
+                                yaxis: {
+                                    min: 0,
+                                },
+                                colors: ["#FF9E00"],
+                                chart: {
+                                    id: "basic-line"
+                                },
+                                xaxis: {
+                                    categories: this.props.dates,
+                                }
+                            }}
+                            
                             series={this.props.series}
                             type="line"
                             width="100%"

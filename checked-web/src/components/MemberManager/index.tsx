@@ -10,6 +10,8 @@ import { LiveService } from '../../api/LiveService';
 import UseAnimations from 'react-useanimations';
 import { LinkService } from '../../api/LinkService';
 import { UserService } from '../../api/UserService';
+import LightGraph from '../Overseer/LightGraph/LightGraph';
+
 
 
 interface IState {
@@ -60,6 +62,7 @@ class MemberManager extends React.Component<IProps, IState> {
         this.deleteComment = this.deleteComment.bind(this);
         this.displayComments = this.displayComments.bind(this);
         this.createLink = this.createLink.bind(this);
+        this.createChart = this.createChart.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -489,7 +492,17 @@ class MemberManager extends React.Component<IProps, IState> {
                                         onChange={this.handleLastName}
                                     />
                                 </Grid>
-                                <Grid item xs={12} className="mb-3">
+                                {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
+                                <Grid item xs={12}> 
+                                    <Autocomplete
+                                        options={this.state.overseers}
+                                        getOptionLabel={(option: any): string => option.name}
+                                        renderInput={(params: any): any => (
+                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
                                     <Button
                                         type="button"
                                         fullWidth
@@ -548,28 +561,32 @@ class MemberManager extends React.Component<IProps, IState> {
                                         Delete Member
                                     </Button>
                                 </Grid>
+                                <Grid item xs={12}>
+                                    {this.createChart()}
+                                </Grid>
                             </Grid>
+                            
                         </Grid>
                         <Grid item xs={7} >
                             {/* Comment feed here */}
                             {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
-
-
-                            <CardHeader title={"Comment Feed"} action={
-
-                                <IconButton >
-                                    <Add onClick={this.addComment} />
-                                </IconButton>
-                            } />
-                            <Divider />
-                            <CardContent >
-                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                                    {this.displayComments()}
-                                </List>
-                            </CardContent>
-
+                                
+                               
+                                <CardHeader title={"Comment Feed"} action={
+                                    
+                                    <IconButton >
+                                        <Add onClick={this.addComment} />
+                                    </IconButton>
+                                } />
+                                <Divider />
+                                    <CardContent >
+                                        <List className="pr-3 pl-2 commentList" style={{ width: "100%"}}>
+                                            {this.displayComments()}
+                                        </List>
+                                    </CardContent>          
+                                
                             {/* </div> */}
-
+                           
 
                         </Grid>
                     </Grid>
@@ -577,6 +594,56 @@ class MemberManager extends React.Component<IProps, IState> {
             );
         }
     }
+
+    createChart(): JSX.Element {
+
+        const data: number[] = [];
+        const dates: string[] = [];
+
+        let score: number = 0;
+
+        this.state.comments.forEach(comment => {
+
+            const rating = comment.rating;
+
+            if (rating === 1) { // red
+                score = score + -2;
+            }
+            else if (rating === 2) { // amber
+                score = score + 0;
+            }
+
+            else if (rating === 3) { // amber
+                score = score + 1;
+            }
+            console.log(score);
+
+            data.push(score);
+            dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
+        });
+        console.log(data);
+        console.log("Rendering");
+        const graph = <LightGraph
+
+            dates={dates}
+
+            series={[
+                {
+                    name: "Score",
+                    data: data
+                }
+            ]}
+
+        />;
+
+        
+
+        return (graph);
+    }
+
+    
+
+    
 
     render(): JSX.Element {
 
