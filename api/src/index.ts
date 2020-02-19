@@ -10,6 +10,8 @@ import { MemberHandler } from './handlers/members';
 import { ActivityHandler } from './handlers/activity';
 import { AssemblyHandler } from './handlers/assembly';
 import { HistoricHandler } from './handlers/historic';
+import { CommentHandler } from './handlers/comment';
+import { LinkHandler } from './handlers/link';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -54,6 +56,7 @@ async function main() {
   app.delete('/api/users/delete/:userId', UserHandler.deleteUser);
   app.get('/api/users/:userId', UserHandler.getUser);
   app.get('/api/users', UserHandler.getUsers);
+  app.post('/api/users/update/:userId', UserHandler.updateUser);
 
   // Member handlers
   app.post('/api/members/create', MemberHandler.createMember);
@@ -73,6 +76,20 @@ async function main() {
   app.post('/api/assembly/create', AssemblyHandler.createPoint);
   app.post('/api/assembly/update/:zoneId', AssemblyHandler.updatePoint);
   app.get('/api/assembly/:zoneId', AssemblyHandler.getPoints);
+
+  // Comment handlers
+  app.post('/api/comment/create', CommentHandler.createComment);
+  app.delete('/api/comment/delete/:commentId', CommentHandler.deleteComment);
+  app.get('/api/comments/:memberId', CommentHandler.getComments);
+  app.get('/api/comment/:commentId', CommentHandler.getComment);
+
+  // Link handlers
+  app.post('/api/links/create', LinkHandler.createLink);
+  app.delete('/api/links/delete/:linkId', LinkHandler.deleteLink);
+  app.get('/api/links/users/:userId', LinkHandler.getLinksByUser);
+  app.get('/api/links/members/:memberId', LinkHandler.getLinksByMember);
+  app.get('/api/links', LinkHandler.getAllLinks);
+  app.get('/api/links/:linkId', LinkHandler.getLink);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

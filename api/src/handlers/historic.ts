@@ -22,6 +22,8 @@ export const HistoricHandler = {
       membersActive: parseInt(req.body.membersActive || '0'),
       zonesCount: parseInt(req.body.zonesCount || '0'),
       activitiesCount: parseInt(req.body.activitiesCount || '0'),
+      locations: JSON.parse(req.body.locations || []),
+      temperatures: JSON.parse(req.body.temperatures || []),
       createdAt: new Date(),
     };
 
@@ -38,13 +40,15 @@ export const HistoricHandler = {
     }
 
     // Convert to a response friendly format
-    const formatted: IHistoricResponse[] = data.map((val: any) => {
+    const formatted: IHistoricResponse[] = data.map((val: IHistoricResponse) => {
       return {
         userId: val.userId,
         averageTemperature: val.averageTemperature,
         membersActive: val.membersActive,
         zonesCount: val.zonesCount,
         activitiesCount: val.activitiesCount,
+        locations: val.locations,
+        temperatures: val.temperatures,
         createdAt: moment(val.createdAt).unix(),
       };
     });

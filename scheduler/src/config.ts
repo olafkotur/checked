@@ -1,4 +1,5 @@
 export const config = {
-  temperatureServiceRule: '* * * * *',
-  locationServiceRule: '* * * * *',
+  rules: {
+    historic: '*/5 * * * *'
+  }
 };

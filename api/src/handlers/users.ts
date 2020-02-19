@@ -17,6 +17,8 @@ export const UserHandler = {
       email: req.body.email || '',
       password: hashedPassword,
       companyName: req.body.companyName || '',
+      isGuardian: req.body.isGuardian === 'true',
+      policyAccepted: req.body.policyAccepted === 'true',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -38,7 +40,9 @@ export const UserHandler = {
         ResponseService.create({
           userId: data.userId,
           email: data.email,
-          companyName: data.companyName
+          companyName: data.companyName,
+          isGuardian: data.isGuardian,
+          policyAccepted: data.policyAccepted
         }, res);
 
         // Send Verification email
@@ -57,9 +61,9 @@ export const UserHandler = {
     const userId: number = parseInt(req.params.userId || '0');
 
     // Ensure that the user exists before attempting to delte
-    await DbHelperService.exists('users', { userId: userId }).then((exists: boolean) => {
+    await DbHelperService.exists('users', { userId }).then((exists: boolean) => {
       if (exists) {
-        MongoService.deleteOne('users', { userId: userId });
+        MongoService.deleteOne('users', { userId });
         ResponseService.ok('Deleted existing user', res);
       } else {
         ResponseService.notFound('User does not exist', res);
@@ -78,6 +82,8 @@ export const UserHandler = {
       userId: data.userId,
       email: data.email,
       companyName: data.companyName || '',
+      isGuardian: data.isGuardian,
+      policyAccepted: data.policyAccepted,
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -98,6 +104,8 @@ export const UserHandler = {
         userId: user.userId,
         email: user.email,
         companyName: user.companyName,
+        isGuardian: user.isGuardian,
+        policyAccepted: user.policyAccepted,
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }
@@ -122,7 +130,9 @@ export const UserHandler = {
         ResponseService.data({ 
           userId: data.userId,
           email: data.email,
-          companyName: data.companyName
+          companyName: data.companyName,
+          isGuardian: data.isGuardian,
+          policyAccepted: data.policyAccepted
         }, res);
         return true;
       }
@@ -131,6 +141,35 @@ export const UserHandler = {
     // Default to unauthorized
     ResponseService.unauthorized('Email address or password is incorrect', res);
     return false;
-  }
+  },
+
+  updateUser: async (req: express.Request, res: express.Response) => {
+    const user: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId || '0')} );
+    if (user === null) {
+      ResponseService.notFound('User does not exist', res);
+      return false;
+    }
+
+    const hashedPassword: string = AuthService.hashValue(req.body.password || '');
+
+    // Update only provided data using old data as fallback
+    const data: IDbUser = {
+      userId: user.userId,
+      email: req.body.email || user.email,
+      password: req.body.password ? hashedPassword : user.password,
+      companyName: req.body.companyName || user.companyName,
+      isGuardian: req.body.isGuardian ? req.body.isGuardian === 'true' : user.isGuardian,
+      policyAccepted: req.body.policyAccepted ? req.body.policyAccepted === 'true' : user.policyAccepted,
+      createdAt: user.createdAt,
+      lastUpdated: new Date()
+    }
+
+    // Update the user
+    await MongoService.deleteOne('users', { userId: user.userId });
+    await MongoService.insertOne('users', data);
+    ResponseService.ok('Updated existing user', res);
+
+    return true;
+  },
 
 }

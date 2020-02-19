@@ -5,6 +5,7 @@ import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
 import { Dashboard } from './pages/dashboard';
 import { MemberManagement } from './pages/member-management';
+import { OverseerView } from './pages/overseer-view';
 
 import {ZoneService} from './api/ZoneService';
 
@@ -85,6 +86,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
+								<OverseerView path="overseer" userID={this.state.userID} />
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -99,6 +101,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
+								<OverseerView path="overseer" userID={this.state.userID} />
 							</Router>
 						</ThemeProvider>
 					</div>
