@@ -41,10 +41,16 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
     }
 
     populateZones(): Array<JSX.Element> {
+        console.log(this.props.locationData, this.props.zoneData);
         const renderedZones: Array<JSX.Element> = [];
         this.props.zoneData.forEach((zone, index) => {
             renderedZones.push(
-                <Zone zone={zone} key={index} userID={this.props.userID} />
+                <Zone 
+                    zone={zone} 
+                    key={index} 
+                    userID={this.props.userID} 
+                    currentCount={this.props.locationData.filter(member => member.zoneId === zone.zoneId).length}
+                />
             );
         });
         return renderedZones;
