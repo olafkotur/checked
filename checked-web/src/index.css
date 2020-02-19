@@ -305,9 +305,14 @@ code {
   max-height: calc(100vh - 25vh);
 }
 
+.minw-250px {
+  min-width: 250px;
+}
+
 .memberList { 
   max-height: calc(100vh - 25vh);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .memberList::-webkit-scrollbar {
@@ -338,6 +343,12 @@ code {
 
 .memberDeleteBtn:hover {
   background-color: #b82a20 !important;
+}
+
+.overseer {
+  border-radius: 10px;
+  background-color: #ff9e00;
+  color: #ffffffef;
 }
 
 /* ===== ZONES ===== */
