@@ -92,3 +92,11 @@ export interface IDbLink {
   relationship: number,
   createdAt: Date,
 }
+
+export interface IDbNotification {
+  notificationId: number,
+  userId: number,
+  priority: number,
+  value: string,
+  createdAt: Date,
+}

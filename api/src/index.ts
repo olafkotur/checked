@@ -12,6 +12,7 @@ import { AssemblyHandler } from './handlers/assembly';
 import { HistoricHandler } from './handlers/historic';
 import { CommentHandler } from './handlers/comment';
 import { LinkHandler } from './handlers/link';
+import { NotificationHandler } from './handlers/notifications';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -90,6 +91,12 @@ async function main() {
   app.get('/api/links/members/:memberId', LinkHandler.getLinksByMember);
   app.get('/api/links', LinkHandler.getAllLinks);
   app.get('/api/links/:linkId', LinkHandler.getLink);
+
+  // Notification handlers
+  app.post('/api/notifications/create', NotificationHandler.createNotification);
+  app.get('/api/notifications/:notificationId', NotificationHandler.getNotification);
+  app.get('/api/notifications/users/:userId', NotificationHandler.getNotificationsByUser);
+  app.get('/api/notifications/latest/:userId', NotificationHandler.getLatestByUser);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

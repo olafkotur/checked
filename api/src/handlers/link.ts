@@ -15,23 +15,20 @@ export const LinkHandler = {
     const userId: number = parseInt(req.body.userId || '0');
     exists = await DbHelperService.exists('users', { userId });
     if (!exists) {
-      ResponseService.bad('Cannot link a user to a member without a valid userId', res);
-      return false;
+      return ResponseService.bad('Cannot link a user to a member without a valid userId', res);
     }
     
     // Check that the member exists
     const memberId: number = parseInt(req.body.memberId || '0');
     exists = await DbHelperService.exists('members', { memberId });
     if (!exists) {
-      ResponseService.bad('Cannot link a user to a member without a valid memberId', res);
-      return false;
+      return ResponseService.bad('Cannot link a user to a member without a valid memberId', res);
     }
 
     // Check that the link does not already exist
     exists = await DbHelperService.exists('links', { userId, memberId });
     if (exists) {
-      ResponseService.bad('A link between this user and member already exists', res);
-      return false;
+      return ResponseService.bad('A link between this user and member already exists', res);
     }
 
     // Format link data
@@ -46,8 +43,7 @@ export const LinkHandler = {
 
     // Add new link
     await MongoService.insertOne('links', data);
-    ResponseService.create({ linkId }, res);
-    return true;
+    return ResponseService.create({ linkId }, res);
   },
   
   deleteLink: async (req: express.Request, res: express.Response) => {
@@ -68,8 +64,7 @@ export const LinkHandler = {
     const userId: number = parseInt(req.params.userId || '0');
     const data: any = await MongoService.findMany('links', { userId });
     if (data === null) {
-      ResponseService.data([], res);
-      return false;
+      return ResponseService.data([], res);
     }
 
     // Convert to response format
@@ -83,16 +78,14 @@ export const LinkHandler = {
       };
     });
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 
   getLinksByMember: async (req: express.Request, res: express.Response) => {
     const memberId: number = parseInt(req.params.memberId || '0');
     const data: any = await MongoService.findMany('links', { memberId });
     if (data === null) {
-      ResponseService.data([], res);
-      return false;
+      return ResponseService.data([], res);
     }
 
     // Convert to response format
@@ -106,15 +99,13 @@ export const LinkHandler = {
       };
     });
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 
-  getAllLinks: async (req: express.Request, res: express.Response) => {
+  getAllLinks: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('links', {});
     if (data === null) {
-      ResponseService.data([], res);
-      return false;
+      return ResponseService.data([], res);
     }
 
     // Convert to response format
@@ -128,16 +119,14 @@ export const LinkHandler = {
       };
     });
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 
   getLink: async (req: express.Request, res: express.Response) => {
     const linkId: number = parseInt(req.params.linkId || '0');
     const data: any = await MongoService.findOne('links', { linkId });
     if (data === null) {
-      ResponseService.data({}, res);
-      return false;
+      return ResponseService.data({}, res);
     }
 
     // Convert to response format
@@ -149,7 +138,6 @@ export const LinkHandler = {
       createdAt: moment(data.createdAt).unix()
     };
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 };
