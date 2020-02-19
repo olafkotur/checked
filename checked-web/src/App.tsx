@@ -86,7 +86,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
-								<OverseerView path="overseer" userID={this.state.userID} />
+								<OverseerView path="overseer" userID={this.state.userID} memberID = {2}/>
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -101,7 +101,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
-								<OverseerView path="overseer" userID={this.state.userID} />
+								<OverseerView path="overseer" userID={this.state.userID} memberID={2} />
 							</Router>
 						</ThemeProvider>
 					</div>

@@ -6,6 +6,7 @@ import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
 import {IMember} from '../../types';
 import Overseer from '../../components/Overseer';
+import { LinkService } from '../../api/LinkService';
 
 
 interface IState {
@@ -15,6 +16,7 @@ interface IState {
 
 interface IProps extends RouteComponentProps {
     userID: number;
+    memberID: number;
 }
 
 export class OverseerView extends React.Component<IProps, IState> {
@@ -25,7 +27,7 @@ export class OverseerView extends React.Component<IProps, IState> {
     }
 
     componentDidMount(): void {
-        MemberService.getAllMembersByUser(this.props.userID).then((res) => {
+        LinkService.getMembersByOverseer(this.props.memberID.toString()).then((res) => {
             this.setState({members: res.result, loaded: true });
         });
     }
