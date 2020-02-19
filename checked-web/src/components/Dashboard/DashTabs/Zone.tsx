@@ -5,6 +5,7 @@ import { Close, NotificationsNone, NotificationsActive } from "@material-ui/icon
 import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
+import {LiveService} from '../../../api/LiveService';
 import { navigate } from '@reach/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
@@ -12,6 +13,7 @@ import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-ic
 interface IProps {
     zone: IZone;
     key: any;
+    currentCount: number;
     userID: number;
 }
 
@@ -19,6 +21,7 @@ interface IState {
     anchorEl: (Element | null);
     open: boolean;
     ringing: boolean;
+    reading: number;
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -27,11 +30,17 @@ class Zone extends React.Component<IProps, IState> {
         super(props);
 
 
-        this.state = { anchorEl: null, open: false, ringing: false };
+        this.state = { anchorEl: null, open: false, ringing: false, reading: 0 };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.toggleAssemble = this.toggleAssemble.bind(this);
+    }
+
+    componentDidMount(): void {
+        LiveService.getLiveTempDataByZone(this.props.zone.zoneId).then((res) => {
+            this.setState({ reading: res.result.value });
+        });
     }
 
     handleClick(event: React.MouseEvent): void {
@@ -170,32 +179,12 @@ class Zone extends React.Component<IProps, IState> {
                                 {this.props.zone.name} Overview
                             </Typography>
 
-                            <Grid item xs={4} className="border-right pt-4 pb-4">
+
+                            <Grid item xs={6} key={1} className="border-right pt-4 pb-4">
                                 <Grid container spacing={0}>
                                     <Grid item xs={12}>
                                         <Typography variant="h6" className="w-100 text-center">
-                                            {this.props.zone.data?.currentTemp || '?'}°C
-                                        </Typography>
-                                    </Grid>
-
-                                    <Grid item xs={12} className="text-center">
-                                        <Typography className="w-100 text-center" variant="caption">
-                                            <i className="text-center">Current Temperature</i>
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
-                                        <Icon >
-                                            <FontAwesomeIcon icon={faThermometerHalf} className="dashOverviewIcon" />
-                                        </Icon>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-
-                            <Grid item xs={4} key={1} className="border-right pt-4 pb-4">
-                                <Grid container spacing={0}>
-                                    <Grid item xs={12}>
-                                        <Typography variant="h6" className="w-100 text-center">
-                                            {this.props.zone.data?.currentCount || '?'}
+                                            {this.props.currentCount}
                                         </Typography>
                                     </Grid>
 
@@ -212,11 +201,32 @@ class Zone extends React.Component<IProps, IState> {
                                 </Grid>
                             </Grid>
 
-                            <Grid item xs={4} key={2} className="pt-4 pb-4">
+                            <Grid item xs={6} className="pt-4 pb-4">
                                 <Grid container spacing={0}>
                                     <Grid item xs={12}>
                                         <Typography variant="h6" className="w-100 text-center">
-                                            {/* {this.props.zone.data?.currentLight || '?'} TODO: */} ?
+                                            {this.state.reading || '?'}°C
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Current Temperature</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <FontAwesomeIcon icon={faThermometerHalf} className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            {/* <Grid item xs={4} key={2} className="pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {this.props.zone.data?.currentLight || '?'} TODO: ?
                                         </Typography>
                                     </Grid>
 
@@ -231,7 +241,7 @@ class Zone extends React.Component<IProps, IState> {
                                         </Icon>
                                     </Grid>
                                 </Grid>
-                            </Grid>
+                            </Grid> */}
 
                             {this.getZoneAlertButton()}
 

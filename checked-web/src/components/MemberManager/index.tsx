@@ -492,17 +492,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         onChange={this.handleLastName}
                                     />
                                 </Grid>
-                                {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
-                                <Grid item xs={12}> 
-                                    <Autocomplete
-                                        options={this.state.overseers}
-                                        getOptionLabel={(option: any): string => option.name}
-                                        renderInput={(params: any): any => (
-                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} className="mb-2">
                                     <Button
                                         type="button"
                                         fullWidth
@@ -561,7 +551,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         Delete Member
                                     </Button>
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} className="d-none">
                                     {this.createChart()}
                                 </Grid>
                             </Grid>

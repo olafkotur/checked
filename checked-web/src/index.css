@@ -129,6 +129,7 @@ code {
   opacity: 0.9;
 }
 
+
 .menuText {
   white-space: nowrap;
 }
@@ -430,4 +431,35 @@ code {
 .commentList::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #313131;
+}
+
+
+/* ===== NOTIFICATIONS ===== */
+
+.modalPaper {
+  margin: auto;
+  height: 60%;
+  width: 60%;
+  margin-top: 12%;
+  z-index: 999999999;
+  overflow-y: scroll !important
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999999;
+}
+
+.notiPresentIcon {
+  color: #ff9e00;
+  animation: wiggle 1s infinite;
+}
+
+.notiListIcon {
+  color: #ff9e00;
+  width: 30px !important;
+  height: 30px !important;
+  transform: translate(0px, -3px);
 }
