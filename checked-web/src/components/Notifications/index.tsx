@@ -80,7 +80,7 @@ class Notifications extends React.Component<IProps, IState> {
                                 <NotificationsNoneOutlined className="notiListIcon mt-3" />
                             </Grid>
                             <Grid item xs={6}>
-                                <Typography variant="subtitle2" className="mt-3 text-left">
+                                <Typography variant="subtitle2" className="mt-3">
                                     {notification.value}
                                 </Typography>
                             </Grid>
@@ -108,34 +108,36 @@ class Notifications extends React.Component<IProps, IState> {
         const notiModal = this.state.notiModal;
 
         return (
+            <div>
+                
             <IconButton onClick={this.handleNotiModal} className="mr-2">
                 {this.getNotificationIcon(this.state.notifications.length)}
-
-
-                <Modal
-                    open={notiModal}
-                    onClose={this.handleNotiModal}
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
-                    classes="modal"
-                >
-                    <Fade in={notiModal}>
-                        <Card className="modalPaper styledScrollBar">
-                            <CardContent>
-                                <Typography color="textSecondary" gutterBottom align="left">
-                                    Notifications
-                                </Typography>
-                                <Divider light />
-                                <Grid container spacing={0} className="mt-1">
-                                    {this.renderNotifications()}
-                                </Grid>
-                            </CardContent>
-                        </Card>
-                    </Fade>
-                </Modal>
             </IconButton>
+            <Modal
+                open={notiModal}
+                onClose={this.handleNotiModal}
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+                classes="modal"
+            >
+                <Fade in={notiModal}>
+                    <Card className="modalPaper styledScrollBar">
+                        <CardContent>
+                            <Typography color="textSecondary" gutterBottom align="left">
+                                Notifications
+                                </Typography>
+                            <Divider light />
+                            <Grid container spacing={0} className="mt-1">
+                                {this.renderNotifications()}
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Fade>
+            </Modal>
+
+            </div>
         );
     }
 }
