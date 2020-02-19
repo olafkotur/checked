@@ -97,6 +97,7 @@ async function main() {
   app.get('/api/notifications/:notificationId', NotificationHandler.getNotification);
   app.get('/api/notifications/users/:userId', NotificationHandler.getNotificationsByUser);
   app.get('/api/notifications/latest/:userId', NotificationHandler.getLatestByUser);
+  app.get('/api/notifications/clear/:notificationId', NotificationHandler.clearNotification);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
