@@ -2,16 +2,6 @@ import delay from 'delay';
 import { HttpService } from './http';
 import { IHistoricResponse, ILiveResponse, IActivityResponse, ILocations, ILocationResponse, IZoneTemperatures } from '../models';
 
-/* TODO:
-  1. Get the latest data
-  2. Calculate the average temperature
-  3. Get the number of active members
-  4. Count all the active zones
-  5. Count the number of active activities
-  6. Count how many users there are in each zone
-  7. Show which users are in which zone
-*/
-
 export const HistoricService = {
 
   start: async (domain: string): Promise<void> => {

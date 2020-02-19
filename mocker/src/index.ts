@@ -5,7 +5,7 @@ import { IApiIds } from './types';
 
 require('dotenv').config();
 
-const DEBUG: boolean = false;
+const DEBUG: boolean = true;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 
 async function main() {
@@ -40,7 +40,9 @@ async function main() {
   await HttpService.post(DOMAIN + '/api/users/create', {
     email: config.default.user.email,
     password: config.default.user.password,
-    companyName: config.default.user.companyName
+    companyName: config.default.user.companyName,
+    isGuardian: false,
+    policyAccepted: false
   }).then(async (res: any) => {
     if (res.code === 201) {
       ids.user = res.result.userId;
