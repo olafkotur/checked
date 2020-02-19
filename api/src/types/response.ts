@@ -117,5 +117,6 @@ export interface INotificationResponse {
   userId: number,
   priority: number,
   value: string,
+  isCleared: boolean,
   createdAt: number,
 }

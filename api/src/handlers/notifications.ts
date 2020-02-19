@@ -28,6 +28,7 @@ export const NotificationHandler = {
       notificationId,
       priority,
       value: req.body.value || '',
+      isCleared: false,
       createdAt: new Date()
     };
 
@@ -49,6 +50,7 @@ export const NotificationHandler = {
       notificationId: data.notificationId,
       priority: data.priority,
       value: data.value,
+      isCleared: data.isCleared || false,
       createdAt: moment(data.createdAt).unix()
     };
 
@@ -69,6 +71,7 @@ export const NotificationHandler = {
         notificationId: val.notificationId,
         priority: val.priority,
         value: val.value,
+        isCleared: val.isCleared || false,
         createdAt: moment(val.createdAt).unix()
       };
     });
@@ -96,9 +99,27 @@ export const NotificationHandler = {
       notificationId: data.notificationId,
       priority: data.priority,
       value: data.value,
+      isCleared: data.isCleared || false,
       createdAt: moment(data.createdAt).unix()
     };
 
     return ResponseService.data(formatted, res);
+  },
+
+  clearNotification: async (req: express.Request, res: express.Response) => {
+    const notificationId: number = parseInt(req.params.notificationId || '0');
+    const notification: any = await MongoService.findOne('notifications', { notificationId });
+    const data: IDbNotification = {
+      notificationId: notification.notificationId,
+      userId: notification.userId,
+      priority: notification.priority,
+      value: notification.value,
+      isCleared: true,
+      createdAt: notification.createdAt
+    };
+
+    await MongoService.deleteOne('notifications', { notificationId });
+    await MongoService.insertOne('notifications', data);
+    return ResponseService.ok('Notification cleared', res);
   },
 };
