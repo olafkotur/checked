@@ -502,7 +502,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                         )}
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={12}>
                                     <Button
                                         type="button"
                                         fullWidth
