@@ -84,3 +84,10 @@ export interface IDbComment {
   value: string,
   createdAt: Date
 }
+
+export interface IDbLink {
+  userId: number,
+  memberId: number,
+  relationship: number,
+  createdAt: Date,
+}
