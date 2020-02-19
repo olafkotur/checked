@@ -49,8 +49,7 @@ async function main() {
       console.error('CreateUser: Error user already exists');
     }
 
-    // Skip creation if in DEBUG mode
-    if (!DEBUG) {
+    if (false) { // TODO: Skip creating new zones and members
       // Create new mock zones
       ids.zone = [];
       for (let i = 0; i < config.default.numberOfZones; i++) {
