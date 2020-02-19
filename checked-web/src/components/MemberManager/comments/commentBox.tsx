@@ -18,6 +18,7 @@ interface IProps extends RouteComponentProps {
    dbid: number;
    deleteThisComment(commentBox: any): void;
    saveThisComment(commentBox: any): void;
+   canDelete: boolean;
 }
 
 const cardStyle = {
@@ -128,11 +129,19 @@ export class CommentBox extends React.Component<IProps, IState> {
 
    saveOrDel(): JSX.Element{
         if(!this.props.new){
-            return(
-            <IconButton >
-                    <Delete onClick={this.handleDelete} />
-            </IconButton>
-            );
+            if(this.props.canDelete){
+                return (
+                    <IconButton >
+                        <Delete onClick={this.handleDelete} />
+                    </IconButton>
+                );
+            }
+            else{
+                return (
+                   <div></div>
+                );
+            }
+            
         }
         else{
             return (

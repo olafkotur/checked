@@ -389,6 +389,7 @@ class MemberManager extends React.Component<IProps, IState> {
                  timeStamp={timeStamp } 
                  deleteThisComment = { this.deleteComment }
                  saveThisComment = {this.saveComment}
+                 canDelete={false}
                 />;
             });
                

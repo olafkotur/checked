@@ -3,8 +3,11 @@ import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, But
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember } from '../../types';
 import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
-import {MemberService} from '../../api/MemberService';
+import { MemberService } from '../../api/MemberService';
+import CommentBox from '../MemberManager/comments/CommentBox';
+import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
+import { LineChart, Line } from 'recharts';
 
 
 interface IState {
@@ -12,6 +15,10 @@ interface IState {
     firstName: string;
     lastName: string;
     overseers: Array<object>;
+    comments: Array<any>;
+    editingComment: boolean;
+    loadingComments: boolean;
+    chaningMember: boolean;
 }
 interface IProps {
     members: Array<IMember>;
@@ -23,15 +30,19 @@ class Overseer extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { 
+        this.state = {
             currentMember: -1,
-            firstName: '', 
+            firstName: '',
             lastName: '',
             overseers: [
                 { name: 'Parent McParentson', email: 'this@memes.com' },
                 { name: 'Parent McParentson2', email: 'this2@memes.com' },
                 { name: 'Parent McParentson3', email: 'this3@memes.com' },
-            ]
+            ],
+            comments: [],
+            editingComment: false,
+            loadingComments: false,
+            chaningMember: false,
         };
         this.setCurrentMember = this.setCurrentMember.bind(this);
         this.handleCreateUser = this.handleCreateUser.bind(this);
@@ -39,7 +50,11 @@ class Overseer extends React.Component<IProps, IState> {
         this.setAddNewMember = this.setAddNewMember.bind(this);
         this.handleFirstName = this.handleFirstName.bind(this);
         this.handleLastName = this.handleLastName.bind(this);
-
+        this.deleteComment = this.deleteComment.bind(this);
+        this.addComment = this.addComment.bind(this);
+        this.saveComment = this.saveComment.bind(this);
+        this.deleteComment = this.deleteComment.bind(this);
+        this.displayComments = this.displayComments.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -55,14 +70,14 @@ class Overseer extends React.Component<IProps, IState> {
             };
         }
 
-        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName});
+        this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment: false });
+        // setTimeout()
+        this.getFeedList(memberID);
 
-
-        
     }
 
     setAddNewMember(): void {
-        this.setState({firstName: '', lastName: ''});
+        this.setState({ firstName: '', lastName: '' });
         this.setCurrentMember(-2);
     }
 
@@ -77,9 +92,9 @@ class Overseer extends React.Component<IProps, IState> {
     handleCreateUser(): void {
         MemberService.createMember(this.props.userID, this.state.firstName, this.state.lastName).then((res) => {
             console.log(res);
-            this.setState({currentMember: -4, firstName: '', lastName: ''});
+            this.setState({ currentMember: -4, firstName: '', lastName: '' });
         }).catch(() => {
-            this.setState({currentMember: -3});
+            this.setState({ currentMember: -3 });
         });
     }
 
@@ -128,7 +143,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     getSelectedMember(): JSX.Element {
-        if(this.state.currentMember === -1){
+        if (this.state.currentMember === -1) {
             return (
                 <div className="w-100 h-100 vcenterParent">
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
@@ -140,7 +155,7 @@ class Overseer extends React.Component<IProps, IState> {
             return (
                 <div className="w-100 h-100 vcenterParent">
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
-                        Something went wrong.<br/>Please try again.
+                        Something went wrong.<br />Please try again.
                     </Typography>
                 </div>
             );
@@ -160,7 +175,7 @@ class Overseer extends React.Component<IProps, IState> {
                     </Typography>
                 </div>
             );
-        } else if(this.state.currentMember === -2){
+        } else if (this.state.currentMember === -2) {
             return (
                 <Card className="w-100 h-100" raised>
                     <Grid container spacing={0}>
@@ -169,7 +184,7 @@ class Overseer extends React.Component<IProps, IState> {
                             <Grid container spacing={3}>
                                 <Grid item xs={12} className="mt-5 mb-3">
                                     <Avatar className="memberAvatar">
-                                        <Person fontSize="large" className="w-100 h-100 m-1"/>
+                                        <Person fontSize="large" className="w-100 h-100 m-1" />
                                     </Avatar>
                                 </Grid>
                                 <Grid item xs={12} className="mt-5">
@@ -229,71 +244,38 @@ class Overseer extends React.Component<IProps, IState> {
                                     <Typography variant="subtitle2">
                                         Member ID: {this.state.currentMember}
                                     </Typography>
+                                    <Typography variant="subtitle1">
+                                        {this.state.firstName + " " + this.state.lastName}
+                                    </Typography>
                                 </Grid>
-                                <Grid item xs={6} className="mt-2">
-                                    <TextField
-                                        variant="outlined"
-                                        value={this.state.firstName}
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="firstName"
-                                        label="First Name"
-                                        name="firstName"
-                                        onChange={this.handleFirstName}
-                                    />
+                                <Grid item xs={12}>
+
+                                {this.createChart()}
+                                    
                                 </Grid>
-                                <Grid item xs={6} className="mt-2">
-                                    <TextField
-                                        variant="outlined"
-                                        value={this.state.lastName}
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="lastName"
-                                        label="Last Name"
-                                        name="lastName"
-                                        onChange={this.handleLastName}
-                                    />
-                                </Grid>
+                                
+                               
                                 {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
-                                <Grid item xs={12}> 
-                                    <Autocomplete
-                                        options={this.state.overseers}
-                                        getOptionLabel={(option: any): string => option.name}
-                                        renderInput={(params: any): any => (
-                                            <TextField {...params} label="Select Overseers" variant="outlined" fullWidth margin="normal" />
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        type="button"
-                                        fullWidth
-                                        variant="contained"
-                                        color="primary"
-                                        className="mt-3"
-                                        onClick={this.handleUpdateUser}
-                                    >
-                                        Save
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Button
-                                        type="button"
-                                        fullWidth
-                                        variant="contained"
-                                        className="mt-3 memberDeleteBtn"
-                                        onClick={(): void => this.handleDeleteUser(this.state.currentMember)}
-                                    >
-                                        Delete Member
-                                    </Button>
-                                </Grid>
+                               
+                               
+                                
                             </Grid>
                         </Grid>
-                        <Grid item xs={7} > 
-                            {/* Something to the right */}
-                           
+                        <Grid item xs={7} >
+                            {/* Comment feed here */}
+                            {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
+
+
+                            <CardHeader title={"Comment Feed"}  />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+
+                            {/* </div> */}
+
 
                         </Grid>
                     </Grid>
@@ -302,16 +284,184 @@ class Overseer extends React.Component<IProps, IState> {
         }
     }
 
-  
 
- 
+    createChart(): JSX.Element{
+       
+        const data:  object[]  = [];
 
-  
-  
+        this.state.comments.forEach(comment => {
+            
+        });
 
-  
+        const renderLineChart = (
+            <LineChart width={400} height={400} data={data}>
+                <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+            </LineChart>
+        );
 
-  
+        return (renderLineChart);
+    }
+
+
+    formatAMPM(date: Date): string {
+        let hours = date.getHours();
+        let minutes: any = date.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        const strTime = hours + ':' + minutes + ampm;
+        return strTime;
+    }
+
+    async getFeedList(memberID: number): Promise<void> {
+        this.setState({ loadingComments: true });
+        const serverInfo = await CommentService.getComments(memberID.toString());
+        console.log(serverInfo);
+
+        serverInfo.forEach((comment: { new: boolean }) => {
+            comment.new = false;
+        });
+
+        this.setState({ comments: serverInfo, loadingComments: false });
+    }
+
+    displayComments(): Array<JSX.Element> {
+
+        if (!this.state.loadingComments) {
+
+            const commentsTmp: JSX.Element[] = [];
+
+            // if(!this.state.editingComment){
+            this.state.comments.forEach(comment => {
+
+                const dateTmp = new Date(comment.createdAt * 1000);
+                const date = dateTmp.getDate(); //Current Date
+                const month = dateTmp.getMonth() + 1; //Current Month
+                const year = dateTmp.getFullYear(); //Current Year
+                console.log(comment);
+
+                let timeStamp = "";
+                if (comment.new) {
+                    timeStamp = "New Comment";
+                }
+                else {
+                    timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+                }
+
+
+                commentsTmp[commentsTmp.length] = <CommentBox
+                    key={comment.commentId}
+                    dbid={comment.commentId}
+                    radioVal={comment.rating.toString()}
+                    textContent={comment.value}
+                    new={comment.new}
+                    timeStamp={timeStamp}
+                    deleteThisComment={this.deleteComment}
+                    saveThisComment={this.saveComment}
+                    canDelete = {false}
+                />;
+            });
+
+            // }
+
+            if (commentsTmp.length > 0) {
+                return (commentsTmp.reverse());
+            }
+
+            else {
+                return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
+            }
+
+        }
+        else {
+            return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+        }
+
+    }
+
+    async deleteComment(commentBox: any): Promise<void> {
+        console.log("i have been called");
+
+        if (commentBox != null) {
+
+            const tempComments: any = [];
+
+            this.state.comments.forEach(async commentBoxTmp => {
+
+                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                    tempComments[tempComments.length] = commentBoxTmp;
+                }
+                else if (!commentBox.props.new) {
+                    await CommentService.deleteComment(commentBox.props.dbid.toString());
+                }
+            });
+
+            this.setState({ comments: tempComments, editingComment: false });
+
+        }
+
+
+
+    }
+
+    addComment(): void {
+
+
+        if (!this.state.editingComment) {
+
+            const tempComments: any = this.state.comments;
+
+            const newComment = {
+                commentId: 0,
+                rating: 0,
+                value: "",
+                new: true,
+            };
+
+            tempComments.push(newComment);
+
+            console.log(tempComments);
+
+            this.setState({ comments: tempComments, editingComment: true });
+        }
+        else {
+            alert("you can only add one comment at a time");
+        }
+    }
+
+    async saveComment(commentBox: any): Promise<void> {
+        console.log("Saving Now");
+
+
+        const body = {
+            memberId: this.state.currentMember,
+            rating: parseInt(commentBox.state.radio),
+            value: commentBox.state.commentVal,
+        };
+
+        console.log(body);
+
+        await CommentService.saveComment(body);
+
+
+        this.setState({ comments: [] });
+        await this.getFeedList(this.state.currentMember);
+
+        const tempComments: any = [];
+
+        this.state.comments.forEach(async commentBoxTmp => {
+            if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                tempComments[tempComments.length] = commentBoxTmp;
+            }
+        });
+
+        this.setState({ comments: tempComments, editingComment: false });
+
+
+
+
+    }
 
 
     render(): JSX.Element {
@@ -323,7 +473,7 @@ class Overseer extends React.Component<IProps, IState> {
                         <ListItem alignItems="center" className="border-bottom border-muted p-0">
                             <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
                                 <ListItemAvatar>
-                                    <PersonAdd className="mr-3"/>
+                                    <PersonAdd className="mr-3" />
                                 </ListItemAvatar>
                                 <Grid container spacing={0}>
                                     <Grid item xs={10}>
