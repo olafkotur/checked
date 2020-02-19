@@ -1,5 +1,6 @@
+import delay from 'delay';
 import { HttpService } from './http';
-import { IHistoricResponse, ILiveResponse, IActivityResponse } from '../models';
+import { IHistoricResponse, ILiveResponse, IActivityResponse, ILocations, ILocationResponse } from '../models';
 
 /* TODO:
   1. Get the latest data
@@ -17,6 +18,7 @@ export const HistoricService = {
     const liveData: any = await HistoricService.getLatestData(domain);
     const uniqueUsers = HistoricService.getUniqueValues('userId', liveData.result);
 
+    // Repeat the historic data process for each unique user in the database
     uniqueUsers.forEach(async (userId: number) => {
       const userData: ILiveResponse[] = liveData.result.filter((live: ILiveResponse) => live.userId === userId);
       const data: IHistoricResponse = {
@@ -24,12 +26,12 @@ export const HistoricService = {
         averageTemperature: HistoricService.calcAverageTemperature(userData),
         membersActive: HistoricService.calcMembersActive(userData),
         zonesCount: HistoricService.calcActiveZones(userData),
-        activitiesCount: await HistoricService.calcActivities(userData, domain)
+        activitiesCount: await HistoricService.calcActivities(userData, domain),
+        locations: JSON.stringify(await HistoricService.getLocationData(userData, userId, domain))
       };
-      console.log(data);
+      delay(250); // Safety to not overload server
+      await HistoricService.uploadData(domain, data);
     });
-
-    // await HistoricService.uploadData(domain, formatted);
   },
 
   getLatestData: async (domain: string): Promise<any> => {
@@ -65,6 +67,8 @@ export const HistoricService = {
     const zones: number[] = HistoricService.getUniqueValues('zoneId', data);
     const activities: any = await HttpService.get(domain + '/api/activity');
     const valid: IActivityResponse[] = [];
+    
+    // Find all the active activities in the database
     activities.result.forEach((activity: IActivityResponse) => {
       if (zones.includes(activity.zoneId)) {
         valid.push(activity);
@@ -73,11 +77,31 @@ export const HistoricService = {
     return valid.length;
   },
 
+  getLocationData: async (data: ILiveResponse[], userId: number, domain: string): Promise<ILocations[]> => {
+    const locations: any = await HttpService.get(`${domain}/api/location/users/${userId}`);
+    const zoneIds: number[] = HistoricService.getUniqueValues('zoneId', data);
+    const formatted: ILocations[] = [];
+
+    // Find where each member is and store it
+    zoneIds.forEach((zoneId: number) => {
+      const members: number[] = [];
+      locations.result.forEach((location: ILocationResponse) => {
+        if (location.zoneId === zoneId) {
+          members.push(location.memberId);
+        }
+      });
+      formatted.push({ zoneId, members});
+    });
+    return formatted;
+  },
+
   uploadData: async (domain: string, data: any): Promise<boolean> => {
-    console.log(data);
-    console.log('HistoricService: uploaded historic data to the database');
-    return false;
-    const res: any = HttpService.post(domain + '/api/historic/upload', data);
-    return res.status === 200;
+    const res: any = await HttpService.post(domain + '/api/historic/upload', data);
+    if (res.code === 200) {
+      console.log('HistoricService: uploaded historic data to the database');
+    } else {
+      console.log('HistoricService: failed to upload historic data to the database');
+    }
+    return res.code === 200;
   },
 }

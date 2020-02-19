@@ -87,6 +87,10 @@ export interface IHistoricResponse {
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
+  locations: {
+    zoneId: number,
+    memebrs: number[]
+  },
   createdAt: number
 }
 

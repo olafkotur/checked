@@ -62,12 +62,18 @@ export interface IDbAssembly {
   lastUpdated: Date,
 }
 
+export interface ILocations {
+  zoneId: number,
+  memebrs: number[]
+}
+
 export interface IDbHistoric {
   userId: number,
   averageTemperature: number,
   membersActive: number,
   zonesCount: number,
   activitiesCount: number,
+  locations: ILocations[],
   createdAt: Date
 }
 
