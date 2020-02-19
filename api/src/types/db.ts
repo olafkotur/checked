@@ -36,6 +36,8 @@ export interface IDbUser {
   email: string,
   password: string,
   companyName: string,
+  isGuardian: boolean,
+  policyAccepted: boolean,
   createdAt: Date,
   lastUpdated: Date
 }

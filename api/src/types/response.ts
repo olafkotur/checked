@@ -51,6 +51,8 @@ export interface IUserResponse {
   userId: number,
   email: string,
   companyName: string,
+  isGuardian: boolean,
+  policyAccepted: boolean,
   createdAt: number,
   lastUpdated: number
 }

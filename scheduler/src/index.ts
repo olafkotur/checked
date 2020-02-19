@@ -26,7 +26,6 @@ async function main() {
 
     status.isRunningHistoric = true;
     await HistoricService.start(DOMAIN);
-
     status.isRunningHistoric = false;
   });
 
