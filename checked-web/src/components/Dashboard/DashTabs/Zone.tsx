@@ -1,25 +1,24 @@
 import React from 'react';
 
-import { Paper, Grid, Typography, Popover, IconButton, Box } from "@material-ui/core";
-import { Speed, LocationOn as Location, Close, NotificationsNone, NotificationsActive } from "@material-ui/icons";
+import { Paper, Grid, Typography, Popover, IconButton, Box, Icon, Button } from "@material-ui/core";
+import { Close, NotificationsNone, NotificationsActive } from "@material-ui/icons";
 import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';
-import { LiveService } from '../../../api/LiveService';
+import { navigate } from '@reach/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
     zone: IZone;
-    type: 'temperature' | 'location';
     key: any;
     userID: number;
-    reading?: number;
 }
 
 interface IState {
-    anchorEl: (Element|null);
+    anchorEl: (Element | null);
     open: boolean;
     ringing: boolean;
-    reading: (number|string);
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -27,30 +26,16 @@ class Zone extends React.Component<IProps, IState> {
     constructor(props: any) {
         super(props);
 
-        let reading;
-        if(this.props.reading){
-            reading = this.props.reading;
-        } else {
-            reading = '0';
-        }
 
-        this.state = { anchorEl: null, open: false, ringing: false, reading };
+        this.state = { anchorEl: null, open: false, ringing: false };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.toggleAssemble = this.toggleAssemble.bind(this);
     }
 
-    componentDidMount(): void {
-        if(this.props.type === 'temperature') {
-            LiveService.getLiveTempDataByZone(this.props.zone.zoneId).then((res) => {
-                this.setState({ reading: res.result.value });
-            });
-        }
-    }
-
     handleClick(event: React.MouseEvent): void {
-        if(this.state.open ){
+        if (this.state.open) {
             this.setState({ anchorEl: null, open: false });
         } else {
             this.setState({ anchorEl: event.currentTarget, open: true });
@@ -58,13 +43,13 @@ class Zone extends React.Component<IProps, IState> {
     }
 
     handleClose(): void {
-        this.setState({anchorEl: null, open: false});
+        this.setState({ anchorEl: null, open: false });
     }
 
     toggleAssemble(): void {
-        if(this.state.ringing){
+        if (this.state.ringing) {
             AssemblyService.stopAssemblyCallFromZone(this.props.zone.zoneId).then(() => {
-                this.setState({ringing: false});
+                this.setState({ ringing: false });
             });
         } else {
             AssemblyService.callAssemblyFromZone(this.props.zone.zoneId).then(() => {
@@ -73,37 +58,37 @@ class Zone extends React.Component<IProps, IState> {
         }
     }
 
-    getPopoverContent(): Array<JSX.Element> {
+    getZoneAlertButton(): Array<JSX.Element> {
 
         const returnArr: Array<JSX.Element> = [];
 
-        if(this.state.ringing){
+        if (this.state.ringing) {
             returnArr.push(
-                <Grid item xs={12} key={0}>
+                <Grid item xs={12} key={0} className="border-top mx-4 pt-3">
                     <Typography className="w-100 text-center mt-2">
                         Alerting all members in Zone {this.props.zone.zoneId}
                     </Typography>
                 </Grid>
             );
             returnArr.push(
-                <Grid className="mb-3 text-center" item xs={12} key={1}>
+                <Grid className="mb-3 text-center border-bottom mx-4" item xs={12} key={1}>
                     <IconButton onClick={this.toggleAssemble} size="medium" color="primary">
-                        <NotificationsActive fontSize="large" className="assembleActive"/>
+                        <NotificationsActive fontSize="large" className="assembleActive" />
                     </IconButton>
                 </Grid>
             );
         } else {
             returnArr.push(
-                <Grid item xs={12} key={3}>
+                <Grid item xs={12} key={3} className="border-top mx-4 pt-3">
                     <Typography className="w-100 text-center mt-2">
                         Assemble members in Zone {this.props.zone.zoneId}?
                     </Typography>
                 </Grid>
             );
             returnArr.push(
-                <Grid className="mb-3 text-center" item xs={12} key={2}>
+                <Grid className="mb-3 text-center border-bottom mx-4" item xs={12} key={2}>
                     <IconButton onClick={this.toggleAssemble} size="medium">
-                        <NotificationsNone fontSize="large"/>
+                        <NotificationsNone fontSize="large" />
                     </IconButton>
                 </Grid>
             );
@@ -117,29 +102,20 @@ class Zone extends React.Component<IProps, IState> {
         let symbol;
         let reading;
 
-        if(this.props.type === 'temperature'){
-            symbol = <Speed className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = this.state.reading + '°C';
-        } else if (this.props.type === 'location'){
-            symbol = <Location className="d-flex align-self-center mr-1 ml-1" fontSize="default"/>;
-            reading = this.state.reading;
-        }
-
-        const popoverContent = this.getPopoverContent();
-
-        return(
+        return (
             <div className="zoneVisZone"
                 style={{
                     width: this.props.zone.width,
                     height: this.props.zone.height,
                     top: this.props.zone.yValue,
                     left: this.props.zone.xValue,
-                    backgroundColor: this.props.zone.color}} >
+                    backgroundColor: this.props.zone.color
+                }} >
                 <Paper
                     className="w-100 h-100"
                     elevation={0}
-                    onClick={this.handleClick} 
-                    style={{backgroundColor: 'transparent'}}>
+                    onClick={this.handleClick}
+                    style={{ backgroundColor: 'transparent' }}>
                     <Grid container spacing={0} className="h-100 ml-2">
                         <Grid item xs={12}>
                             <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack zoneName" >
@@ -179,27 +155,107 @@ class Zone extends React.Component<IProps, IState> {
                     <Box className="p-2">
                         <Grid container spacing={1}
                             style={{
-                                width: '300px'
+                                width: '500px'
                             }}>
 
-                            <Grid item xs={10}>
+                            <Grid item xs={11}>
                             </Grid>
-                            <Grid item xs={2} >
-                                <IconButton onClick={this.handleClose} className="ml-3" size="small" >
-                                    <Close fontSize="small"/>
+                            <Grid item xs={1} >
+                                <IconButton onClick={this.handleClose} className="mr-1 mt-1" size="small" >
+                                    <Close fontSize="small" />
                                 </IconButton>
                             </Grid>
 
-                            {popoverContent}
+                            <Typography variant="h6" className="w-100 text-center pb-4 border-bottom mx-4">
+                                {this.props.zone.name} Overview
+                            </Typography>
+
+                            <Grid item xs={4} className="border-right pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {this.props.zone.data?.currentTemp || '?'}°C
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Current Temperature</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <FontAwesomeIcon icon={faThermometerHalf} className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={4} key={1} className="border-right pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {this.props.zone.data?.currentCount || '?'}
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Members Present</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <FontAwesomeIcon icon={faUser} className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            <Grid item xs={4} key={2} className="pt-4 pb-4">
+                                <Grid container spacing={0}>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6" className="w-100 text-center">
+                                            {/* {this.props.zone.data?.currentLight || '?'} TODO: */} ?
+                                        </Typography>
+                                    </Grid>
+
+                                    <Grid item xs={12} className="text-center">
+                                        <Typography className="w-100 text-center" variant="caption">
+                                            <i className="text-center">Light Level</i>
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={12} key={0} className="w-100 text-center mt-2">
+                                        <Icon >
+                                            <FontAwesomeIcon icon={faSun} className="dashOverviewIcon" />
+                                        </Icon>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+
+                            {this.getZoneAlertButton()}
+
+                            <Grid item xs={2} key={9}>
+                            </Grid>
+                            <Grid item xs={4} key={10}>
+                                <Button disableElevation variant="contained" className="dashOverviewButton" color="primary" onClick={(): any => navigate(this.props.zone.zoneId)}>
+                                    Detailed View
+                                </Button>
+                            </Grid>
+                            <Grid item xs={4} key={11}>
+                                <Button variant="outlined" className="dashOverviewButton" color="primary" onClick={(): any => navigate('editor')} key={'MapEditor'}>
+                                    Edit Zones
+                                </Button>
+                            </Grid>
 
                         </Grid>
-                        
+
 
                     </Box>
-                    
+
                 </Popover>
             </div>
-            
+
         );
     }
 }
