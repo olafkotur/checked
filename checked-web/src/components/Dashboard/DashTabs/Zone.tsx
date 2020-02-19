@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Paper, Grid, Typography, Popover, IconButton, Box, Icon, Button } from "@material-ui/core";
-import { Speed, Close, NotificationsNone, NotificationsActive, Person, Brightness7 } from "@material-ui/icons";
+import { Close, NotificationsNone, NotificationsActive } from "@material-ui/icons";
 import { IZone } from '../../../types';
 
 import { AssemblyService } from '../../../api/AssemblyService';

@@ -3,7 +3,7 @@ import React from 'react';
 import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faThermometerHalf, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Card, CardContent, Grid, CardHeader, Typography, Paper } from '@material-ui/core';
 import { IZone, IMemberLocation } from '../../types';
 import TimeSeriesGraph from '../../components/Zone/TimeSeriesGraph';

@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import Chart from "react-apexcharts";
 
 
