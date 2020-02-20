@@ -1,5 +1,5 @@
 import 'package:checked_mobile_application/module/api_respose.dart';
-import 'package:checked_mobile_application/module/zone.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -13,7 +13,8 @@ class ZoneServices {
   static const headers = {
     'Content-Type':'application/x-www-form-urlencoded'
   };
-  static const ZONES_BY_USER_ENDPOINT = 'zones/users/'; // Change this to the userId passed by login
+  static const ZONES_BY_USER_ENDPOINT = 'zones/users/';
+  static const ADD_ZONE_ENDPOINT = "zones/create";
 
   // Get all zones by user
   Future<APIResponse> getZonesByUser(int _userId) async {
@@ -30,5 +31,21 @@ class ZoneServices {
           return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
         }
       }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
+  }
+
+  // Add zone
+  Future<APIResponse> createZone(int userId, String name, double width, double height, double xValue, double yValue, Color color) async {
+  String _body = 'userId=$userId&name=$name&width=$width&height=$height&xValue=$xValue&yValue=$yValue&color=$color';
+  dynamic jsonData;
+  
+  return http.post(API_URL + ADD_ZONE_ENDPOINT, body: _body, headers: headers)
+    .then((data){
+      var jsonData = json.decode(data.body);
+      if(jsonData["code"] == 200){
+        return APIResponse(data:jsonData["result"]);
+      }else if(jsonData["code"] == 401){
+          return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+        }
+    }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
 }

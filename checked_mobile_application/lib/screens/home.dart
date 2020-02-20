@@ -26,6 +26,12 @@ class _HomeState extends State<Home> {
     return _apiresponse;
   }
 
+  _asyncAdd() async {
+    _apiresponse = await service.createZone(widget.userId, "New Zone", 200.0, 00.0, 0.0, 0.0, Colors.amber);
+    //print(_apiresponse.data[1]);
+    return _apiresponse;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,8 +61,7 @@ class _HomeState extends State<Home> {
               color: Colors.black,
             ),
             onPressed: () async {
-              //_apiresponse = await service.getZonesByUser(widget.userId);
-              //for(dynamic _ in _apiresponse.data) DragBox(Offset(0.0, 0.0), index["width"].toDouble()*0.4, index["height"].toDouble()*0.4, index["name"], Colors.orange, index['width']*0.1)
+              _asyncMethod();
             },
           ),
         ],
@@ -257,13 +262,15 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          _asyncAdd();
+        },
         backgroundColor: Colors.green,
         tooltip: 'Add a new zone',
         child: Icon(
           Icons.add,
           color: Colors.white,
-          ),
+        ),
       ),
     );
   }
