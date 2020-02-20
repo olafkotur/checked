@@ -126,7 +126,7 @@ export class Login extends React.Component<IProps, IState> {
                                 Keep track of your space.
                             </Typography>
                         </div>
-                        <div className="loaderDiv text-center mb-2 mt-4 vcenterParent">
+                        <div className="loaderDiv text-center mt-1 vcenterParent">
                             {this.state.showLoader &&
                                 <UseAnimations animationKey="loading2" size={30} className="loginLoader vcenterChild"/>
                             }
@@ -141,7 +141,7 @@ export class Login extends React.Component<IProps, IState> {
                                 label="Email"
                                 name="email"
                                 autoFocus
-                                className="mt-1 mb-3"
+                                className="mb-3"
                                 onChange={this.handleEmail}
                             />
                             <TextField

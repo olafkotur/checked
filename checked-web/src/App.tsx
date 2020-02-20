@@ -37,6 +37,10 @@ class App extends React.Component<{}, IState> {
 		this.setGuardian = this.setGuardian.bind(this);
 	}
 
+	componentDidMount(): void {
+		this.getZones();
+	}
+
 	setAuthorised(authState: boolean): void {
 		this.setState({authorised: authState});
 	};
@@ -87,7 +91,7 @@ class App extends React.Component<{}, IState> {
 						<div className="backgroundDark">
 							<ThemeProvider theme={DarkTheme}>
 								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
-								<OverseerView userID={this.state.userID} memberID={7} />
+								<OverseerView userID={this.state.userID} />
 							</ThemeProvider>
 						</div>
 					);
@@ -96,14 +100,12 @@ class App extends React.Component<{}, IState> {
 						<div className="background">
 							<ThemeProvider theme={LightTheme}>
 								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
-								<OverseerView userID={this.state.userID} memberID={7} />
+								<OverseerView userID={this.state.userID}/>
 							</ThemeProvider>
 						</div>
 					);
 				}
 			} 
-
-			this.getZones();
 
 			if(this.state.darkTheme && this.state.loaded){
 				return (

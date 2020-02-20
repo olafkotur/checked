@@ -69,7 +69,6 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     handleColorChange = (color: any): void => {
-        console.log(this.state.selectedZone);
         if (this.state.selectedZone != null) {
             this.setState({ pickerColor: color });
             this.state.selectedZone.setBackground(color);

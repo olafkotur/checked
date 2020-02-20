@@ -2,7 +2,7 @@ import { HttpService } from "./HttpService";
 
 export const CommentService = {
     getComments: async (memberId: string): Promise<any> => {
-    const uri = "comments/" + memberId;
+    const uri = "comments/members/" + memberId;
 
         return await HttpService.get(uri).then((res: any) => {
             // console.log(res);

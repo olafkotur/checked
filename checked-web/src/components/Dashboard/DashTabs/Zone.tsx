@@ -130,11 +130,12 @@ class Zone extends React.Component<IProps, IState> {
                             <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack zoneName" >
                                 {this.props.zone.name}
                             </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
+
                             <Typography variant="subtitle1" className="ml-1 mutedBlack font-italic" >
                                 {this.props.zone.activity.name || ''}
                             </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
                         </Grid>
                         <Grid item xs={12}>
                             <div className="h-100 w-100 d-flex flex-row align-items-center">

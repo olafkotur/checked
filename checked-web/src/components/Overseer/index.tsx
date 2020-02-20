@@ -499,25 +499,6 @@ class Overseer extends React.Component<IProps, IState> {
             <Grid container spacing={0} className="memberManager mt-3">
                 <Grid item xs={2} className="border-right border-muted">
                     <List className="pr-3 pl-2 memberList">
-                        <ListItem alignItems="center" className="border-bottom border-muted p-0">
-                            <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
-                                <ListItemAvatar>
-                                    <PersonAdd className="mr-3" />
-                                </ListItemAvatar>
-                                <Grid container spacing={0}>
-                                    <Grid item xs={10}>
-                                        <Grid container spacing={0}>
-                                            <Grid item xs={12}>
-                                                <Typography variant="body1" align="left" color="textPrimary">Add New Member</Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item xs={2} className="pl-1">
-                                        <Add className="vcenterChild ml-2" fontSize="small" />
-                                    </Grid>
-                                </Grid>
-                            </Button>
-                        </ListItem>
                         {this.getMembersList()}
                     </List>
                 </Grid>

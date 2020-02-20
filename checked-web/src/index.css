@@ -163,13 +163,15 @@ code {
 /* ===== LOGIN ===== */
 
 .logo {
-  width: 100%;
+  width: 200px;
   border-radius: 10%;
+  margin-left: 65px;
 }
 
 .signInCard {
   transition: 6s;
-  animation: slideDown 1.25s
+  animation: slideDown 1.25s;
+  max-height: 95vh;
 }
 
 @keyframes slideDown {
