@@ -11,6 +11,8 @@ class UserServices{
 
   static const signUpEndpoint = "/users/create";
   static const signInEndpoint = "/users/login";
+  static const getCommentsEndpoint = "/comments/members/";
+  static const getMembersByUserEndpoint = "/members/users/";
 
   // signup a user and return a response
   Future<APIResponse> postSignup(String _email, String _password, String _company) async {
@@ -45,6 +47,59 @@ class UserServices{
           return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
         }
     }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
+  }
+
+  // get all the members that are linked to the user
+  Future<APIResponse> getMembersByUser(String userId) async {
+  dynamic jsonData;
+  
+  return http.get(API+getMembersByUserEndpoint+userId,headers: headers)
+    .then((data){
+      var jsonData = json.decode(data.body);
+      if(jsonData["code"] == 200){
+        return APIResponse(data:jsonData["result"]);
+      }else if(jsonData["code"] == 401){
+        return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+      }
+    }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
+  }
+
+  // get all the comments for this user
+  Future<APIResponse> getComments(List<dynamic> memberId) async {
+  dynamic jsonData;
+  List results = [];
+
+  for (var item in memberId) {
+    try{
+      print(item);
+      var uriResponse = await http.get(API+getCommentsEndpoint+item.toString(),headers: headers);
+      var jsonData = json.decode(uriResponse.body);
+      //print(jsonData.data);
+      if(jsonData["code"]== 200){
+        print("print result");
+        print(jsonData["result"]);
+        jsonData["result"].forEach((element) => results.add(element));
+      }else if(jsonData["code"] == 401){
+        print("bad request");
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+  print("this is a list");
+  print(results);
+  return APIResponse(data:results);
+
+  
+  // return http.get(API+getCommentsEndpoint+memberId,headers: headers)
+  //   .then((data){
+  //     var jsonData = json.decode(data.body);
+  //     if(jsonData["code"] == 200){
+  //       return APIResponse(data:jsonData["result"]);
+  //     }else if(jsonData["code"] == 401){
+  //       return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+  //     }
+  //   }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
 }
 
