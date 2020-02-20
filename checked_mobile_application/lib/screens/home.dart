@@ -1,4 +1,5 @@
 import 'package:checked_mobile_application/module/api_respose.dart';
+import 'package:checked_mobile_application/screens/historic.dart';
 import 'package:checked_mobile_application/services/zone_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -105,7 +106,9 @@ class _HomeState extends State<Home> {
             ),
             SizedBox(height: 30,),
             InkWell(
-              onTap: (){},
+              onTap: (){
+                Navigator.push(context,MaterialPageRoute(builder: (context) => History(userId:widget.userId)));
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -115,7 +118,7 @@ class _HomeState extends State<Home> {
                         padding: const EdgeInsets.symmetric(horizontal:8.0),
                         child: Icon(Icons.directions_run),
                       ),
-                      Text("Activity",style: 
+                      Text("History",style: 
                         TextStyle(
                           fontWeight: FontWeight.w600
                         )
