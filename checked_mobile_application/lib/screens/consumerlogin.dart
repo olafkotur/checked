@@ -106,7 +106,7 @@ class ConsumerLogin extends StatelessWidget {
                           children: <Widget>[
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed()));
+                                //Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed()));
                               },
                               child: Container(
                                 height: 50,
