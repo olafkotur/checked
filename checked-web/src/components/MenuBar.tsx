@@ -29,6 +29,7 @@ interface IProps {
     setDarkMode(darkMode: boolean): void;
     zones: Array<IZone>;
     userID: number;
+    menuHidden?: boolean;
 }
 
 class MenuBar extends React.Component<IProps, IState> {
@@ -116,6 +117,32 @@ class MenuBar extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
+
+        if(this.props.menuHidden){
+            return(
+                <div>
+                    <AppBar position="fixed" className="topBar" color="inherit" style={{ zIndex: 9999 }}>
+                        <Toolbar>
+                            <div className="text-center w-100">
+                                <Typography variant="h6" className="pl-3 mr-5 montserrat">
+                                    - Checked -
+                            </Typography>
+                            </div>
+
+                            <IconButton onClick={this.setDarkMode} className="mr-1">
+                                {this.state.themeIcon}
+                            </IconButton>
+
+                            <Notifications userID={this.props.userID} />
+
+                            <div aria-label="logo">
+                                <img src={Logo} className="topBarLogo" alt="logo" />
+                            </div>
+                        </Toolbar>
+                    </AppBar>
+                </div>
+            );
+        }
 
         return (
             <div>
