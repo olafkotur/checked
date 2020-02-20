@@ -3,6 +3,7 @@ import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/module/loading.dart';
 import 'package:checked_mobile_application/screens/consumerlogin.dart';
 import 'package:checked_mobile_application/screens/home.dart';
+import 'package:checked_mobile_application/screens/newsfeed.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
@@ -36,6 +37,8 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
+  bool _isGuardian;
+  int _userId;
   @override
   Widget build(BuildContext context) {
     return _isloading ? Loading() : Scaffold(
@@ -172,10 +175,23 @@ class _SignInState extends State<SignIn> {
                                   _apiresponse = await service.postLogIn(_email, _password);
                                   if(!_apiresponse.error){
                                     print(_apiresponse.data["userId"]);
+                                    _isGuardian = _apiresponse.data["isGuardian"];
+                                    _userId =_apiresponse.data["userId"];
+                                    var _membersList = await service.getMembersByUser(_userId.toString());
+                                    //print(_membersList.data[0]["memberId"]);
+                                    var memberIds = _membersList.data.map((member)=> member["memberId"]).toList();
+                                    print(memberIds);
                                     setState(() {
-                                      _isloading = false;
-                                      errorMessage = _apiresponse.errorMessage;
-                                      Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_apiresponse.data["userId"])));
+                                      if(_isGuardian){
+                                        _isloading = false;
+                                        errorMessage = _apiresponse.errorMessage;
+                                        
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: _userId,membersIds: memberIds,)));
+                                      }else{
+                                        _isloading = false;
+                                        errorMessage = _apiresponse.errorMessage;
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_userId)));
+                                      }
                                     });
                                   }else if(_apiresponse.error){
                                     setState(() {
@@ -206,36 +222,7 @@ class _SignInState extends State<SignIn> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20.0),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context) => ConsumerLogin()));
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                height: 50,
-                                width: 150,
-                                child: Center(
-                                  child: Text("Parent View",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 23.0,
-                                    ),
-                                  )
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.orange[600],
-                                  border: Border.all(
-                                    width: 1
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 20.0,),
+                        SizedBox(height: 40.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
