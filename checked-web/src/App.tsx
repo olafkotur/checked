@@ -22,6 +22,7 @@ interface IState {
 	darkTheme: boolean;
 	zones: Array<IZone>;
 	loaded: boolean;
+	guardian: boolean;
 }
 
 
@@ -29,10 +30,11 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: true, userID: 1, loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: false, userID: 1, guardian: false, loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
+		this.setGuardian = this.setGuardian.bind(this);
 	}
 
 	setAuthorised(authState: boolean): void {
@@ -45,6 +47,10 @@ class App extends React.Component<{}, IState> {
 
 	setDarkMode(darkMode: boolean): void {
 		this.setState({darkTheme: darkMode});
+	}
+
+	setGuardian(isGuardian: boolean): void {
+		this.setState({guardian: isGuardian});
 	}
 
 	getZones(): void {
@@ -74,6 +80,29 @@ class App extends React.Component<{}, IState> {
 
 		if (this.state.authorised) {
 
+
+			if (this.state.guardian) {
+				if(this.state.darkTheme){
+					return (
+						<div className="backgroundDark">
+							<ThemeProvider theme={DarkTheme}>
+								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
+								<OverseerView userID={this.state.userID} memberID={7} />
+							</ThemeProvider>
+						</div>
+					);
+				} else {
+					return (
+						<div className="background">
+							<ThemeProvider theme={LightTheme}>
+								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
+								<OverseerView userID={this.state.userID} memberID={7} />
+							</ThemeProvider>
+						</div>
+					);
+				}
+			} 
+
 			this.getZones();
 
 			if(this.state.darkTheme && this.state.loaded){
@@ -86,7 +115,6 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
-								<OverseerView path="overseer" userID={this.state.userID} memberID = {7}/>
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -101,7 +129,6 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
-								<OverseerView path="overseer" userID={this.state.userID} memberID={7} />
 							</Router>
 						</ThemeProvider>
 					</div>
@@ -112,10 +139,11 @@ class App extends React.Component<{}, IState> {
 				);
 			}
 
+
 		} else {
 			return (
 				<ThemeProvider theme={LightTheme}>
-					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID}/>
+					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian}/>
 				</ThemeProvider>
 			);
 		}

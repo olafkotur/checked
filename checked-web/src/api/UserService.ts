@@ -2,9 +2,9 @@ import { HttpService } from './HttpService';
 
 export const UserService = {
 
-    createUser: async (email: string, password: string): Promise<any> => {
+    createUser: async (email: string, password: string, companyName: string, isGuardian: boolean): Promise<any> => {
         const uri = 'users/create';
-        const body = {email, password};
+        const body = {email, password, companyName, isGuardian};
         return await HttpService.post(uri, body);
     },
 
