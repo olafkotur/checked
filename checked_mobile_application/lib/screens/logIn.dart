@@ -193,7 +193,7 @@ class _SignInState extends State<SignIn> {
                                         Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_userId)));
                                       }
                                     });
-                                  }else if(_apiresponse.error){
+                                  } else if(_apiresponse.error){
                                     setState(() {
                                       _isloading = false;
                                       errorMessage = _apiresponse.errorMessage;

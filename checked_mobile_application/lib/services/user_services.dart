@@ -23,7 +23,6 @@ class UserServices{
     return http.post(API+signUpEndpoint,body: _body ,headers: headers)
       .then((data){
         var jsonData = json.decode(data.body);
-        print(jsonData);
         if(jsonData["code"] == 201){
           return APIResponse(data:jsonData["result"], error: false);
         }else if(jsonData["code"] == 400){
@@ -71,13 +70,10 @@ class UserServices{
 
   for (var item in memberId) {
     try{
-      print(item);
       var uriResponse = await http.get(API+getCommentsEndpoint+item.toString(),headers: headers);
       var jsonData = json.decode(uriResponse.body);
-      //print(jsonData.data);
+
       if(jsonData["code"]== 200){
-        print("print result");
-        print(jsonData["result"]);
         jsonData["result"].forEach((element) => results.add(element));
       }else if(jsonData["code"] == 401){
         print("bad request");
@@ -86,8 +82,7 @@ class UserServices{
       print(e);
     }
   }
-  print("this is a list");
-  print(results);
+
   return APIResponse(data:results);
 
   
