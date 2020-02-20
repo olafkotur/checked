@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/module/loading.dart';
+import 'package:checked_mobile_application/screens/consumerlogin.dart';
 import 'package:checked_mobile_application/screens/home.dart';
+import 'package:checked_mobile_application/screens/newsfeed.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
@@ -35,6 +37,8 @@ class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
   String _email = "";
   String _password = "";
+  bool _isGuardian;
+  int _userId;
   @override
   Widget build(BuildContext context) {
     return _isloading ? Loading() : Scaffold(
@@ -86,7 +90,7 @@ class _SignInState extends State<SignIn> {
                         SizedBox(height: 4,),
                         Container(
                           child: TextFormField(
-                            onChanged: (String val) => setState(()=> _email = val),
+                            onChanged: (String val) => setState(() => _email = val),
                             validator: (value){
                               if(value.isEmpty){
                                 return "Enter your Email";
@@ -155,6 +159,7 @@ class _SignInState extends State<SignIn> {
                               TextStyle(
                                 color: Colors.red,
                                 fontWeight: FontWeight.w600,
+                                fontSize: 12,
                               ),
                             ),
                           ],
@@ -170,10 +175,23 @@ class _SignInState extends State<SignIn> {
                                   _apiresponse = await service.postLogIn(_email, _password);
                                   if(!_apiresponse.error){
                                     print(_apiresponse.data["userId"]);
+                                    _isGuardian = _apiresponse.data["isGuardian"];
+                                    _userId =_apiresponse.data["userId"];
+                                    var _membersList = await service.getMembersByUser(_userId.toString());
+                                    //print(_membersList.data[0]["memberId"]);
+                                    var memberIds = _membersList.data.map((member)=> member["memberId"]).toList();
+                                    print(memberIds);
                                     setState(() {
-                                      _isloading = false;
-                                      errorMessage = _apiresponse.errorMessage;
-                                      Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_apiresponse.data["userId"])));
+                                      if(_isGuardian){
+                                        _isloading = false;
+                                        errorMessage = _apiresponse.errorMessage;
+                                        
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: _userId,membersIds: memberIds,)));
+                                      }else{
+                                        _isloading = false;
+                                        errorMessage = _apiresponse.errorMessage;
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => Home(userId:_userId)));
+                                      }
                                     });
                                   }else if(_apiresponse.error){
                                     setState(() {
@@ -204,7 +222,7 @@ class _SignInState extends State<SignIn> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 40.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
