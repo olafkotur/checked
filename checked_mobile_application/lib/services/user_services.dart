@@ -92,7 +92,6 @@ class UserServices{
       if(jsonData["code"]== 200){
         jsonData["result"].forEach((element) => results.add(element));
       }else if(jsonData["code"] == 401){
-        print("bad request");
       }
     }catch(e){
       print(e);

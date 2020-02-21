@@ -174,15 +174,12 @@ class _SignInState extends State<SignIn> {
                                   setState(() => _isloading = true);
                                   _apiresponse = await service.postLogIn(_email, _password);
                                   if(!_apiresponse.error){
-                                    print(_apiresponse.data["userId"]);
                                     _isGuardian = _apiresponse.data["isGuardian"];
                                     _userId =_apiresponse.data["userId"];
                                     var _membersList = await service.getMembersByUser(_userId.toString());
-                                    //print(_membersList.data[0]["memberId"]);
                                     var memberIds = _membersList.data.map((member)=> member["memberId"]).toList();
-                                    print(memberIds);
                                     setState(() {
-                                      if(_isGuardian){
+                                      if(!_isGuardian){
                                         _isloading = false;
                                         errorMessage = _apiresponse.errorMessage;
                                         
