@@ -78,7 +78,6 @@ class _HistoryState extends State<History> {
                             backgroundColor: Colors.white,
                           ));
                         }else {
-                          print(snapshot.data.data.length);
                           return  ListView.builder(
                           itemCount: snapshot.data.data.length,
                           itemBuilder: (BuildContext context, int index){
