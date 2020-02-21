@@ -34,68 +34,82 @@ class _HistoryState extends State<History> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:<Widget>[
-                    Text("Showing filtered results",style: 
-                      TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 15.3,
+        child: Container(
+          color: Colors.orange[600],
+          child: Column(
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(7.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children:<Widget>[
+                      Text("Showing filtered results",style: 
+                        TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 15.3,
+                        ),
                       ),
-                    ),
-                    IconButton(icon: Icon(Icons.filter_list), onPressed:(){})
-                  ]
+                      IconButton(icon: Icon(Icons.filter_list), onPressed:(){})
+                    ]
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.8,
-              child: FutureBuilder(
-                future: _getHistoryAsync(),
-                builder: (BuildContext context, AsyncSnapshot snapshot){
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return Text("Doing nothing");
-                    case ConnectionState.waiting:
-                      return new Center(child: new CircularProgressIndicator());
-                    case ConnectionState.active:
-                      return Text("");
-                    case ConnectionState.done:
-                      if(snapshot.data.data == null){
-                        return new Center(child: new CircularProgressIndicator());
-                      }else {
-                        print(snapshot.data.data.length);
-                        return  ListView.builder(
-                        itemCount: snapshot.data.data.length,
-                        itemBuilder: (BuildContext context, int index){
-                          var timestamp=snapshot.data.data[index]["createdAt"];
-                          var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
-                          return buildfeedbacktab(context,snapshot.data.data[index]["averageTemperature"],snapshot.data.data[index]["membersActive"],snapshot.data.data[index]["zonesCount"],snapshot.data.data[index]["activitiesCount"],date);
-                        },
-                      );
+              SizedBox(height: 5,),
+              Container(
+                width: MediaQuery.of(context).size.width*0.97,
+                height: MediaQuery.of(context).size.height*0.8,
+                child: FutureBuilder(
+                  future: _getHistoryAsync(),
+                  builder: (BuildContext context, snapshot){
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                        return Text("Doing nothing");
+                      case ConnectionState.waiting:
+                        return new Center(child: new CircularProgressIndicator(
+                          backgroundColor: Colors.white,
+                        ));
+                      case ConnectionState.active:
+                        return Text("");
+                      case ConnectionState.done:
+                        if(snapshot.data.data == null){
+                          return new Center(child: new CircularProgressIndicator(
+                            backgroundColor: Colors.white,
+                          ));
+                        }else {
+                          print(snapshot.data.data.length);
+                          return  ListView.builder(
+                          itemCount: snapshot.data.data.length,
+                          itemBuilder: (BuildContext context, int index){
+                            var timestamp=snapshot.data.data[index]["createdAt"];
+                            var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+                            return
+                            Padding(
+                              padding: const EdgeInsets.only(bottom:0.0, top: 5.0),
+                              child: buildfeedbacktab(context,snapshot.data.data[index]["averageTemperature"],snapshot.data.data[index]["membersActive"],snapshot.data.data[index]["zonesCount"],snapshot.data.data[index]["activitiesCount"],date),
+                            );
+                          },
+                        );
+                      }
                     }
-                  }
-                },
+                  },
+                )
               )
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-Container buildfeedbacktab(BuildContext context, int temperature, int membersActive, int zoneCount, int activitesCount, DateTime date) {
-return Container(
+Card buildfeedbacktab(BuildContext context, int temperature, int membersActive, int zoneCount, int activitesCount, DateTime date) {
+return Card(
+      elevation: 5,
       child: Column(
         children:<Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.only(top: 10.0, left: 10.0),
             child: Row(
               children:<Widget>[
                 Container(
@@ -270,34 +284,6 @@ return Container(
               ),
             ),
           ),
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 20,vertical:10.0),
-          //   child: Container(
-          //     child: Column(
-          //       children: <Widget>[
-          //         Row(
-          //           children: <Widget>[
-          //             Text("Voice recording",style: TextStyle(
-          //               fontWeight: FontWeight.w800,
-          //               fontSize: 15
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //         SizedBox(height:5.0),
-          //         Row(
-          //           children: <Widget>[
-          //             Text("I'm flying",style: TextStyle(
-          //               fontWeight: FontWeight.w400,
-          //               fontSize: 15
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
         ]
       ),
     );

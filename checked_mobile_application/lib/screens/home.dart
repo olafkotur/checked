@@ -1,3 +1,5 @@
+import 'dart:math' show Random;
+
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/screens/historic.dart';
 import 'package:checked_mobile_application/services/zone_services.dart';
@@ -288,6 +290,7 @@ class DragBox extends StatefulWidget {
   final String label;
   final Color itemColor;
 
+  final rng = Random();
   DragBox(this.initPos, this.width, this.height, this.label, this.itemColor, this.fontSize);
 
   @override
@@ -329,6 +332,13 @@ class _DragBoxState extends State<DragBox> {
                   ),
                 ],
               ),
+              Text("20",
+                style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        fontSize: widget.fontSize
+                      ),
+              )
             ],
           ),
         ),
