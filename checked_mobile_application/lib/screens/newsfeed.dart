@@ -27,7 +27,7 @@ class _NewsFeedState extends State<NewsFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("NewsFeed",style: 
+        title: Text("Comments",style: 
           TextStyle(
             color: Colors.white,
           ),
@@ -220,7 +220,7 @@ return Container(
                   ),
                   Row(
                     children: <Widget>[
-                      Text("to fly like a superhero",style: TextStyle(
+                      Text("",style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 15
                         ),
