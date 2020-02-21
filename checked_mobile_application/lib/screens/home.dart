@@ -26,13 +26,11 @@ class _HomeState extends State<Home> {
 
   _asyncMethod() async {
     _apiresponse = await service.getZonesByUser(widget.userId);
-    //print(_apiresponse.data[1]);
     return _apiresponse;
   }
 
   _asyncAdd() async {
     _apiresponse = await service.createZone(widget.userId, "New Zone", 200.0, 00.0, 0.0, 0.0, Colors.amber);
-    //print(_apiresponse.data[1]);
     return _apiresponse;
   }
 
@@ -215,7 +213,6 @@ class _HomeState extends State<Home> {
                         style: TextStyle(color: Colors.red),
                       );
                     } else {
-                    print(snapshot.data.data);
                     return Stack (
                       children: <Widget>[
                         for (var index in snapshot.data.data)
