@@ -21,7 +21,6 @@ class _NotificationState extends State<Notifications> {
 
   _asyncNotificationsMethod() async {
     _apiresponse = await service.getNotificationsByUser(widget.userId);
-    print(_apiresponse);
     return _apiresponse;
   }
 
@@ -63,7 +62,6 @@ class _NotificationState extends State<Notifications> {
                       if(snapshot.data.data == null){
                         return new Center(child: new CircularProgressIndicator());
                       }else {
-                        print(snapshot.data.data.length);
                         return  ListView.separated(
                         itemCount: snapshot.data.data.length,
                         itemBuilder: (BuildContext context, int index){

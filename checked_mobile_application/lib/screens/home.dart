@@ -1,3 +1,5 @@
+import 'dart:math' show Random;
+
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/screens/historic.dart';
 import 'package:checked_mobile_application/services/zone_services.dart';
@@ -24,13 +26,11 @@ class _HomeState extends State<Home> {
 
   _asyncMethod() async {
     _apiresponse = await service.getZonesByUser(widget.userId);
-    //print(_apiresponse.data[1]);
     return _apiresponse;
   }
 
   _asyncAdd() async {
     _apiresponse = await service.createZone(widget.userId, "New Zone", 200.0, 00.0, 0.0, 0.0, Colors.amber);
-    //print(_apiresponse.data[1]);
     return _apiresponse;
   }
 
@@ -213,7 +213,6 @@ class _HomeState extends State<Home> {
                         style: TextStyle(color: Colors.red),
                       );
                     } else {
-                    print(snapshot.data.data);
                     return Stack (
                       children: <Widget>[
                         for (var index in snapshot.data.data)
@@ -288,6 +287,7 @@ class DragBox extends StatefulWidget {
   final String label;
   final Color itemColor;
 
+  final rng = Random();
   DragBox(this.initPos, this.width, this.height, this.label, this.itemColor, this.fontSize);
 
   @override
@@ -329,6 +329,13 @@ class _DragBoxState extends State<DragBox> {
                   ),
                 ],
               ),
+              Text("20",
+                style: TextStyle(
+                        color: Colors.white,
+                        decoration: TextDecoration.none,
+                        fontSize: widget.fontSize
+                      ),
+              )
             ],
           ),
         ),
