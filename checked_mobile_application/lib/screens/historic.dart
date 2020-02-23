@@ -82,7 +82,7 @@ class _HistoryState extends State<History> {
                           itemCount: snapshot.data.data.length,
                           itemBuilder: (BuildContext context, int index){
                             var timestamp=snapshot.data.data[index]["createdAt"];
-                            var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+                            var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
                             return
                             Padding(
                               padding: const EdgeInsets.only(bottom:0.0, top: 5.0),

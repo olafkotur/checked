@@ -99,7 +99,7 @@ class _NewsFeedState extends State<NewsFeed> {
                             itemCount: snapshot.data.data.length,
                             itemBuilder: (BuildContext context, int index){
                               var timestamp=snapshot.data.data[index]["createdAt"];
-                              var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+                              var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 5),
                                 child: buildfeedbacktab(context,snapshot.data.data[index]["value"],date),
