@@ -25,59 +25,46 @@ export const UserHandler = {
 
     // Ensure valid email and password is provided
     if (data.email === '' || !data.email.includes('@')) {
-      ResponseService.bad('Please enter a valid email address', res);
-      return false;
+      return ResponseService.bad('Please enter a valid email address', res);
     }
     if (data.password.length < 6) {
-      ResponseService.bad('Password must be at least 6 characters', res);
-      return false;
+      return ResponseService.bad('Password must be at least 6 characters', res);
     }
 
     // Check that a user with the same email does not exist
-    await DbHelperService.exists('users', { email: req.body.email }).then((exists: boolean) => {
-      if (!exists) {
-        MongoService.insertOne('users', data)
-        ResponseService.create({
-          userId: data.userId,
-          email: data.email,
-          companyName: data.companyName,
-          isGuardian: data.isGuardian,
-          policyAccepted: data.policyAccepted
-        }, res);
+    const exists: boolean = await DbHelperService.exists('users', { email: req.body.email });
+    if (exists) {
+      return ResponseService.bad('Email address already taken', res);
+    }
 
-        // Send Verification email
-        const body: string = EmailService.generateRegistrationBody();
-        EmailService.send('Email Verification', data.email, body);
-
-      } else {
-        ResponseService.bad('Email address already taken', res);
-      }
-    });
-
-    return true;
+    // Add user to the database and send an email verification
+    const body: string = EmailService.generateRegistrationBody();
+    await MongoService.insertOne('users', data)
+    await EmailService.send('Email Verification', data.email, body);
+    return ResponseService.create(data, res);
   },
 
   deleteUser: async (req: express.Request, res: express.Response) => {
     const userId: number = parseInt(req.params.userId || '0');
 
-    // Ensure that the user exists before attempting to delte
-    await DbHelperService.exists('users', { userId }).then((exists: boolean) => {
-      if (exists) {
-        MongoService.deleteOne('users', { userId });
-        ResponseService.ok('Deleted existing user', res);
-      } else {
-        ResponseService.notFound('User does not exist', res);
-      }
-    });
+    // Ensure that the user exists before attempting to delete
+    const exists: boolean = await DbHelperService.exists('users', { email: req.body.email });
+    if (!exists) {
+      return ResponseService.notFound('User does not exist', res);
+    }
+
+    // Delete user from the database
+    await MongoService.deleteOne('users', { userId });
+    return ResponseService.ok('Deleted existing user', res);
   },
 
   getUser: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId || '0')} );
     if (data === null) {
-      ResponseService.data({}, res);
-      return false;
+      return ResponseService.data({}, res);
     }
 
+    // Convert to a response friendly format
     const formatted: IUserResponse = {
       userId: data.userId,
       email: data.email,
@@ -88,17 +75,16 @@ export const UserHandler = {
       lastUpdated: data.lastUpdated
     };
 
-    ResponseService.data(formatted, res);
-    return false;
+    return ResponseService.data(formatted, res);
   },
 
   getUsers: async (_req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('users', {});
     if (data === null) {
-      ResponseService.data([], res);
-      return false;
+      return ResponseService.data([], res);
     }
 
+    // Convert to a response friendly format
     const formatted: IUserResponse[] = data.map((user: IDbUser) => {
       return {
         userId: user.userId,
@@ -111,8 +97,7 @@ export const UserHandler = {
       }
     });
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 
   login: async (req: express.Request, res: express.Response) => {
@@ -120,34 +105,30 @@ export const UserHandler = {
 
     const data: any = await MongoService.findOne('users', { email: req.body.email || '' });
     if (data === null) {
-      ResponseService.unauthorized('Email address or password is incorrect', res);
-      return false;
+      return ResponseService.unauthorized('Email address or password is incorrect', res);
     }
 
     // Check if credentials are correct
     if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        ResponseService.data({ 
+        return ResponseService.data({ 
           userId: data.userId,
           email: data.email,
           companyName: data.companyName,
           isGuardian: data.isGuardian,
           policyAccepted: data.policyAccepted
         }, res);
-        return true;
       }
     }
 
     // Default to unauthorized
-    ResponseService.unauthorized('Email address or password is incorrect', res);
-    return false;
+    return ResponseService.unauthorized('Email address or password is incorrect', res);
   },
 
   updateUser: async (req: express.Request, res: express.Response) => {
     const user: any = await MongoService.findOne('users', { userId: parseInt(req.params.userId || '0')} );
     if (user === null) {
-      ResponseService.notFound('User does not exist', res);
-      return false;
+      return ResponseService.notFound('User does not exist', res);
     }
 
     const hashedPassword: string = AuthService.hashValue(req.body.password || '');
@@ -167,9 +148,7 @@ export const UserHandler = {
     // Update the user
     await MongoService.deleteOne('users', { userId: user.userId });
     await MongoService.insertOne('users', data);
-    ResponseService.ok('Updated existing user', res);
-
-    return true;
+    return ResponseService.ok('Updated existing user', res);
   },
 
 }
