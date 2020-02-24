@@ -12,7 +12,7 @@
     "mocker": "node mocker.js",
     "mongo:start": "mongod --dbpath db --fork --logpath /dev/null",
     "mongo:stop": "mongo admin --eval 'db.shutdownServer()' > /dev/null",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "dependencies": {
     "@types/express": "^4.17.2",
