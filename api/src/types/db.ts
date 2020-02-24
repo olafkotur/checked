@@ -101,3 +101,10 @@ export interface IDbNotification {
   isCleared: boolean,
   createdAt: Date,
 }
+
+export interface IDbSettings {
+  userId: number;
+  logoImage: string;
+  createdAt: Date,
+  lastUpdated: Date
+}
