@@ -5,7 +5,7 @@ import { IApiIds } from './types';
 
 require('dotenv').config();
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 const DOMAIN: string = DEBUG ? 'http://localhost:8080' : 'https://checked-api.herokuapp.com';
 
 async function main() {
