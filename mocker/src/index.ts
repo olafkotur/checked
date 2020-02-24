@@ -40,7 +40,9 @@ async function main() {
   await HttpService.post(DOMAIN + '/api/users/create', {
     email: config.default.user.email,
     password: config.default.user.password,
-    companyName: config.default.user.companyName
+    companyName: config.default.user.companyName,
+    isGuardian: false,
+    policyAccepted: false
   }).then(async (res: any) => {
     if (res.code === 201) {
       ids.user = res.result.userId;
@@ -49,8 +51,7 @@ async function main() {
       console.error('CreateUser: Error user already exists');
     }
 
-    // Skip creation if in DEBUG mode
-    if (!DEBUG) {
+    if (false) { // TODO: Skip creating new zones and members
       // Create new mock zones
       ids.zone = [];
       for (let i = 0; i < config.default.numberOfZones; i++) {

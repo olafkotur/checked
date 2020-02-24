@@ -2,7 +2,7 @@
 import React from 'react';
 import { MemberService } from '../../../api/MemberService';
 import { IZone } from '../../../types';
-import { Grid, Typography, List, ListItem, ListItemAvatar } from '@material-ui/core';
+import { Grid, Typography, List, ListItem, ListItemAvatar, Paper } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
 import Zone from './Zone';
 interface IState {
@@ -14,7 +14,6 @@ interface IState {
 
 interface IProps {
     zoneData: Array<IZone>;
-    type: 'temperature' | 'location';
     userID: number;
     locationData: Array<any>;
 }
@@ -41,25 +40,20 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
         });
     }
 
-    populateTempZones(): Array<JSX.Element> {
-        const tempRenderedZones: Array<JSX.Element> = [];
+    populateZones(): Array<JSX.Element> {
+        const renderedZones: Array<JSX.Element> = [];
         this.props.zoneData.forEach((zone, index) => {
-            tempRenderedZones.push(
-                <Zone zone={zone} type='temperature' key={index} userID={this.props.userID} />
+            renderedZones.push(
+                <Zone 
+                    zone={zone} 
+                    key={index} 
+                    userID={this.props.userID} 
+                    currentCount={this.props.locationData.filter(member => member.zoneId === zone.zoneId).length}
+                />
             );
         });
-        return tempRenderedZones;
+        return renderedZones;
     };
-
-    populateLocationZones(): Array<JSX.Element> {
-        const tempRenderedZones: Array<JSX.Element> = [];
-        this.props.zoneData.forEach((zone, index) => {
-            tempRenderedZones.push(
-                <Zone zone={zone} type='location' key={index} userID={this.props.userID} reading={this.props.locationData.filter((member: any) => member.zoneId === zone.zoneId).length} />
-            );
-        });
-        return tempRenderedZones;
-    }
 
     getMembersList(): Array<JSX.Element> {
         const membersList: Array<JSX.Element> = [];
@@ -75,7 +69,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
 
 
             membersList.push(
-                <ListItem alignItems="center" className="border-bottom border-muted" key={member.memberId}>
+                <ListItem alignItems="center" className="memberList border-bottom border-muted" key={member.memberId}>
                     <ListItemAvatar>
                         <Person />
                     </ListItemAvatar>
@@ -86,7 +80,7 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
                         </Grid>
                         <Grid item xs={12}>
 
-                            <Typography component="span" variant="body2" color="textPrimary">Zone ID:  {member.zoneId} </Typography>
+                            <Typography component="span" variant="body2" color="textPrimary"><i>Zone:</i>  {this.state.zoneData.find((zone: IZone) => {return zone.zoneId === member.zoneId;})?.name || ('Zone ID: ' + member.zoneId)} </Typography>
                         </Grid>
                     </Grid>
                 </ListItem>
@@ -97,29 +91,23 @@ class ZoneVisualisation extends React.Component<IProps, IState> {
 
     render(): JSX.Element {
 
-        let renderedZones: Array<JSX.Element> = [];
+        const renderedZones: Array<JSX.Element> = this.populateZones();
 
-        if (this.props.type === 'temperature') {
-            renderedZones = this.populateTempZones();
-        } else if (this.props.type === 'location') {
-            renderedZones = this.populateLocationZones();
-        }
         return (
             <Grid container spacing={0}>
-                <Grid item xs={10}>
-                    <div className="zoneVisContainer h-100 w-100">
+                <Grid item xs={12}>
+                    <div className="zoneVisContainer">
                         {renderedZones}
+                        <Paper elevation={0} variant="outlined" className="dashMemberList mt-3 mb-3">
+                            <Typography variant="subtitle1" className="pl-3 mt-2 pb-2 w-100 border-bottom">
+                                <i>Active Members</i>
+                            </Typography>
+                            <List className="h-100 memberList dashMemberHeight">
+                                {this.getMembersList()}
+                            </List>
+                        </Paper>
                     </div>
                 </Grid>
-                <Grid item xs={2}>
-                    <Typography variant="h6" className="ml-1 mt-1 fontMontserrat text-right border-bottom border-muted" >
-                        Members
-                    </Typography>
-                    <List className="membersList mt-2 mb-2">
-                        {this.getMembersList()}
-                    </List>
-                </Grid>
-
             </Grid>
 
         );

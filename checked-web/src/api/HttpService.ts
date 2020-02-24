@@ -10,7 +10,12 @@ export const HttpService = {
                 if (error) {
                     reject();
                 }
-                resolve(JSON.parse(body));
+                try {
+                    const formatted = JSON.parse(body);
+                    resolve(formatted);
+                } catch (e) {
+                    resolve({});
+                }                           
             });
         });
     },
@@ -29,7 +34,12 @@ export const HttpService = {
                 if (error) {
                     reject();
                 }
-                resolve(JSON.parse(body));
+                try {
+                    const formatted = JSON.parse(body);
+                    resolve(formatted);
+                } catch (e) {
+                    resolve({});
+                }
             });
         });
     },

@@ -3,8 +3,6 @@ import { RouteComponentProps } from "@reach/router";
 import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton } from "@material-ui/core";
 import '../../../index.css';
 import { Delete, Save } from "@material-ui/icons";
-import color from "@material-ui/core/colors/amber";
-import { green } from "@material-ui/core/colors";
 
 
 interface IState {
@@ -20,6 +18,7 @@ interface IProps extends RouteComponentProps {
    dbid: number;
    deleteThisComment(commentBox: any): void;
    saveThisComment(commentBox: any): void;
+   canDelete: boolean;
 }
 
 const cardStyle = {
@@ -130,11 +129,19 @@ export class CommentBox extends React.Component<IProps, IState> {
 
    saveOrDel(): JSX.Element{
         if(!this.props.new){
-            return(
-            <IconButton >
-                    <Delete onClick={this.handleDelete} />
-            </IconButton>
-            );
+            if(this.props.canDelete){
+                return (
+                    <IconButton >
+                        <Delete onClick={this.handleDelete} />
+                    </IconButton>
+                );
+            }
+            else{
+                return (
+                   <div></div>
+                );
+            }
+            
         }
         else{
             return (
@@ -153,19 +160,6 @@ export class CommentBox extends React.Component<IProps, IState> {
             );
         }
     };
-
-
-    // // use this for saving
-    // getTimeStamp(): string{
-    //     const date = new Date().getDate(); //Current Date
-    //     const month = new Date().getMonth() + 1; //Current Month
-    //     const year = new Date().getFullYear(); //Current Year
-    //     const hours = new Date().getHours(); //Current Hours
-    //     const min = new Date().getMinutes(); //Current Minutes
-
-    //     return (date + '/' + month + '/' + year + ' ' + hours + ':' + min);
-
-    // };
 
 
     render(): JSX.Element {
@@ -194,7 +188,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                             </Grid>
 
                             <Grid item xs={1}>
-                                <div style={{ height: "100%", paddingLeft:"5px" }}>
+                                <div style={{ height: "100%", paddingLeft:"7px" }}>
                                    
                                         <RadioGroup onChange={this.radioChange} value={this.state.radio} >
                                         <MuiThemeProvider theme={redLight}>

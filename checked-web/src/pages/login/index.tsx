@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { UserService } from '../../api/UserService';
-import { Button, Typography, TextField, Grid, Link, Card, CardContent, Snackbar } from '@material-ui/core';
+import { Button, Typography, TextField, Grid, Link, Card, CardContent, Snackbar, FormControlLabel, Checkbox } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import UseAnimations from 'react-useanimations';
 
@@ -12,11 +12,14 @@ interface IState {
     snackbarOpen: boolean;
     snackbarMessage: string;
     showLoader: boolean;
+    guardian: boolean;
+    org: string;
 }
 
 interface IProps {
     setAuthorised(authState: boolean): void;
     setUserID(userID: number): void;
+    setGuardian(isGuardian: boolean): void;
 }
 
 export class Login extends React.Component<IProps, IState> {
@@ -26,6 +29,8 @@ export class Login extends React.Component<IProps, IState> {
         this.state = {
             email: '',
             password: '',
+            org: '',
+            guardian: false,
             snackbarOpen: false,
             snackbarMessage: '',
             showLoader: false,
@@ -33,6 +38,8 @@ export class Login extends React.Component<IProps, IState> {
         this.handleEmail = this.handleEmail.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.toggleSnackbar = this.toggleSnackbar.bind(this);
+        this.handleOrg = this.handleOrg.bind(this);
+        this.handleGuardian = this.handleGuardian.bind(this);
     }
 
     handleSignIn(email: string, password: string): void {
@@ -43,6 +50,7 @@ export class Login extends React.Component<IProps, IState> {
                 if (res.status === 'ok') {
                     this.props.setAuthorised(true);
                     this.props.setUserID(res.result.userId);
+                    this.props.setGuardian(res.result.isGuardian);
                 } else {
                     this.setState({ snackbarMessage: res.message.toString() });
                     this.toggleSnackbar();
@@ -55,13 +63,14 @@ export class Login extends React.Component<IProps, IState> {
         }, 1500);
     };
 
-    handleSignUp(email: string, password: string): void {
+    handleSignUp(email: string, password: string, companyName: string, isGuardian: boolean): void {
         this.setState({ showLoader: true });
         setTimeout(() => {
-            UserService.createUser(email, password).then((res) => {
+            UserService.createUser(email, password, companyName, isGuardian).then((res) => {
                 if (res.status === 'created') {
                     this.props.setAuthorised(true);
                     this.props.setUserID(res.result.userId);
+                    this.props.setGuardian(res.result.isGuardian);
                 } else {
                     this.setState({ snackbarMessage: res.message.toString() });
                     this.toggleSnackbar();
@@ -82,6 +91,14 @@ export class Login extends React.Component<IProps, IState> {
 
     handleEmail(event: any): void {
         this.setState({ email: event.target.value });
+    };
+
+    handleOrg(event: any): void {
+        this.setState({ org: event.target.value });
+    };
+
+    handleGuardian(event: any): void {
+        this.setState({ guardian: !this.state.guardian });
     };
 
     handlePassword(event: any): void {
@@ -105,11 +122,11 @@ export class Login extends React.Component<IProps, IState> {
                             <Typography variant="h6" className="montserrat">
                                 Checked
                             </Typography>
-                            <Typography variant="subtitle1" className="mb-2 text-muted uppercase">
+                            <Typography variant="subtitle1" className="text-muted uppercase">
                                 Keep track of your space.
                             </Typography>
                         </div>
-                        <div className="loaderDiv text-center mb-4 mt-4 vcenterParent">
+                        <div className="loaderDiv text-center mt-1 vcenterParent">
                             {this.state.showLoader &&
                                 <UseAnimations animationKey="loading2" size={30} className="loginLoader vcenterChild"/>
                             }
@@ -124,7 +141,7 @@ export class Login extends React.Component<IProps, IState> {
                                 label="Email"
                                 name="email"
                                 autoFocus
-                                className="mt-1 mb-3"
+                                className="mb-3"
                                 onChange={this.handleEmail}
                             />
                             <TextField
@@ -140,24 +157,47 @@ export class Login extends React.Component<IProps, IState> {
                                 onChange={this.handlePassword}
                                 onKeyDown={(e): void => this.handleKeyDown(e)}
                             />
+
                             <Button
                                 type="button"
                                 fullWidth
                                 variant="contained"
                                 color="primary"
-                                className="mt-3"
+                                className="mt-1 mb-3"
                                 onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
                                 disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                             >
                                 Sign In
                             </Button>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                fullWidth
+                                id="organisation"
+                                label="Organisation"
+                                name="organisation"
+                                autoFocus
+                                className="mt-4 mb-3"
+                                onChange={this.handleOrg}
+                            />
+
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.guardian}
+                                        onChange={this.handleGuardian}
+                                        color="primary"
+                                    />
+                                }
+                                label="Parent/Guardian?"
+                            />
                             <Button
                                 type="button"
                                 fullWidth
                                 variant="outlined"
                                 color="primary"
                                 className="mt-3"
-                                onClick={(): void => this.handleSignUp(this.state.email, this.state.password)}
+                                onClick={(): void => this.handleSignUp(this.state.email, this.state.password, this.state.org, this.state.guardian)}
                                 disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                             >
                                 Sign Up

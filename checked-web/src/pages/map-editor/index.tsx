@@ -15,7 +15,6 @@ import BgColumn from '../../components/MapEditor/BgColumn';
 import BgRow from '../../components/MapEditor/BgRow';
 import { ActivityService } from '../../api/ActivityService';
 import { SketchPicker } from 'react-color';
-import ReactDOM from 'react-dom';
 
 
 interface IState {
@@ -70,7 +69,6 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     handleColorChange = (color: any): void => {
-        console.log(this.state.selectedZone);
         if (this.state.selectedZone != null) {
             this.setState({ pickerColor: color });
             this.state.selectedZone.setBackground(color);

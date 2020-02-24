@@ -103,3 +103,20 @@ export interface ICommentResponse {
   value: string,
   createdAt: number
 }
+
+export interface ILinkResponse {
+  linkId: number,
+  userId: number,
+  memberId: number,
+  relationship: number,
+  createdAt: number,
+}
+
+export interface INotificationResponse {
+  notificationId: number,
+  userId: number,
+  priority: number,
+  value: string,
+  isCleared: boolean,
+  createdAt: number,
+}
