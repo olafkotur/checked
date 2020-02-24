@@ -37,7 +37,7 @@ export const SettingHandler = {
     const userId: number = parseInt(req.params.userId || '0');
     const exists: boolean = await DbHelperService.exists('users', { userId });
     if (!exists) {
-      return ResponseService.notFound('User does not exist', res);
+      return ResponseService.data({}, res);
     }
 
     const data: any = await MongoService.findOne('settings', { userId });
