@@ -3,7 +3,7 @@ import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
 import { AuthService } from '../services/auth';
 import { ResponseService } from '../services/response';
-import { IDbUser } from '../types/db';
+import { IDbUser, IDbSettings } from '../types/db';
 import { IUserResponse } from '../types/response';
 import { EmailService } from '../services/email';
 
@@ -37,9 +37,18 @@ export const UserHandler = {
       return ResponseService.bad('Email address already taken', res);
     }
 
+    // Create a new settings document for the user
+    const settings: IDbSettings = {
+      userId: data.userId,
+      logoImage: '',
+      createdAt: new Date(),
+      lastUpdated: new Date()
+    }
+
     // Add user to the database and send an email verification
     const body: string = EmailService.generateRegistrationBody();
-    await MongoService.insertOne('users', data)
+    await MongoService.insertOne('users', data);
+    await MongoService.insertOne('settings', settings);
     await EmailService.send('Email Verification', data.email, body);
     return ResponseService.create(data, res);
   },
