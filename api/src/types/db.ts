@@ -1,4 +1,4 @@
-import { ILocations, IZoneTemperatures, INotificationSettings } from "./misc";
+import { ILocations, IZoneTemperatures, INotificationSettings } from './misc';
 
 export interface IDbLive {
   dataType: string;
@@ -6,7 +6,7 @@ export interface IDbLive {
   userId: number;
   zoneId: number;
   value: number;
-  createdAt: Date
+  createdAt: Date;
 }
 
 export interface IDbLocation {
@@ -15,7 +15,7 @@ export interface IDbLocation {
   zoneId: number;
   xValue: number;
   yValue: number;
-  createdAt: Date
+  createdAt: Date;
 }
 
 export interface IDbZone {
@@ -39,7 +39,7 @@ export interface IDbUser {
   isGuardian: boolean;
   policyAccepted: boolean;
   createdAt: Date;
-  lastUpdated: Date
+  lastUpdated: Date;
 }
 
 export interface IDbMember {
@@ -48,7 +48,7 @@ export interface IDbMember {
   firstName: string;
   lastName: string;
   createdAt: Date;
-  lastUpdated: Date
+  lastUpdated: Date;
 }
 
 export interface IDbActivity {
@@ -56,7 +56,7 @@ export interface IDbActivity {
   name: string;
   zoneId: number
   createdAt: Date;
-  lastUpdated: Date
+  lastUpdated: Date;
 }
 
 export interface IDbAssembly {
@@ -74,7 +74,7 @@ export interface IDbHistoric {
   activitiesCount: number;
   locations: ILocations[];
   temperatures: IZoneTemperatures[];
-  createdAt: Date
+  createdAt: Date;
 }
 
 export interface IDbComment {
@@ -83,7 +83,7 @@ export interface IDbComment {
   rating: number;
   value: string;
   image: string;
-  createdAt: Date
+  createdAt: Date;
 }
 
 export interface IDbLink {
@@ -110,6 +110,16 @@ export interface IDbSettings {
   timeZone: string;
   themeColor: string;
   notifications: INotificationSettings;
+  createdAt: Date;
+  lastUpdated: Date;
+}
+
+export interface IDbEvent {
+  userId: number;
+  eventId: number;
+  title: string;
+  description: string;
+  eventDate: Date;
   createdAt: Date;
   lastUpdated: Date;
 }
