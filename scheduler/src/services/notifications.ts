@@ -53,7 +53,7 @@ export const NotificationService = {
       if (live.value >= config.warnings.maxTemperature) {
         notification.value = `The temperature appears to be too high reading a value of ${live.value}`;
       }
-    })    
+    });    
 
     return notification.value ? notification : false;
   },

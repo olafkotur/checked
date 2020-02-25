@@ -1,4 +1,4 @@
-import { IZoneTemperatures, ILocations } from "./misc";
+import { IZoneTemperatures, ILocations, INotificationSettings } from "./misc";
 
 export interface IResponse {
   code: number;
@@ -101,6 +101,7 @@ export interface ICommentResponse {
   memberId: number;
   rating: number;
   value: string;
+  image: string;
   createdAt: number
 }
 
@@ -124,6 +125,10 @@ export interface INotificationResponse {
 export interface ISettingsResponse {
   userId: number;
   logoImage: string;
-  createdAt: number,
-  lastUpdated: number
+  darkMode: boolean;
+  timeZone: string;
+  themeColor: string;
+  notifications: INotificationSettings;
+  createdAt: number;
+  lastUpdated: number;
 }

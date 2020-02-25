@@ -41,6 +41,15 @@ export const UserHandler = {
     const settings: IDbSettings = {
       userId: data.userId,
       logoImage: '',
+      darkMode: false,
+      timeZone: '',
+      themeColor: '',
+      notifications: {
+        interval: 10,
+        minTemperature: 16,
+        maxTemperature: 35,
+        gatheringThreshold: 0.7
+      },
       createdAt: new Date(),
       lastUpdated: new Date()
     }
