@@ -132,3 +132,13 @@ export interface ISettingsResponse {
   createdAt: number;
   lastUpdated: number;
 }
+
+export interface IEventResponse {
+  userId: number;
+  eventId: number;
+  title: string;
+  description: string;
+  eventDate: number;
+  createdAt: number;
+  lastUpdated: number;
+}

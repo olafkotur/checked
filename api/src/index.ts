@@ -14,6 +14,7 @@ import { CommentHandler } from './handlers/comment';
 import { LinkHandler } from './handlers/link';
 import { NotificationHandler } from './handlers/notifications';
 import { SettingHandler } from './handlers/settings';
+import { EventHandler } from './handlers/events';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -104,6 +105,12 @@ async function main() {
   // Settings handlers
   app.post('/api/settings/update/:userId', SettingHandler.updateSetting);
   app.get('/api/settings/:userId', SettingHandler.getSettingByUser);
+
+  // Event handlers
+  app.post('/api/events/create', EventHandler.createEvent);
+  app.delete('/api/events/delete/:eventId', EventHandler.deleteEvent);
+  app.get('/api/events/:eventId', EventHandler.getEvent);
+  app.get('/api/events/users/:userId', EventHandler.getEventsByUser);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
