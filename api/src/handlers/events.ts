@@ -28,13 +28,22 @@ export const EventHandler = {
       eventDate: new Date(parseInt(req.body.eventDate)),
       createdAt: new Date(),
       lastUpdated: new Date()
-    }
+    };
 
     await MongoService.insertOne('events', data);
     return ResponseService.create(data, res);
   },
 
-  delteEvent: (req: express.Request, res: express.Response) => {},
+  deleteEvent: async (req: express.Request, res: express.Response) => {
+    const eventId: number = parseInt(req.params.eventId || '0');
+    const exists: boolean = await DbHelperService.exists('events', { eventId });
+    if (!exists) {
+      return ResponseService.notFound('Cannot delete event that does not exist', res);
+    }
+
+    await MongoService.deleteOne('events', { eventId });
+    return ResponseService.ok('Event was successfully deleted', res)
+  },
   getEvent: (req: express.Request, res: express.Response) => {},
   getEventsByUser: (req: express.Request, res: express.Response) => {},
 };

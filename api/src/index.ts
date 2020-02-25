@@ -108,6 +108,7 @@ async function main() {
 
   // Event handlers
   app.post('/api/events/create', EventHandler.createEvent);
+  app.delete('/api/events/delete/:eventId', EventHandler.deleteEvent);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
