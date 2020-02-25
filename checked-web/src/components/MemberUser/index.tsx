@@ -11,6 +11,7 @@ import UseAnimations from 'react-useanimations';
 
 
 
+
 interface IState {
     currentMember: number;
     firstName: string;
@@ -20,6 +21,7 @@ interface IState {
     editingComment: boolean;
     loadingComments: boolean;
     chaningMember: boolean;
+    tabValue: number;
 }
 interface IProps {
     members: Array<IMember>;
@@ -44,6 +46,7 @@ class MemberUser extends React.Component<IProps, IState> {
             editingComment: false,
             loadingComments: false,
             chaningMember: false,
+            tabValue: 0,
         };
 
         this.handleFirstName = this.handleFirstName.bind(this);
@@ -53,6 +56,8 @@ class MemberUser extends React.Component<IProps, IState> {
         this.saveComment = this.saveComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.displayComments = this.displayComments.bind(this);
+        this.changeTab = this.changeTab.bind(this);
+        this.displayTab = this.displayTab.bind(this);
     }
 
 
@@ -70,7 +75,11 @@ class MemberUser extends React.Component<IProps, IState> {
 
    
 
-    
+    changeTab(event: React.ChangeEvent<{}>, newValue: number): void{
+       
+        this.setState({tabValue: newValue});
+        console.log(newValue);
+    };
 
 
     
@@ -231,108 +240,124 @@ class MemberUser extends React.Component<IProps, IState> {
 
         this.setState({ comments: tempComments, editingComment: false });
 
-
-
-
     }
+
+
+
+    displayTab(): JSX.Element{
+        // Feed
+        if (this.state.tabValue === 0){
+            return (
+                <Grid container spacing={3} className="memberManager mt-3">
+                    <Grid item xs={6} >
+                        <CardHeader title={"Comment Feed"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {this.displayComments()}
+                            </List>
+                        </CardContent>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <CardHeader title={"OverSeer Feedback"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {/* {this.displayComments()} */}
+                            </List>
+                        </CardContent>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+       // consent forms
+       else if (this.state.tabValue === 1) {
+            return (
+                <Grid container spacing={3} className="memberManager mt-3">
+                    <Grid item xs={6} >
+                        <CardHeader title={"Consent Toggle"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {/* {this.displayComments()} */}
+                                <h1>Select Consent here</h1>
+                            </List>
+                        </CardContent>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <CardHeader title={"Agree Form"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {/* {this.displayComments()} */}
+                                <h1>Agree here</h1>
+                            </List>
+                        </CardContent>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+
+        // consent forms
+        else if (this.state.tabValue === 2) {
+            return (
+                <Grid container spacing={3} className="memberManager mt-3">
+                    <Grid item xs={6} >
+                        <CardHeader title={"Consent Toggle"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {/* {this.displayComments()} */}
+                                <h1>Settings Part 1</h1>
+                            </List>
+                        </CardContent>
+                    </Grid>
+                    <Grid item xs={6} >
+                        <CardHeader title={"Agree Form"} />
+                        <Divider />
+                        <CardContent >
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                {/* {this.displayComments()} */}
+                                <h1>Settings Part 2</h1>
+                            </List>
+                        </CardContent>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+
+        else{
+            return (
+                 <Grid container spacing={0} className="memberManager mt-3">
+                     <Grid item><h1>Error NO Tab Found</h1></Grid>
+                </Grid>
+            );
+        }
+    }
+
 
 
     render(): JSX.Element {
 
         return (
-            // <Grid container spacing={0} className="memberManager mt-3">
-            //     <Grid item xs={12} className="p-2 pl-4">
-                    
-            //     <div className="w-100 h-100">
-            //             <Grid container spacing={2} className="p-4 h-100">
-            //                 <Grid item xs={4} className="text-center border-right pr-5">
-            //                     <Grid container spacing={1}>
-            //                         <Grid item xs={12} className="mt-3 mb-3">
-            //                             <Avatar className="memberAvatar">
-            //                                 <Person fontSize="large" className="w-100 h-100 m-1" />
-            //                             </Avatar>
-            //                         </Grid>
-            //                         <Grid item xs={12}>
-            //                             <Typography variant="subtitle2">
-            //                                 Member ID: {this.state.currentMember}
-            //                             </Typography>
-            //                             <Typography variant="subtitle1">
-            //                                 {this.state.firstName + " " + this.state.lastName}
-            //                             </Typography>
-            //                         </Grid>
-            //                         <Grid item xs={12}>
-
-
-
-            //                         </Grid>
-
-
-            //                         {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
-
-
-
-            //                     </Grid>
-            //                     {/* {this.createChart()} */}
-            //                 </Grid>
-            //                 <Grid item xs={4} >
-            //                     {/* Comment feed here */}
-            //                     {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
-
-
-            //                     <CardHeader title={"Comment Feed"} />
-            //                     <Divider />
-            //                     <CardContent >
-            //                         <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-            //                             {this.displayComments()}
-            //                         </List>
-            //                     </CardContent>
-
-            //                     {/* </div> */}
-
-
-            //                 </Grid>
-
-            //                 <Grid item xs={4} >
-            //                     {/* Comment feed here */}
-            //                     {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
-
-
-            //                     <CardHeader title={"Comment Feed"} />
-            //                     <Divider />
-            //                     <CardContent >
-            //                         <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-            //                             {this.displayComments()}
-            //                         </List>
-            //                     </CardContent>
-
-            //                     {/* </div> */}
-
-
-            //                 </Grid>
-            //             </Grid>
-            //         </div>
-            
-            //     </Grid>
-            // </Grid>
-
             <div>
                 <AppBar position="static">
-                    <Tabs value={"hello"}  aria-label="simple tabs example">
-                    {/* <Tabs  aria-label="simple tabs example"> */}
-                        <Tab label="Feed"  />
-                        <Tab label="Consent"  />
-                        <Tab label="Settings"  />
+                    <Tabs value={this.state.tabValue} onChange={this.changeTab} aria-label="simple tabs example">
+                        <Tab label="Feed"/>
+                        <Tab label="Consent"/>
+                        <Tab label="Settings"/>
                     </Tabs>
                 </AppBar>
-                {/* <TabPanel value={value} index={0}>
-                    Item One
-                 </TabPanel>
-                <TabPanel value={value} index={1}>
-                    Item Two
-                </TabPanel>
-                <TabPanel value={value} index={2}>
-                    Item Three
-                </TabPanel> */}
+                
+               
+
+                    {this.displayTab()}
+
+              
+               
 
             </div>
         );
