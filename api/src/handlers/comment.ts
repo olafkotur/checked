@@ -20,6 +20,7 @@ export const CommentHandler = {
       commentId: await DbHelperService.assignAvailableId('comments', 'commentId'),
       rating: parseInt(req.body.rating || '0'),
       value: req.body.value || '',
+      image: req.body.image || '',
       createdAt: new Date(),
     };
 
@@ -54,6 +55,7 @@ export const CommentHandler = {
         memberId: comment.memberId,
         rating: comment.rating,
         value: comment.value,
+        image: comment.image,
         createdAt: moment(comment.createdAt).unix(),
       };
     });
@@ -74,6 +76,7 @@ export const CommentHandler = {
       memberId: data.memberId,
       rating: data.rating,
       value: data.value,
+      image: data.image,
       createdAt: moment(data.createdAt).unix(),
     };
 

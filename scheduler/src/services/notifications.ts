@@ -1,6 +1,6 @@
 import { HttpService } from './http';
 import { config } from '../config';
-import { INotification, IUser, ILiveResponse, ILocationResponse, IGrouping } from "../models";
+import { INotification, IUser, ILiveResponse, ILocationResponse, IGrouping, ISettingsResponse } from "../models";
 
 export const NotificationService = {
 
@@ -38,6 +38,9 @@ export const NotificationService = {
       return false;
     }
 
+    // Get users settings
+    const settings: ISettingsResponse = await HttpService.get(`${domain}/api/settings/${user.userId}`);
+
     const notification: INotification = {
       userId: user.userId,
       priority: 1,
@@ -47,13 +50,13 @@ export const NotificationService = {
     // Check if the temperature is either too low or too high
     const filtered: ILiveResponse[] = data.result.filter((live: ILiveResponse) => user.userId === live.userId);
     filtered.forEach((live: ILiveResponse) => {
-      if (live.value <= config.warnings.minTemperature) {
+      if (live.value <= (settings.notifications.minTemperature || config.warnings.minTemperature)) {
         notification.value = `The temperature appears to be too low reading a value of ${live.value}`;
       }
-      if (live.value >= config.warnings.maxTemperature) {
+      if (live.value >= (settings.notifications.maxTemperature || config.warnings.maxTemperature)) {
         notification.value = `The temperature appears to be too high reading a value of ${live.value}`;
       }
-    })    
+    });    
 
     return notification.value ? notification : false;
   },
@@ -64,6 +67,9 @@ export const NotificationService = {
     if (data.length === 0) {
       return false;
     }
+
+    // Get users settings
+    const settings: ISettingsResponse = await HttpService.get(`${domain}/api/settings/${user.userId}`);
 
     const notification: INotification = {
       userId: user.userId,
@@ -84,7 +90,7 @@ export const NotificationService = {
 
     // Determine whether there is a gathering
     count.forEach((c: IGrouping) => {
-      if (c.count / data.result.length >= config.warnings.gatheringThreshold) {
+      if (c.count / data.result.length >= (settings.notifications.gatheringThreshold || config.warnings.gatheringThreshold)) {
         notification.value = `There seems to be a large gathering of members in zone ${c.zoneId}`;
       }
     });
