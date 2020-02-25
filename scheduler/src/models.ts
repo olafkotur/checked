@@ -69,3 +69,21 @@ export interface IGrouping {
   zoneId: number,
   count: number
 }
+
+export interface INotificationSettings {
+  interval: number;
+  maxTemperature: number;
+  minTemperature: number;
+  gatheringThreshold: number;
+}
+
+export interface ISettingsResponse {
+  userId: number;
+  logoImage: string;
+  darkMode: boolean;
+  timeZone: string;
+  themeColor: string;
+  notifications: INotificationSettings;
+  createdAt: number;
+  lastUpdated: number;
+}
