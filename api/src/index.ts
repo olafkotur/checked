@@ -68,6 +68,7 @@ async function main() {
   app.get('/api/members/:memberId', MemberHandler.getMember);
   app.get('/api/members', MemberHandler.getMembers);
   app.get('/api/members/users/:userId', MemberHandler.getMembersByUser);
+  app.post('/api/members/login', MemberHandler.login);
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);

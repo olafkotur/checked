@@ -47,6 +47,7 @@ export interface IDbMember {
   userId: number;
   firstName: string;
   lastName: string;
+  password: string;
   createdAt: Date;
   lastUpdated: Date;
 }
