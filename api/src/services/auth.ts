@@ -10,7 +10,6 @@ export const AuthService = {
 
   generateSecurePassword: (): any => {
     const seed: number = Math.random();
-    console.log(seed);
     const securePassword: string = AuthService.hashValue(seed.toString());
     return securePassword;
   }
