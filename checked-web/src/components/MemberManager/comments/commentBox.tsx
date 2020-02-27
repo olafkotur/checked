@@ -162,6 +162,57 @@ export class CommentBox extends React.Component<IProps, IState> {
     };
 
 
+    trafficLight(): JSX.Element {
+
+        if(this.props.radioVal === "0"){
+            return(
+            <Grid container style={{ height: "100%" }}>
+                <Grid item xs={12} >
+                    <div style={{ width: "100%", height: "100%" }}>
+                        <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
+                            <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
+                        </form>
+                    </div>
+                </Grid>
+
+                
+            </Grid>
+            );
+        }
+        else{
+            return(
+                <Grid container style={{ height: "100%" }}>
+                    <Grid item xs={11} >
+                        <div style={{ width: "100%", height: "100%" }}>
+                            <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
+                                <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
+                            </form>
+                        </div>
+                    </Grid>
+
+                    <Grid item xs={1}>
+                        <div style={{ height: "100%", paddingLeft: "7px" }} className="radioBox">
+
+                            <RadioGroup onChange={this.radioChange} value={this.state.radio} >
+                                <MuiThemeProvider theme={redLight}>
+                                    <Radio size="medium" color="primary" value={"1"} disabled={!this.props.new} />
+                                </MuiThemeProvider>
+                                <MuiThemeProvider theme={amberLight}>
+                                    <Radio size="medium" color="primary" disabled={!this.props.new} value={"2"} />
+                                </MuiThemeProvider>
+                                <MuiThemeProvider theme={greenLight}>
+                                    <Radio size="medium" color="primary" disabled={!this.props.new} value={"3"} />
+                                </MuiThemeProvider>
+                            </RadioGroup>
+                        </div>
+                    </Grid>
+                </Grid>
+            );
+        }
+
+
+    }
+
     render(): JSX.Element {
         return (
            <div>
@@ -178,32 +229,7 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
                     <CardContent >
-                        <Grid container style={{ height: "100%" }}>
-                            <Grid item xs={11} >
-                                <div style={{ width: "100%", height: "100%"}}>
-                                    <form style={{height:"100%"}} onSubmit={e => { this.submitHandler(e); }}>
-                                        <textarea disabled = {!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
-                                    </form>
-                                </div>
-                            </Grid>
-
-                            <Grid item xs={1}>
-                                <div style={{ height: "100%", paddingLeft:"7px" }}>
-                                   
-                                        <RadioGroup onChange={this.radioChange} value={this.state.radio} >
-                                        <MuiThemeProvider theme={redLight}>
-                                            <Radio size="medium" color="primary" value={"1"} disabled={!this.props.new}/>
-                                        </MuiThemeProvider>
-                                         <MuiThemeProvider theme={amberLight}>
-                                            <Radio size="medium" color="primary" disabled={!this.props.new} value={"2"} />
-                                        </MuiThemeProvider>
-                                        <MuiThemeProvider theme={greenLight}>
-                                            <Radio size="medium" color="primary" disabled={!this.props.new} value={"3"} />
-                                        </MuiThemeProvider>
-                                        </RadioGroup>   
-                               </div>
-                            </Grid>
-                         </Grid>
+                        {this.trafficLight()}
                    </CardContent>                
                </Card>
            </div>
