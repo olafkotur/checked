@@ -408,9 +408,14 @@ code {
     height: 100%;
     resize: none;
     border: 0px none;
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    /* border-right: 1px solid rgba(0, 0, 0, 0.1); */
     background-color: transparent;
     padding: 10px;
+}
+
+.radioBox{
+  border: 0px none;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .commentItem{
