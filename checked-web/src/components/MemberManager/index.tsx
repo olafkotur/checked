@@ -226,6 +226,7 @@ class MemberManager extends React.Component<IProps, IState> {
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
                     canDelete={false}
+                    imageSrc = {comment.image}
                 />;
             });
 
@@ -298,6 +299,7 @@ class MemberManager extends React.Component<IProps, IState> {
             memberId: this.state.currentMember,
             rating: parseInt(commentBox.state.radio),
             value: commentBox.state.commentVal,
+            image: commentBox.state.imageSrc,
         };
 
         await CommentService.saveComment(body);

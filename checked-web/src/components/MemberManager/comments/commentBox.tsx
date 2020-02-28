@@ -1,24 +1,29 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
-import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton } from "@material-ui/core";
+import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton, CardMedia } from "@material-ui/core";
 import '../../../index.css';
-import { Delete, Save } from "@material-ui/icons";
+import { Delete, Save, CameraAlt, AddAPhoto } from "@material-ui/icons";
+import Logo from '../../../media/checkedLogo.jpg';
 
+
+// Convert image into base64
 
 interface IState {
     commentVal: string;
     radio: string;
+    hasImage: boolean;
 }
 
 interface IProps extends RouteComponentProps {
-   new: boolean;
-   timeStamp: string;
-   textContent: string;
-   radioVal: string;
-   dbid: number;
-   deleteThisComment(commentBox: any): void;
-   saveThisComment(commentBox: any): void;
-   canDelete: boolean;
+    new: boolean;
+    timeStamp: string;
+    textContent: string;
+    radioVal: string;
+    dbid: number;
+    deleteThisComment(commentBox: any): void;
+    saveThisComment(commentBox: any): void;
+    canDelete: boolean;
+    imageSrc: string;
 }
 
 const cardStyle = {
@@ -37,20 +42,20 @@ const cardStyle = {
 
 const redLight = createMuiTheme({
     palette: {
-        primary: { main: "#f44336" }, 
+        primary: { main: "#f44336" },
     },
     overrides: {
         MuiRadio: {
-               
-                root: {
+
+            root: {
+                color: "#f44336 !important",
+                '&.$Mui-disabled': {
                     color: "#f44336 !important",
-                    '&.$Mui-disabled': {
-                        color: "#f44336 !important",
-                    }
-                },
+                }
+            },
         }
     },
-    
+
 });
 
 const amberLight = createMuiTheme({
@@ -75,15 +80,15 @@ const greenLight = createMuiTheme({
     },
     overrides: {
         MuiRadio: {
-                root: {
+            root: {
+                color: "#11cb5f !important",
+                '&.$Mui-disabled': {
                     color: "#11cb5f !important",
-                    '&.$Mui-disabled': {
-                        color: "#11cb5f !important",
-                    }
-                },
+                }
+            },
         }
     },
-    
+
 });
 
 
@@ -92,26 +97,36 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = {commentVal: this.props.textContent, radio:this.props.radioVal};
+        this.state = { commentVal: this.props.textContent, radio: this.props.radioVal, hasImage: false };
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleAddImage = this.handleAddImage.bind(this);
     }
 
-    
-    
-    handleDelete(event: any): void{
+
+
+    handleDelete(event: any): void {
         console.log("delete me");
         this.props.deleteThisComment(this);
     }
 
-    handleSave(event: any): void{
+    handleSave(event: any): void {
         this.props.saveThisComment(this);
     }
 
-    commentChangeHandler= (event: any): void => {
-            this.setState({ commentVal: event.target.value});
-        };
+    handleAddImage(event: any): void {
+        if (!this.state.hasImage) {
+            this.setState({ hasImage: true });
+        }
+        else {
+            this.setState({ hasImage: false });
+        }
+    }
+
+    commentChangeHandler = (event: any): void => {
+        this.setState({ commentVal: event.target.value });
+    };
 
     submitHandler = (event: any): void => {
         event.preventDefault(); // Stop the form from reloading the page
@@ -121,39 +136,44 @@ export class CommentBox extends React.Component<IProps, IState> {
     };
 
     radioChange = (event: any): void => {
-        this.setState({ radio: event.target.value});
+        this.setState({ radio: event.target.value });
     };
 
 
-   
 
-   saveOrDel(): JSX.Element{
-        if(!this.props.new){
-            if(this.props.canDelete){
+
+    saveOrDel(): JSX.Element {
+        if (!this.props.new) {
+            if (this.props.canDelete) {
                 return (
                     <IconButton >
                         <Delete onClick={this.handleDelete} />
                     </IconButton>
                 );
             }
-            else{
+            else {
                 return (
-                   <div></div>
+                    <div></div>
                 );
             }
-            
+
         }
-        else{
+        else {
             return (
                 <Grid container>
                     <Grid item>
                         <IconButton >
-                            <Save onClick={this.handleSave}/>
+                            <AddAPhoto onClick={this.handleAddImage} />
                         </IconButton>
                     </Grid>
                     <Grid item>
                         <IconButton >
-                            <Delete onClick={this.handleDelete}/>
+                            <Save onClick={this.handleSave} />
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <IconButton >
+                            <Delete onClick={this.handleDelete} />
                         </IconButton>
                     </Grid>
                 </Grid>
@@ -164,23 +184,23 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     trafficLight(): JSX.Element {
 
-        if(this.props.radioVal === "0"){
-            return(
-            <Grid container style={{ height: "100%" }}>
-                <Grid item xs={12} >
-                    <div style={{ width: "100%", height: "100%" }}>
-                        <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
-                            <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
-                        </form>
-                    </div>
-                </Grid>
+        if (this.props.radioVal === "0" && this.props.new === false) {
+            return (
+                <Grid container style={{ height: "100%" }}>
+                    <Grid item xs={12} >
+                        <div style={{ width: "100%", height: "100%" }}>
+                            <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
+                                <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
+                            </form>
+                        </div>
+                    </Grid>
 
-                
-            </Grid>
+
+                </Grid>
             );
         }
-        else{
-            return(
+        else {
+            return (
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={11} >
                         <div style={{ width: "100%", height: "100%" }}>
@@ -192,7 +212,6 @@ export class CommentBox extends React.Component<IProps, IState> {
 
                     <Grid item xs={1}>
                         <div style={{ height: "100%", paddingLeft: "7px" }} className="radioBox">
-
                             <RadioGroup onChange={this.radioChange} value={this.state.radio} >
                                 <MuiThemeProvider theme={redLight}>
                                     <Radio size="medium" color="primary" value={"1"} disabled={!this.props.new} />
@@ -213,26 +232,67 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     }
 
+    getImage(): JSX.Element {
+
+        const dataImg = this.props.imageSrc;
+        console.log("Data Image " + dataImg);
+
+
+
+        if (dataImg != null && this.props.new == false) {
+            return (
+                <div>
+                    <Divider />
+
+                    <img
+                        // className={classes.media}
+                        src={`data:image/jpeg;base64,${dataImg}`}
+                        style={{ width: "100%", paddingTop: 10 }}
+                    />
+                </div>
+            );
+        }
+
+        else if (this.props.new && this.state.hasImage) {
+            return (
+                <div style= {{paddingTop:10}}>
+                    <Divider />
+                    <h1>IMAGE UPLOAD HERE</h1>
+                </div>
+            );
+        }
+
+        else {
+            return (
+                <div></div>
+            );
+        }
+
+    }
+
     render(): JSX.Element {
         return (
-           <div>
-               
-               <Card style={cardStyle}>
+            <div>
+
+                <Card style={cardStyle}>
 
                     <CardHeader title={this.props.timeStamp} action={
 
-                      this.saveOrDel()
-                       
+                        this.saveOrDel()
+
                     } />
                     <Divider />
-                    
+
 
 
                     <CardContent >
                         {this.trafficLight()}
-                   </CardContent>                
-               </Card>
-           </div>
+
+                        {this.getImage()}
+
+                    </CardContent>
+                </Card>
+            </div>
         );
     }
 }

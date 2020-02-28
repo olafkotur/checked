@@ -142,6 +142,7 @@ class MemberUser extends React.Component<IProps, IState> {
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
                     canDelete = {false}
+                    imageSrc={comment.image}
                 />;
             });
 
