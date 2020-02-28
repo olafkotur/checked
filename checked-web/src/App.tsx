@@ -16,7 +16,7 @@ import './index.css';
 import { IZone } from './types';
 import { Zone } from './pages/zone';
 import { MemberUserView } from './pages/memberuser-view';
-import { AdminSettings } from './pages/admin-settings';
+
 
 interface IState {
 	authorised: boolean;
@@ -120,7 +120,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								<MemberUserView path = "memberuser"userID={this.state.userID} />
-								<AdminSettings path="adminsettings" userID={this.state.userID} />
+								
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -136,7 +136,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								<MemberUserView path="memberuser" userID={this.state.userID} />
-								<AdminSettings path="adminsettings" userID={this.state.userID} />
+								
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
