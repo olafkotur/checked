@@ -1,9 +1,6 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Grid, List,  Button, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { IMember } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
-import { MemberService } from '../../api/MemberService';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
@@ -22,6 +19,7 @@ interface IState {
     loadingComments: boolean;
     chaningMember: boolean;
     tabValue: number;
+    consentType: string;
 }
 interface IProps {
     members: Array<IMember>;
@@ -29,10 +27,8 @@ interface IProps {
 }
 
 class MemberUser extends React.Component<IProps, IState> {
-
     constructor(props: any) {
         super(props);
-
         this.state = {
             currentMember: -1,
             firstName: '',
@@ -47,6 +43,7 @@ class MemberUser extends React.Component<IProps, IState> {
             loadingComments: false,
             chaningMember: false,
             tabValue: 0,
+            consentType: "Consent"
         };
 
         this.handleFirstName = this.handleFirstName.bind(this);
@@ -58,6 +55,7 @@ class MemberUser extends React.Component<IProps, IState> {
         this.displayComments = this.displayComments.bind(this);
         this.changeTab = this.changeTab.bind(this);
         this.displayTab = this.displayTab.bind(this);
+        this.handleConsentToggle = this.handleConsentToggle.bind(this);
     }
 
 
@@ -75,8 +73,7 @@ class MemberUser extends React.Component<IProps, IState> {
 
    
 
-    changeTab(event: React.ChangeEvent<{}>, newValue: number): void{
-       
+    changeTab(event: React.ChangeEvent<{}>, newValue: number): void{ 
         this.setState({tabValue: newValue});
         console.log(newValue);
     };
@@ -99,8 +96,6 @@ class MemberUser extends React.Component<IProps, IState> {
     async getFeedList(memberID: number): Promise<void> {
         this.setState({ loadingComments: true });
         const serverInfo = await CommentService.getComments(memberID.toString());
-        // console.log(serverInfo);
-
         serverInfo.forEach((comment: { new: boolean }) => {
             comment.new = false;
         });
@@ -243,6 +238,10 @@ class MemberUser extends React.Component<IProps, IState> {
 
     }
 
+    handleConsentToggle = (event: any): void => {
+        this.setState({consentType: event.target.value});
+        console.log(event.target.value);
+    };
 
 
     displayTab(): JSX.Element{
@@ -274,25 +273,87 @@ class MemberUser extends React.Component<IProps, IState> {
 
        // consent forms
        else if (this.state.tabValue === 1) {
+            const listGridWidth = 8;
+            const acceptedGridWidth = 4;
+
             return (
                 <Grid container spacing={3} className="memberManager mt-3">
                     <Grid item xs={6} >
-                        <CardHeader title={"Consent Toggle"} />
-                        <Divider />
+                        {/* <CardHeader title={"Consent Toggle"} /> */}
+                        {/* <Divider /> */}
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
                                 {/* {this.displayComments()} */}
-                                <h1>Select Consent here</h1>
+                                <RadioGroup onChange={e => { this.handleConsentToggle(e);}}  >
+
+                                    <Grid container>
+                                        <Grid item xs={listGridWidth} > 
+                                            <FormControlLabel value="General" control={<Radio color="primary" />} label="General Terms & Conditions" />
+                                        </Grid>
+                                        <Grid item xs={acceptedGridWidth} > 
+                                            <p>Accepted</p>
+                                        </Grid>
+                                        <Grid item xs={listGridWidth} > 
+                                            <FormControlLabel value="Location" control={<Radio color="primary" />} label="Location Tracking" />
+                                        </Grid>
+                                        <Grid item xs={acceptedGridWidth} >
+                                            <p>Accepted</p>
+                                        </Grid>
+                                    {/* <FormControlLabel value="other" control={<Radio color="primary" />} label="Other" /> */}
+                                    </Grid>
+                                </RadioGroup>
                             </List>
                         </CardContent>
                     </Grid>
                     <Grid item xs={6} >
-                        <CardHeader title={"Agree Form"} />
-                        <Divider />
+                        {/* <CardHeader title={"Agree Form"} />
+                        <Divider /> */}
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
                                 {/* {this.displayComments()} */}
-                                <h1>Agree here</h1>
+                                <TextField id="outlined-basic" value = "Hello" label={this.state.consentType} variant="outlined" style={{ width: "100%" }} disabled/>
+
+                                <Grid container spacing={2}>
+                                    <Grid item  xs={6}>
+
+                                        <Button
+                                            type="button"
+                                            fullWidth
+                                            variant="contained"
+                                            color="secondary"
+                                            className="mt-1 mb-3"
+                                            // onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
+                                            // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
+                                        >
+                                            Decline
+                                        </Button>
+
+                                      
+
+                                    </Grid>
+
+                                    <Grid item xs={6}>
+
+                                        <Button
+                                            type="button"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            className="mt-1 mb-3"
+                                        // onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
+                                        // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
+                                        >
+                                           Accept
+                                        </Button>
+
+
+
+                                    </Grid>
+
+                                    
+
+                                </Grid>
+
                             </List>
                         </CardContent>
                     </Grid>
