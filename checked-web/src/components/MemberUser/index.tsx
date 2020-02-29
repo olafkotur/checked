@@ -56,6 +56,8 @@ class MemberUser extends React.Component<IProps, IState> {
         this.changeTab = this.changeTab.bind(this);
         this.displayTab = this.displayTab.bind(this);
         this.handleConsentToggle = this.handleConsentToggle.bind(this);
+        this.handleAcceptConsent = this.handleAcceptConsent.bind(this);
+        this.handleDeclineConsent = this.handleDeclineConsent.bind(this);
     }
 
 
@@ -69,18 +71,9 @@ class MemberUser extends React.Component<IProps, IState> {
         this.setState({ lastName: event.target.value });
     };
 
-    
-
-   
-
     changeTab(event: React.ChangeEvent<{}>, newValue: number): void{ 
         this.setState({tabValue: newValue});
-        console.log(newValue);
     };
-
-
-    
-
 
     formatAMPM(date: Date): string {
         let hours = date.getHours();
@@ -99,7 +92,6 @@ class MemberUser extends React.Component<IProps, IState> {
         serverInfo.forEach((comment: { new: boolean }) => {
             comment.new = false;
         });
-
         this.setState({ comments: serverInfo, loadingComments: false });
     }
 
@@ -109,15 +101,12 @@ class MemberUser extends React.Component<IProps, IState> {
 
             const commentsTmp: JSX.Element[] = [];
 
-            // if(!this.state.editingComment){
             this.state.comments.forEach(comment => {
 
                 const dateTmp = new Date(comment.createdAt * 1000);
                 const date = dateTmp.getDate(); //Current Date
                 const month = dateTmp.getMonth() + 1; //Current Month
                 const year = dateTmp.getFullYear(); //Current Year
-                // console.log(comment);
-
                 let timeStamp = "";
                 if (comment.new) {
                     timeStamp = "New Comment";
@@ -140,8 +129,6 @@ class MemberUser extends React.Component<IProps, IState> {
                     imageSrc={comment.image}
                 />;
             });
-
-            // }
 
             if (commentsTmp.length > 0) {
                 return (commentsTmp.reverse());
@@ -184,7 +171,6 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     addComment(): void {
-
 
         if (!this.state.editingComment) {
 
@@ -240,7 +226,15 @@ class MemberUser extends React.Component<IProps, IState> {
 
     handleConsentToggle = (event: any): void => {
         this.setState({consentType: event.target.value});
-        console.log(event.target.value);
+        // console.log(event.target.value);
+    };
+
+    handleAcceptConsent (event: any): void  {
+        console.log("Accept");
+    };
+
+    handleDeclineConsent (event: any): void {
+        console.log("Decline");
     };
 
 
@@ -284,7 +278,8 @@ class MemberUser extends React.Component<IProps, IState> {
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
                                 {/* {this.displayComments()} */}
-                                <RadioGroup onChange={e => { this.handleConsentToggle(e);}}  >
+                                
+                                <RadioGroup onChange={this.handleConsentToggle}  >
 
                                     <Grid container>
                                         <Grid item xs={listGridWidth} > 
@@ -299,18 +294,14 @@ class MemberUser extends React.Component<IProps, IState> {
                                         <Grid item xs={acceptedGridWidth} >
                                             <p>Accepted</p>
                                         </Grid>
-                                    {/* <FormControlLabel value="other" control={<Radio color="primary" />} label="Other" /> */}
                                     </Grid>
                                 </RadioGroup>
                             </List>
                         </CardContent>
                     </Grid>
                     <Grid item xs={6} >
-                        {/* <CardHeader title={"Agree Form"} />
-                        <Divider /> */}
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                                {/* {this.displayComments()} */}
                                 <TextField id="outlined-basic" value = "Hello" label={this.state.consentType} variant="outlined" style={{ width: "100%" }} disabled/>
 
                                 <Grid container spacing={2}>
@@ -322,7 +313,7 @@ class MemberUser extends React.Component<IProps, IState> {
                                             variant="contained"
                                             color="secondary"
                                             className="mt-1 mb-3"
-                                            // onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
+                                            onClick={this.handleDeclineConsent}
                                             // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                                         >
                                             Decline
@@ -340,7 +331,7 @@ class MemberUser extends React.Component<IProps, IState> {
                                             variant="contained"
                                             color="primary"
                                             className="mt-1 mb-3"
-                                        // onClick={(): void => this.handleSignIn(this.state.email, this.state.password)}
+                                            onClick={this.handleAcceptConsent}
                                         // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
                                         >
                                            Accept

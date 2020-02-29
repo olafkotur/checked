@@ -22,6 +22,7 @@ interface IState {
     open: boolean;
     ringing: boolean;
     reading: number;
+
 }
 
 class Zone extends React.Component<IProps, IState> {
@@ -30,11 +31,12 @@ class Zone extends React.Component<IProps, IState> {
         super(props);
 
 
-        this.state = { anchorEl: null, open: false, ringing: false, reading: 0 };
+        this.state = { anchorEl: null, open: false, ringing: false, reading: 0, };
 
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.toggleAssemble = this.toggleAssemble.bind(this);
+        this.determineTextColor = this.determineTextColor.bind(this);
     }
 
     componentDidMount(): void {
@@ -106,6 +108,24 @@ class Zone extends React.Component<IProps, IState> {
         return returnArr;
     }
 
+    determineTextColor(hex: any): string {
+
+        //convert hex to rgb
+        console.log(this.props.zone.color);
+        hex = hex.replace('#', '');
+        const red = parseInt(hex.substring(0, 2), 16);
+        const green = parseInt(hex.substring(2, 4), 16);
+        const blue = parseInt(hex.substring(4, 6), 16);
+
+        if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
+            return "#000000";
+        }
+        else {
+            return "#ffffff";
+        }
+
+    }
+
     render(): JSX.Element {
 
         let symbol;
@@ -127,7 +147,7 @@ class Zone extends React.Component<IProps, IState> {
                     style={{ backgroundColor: 'transparent' }}>
                     <Grid container spacing={0} className="h-100 ml-2">
                         <Grid item xs={12}>
-                            <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack zoneName" >
+                            <Typography variant="h6" className="ml-1 mt-1 fontMontserrat mutedBlack zoneName" style={{color:this.determineTextColor(this.props.zone.color)}}>
                                 {this.props.zone.name}
                             </Typography>
 

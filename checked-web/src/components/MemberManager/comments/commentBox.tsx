@@ -1,9 +1,9 @@
 import React from "react";
 import { RouteComponentProps } from "@reach/router";
-import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton, CardMedia } from "@material-ui/core";
+import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton} from "@material-ui/core";
 import '../../../index.css';
-import { Delete, Save, CameraAlt, AddAPhoto } from "@material-ui/icons";
-import Logo from '../../../media/checkedLogo.jpg';
+import { Delete, Save,  AddAPhoto } from "@material-ui/icons";
+
 
 
 // Convert image into base64
@@ -189,7 +189,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={12} >
                         <div style={{ width: "100%", height: "100%" }}>
-                            <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
+                            <form style={{ height: "100%" }} onSubmit={this.submitHandler}>
                                 <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
                             </form>
                         </div>
@@ -204,7 +204,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={11} >
                         <div style={{ width: "100%", height: "100%" }}>
-                            <form style={{ height: "100%" }} onSubmit={e => { this.submitHandler(e); }}>
+                            <form style={{ height: "100%" }} onSubmit={this.submitHandler}>
                                 <textarea disabled={!this.props.new} onChange={this.commentChangeHandler} value={this.state.commentVal} placeholder="Type Here" className="commentBox" />
                             </form>
                         </div>
@@ -239,7 +239,7 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
 
-        if (dataImg != null && this.props.new == false) {
+        if (dataImg != null && this.props.new === false) {
             return (
                 <div>
                     <Divider />

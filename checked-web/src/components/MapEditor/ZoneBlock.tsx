@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React from 'react';
 import './CSS/ZoneBlock.css';
 
@@ -40,17 +40,16 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
         this.myChangeHandler = this.myChangeHandler.bind(this);
         this.mySubmitHandler = this.mySubmitHandler.bind(this);
+        
     }
 
     
 
     myChangeHandler = (event: any): void => {
-        // console.log("change detected");
         this.setState({ value: event.target.value});
     };
 
     activityChangeHandler = (event: any): void => {
-        // console.log("change detected");
         this.setState({ activity: event.target.value });
     };
 
@@ -61,21 +60,21 @@ class ZoneBlock extends React.Component<IProps, IState> {
         console.log(this.state.value);
     };
 
-    setBackground(color: any){
+    setBackground(color: any): void{
         this.setState({backgroundColor: color});
     }
 
-    setTextColor(hex: any){
+    setPlaceholderColor(hex: any): string{
         //this.setState({textColor: hex});
-
+        console.log("---" + hex);
         if(hex === "#ffffff"){
             // white
-            this.setState({ textColor: hex, placeholderColor:"activityInput" });
+            return("activityInput" );
 
         }
         else{
             // Black
-            this.setState({ textColor: hex, placeholderColor: "activityInputDark" });
+            return ("activityInputDark");
         }
 
 
@@ -86,7 +85,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
         
     };
 
-    render() {
+    render(): JSX.Element {
         console.log(this.state.textColor);
         return (
             <div 
@@ -95,9 +94,11 @@ class ZoneBlock extends React.Component<IProps, IState> {
             style={{ backgroundColor: this.state.backgroundColor, width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} 
             id = {this.state.value} 
             data-dbid = {this.props.dbid} 
-            data-activity = {this.state.activity}>
-               
-                <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
+            data-activity = {this.state.activity}
+            data-backgroundstyle={this.state.backgroundColor}
+            >
+              
+                <form className="zoneForm" onSubmit={this.mySubmitHandler}>
 
                     <input 
                     id = {this.props.name + "Title"} 
@@ -111,7 +112,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
                     />
 
                     <input 
-                    className={this.state.placeholderColor}
+                    className={this.setPlaceholderColor(this.props.textColor)}
                     onChange={this.activityChangeHandler} 
                     placeholder={'Activity'} 
                     value= {this.state.activity} 

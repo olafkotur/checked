@@ -142,9 +142,10 @@ class MapEditor extends React.Component<IProps, IState> {
                 // Uses HTML Div
                 const zone = zones[i];
                 const rect = zone.getBoundingClientRect();
-                const backgroundStyle = window.getComputedStyle(zone, null).getPropertyValue("background-color");
+                // const backgroundStyle = window.getComputedStyle(zone, null).getPropertyValue("background-color");
                 const id = zone.getAttribute('data-dbid');
                 const activity = zone.getAttribute('data-activity');
+                const backgroundStyle = zone.getAttribute('data-backgroundStyle');
                 if (id != null && activity != null) {
                     const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(id));
                     // console.log(activitiesDB.result[0].activityId);
@@ -233,21 +234,16 @@ class MapEditor extends React.Component<IProps, IState> {
 
     determineTextColor(hex: any): string{
   
-        // const rgb = this.hexToRgb(color);
-
-        // rgb = rgb.replace(/[^\d,]/g, '').split(',');
-
+        //convert hex to rgb
         hex = hex.replace('#', '');
         const red = parseInt(hex.substring(0, 2), 16);
         const green = parseInt(hex.substring(2, 4), 16);
         const blue = parseInt(hex.substring(4, 6), 16);
 
         if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
-            console.log("Black");
             return "#000000";
         }
         else {
-            console.log("White");
             return "#ffffff";
         }
         
@@ -256,8 +252,6 @@ class MapEditor extends React.Component<IProps, IState> {
    
 
     async buildZone(DBZone: any): Promise<void> {
-
-        // console.log(DBZone);
 
         const pos = {
             width: DBZone.width,
@@ -269,13 +263,11 @@ class MapEditor extends React.Component<IProps, IState> {
         let activity = '';
 
         const activitiesDB = await ActivityService.getAllActivitiesForZone(parseInt(DBZone.zoneId));
-        // console.log(activitiesDB);
 
         if (activitiesDB.result.length > 0) {
-            // console.log(activitiesDB.result[0].name);
             activity = activitiesDB.result[0].name;
         }
-
+        console.log("------------------------" + DBZone.color);
         const tempZones = this.state.zones;
         tempZones[tempZones.length] = <ZoneBlock
             key={(tempZones.length + 1).toString()}
@@ -287,7 +279,7 @@ class MapEditor extends React.Component<IProps, IState> {
             setSelectedZone={this.setSelectedZone}
             backgroundColor={DBZone.color}
             
-            textColor = {this.determineTextColor(DBZone.color)}
+            textColor={this.determineTextColor(DBZone.color)}
         />;
         this.setState({ zones: tempZones });
     }
@@ -384,3 +376,4 @@ class MapEditor extends React.Component<IProps, IState> {
 
 
 export default MapEditor;
+// export function determineTextColor();

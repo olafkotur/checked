@@ -1,6 +1,5 @@
 import React from 'react';
 import UseAnimations from 'react-useanimations';
-import { MemberService } from '../../api/MemberService';
 import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { Person } from '@material-ui/icons';
