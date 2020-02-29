@@ -6,7 +6,6 @@ import { Delete, Save,  AddAPhoto } from "@material-ui/icons";
 
 
 
-// Convert image into base64
 
 interface IState {
     commentVal: string;
@@ -235,7 +234,7 @@ export class CommentBox extends React.Component<IProps, IState> {
     getImage(): JSX.Element {
 
         const dataImg = this.props.imageSrc;
-        console.log("Data Image " + dataImg);
+        // console.log("Data Image " + dataImg);
 
 
 

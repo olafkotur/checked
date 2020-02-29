@@ -282,6 +282,7 @@ class MemberManager extends React.Component<IProps, IState> {
                 rating: 0,
                 value: "",
                 new: true,
+                image: undefined,
             };
 
             tempComments.push(newComment);
