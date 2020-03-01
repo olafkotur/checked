@@ -3,6 +3,7 @@ import { RouteComponentProps } from "@reach/router";
 import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton} from "@material-ui/core";
 import '../../../index.css';
 import { Delete, Save,  AddAPhoto } from "@material-ui/icons";
+import { DropzoneArea } from '../../../../node_modules/material-ui-dropzone';
 
 
 
@@ -11,6 +12,8 @@ interface IState {
     commentVal: string;
     radio: string;
     hasImage: boolean;
+    imageDropped: boolean;
+    image: any;
 }
 
 interface IProps extends RouteComponentProps {
@@ -96,11 +99,13 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { commentVal: this.props.textContent, radio: this.props.radioVal, hasImage: false };
+        this.state = { commentVal: this.props.textContent, radio: this.props.radioVal, hasImage: false, imageDropped: false, image: this.props.imageSrc };
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleAddImage = this.handleAddImage.bind(this);
+        this.handleDropImage = this.handleDropImage.bind(this);
+        this.getBase64 = this.getBase64.bind(this);
     }
 
 
@@ -119,9 +124,26 @@ export class CommentBox extends React.Component<IProps, IState> {
             this.setState({ hasImage: true });
         }
         else {
-            this.setState({ hasImage: false });
+            this.setState({ hasImage: false, imageDropped: false, image: null });
         }
     }
+
+    handleDropImage(files: any): void {
+        console.log(files);
+        this.getBase64(files[0]);
+    }
+
+    getBase64(file: any): void {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        
+        reader.onload = () => this.setState({ imageDropped: true, image: reader.result });
+           
+        reader.onerror = function (error): void {
+            console.log('Error: ', error);
+        };
+    }
+
 
     commentChangeHandler = (event: any): void => {
         this.setState({ commentVal: event.target.value });
@@ -231,21 +253,24 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     }
 
+    
+
     getImage(): JSX.Element {
 
-        const dataImg = this.props.imageSrc;
-        // console.log("Data Image " + dataImg);
+       
+       
 
+        console.log(this.state.image);
 
-
-        if (dataImg != null && this.props.new === false) {
+        if (this.state.image != null && this.props.new === false) {
             return (
                 <div>
                     <Divider />
 
                     <img
                         // className={classes.media}
-                        src={`data:image/jpeg;base64,${dataImg}`}
+                        // src={`data:image/jpeg;base64,${this.state.image}`}
+                        src={this.state.image}
                         style={{ width: "100%", paddingTop: 10 }}
                     />
                 </div>
@@ -253,12 +278,30 @@ export class CommentBox extends React.Component<IProps, IState> {
         }
 
         else if (this.props.new && this.state.hasImage) {
-            return (
-                <div style= {{paddingTop:10}}>
-                    <Divider />
-                    <h1>IMAGE UPLOAD HERE</h1>
-                </div>
-            );
+            if(!this.state.imageDropped){
+                return (
+                    <div style= {{paddingTop:10}}>
+                        <Divider />
+                        <DropzoneArea
+                            onChange={this.handleDropImage}
+                            filesLimit = {1}
+                            acceptedFiles = {['image/*']}
+                    />
+                    </div>
+                );
+            }
+            else{
+                return (
+                    <div style={{ paddingTop: 10 }}>
+                        <Divider />
+                        <img 
+                            src = {this.state.image} 
+                            style={{ width: "100%", paddingTop: 10 }}
+                        />
+                        
+                    </div>
+                );
+            }
         }
 
         else {

@@ -299,7 +299,7 @@ class MemberManager extends React.Component<IProps, IState> {
             memberId: this.state.currentMember,
             rating: parseInt(commentBox.state.radio),
             value: commentBox.state.commentVal,
-            image: commentBox.state.imageSrc,
+            image: commentBox.state.image,
         };
 
         await CommentService.saveComment(body);
