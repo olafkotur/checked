@@ -1,3 +1,4 @@
+import 'package:checked_mobile_application/screens/analysis.dart';
 import 'package:checked_mobile_application/screens/notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +69,10 @@ class User_NavigationState extends State<UserNavigation> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           color:Colors.orange[300],
+                          border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(60.0),
                             topRight: Radius.circular(60.0),
@@ -94,8 +99,8 @@ class User_NavigationState extends State<UserNavigation> {
                       top: 230,
                       left: MediaQuery.of(context).size.width*.5-110,
                       child: Container(
-                        height: 200,
-                        width: 400,
+                        height: 150,
+                        width: 300,
                         child: Text(widget.companyName,style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -129,14 +134,18 @@ class User_NavigationState extends State<UserNavigation> {
                             Stack(
                               children: <Widget>[
                                 Container(
-                                  width:200,
-                                  height:190,
+                                  width:140,
+                                  height:140,
                                   child: Container(
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: Colors.orange,
-                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      borderRadius: BorderRadius.all(Radius.circular(200)),
+                                      border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
                                     ),
                                     child: IconButton(
                                     onPressed: (){
@@ -151,8 +160,8 @@ class User_NavigationState extends State<UserNavigation> {
                                   )
                                 ),
                                 Positioned(
-                                  top: 200,
-                                  left: 60,
+                                  top: 150,
+                                  left: 32,
                                   child: Text("Activities",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -166,14 +175,18 @@ class User_NavigationState extends State<UserNavigation> {
                             Stack(
                               children: <Widget>[
                                 Container(
-                                  width:200,
-                                  height:190,
+                                  width:140,
+                                  height:140,
                                   child: Container(
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: Colors.orange,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
                                     ),
                                     child: IconButton(
                                     onPressed: (){
@@ -188,8 +201,8 @@ class User_NavigationState extends State<UserNavigation> {
                                   )
                                 ),
                                 Positioned(
-                                  top: 200,
-                                  left: 60,
+                                  top: 150,
+                                  left: 26,
                                   child: Text("Comments",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -203,14 +216,18 @@ class User_NavigationState extends State<UserNavigation> {
                             Stack(
                               children: <Widget>[
                                 Container(
-                                  width:200,
-                                  height:190,
+                                  width:140,
+                                  height:140,
                                   child: Container(
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: Colors.orange,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
                                     ),
                                     child: IconButton(
                                     onPressed: (){
@@ -225,8 +242,8 @@ class User_NavigationState extends State<UserNavigation> {
                                   )
                                 ),
                                 Positioned(
-                                  top: 200,
-                                  left: 48,
+                                  top: 150,
+                                  left: 23,
                                   child: Text("Notification",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -240,14 +257,18 @@ class User_NavigationState extends State<UserNavigation> {
                             Stack(
                               children: <Widget>[
                                 Container(
-                                  width:200,
-                                  height:190,
+                                  width:140,
+                                  height:140,
                                   child: Container(
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
                                       color: Colors.orange,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
                                     ),
                                     child: IconButton(
                                     onPressed: (){},
@@ -260,8 +281,8 @@ class User_NavigationState extends State<UserNavigation> {
                                   )
                                 ),
                                 Positioned(
-                                  top: 200,
-                                  left: 48,
+                                  top: 150,
+                                  left: 14,
                                   child: Text("Members Info",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -271,10 +292,92 @@ class User_NavigationState extends State<UserNavigation> {
                                 )
                               ],
                             ),
+                            SizedBox(width:20,),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  width:140,
+                                  height:140,
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors.orange,
+                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      border: Border.all(
+                                        color:Colors.orange[700],
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: IconButton(
+                                    onPressed: (){
+                                      Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: widget.userId,membersIds: widget.membersIds,)));
+                                    },
+                                    icon: Icon(
+                                      Icons.settings,
+                                      size: 100,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  )
+                                ),
+                                Positioned(
+                                  top: 150,
+                                  left: 36,
+                                  child: Text("Settings",style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w700
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
                     ),
+                    Positioned(
+                      top: 640,
+                      left: 60,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => AnalysisBoard()));
+                        },
+                        child: Container(
+                          width: 300,
+                          height:60,
+                          decoration: BoxDecoration(
+                            color:Colors.orange,
+                            border: Border.all(
+                              color: Colors.orange[700],
+                              width: 2,
+                            )
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              SizedBox(width: 20,),
+                              Expanded(
+                                child: Text("Analysis board",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600
+                                  ),
+                                ),
+                              ),
+                              Icon(
+                                Icons.insert_chart,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                              SizedBox(width: 20,)
+                            ]
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )
