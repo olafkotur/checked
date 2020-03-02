@@ -19,8 +19,14 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
   List<charts.Series<Entry,int>> _SeriesLineData;
   LiveData get service => GetIt.I<LiveData>();
   APIResponse _apiresponse;
+  APIResponse _apiResponseByZone;
   int index =0;
   List<Entry> Linedata =[];
+
+  _getTemperatureByzone(String zone) async {
+    _apiResponseByZone = await service.getTemperatureByZone(zone);
+    return _apiResponseByZone.data;
+  }
 
   //getting the data from the backend
   _generateData()async {
@@ -40,6 +46,8 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
         measureFn: (Entry entry,_)=> entry.value,
       ),
     );
+
+    return _SeriesLineData;
   }
   Material makeCard(Container func, String  heading){
     return Material(
@@ -56,7 +64,8 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
                 SizedBox(height: 10,),
                 Text(heading,
                   style: TextStyle(
-                    fontSize: 17
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700
                   ),
                 ),
                 Expanded(
@@ -106,19 +115,24 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
           children: <Widget>[
             makeCard(buildTemperatureChart(),"Temperature"),
             makeCard(buildContainer(),"Light Levels"),
-            makeCard(buildContainer(),"Zone 1"),
-            makeCard(buildContainer(),"Zone 2"),
-            makeCard(buildContainer(),"Zone 3"),
-            makeCard(buildContainer(),"Zone 4"),
+            makeCard(buildTemperatureReading("1"),"Zone 1"),
+            makeCard(buildTemperatureReading("2"),"Zone 2"),
+            makeCard(buildTemperatureReading("4"),"Zone 4"),
+            makeCard(buildTemperatureReading("3"),"Zone 5"),
+            makeCard(buildTemperatureReading("3"),"Zone 7"),
+            makeCard(buildTemperatureReading("3"),"Zone 6"),
             makeCard(buildTemperatureChart(),"Historical data"),
           ],
           staggeredTiles: [
             StaggeredTile.extent(2, 300.0),
-            StaggeredTile.extent(1, 316.0),
-            StaggeredTile.extent(1, 150.0),
-            StaggeredTile.extent(1, 150.0),
-            StaggeredTile.extent(1, 150.0),
-            StaggeredTile.extent(1, 150.0),
+            StaggeredTile.extent(1, 215.0),
+            StaggeredTile.extent(1, 100.0),
+            StaggeredTile.extent(1, 100.0),
+            StaggeredTile.extent(1, 100.0),
+            StaggeredTile.extent(1, 100.0),
+            StaggeredTile.extent(1, 100.0),
+            StaggeredTile.extent(1, 100.0),
+
             StaggeredTile.extent(2, 290.0),
           ],
         ),
@@ -127,6 +141,43 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
   }
   Container buildContainer(){
     return Container();
+  }
+  Container buildTemperatureReading(String zone){
+    int temperatureNum = 0;
+    return Container(
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Container(
+              child:Text("Temperature",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blue[400],
+                ),
+              ),
+            ),
+            SizedBox(height: 0.0,),
+            FutureBuilder<Object>(
+              future: _getTemperatureByzone(zone),
+              builder: (BuildContext context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.done){
+                var data = snapshot.data as Map;
+                  return Container(
+                    child:Text(data["value"].toString(),
+                      style: TextStyle(
+                        fontSize: 25
+                      ),
+                    ),
+                  );
+                }else {
+                  return buildContainer();
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
   Container buildTemperatureChart() {
     return Container(
