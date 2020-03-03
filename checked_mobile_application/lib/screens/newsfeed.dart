@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/screens/notifications.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:get_it/get_it.dart';
 
 class NewsFeed extends StatefulWidget {
@@ -100,9 +103,19 @@ class _NewsFeedState extends State<NewsFeed> {
                             itemBuilder: (BuildContext context, int index){
                               var timestamp=snapshot.data.data[index]["createdAt"];
                               var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+                              String rawData = (snapshot.data.data[index]["image"]);
+                              Uint8List bytes;
+                              var imageData;
+                              if(rawData.length>1){
+                                String _base64 = rawData.substring(23, rawData.length);
+                                bytes = Base64Decoder().convert(_base64);
+                                imageData = MemoryImage(bytes);
+                              }else{
+                                imageData = AssetImage("assets/checkedLogo.jpg");
+                              }
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 5),
-                                child: buildfeedbacktab(context,snapshot.data.data[index]["value"],date),
+                                child: buildfeedbacktab(context,snapshot.data.data[index]["value"],date, imageData),
                               );
                             },
                           );
@@ -119,7 +132,7 @@ class _NewsFeedState extends State<NewsFeed> {
     );
   }
 
-Card buildfeedbacktab(BuildContext context, String comment, DateTime time) {
+Card buildfeedbacktab(BuildContext context, String comment, DateTime time, dataimage) {
 return Card(
       elevation: 5,
       child: Padding(
@@ -209,7 +222,7 @@ return Card(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                  image: AssetImage("assets/checkedLogo.jpg"),
+                  image: dataimage,
                   fit: BoxFit.cover
                 )
               ),
