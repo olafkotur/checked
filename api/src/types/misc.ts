@@ -14,3 +14,9 @@ export interface INotificationSettings {
   minTemperature: number;
   gatheringThreshold: number;
 }
+
+export interface IDecodedToken {
+  exp: number;
+  email: string;
+  password: string;
+}

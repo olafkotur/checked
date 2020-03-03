@@ -129,13 +129,7 @@ export const UserHandler = {
     // Check if credentials are correct
     if (data.email === req.body.email || '') {
       if (data.password === hashedPassword) {
-        return ResponseService.data({ 
-          userId: data.userId,
-          email: data.email,
-          companyName: data.companyName,
-          isGuardian: data.isGuardian,
-          policyAccepted: data.policyAccepted
-        }, res);
+        return ResponseService.data(data, res);
       }
     }
 
