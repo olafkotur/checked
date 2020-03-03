@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card,  Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
 import { IMember } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
+import { Person, ArrowForwardIos } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
@@ -292,7 +291,7 @@ class Overseer extends React.Component<IProps, IState> {
         const data:  number[]  = [];
         const dates: string[] = [];
 
-        let score: number = 0;
+        let score = 0;
 
         this.state.comments.forEach(comment => {
 
@@ -389,6 +388,7 @@ class Overseer extends React.Component<IProps, IState> {
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
                     canDelete = {false}
+                    imageSrc={comment.image}
                 />;
             });
 

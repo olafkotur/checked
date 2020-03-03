@@ -78,7 +78,7 @@ async function main() {
       for (let i = 0; i < config.default.numberOfMembers; i++) {
         await HttpService.post(DOMAIN + '/api/members/create', {
           userId: ids.user,
-          firstName: config.default.member.firstName + ` ${i+1}`,
+          firstName: config.default.member.firstName,
           lastName: config.default.member.lastName
         }).then((res: any) => {
           if (res.code === 201) {

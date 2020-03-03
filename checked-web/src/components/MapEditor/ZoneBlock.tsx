@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import React from 'react';
 import './CSS/ZoneBlock.css';
 
@@ -11,6 +11,7 @@ interface IState {
     activity: string;
     backgroundColor: any;
     textColor: any;
+    placeholderColor: string;
 
 }
 interface IProps {
@@ -29,21 +30,26 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = { value: this.props.name, activity: this.props.activity , backgroundColor: this.props.backgroundColor, textColor: this.props.textColor};
+        this.state = { 
+            value: this.props.name, 
+            activity: this.props.activity, 
+            backgroundColor: this.props.backgroundColor, 
+            textColor: this.props.textColor, 
+            placeholderColor: "activityInput"
+        };
 
         this.myChangeHandler = this.myChangeHandler.bind(this);
         this.mySubmitHandler = this.mySubmitHandler.bind(this);
+        
     }
 
     
 
     myChangeHandler = (event: any): void => {
-        console.log("change detected");
         this.setState({ value: event.target.value});
     };
 
     activityChangeHandler = (event: any): void => {
-        console.log("change detected");
         this.setState({ activity: event.target.value });
     };
 
@@ -54,12 +60,24 @@ class ZoneBlock extends React.Component<IProps, IState> {
         console.log(this.state.value);
     };
 
-    setBackground(color: any){
-        this.setState({backgroundColor: color.hex});
+    setBackground(color: any): void{
+        this.setState({backgroundColor: color});
     }
 
-    setTextColor(color: any){
-        this.setState({textColor: color.hex});
+    setPlaceholderColor(hex: any): string{
+        //this.setState({textColor: hex});
+        console.log("---" + hex);
+        if(hex === "#ffffff"){
+            // white
+            return("activityInput" );
+
+        }
+        else{
+            // Black
+            return ("activityInputDark");
+        }
+
+
     }
 
     handleClick = (event: any): void => {
@@ -67,14 +85,39 @@ class ZoneBlock extends React.Component<IProps, IState> {
         
     };
 
-    render() {
+    render(): JSX.Element {
+        console.log(this.state.textColor);
         return (
-            <div className="zoneBlock" onClick={this.handleClick} style={{ backgroundColor: this.state.backgroundColor, width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} id = {this.state.value} data-dbid = {this.props.dbid} data-activity = {this.state.activity}>
-               
-                <form className="zoneForm" onSubmit={e => { this.mySubmitHandler(e); }}>
+            <div 
+            className="zoneBlock" 
+            onClick={this.handleClick} 
+            style={{ backgroundColor: this.state.backgroundColor, width:this.props.pos.width,height:this.props.pos.height,top:this.props.pos.yValue, left:this.props.pos.xValue}} 
+            id = {this.state.value} 
+            data-dbid = {this.props.dbid} 
+            data-activity = {this.state.activity}
+            data-backgroundstyle={this.state.backgroundColor}
+            >
+              
+                <form className="zoneForm" onSubmit={this.mySubmitHandler}>
 
-                    <input id = {this.props.name + "Title"} onChange={this.myChangeHandler} value={this.state.value} className="zoneTitle" type="text" name="zoneName" placeholder={this.props.name} style = {{color: this.state.textColor}} />
-                    <input className="activityInput" onChange={this.activityChangeHandler} placeholder={'Activity'} value= {this.state.activity} style = {{color: this.state.textColor}}/>
+                    <input 
+                    id = {this.props.name + "Title"} 
+                    onChange={this.myChangeHandler} 
+                    value={this.state.value} 
+                    className="zoneTitle" 
+                    type="text" 
+                    name="zoneName" 
+                    placeholder={this.props.name} 
+                    style = {{color: this.state.textColor}} 
+                    />
+
+                    <input 
+                    className={this.setPlaceholderColor(this.props.textColor)}
+                    onChange={this.activityChangeHandler} 
+                    placeholder={'Activity'} 
+                    value= {this.state.activity} 
+                    style = {{color: this.state.textColor}}
+                    />
 
                 </form>
 

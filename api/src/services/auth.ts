@@ -8,4 +8,9 @@ export const AuthService = {
     return salted;
   },
 
+  generateSecurePassword: (): any => {
+    const seed: number = Math.random();
+    const securePassword: string = AuthService.hashValue(seed.toString());
+    return securePassword;
+  }
 }

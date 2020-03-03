@@ -1,9 +1,22 @@
 export interface ILocations {
-  zoneId: number,
-  memebrs: number[]
+  zoneId: number;
+  memebrs: number[];
 }
 
 export interface IZoneTemperatures {
-  zoneId: number,
-  value: number
+  zoneId: number;
+  value: number;
+}
+
+export interface INotificationSettings {
+  interval: number;
+  maxTemperature: number;
+  minTemperature: number;
+  gatheringThreshold: number;
+}
+
+export interface IDecodedToken {
+  exp: number;
+  email: string;
+  password: string;
 }

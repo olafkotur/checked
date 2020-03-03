@@ -6,7 +6,6 @@ import { Person, ArrowForwardIos, Add, PersonAdd, DeleteOutlineRounded } from '@
 import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';
-import { LiveService } from '../../api/LiveService';
 import UseAnimations from 'react-useanimations';
 import { LinkService } from '../../api/LinkService';
 import { UserService } from '../../api/UserService';
@@ -225,7 +224,8 @@ class MemberManager extends React.Component<IProps, IState> {
                     timeStamp={timeStamp}
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
-                    canDelete={false}
+                    canDelete={true}
+                    imageSrc = {comment.image}
                 />;
             });
 
@@ -282,6 +282,7 @@ class MemberManager extends React.Component<IProps, IState> {
                 rating: 0,
                 value: "",
                 new: true,
+                image: undefined,
             };
 
             tempComments.push(newComment);
@@ -298,6 +299,7 @@ class MemberManager extends React.Component<IProps, IState> {
             memberId: this.state.currentMember,
             rating: parseInt(commentBox.state.radio),
             value: commentBox.state.commentVal,
+            image: commentBox.state.image,
         };
 
         await CommentService.saveComment(body);
@@ -590,7 +592,7 @@ class MemberManager extends React.Component<IProps, IState> {
         const data: number[] = [];
         const dates: string[] = [];
 
-        let score: number = 0;
+        let score = 0;
 
         this.state.comments.forEach(comment => {
 

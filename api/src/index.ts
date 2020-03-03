@@ -13,6 +13,8 @@ import { HistoricHandler } from './handlers/historic';
 import { CommentHandler } from './handlers/comment';
 import { LinkHandler } from './handlers/link';
 import { NotificationHandler } from './handlers/notifications';
+import { SettingHandler } from './handlers/settings';
+import { EventHandler } from './handlers/events';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -23,7 +25,8 @@ const app: express.Application = express();
 async function main() {
   await MongoService.connect();
 
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+  app.use(bodyParser.json({limit: '50mb'}));
   app.use(cors());
 
   // Live handlers
@@ -65,6 +68,7 @@ async function main() {
   app.get('/api/members/:memberId', MemberHandler.getMember);
   app.get('/api/members', MemberHandler.getMembers);
   app.get('/api/members/users/:userId', MemberHandler.getMembersByUser);
+  app.post('/api/members/login', MemberHandler.login);
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);
@@ -98,6 +102,16 @@ async function main() {
   app.get('/api/notifications/users/:userId', NotificationHandler.getNotificationsByUser);
   app.get('/api/notifications/latest/:userId', NotificationHandler.getLatestByUser);
   app.get('/api/notifications/clear/:notificationId', NotificationHandler.clearNotification);
+
+  // Settings handlers
+  app.post('/api/settings/update/:userId', SettingHandler.updateSetting);
+  app.get('/api/settings/:userId', SettingHandler.getSettingByUser);
+
+  // Event handlers
+  app.post('/api/events/create', EventHandler.createEvent);
+  app.delete('/api/events/delete/:eventId', EventHandler.deleteEvent);
+  app.get('/api/events/:eventId', EventHandler.getEvent);
+  app.get('/api/events/users/:userId', EventHandler.getEventsByUser);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
