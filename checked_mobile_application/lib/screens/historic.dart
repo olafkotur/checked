@@ -82,11 +82,11 @@ class _HistoryState extends State<History> {
                           itemCount: snapshot.data.data.length,
                           itemBuilder: (BuildContext context, int index){
                             var timestamp=snapshot.data.data[index]["createdAt"];
-                            var date = new DateTime.fromMicrosecondsSinceEpoch(timestamp * 1000);
+                            var date = new DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
                             return
                             Padding(
                               padding: const EdgeInsets.only(bottom:0.0, top: 5.0),
-                              child: buildfeedbacktab(context,snapshot.data.data[index]["averageTemperature"],snapshot.data.data[index]["membersActive"],snapshot.data.data[index]["zonesCount"],snapshot.data.data[index]["activitiesCount"],date),
+                              child: buildfeedbacktab(context,snapshot.data.data[index]["averageTemperature"],snapshot.data.data[index]["membersActive"],snapshot.data.data[index]["zonesCount"],snapshot.data.data[index]["activitiesCount"],date,snapshot.data.data[index]["locations"]),
                             );
                           },
                         );
@@ -102,7 +102,7 @@ class _HistoryState extends State<History> {
     );
   }
 
-Card buildfeedbacktab(BuildContext context, int temperature, int membersActive, int zoneCount, int activitesCount, DateTime date) {
+Card buildfeedbacktab(BuildContext context, int temperature, int membersActive, int zoneCount, int activitesCount, DateTime date,List memebers) {
 return Card(
       elevation: 5,
       child: Column(
@@ -185,7 +185,7 @@ return Card(
                         )
                       ),
                       SizedBox(width: 10.0,),
-                      Text("average Temperature: "+temperature.toString(),style: TextStyle(
+                      Text("Average Temperature: "+temperature.toString(),style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 15
                         ),
@@ -272,13 +272,48 @@ return Card(
                         )
                       ),
                       SizedBox(width: 10.0,),
-                      Text("activities: "+activitesCount.toString(),style: TextStyle(
+                      Text("Activities: "+activitesCount.toString(),style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 15
                         ),
                       ),
                     ],
                   ),
+                  SizedBox(height: 5,),
+                  Column(
+                    children: <Widget>[
+                      Row(
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40),
+                            color: Colors.orange[400],
+                          ),
+                          height: 30.0,
+                          width: 30.0,
+                          child: Center(
+                            child: IconButton(
+                              icon: Icon(Icons.group), 
+                              onPressed: (){
+                                
+                              },
+                              color: Colors.white,
+                              iconSize: 15,
+                            ),
+                          )
+                        ),
+                        SizedBox(width: 10.0,),
+                        Text("Memebers: "+activitesCount.toString(),style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15
+                          ),
+                        ),
+                      ],
+                    ),
+                    ],
+                  ),
+                  SizedBox(height:5),
+                  //renderMembers(memebers),
                 ],
               ),
             ),
@@ -287,4 +322,14 @@ return Card(
       ),
     );
   }
+}
+renderMembers(members){
+  // members.map((zone){
+
+  // });
+  return Row(
+    children: members.map<Widget>((member) =>
+    Flexible(child: Text("Zone "+member["zoneId"].toString() +":" + member["members"].toString())),
+    ).toList()
+  );
 }

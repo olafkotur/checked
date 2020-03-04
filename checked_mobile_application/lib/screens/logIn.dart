@@ -4,6 +4,7 @@ import 'package:checked_mobile_application/module/loading.dart';
 import 'package:checked_mobile_application/screens/consumerlogin.dart';
 import 'package:checked_mobile_application/screens/home.dart';
 import 'package:checked_mobile_application/screens/newsfeed.dart';
+import 'package:checked_mobile_application/screens/userNavigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:checked_mobile_application/services/user_services.dart';
@@ -35,10 +36,12 @@ class _SignInState extends State<SignIn> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  String _email = "";
-  String _password = "";
+  String _email;
+  String _password;
+  String _companyName;
   bool _isGuardian;
   int _userId;
+
   @override
   Widget build(BuildContext context) {
     return _isloading ? Loading() : Scaffold(
@@ -176,14 +179,16 @@ class _SignInState extends State<SignIn> {
                                   if(!_apiresponse.error){
                                     _isGuardian = _apiresponse.data["isGuardian"];
                                     _userId =_apiresponse.data["userId"];
+                                    _companyName = _apiresponse.data["companyName"];
                                     var _membersList = await service.getMembersByUser(_userId.toString());
                                     var memberIds = _membersList.data.map((member)=> member["memberId"]).toList();
                                     setState(() {
                                       if(!_isGuardian){
                                         _isloading = false;
                                         errorMessage = _apiresponse.errorMessage;
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => UserNavigation(userId: _userId,membersIds: memberIds,companyName: _companyName,)));
                                         
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: _userId,membersIds: memberIds,)));
+                                        //Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: _userId,membersIds: memberIds,)));
                                       }else{
                                         _isloading = false;
                                         errorMessage = _apiresponse.errorMessage;
