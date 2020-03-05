@@ -124,3 +124,10 @@ export interface IDbEvent {
   createdAt: Date;
   lastUpdated: Date;
 }
+
+export interface IDbConsentForm {
+  memberId: number;
+  isAccepeted: boolean;
+  createdAt: Date;
+  lastUpdated: Date;
+}

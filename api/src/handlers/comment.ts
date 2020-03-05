@@ -11,8 +11,7 @@ export const CommentHandler = {
     const memberId: number = parseInt(req.body.memberId || '0');
     const exists: boolean = await DbHelperService.exists('members', { memberId });
     if (!exists) {
-      ResponseService.bad('Cannot create a new comment without a valid member id', res);
-      return false;
+      return ResponseService.bad('Cannot create a new comment without a valid member id', res);
     }
 
     const data: IDbComment = {
@@ -24,29 +23,25 @@ export const CommentHandler = {
       createdAt: new Date(),
     };
 
-    MongoService.insertOne('comments', data);
-    ResponseService.ok('Added to collection', res);
-    return true;
+    await MongoService.insertOne('comments', data);
+    return ResponseService.ok('Added to collection', res);
   },
 
   deleteComment: async (req: express.Request, res: express.Response) => {
     const commentId: number = parseInt(req.params.commentId || '0');
     const exists: boolean = await DbHelperService.exists('comments', { commentId });
     if (!exists) {
-      ResponseService.notFound('Cannot delete comment that does not exist', res);
-      return false;
+      return ResponseService.notFound('Cannot delete comment that does not exist', res);
     }
 
-    MongoService.deleteOne('comments', { commentId })
-    ResponseService.ok('Comment was successfully deleted', res)
-    return true;
+    await MongoService.deleteOne('comments', { commentId })
+    return ResponseService.ok('Comment was successfully deleted', res)
   },
 
   getCommentsByMember: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('comments', { memberId: parseInt(req.params.memberId || '0') });
     if (data === null) {
-      ResponseService.data([], res);
-      return false;
+      return ResponseService.data([], res);
     }
 
     const formatted: ICommentResponse[] = data.map((comment: IDbComment) => {
@@ -60,15 +55,13 @@ export const CommentHandler = {
       };
     });
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 
   getComment: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('comments', { commentId: parseInt(req.params.commentId || '0') });
     if (data === null) {
-      ResponseService.data({}, res);
-      return false;
+      return ResponseService.data({}, res);
     }
 
     const formatted: ICommentResponse = {
@@ -80,8 +73,7 @@ export const CommentHandler = {
       createdAt: moment(data.createdAt).unix(),
     };
 
-    ResponseService.data(formatted, res);
-    return true;
+    return ResponseService.data(formatted, res);
   },
 };
 

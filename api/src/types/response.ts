@@ -143,3 +143,10 @@ export interface IEventResponse {
   createdAt: number;
   lastUpdated: number;
 }
+
+export interface IConsentFormResponse {
+  memberId: number;
+  isAccepeted: boolean;
+  createdAt: number;
+  lastUpdated: number;
+}

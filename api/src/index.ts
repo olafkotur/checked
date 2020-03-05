@@ -15,6 +15,7 @@ import { LinkHandler } from './handlers/link';
 import { NotificationHandler } from './handlers/notifications';
 import { SettingHandler } from './handlers/settings';
 import { EventHandler } from './handlers/events';
+import { LegalHandler } from './handlers/legal';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -87,6 +88,7 @@ async function main() {
   app.delete('/api/comment/delete/:commentId', CommentHandler.deleteComment);
   app.get('/api/comments/members/:memberId', CommentHandler.getCommentsByMember);
   app.get('/api/comment/:commentId', CommentHandler.getComment);
+  app.post('/api/comment/feedback/create', CommentHandler.createMemberFeedback);
 
   // Link handlers
   app.post('/api/links/create', LinkHandler.createLink);
@@ -112,6 +114,11 @@ async function main() {
   app.delete('/api/events/delete/:eventId', EventHandler.deleteEvent);
   app.get('/api/events/:eventId', EventHandler.getEvent);
   app.get('/api/events/users/:userId', EventHandler.getEventsByUser);
+
+  // Legal handlers
+  app.get('/api/legal/copy/:copyType', LegalHandler.getLegalCopy);
+  app.get('/api/consent/:memberId', LegalHandler.getConsentByMember);
+  app.post('/api/consent/update/:memberId', LegalHandler.updateConsentByMember);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);
