@@ -40,7 +40,7 @@ export const CommentHandler = {
 
   getCommentsByMember: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findMany('comments', { memberId: parseInt(req.params.memberId || '0') });
-    if (data === null) {
+    if (!data) {
       return ResponseService.data([], res);
     }
 
@@ -60,7 +60,7 @@ export const CommentHandler = {
 
   getComment: async (req: express.Request, res: express.Response) => {
     const data: any = await MongoService.findOne('comments', { commentId: parseInt(req.params.commentId || '0') });
-    if (data === null) {
+    if (!data) {
       return ResponseService.data({}, res);
     }
 
