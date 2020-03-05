@@ -143,3 +143,19 @@ export interface IEventResponse {
   createdAt: number;
   lastUpdated: number;
 }
+
+export interface IConsentFormResponse {
+  memberId: number;
+  isAccepeted: boolean;
+  createdAt: number;
+  lastUpdated: number;
+}
+
+export interface IFeedbackResponse {
+  feedbackId: number;
+  userId: number;
+  memberId: number;
+  value: string;
+  createdAt: number;
+  lastUpdated: number;
+}

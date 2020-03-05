@@ -16,11 +16,20 @@ export const MemberHandler = {
       return ResponseService.notFound('Admin user does not exist', res);
     }
 
-    // Generate a secure password for the member
+    // Generate a id and secure password for the member
+    const memberId: number = await DbHelperService.assignAvailableId('members', 'memberId');
     const securePassword: string = AuthService.generateSecurePassword();
 
+    // Create a default entry for the consent form
+    await MongoService.insertOne('consent', {
+      memberId,
+      isAccepted: false,
+      createdAt: new Date(),
+      lastUpdated: new Date()
+    });
+
     const data: IDbMember = {
-      memberId: await DbHelperService.assignAvailableId('members', 'memberId'),
+      memberId,
       userId: parseInt(req.body.userId || '0'),
       firstName: req.body.firstName || '',
       lastName: req.body.lastName || '',
