@@ -150,3 +150,12 @@ export interface IConsentFormResponse {
   createdAt: number;
   lastUpdated: number;
 }
+
+export interface IFeedbackResponse {
+  feedbackId: number;
+  userId: number;
+  memberId: number;
+  value: string;
+  createdAt: number;
+  lastUpdated: number;
+}
