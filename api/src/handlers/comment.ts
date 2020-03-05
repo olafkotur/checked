@@ -2,7 +2,7 @@ import express from 'express'
 import { ResponseService } from '../services/response';
 import { MongoService } from '../services/mongo';
 import { DbHelperService } from '../services/dbHelper';
-import { IDbComment } from '../types/db';
+import { IDbComment, IDbFeedback } from '../types/db';
 import { ICommentResponse } from '../types/response';
 import moment from 'moment';
 
@@ -75,5 +75,34 @@ export const CommentHandler = {
 
     return ResponseService.data(formatted, res);
   },
+
+  createMemberFeedback: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.body.userId || '0');
+    const memberId: number = parseInt(req.body.memberId || '0');
+
+    // Check that the user exists before creating feedback
+    let exists: boolean = await DbHelperService.exists('users', { userId });
+    if (!exists) {
+      return ResponseService.bad('Cannot create new feedback without a valid userId', res);
+    }
+
+    // Check that the member exists before creating feedback
+    exists = await DbHelperService.exists('members', { memberId });
+    if (!exists) {
+      return ResponseService.bad('Cannot create new feedback without a valid memberId', res);
+    }
+
+    const data: IDbFeedback = {
+      feedbackId: await DbHelperService.assignAvailableId('feedback', 'feedbackId'),
+      userId,
+      memberId,
+      value: req.body.value,
+      createdAt: new Date(),
+      lastUpdated: new Date()
+    };
+
+    await MongoService.insertOne('feedback', data);
+    return ResponseService.create(data, res);
+  }
 };
 

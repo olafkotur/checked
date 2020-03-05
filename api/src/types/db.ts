@@ -131,3 +131,12 @@ export interface IDbConsentForm {
   createdAt: Date;
   lastUpdated: Date;
 }
+
+export interface IDbFeedback {
+  feedbackId: number;
+  userId: number;
+  memberId: number;
+  value: string;
+  createdAt: Date;
+  lastUpdated: Date;
+}
