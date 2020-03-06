@@ -36,3 +36,17 @@ userId=1
 ### @name getLinksByMember
 GET {{baseUrl}}links/members/7 HTTP/1.1
 Content-Type: application/x-www-form-urlencoded 
+
+### @name updateUserSettings
+POST {{baseUrl}}settings/update/2 HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "darkMode": false,
+    "notifications": {
+        "interval": 100,
+        "maxTemperature": 20,
+        "minTemperature": 10,
+        "gatheringThreshold": 1
+    }
+}
