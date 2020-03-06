@@ -128,11 +128,11 @@ export class Settings extends React.Component<IProps, IState> {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <CardContent className="pt-4 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                        <Grid container spacing={3}>
-                                            <Grid item xs={6} className="border-right pt-3">
+                                        <Grid container spacing={3} className="mt-4">
+                                            <Grid item xs={6} className="border-right">
                                                 <Grid container spacing={3}>
 
-                                                    <Grid item xs={12} className="vcenterParent  mb-3 mt-3">
+                                                    <Grid item xs={12} className="vcenterParent  mb-4 mt-1">
                                                         <Typography variant="h6" className="vcenterChild text-center w-100 text-muted">
                                                             General Settings
                                                         </Typography>
@@ -180,7 +180,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     </Grid>
                                                     <Grid item xs={2}>
                                                         <IconButton size='medium' aria-label="Change color" className="ml-2" onClick={this.handleColourClick}>
-                                                            <ColorLens style={{color: this.state.settings.themeColor}}/>
+                                                            <ColorLens style={{color: this.state.settings.themeColor}} fontSize="large"/>
                                                         </IconButton>
                                                         <div className={this.state.displayColourPicker} >
                                                             <div className="colorPicker" >
@@ -203,8 +203,8 @@ export class Settings extends React.Component<IProps, IState> {
                                                             <div style={{position: 'relative'}}>
                                                                 <img src={this.state.settings.logoImage} alt="logo-preview" className="settingsLogoPreview" />
                                                                 <Tooltip title="Delete Logo">
-                                                                    <IconButton onClick={(): void => this.handleLogo([])} className="logoDelete" color="primary">
-                                                                        <Delete></Delete>
+                                                                    <IconButton onClick={(): void => this.handleLogo([])} className="logoDelete" color="primary" size="small">
+                                                                        <Delete fontSize="small"></Delete>
                                                                     </IconButton>
                                                                 </Tooltip>
                                                             </div>
@@ -228,7 +228,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                 
                                             </Grid>
                                             <Grid item xs={6}>
-                                                <Grid item xs={12} className="vcenterParent  mb-3 mt-3">
+                                                <Grid item xs={12} className="vcenterParent  mb-5 mt-1">
                                                     <Typography variant="h6" className="vcenterChild text-center w-100 text-muted">
                                                         Notification Settings
                                                     </Typography>
@@ -245,7 +245,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     fullWidth
                                                     variant="contained"
                                                     color="primary"
-                                                    className="mt-3"
+                                                    className="mt-5 mb-2"
                                                     onClick={(): void => this.props.saveSettings(this.state.settings)}
                                                 >
                                                     Save

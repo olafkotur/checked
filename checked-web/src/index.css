@@ -350,11 +350,16 @@ code {
   background-color: #b82a20 !important;
 }
 
-.overseer {
-  border-radius: 10px;
-  background-color: #ff9e00;
-  color: #ffffffef;
+.overseerAdd {
+  border: solid 1px #00000025 !important;
+  transition: 0.3s;
 }
+
+.overseerAdd:hover {
+  transition: 0.3s;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.185);
+}
+
 
 /* ===== ZONES ===== */
 
@@ -494,8 +499,8 @@ code {
   position: absolute !important;
   background-color: #fff !important;
   border: solid 1px #00000025 !important;
-  top: -25px;
-  right: -20px;
+  bottom: -10px;
+  right: 10px;
   transition: 0.3s;
 }
 
