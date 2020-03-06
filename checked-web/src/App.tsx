@@ -6,9 +6,7 @@ import MapEditor from './pages/map-editor';
 import { Dashboard } from './pages/dashboard';
 import { MemberManagement } from './pages/member-management';
 import { OverseerView } from './pages/overseer-view';
-
 import {ZoneService} from './api/ZoneService';
-
 import { ThemeProvider } from '@material-ui/core/styles';
 import {LightTheme, DarkTheme} from './muiTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -54,10 +52,12 @@ class App extends React.Component<{}, IState> {
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
 		this.setGuardian = this.setGuardian.bind(this);
+		this.updateUserSettings = this.updateUserSettings.bind(this);
 	}
 
 	async componentDidMount(): Promise<void> {
 		await this.getUserData();
+		console.log('APP SETTINGS', this.state.settings);
 	}
 
 	async getUserData(): Promise<void> {
@@ -70,12 +70,20 @@ class App extends React.Component<{}, IState> {
 		}).finally(async () => {
 			await SettingsService.getUserSettings(Number(sessionStorage.getItem('userID'))).then((res2) => {
 				this.setState({
-					settings: res2.result,
+					settings: res2.result as ISettings,
 					loaded: true
 				});
 			}).catch(() => {
 				console.error('Error loading Settings Data.');
 			});
+		});
+	}
+
+	updateUserSettings(settings: ISettings): void {
+		SettingsService.setUserSettings(Number(sessionStorage.getItem('userID')), settings as ISettings).then(() => {
+			this.setState({settings});
+		}).catch(() => {
+			console.error('Error saving user settings.');
 		});
 	}
 
@@ -116,11 +124,11 @@ class App extends React.Component<{}, IState> {
 
 
 			if (sessionStorage.getItem('guardian') === 'true') {
-				if(this.state.darkTheme){
+				if(this.state.settings.darkMode){
 					return (
 						<div className="backgroundDark">
 							<ThemeProvider theme={DarkTheme}>
-								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden/>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
 								<OverseerView userID={userID} />
 								
 							</ThemeProvider>
@@ -130,7 +138,7 @@ class App extends React.Component<{}, IState> {
 					return (
 						<div className="background">
 							<ThemeProvider theme={LightTheme}>
-								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden/>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
 								<OverseerView userID={userID}/>
 							</ThemeProvider>
 						</div>
@@ -138,17 +146,17 @@ class App extends React.Component<{}, IState> {
 				}
 			} 
 
-			if(this.state.darkTheme && this.state.loaded){
+			if (this.state.settings.darkMode && this.state.loaded){
 				return (
 					<div className="backgroundDark">
 						<ThemeProvider theme={DarkTheme}>
-							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID}/>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
 								<MapEditor path="editor" userID={userID} />
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path = "memberuser"userID={userID} />
-								<Settings path="settings" userID={userID} settings={this.state.settings}/>
+								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -158,13 +166,13 @@ class App extends React.Component<{}, IState> {
 				return (
 					<div className="background">
 						<ThemeProvider theme={LightTheme}>
-							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID}/>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
 								<MapEditor path="editor" userID={userID} />
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path="memberuser" userID={userID} />
-								<Settings path="settings" userID={userID} settings={this.state.settings}/>
+								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>

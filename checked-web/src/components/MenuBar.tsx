@@ -10,7 +10,7 @@ import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Di
 import { Info as Icon, Menu, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline, SettingsRounded, ExitToApp } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
-import Logo from '../media/checkedLogo.jpg';
+import CheckedLogo from '../media/checkedLogo.jpg';
 import { IZone } from '../types';
 import Notifications from './Notifications';
 
@@ -29,6 +29,7 @@ interface IProps {
     zones: Array<IZone>;
     userID: number;
     menuHidden?: boolean;
+    logo: string;
 }
 
 class MenuBar extends React.Component<IProps, IState> {
@@ -105,6 +106,14 @@ class MenuBar extends React.Component<IProps, IState> {
     }
 
     render(): JSX.Element {
+
+        let Logo: any;
+
+        if(this.props.logo === ''){
+            Logo = CheckedLogo;
+        } else {
+            Logo = this.props.logo;
+        }
 
         if(this.props.menuHidden){
             return(
