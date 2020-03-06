@@ -13,32 +13,70 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import {LightTheme, DarkTheme} from './muiTheme';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import { IZone } from './types';
+import { IZone, ISettings } from './types';
 import { Zone } from './pages/zone';
 import { MemberUserView } from './pages/memberuser-view';
 import { Settings } from './pages/settings';
+import { SettingsService } from './api/SettingsService';
 
 
 interface IState {
 	darkTheme: boolean;
 	zones: Array<IZone>;
 	loaded: boolean;
+	settings: ISettings;
 }
 
 
 class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
+		
+		
+		const tempSettings: ISettings = {
+			userId: -1,
+			logoImage: '',
+			darkMode: false,
+			timeZone: 'en-GB',
+			themeColor: '',
+			notifications: {
+				interval: 5,
+				minTemperature: 15,
+				maxTemperature: 25,
+				gatheringThreshold: 0.7,
+			},
+		};
+
+
 		super(props);
-		this.state = { loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { loaded: false, darkTheme: false, zones: [], settings: tempSettings}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
 		this.setGuardian = this.setGuardian.bind(this);
 	}
 
-	componentDidMount(): void {
-		this.getZones();
+	async componentDidMount(): Promise<void> {
+		await this.getUserData();
+	}
+
+	async getUserData(): Promise<void> {
+		await ZoneService.loadZonesByUser(Number(sessionStorage.getItem('userID'))).then((res) => {
+			this.setState({
+				zones: res.result,
+			});
+		}).catch(() => {
+			console.error('Error loading Zone Data.');
+		}).finally(async () => {
+			await SettingsService.getUserSettings(Number(sessionStorage.getItem('userID'))).then((res2) => {
+				this.setState({
+					settings: res2.result,
+					loaded: true
+				});
+			}).catch(() => {
+				console.error('Error loading Settings Data.');
+			});
+		});
 	}
 
 	setAuthorised(authState: boolean): void {
@@ -56,17 +94,6 @@ class App extends React.Component<{}, IState> {
 
 	setGuardian(isGuardian: boolean): void {
 		sessionStorage.setItem('guardian', isGuardian.toString());
-	}
-
-	getZones(): void {
-		ZoneService.loadZonesByUser(Number(sessionStorage.getItem('userID'))).then((res) => {
-			this.setState({
-				zones: res.result,
-				loaded: true
-			});
-		}).catch(() => {
-			console.error('Error loading Zone Data.');
-		});
 	}
 
 	renderZoneRoutes(): Array<JSX.Element> {
@@ -121,7 +148,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path = "memberuser"userID={userID} />
-								<Settings path="settings" userID={userID} />
+								<Settings path="settings" userID={userID} settings={this.state.settings}/>
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -137,7 +164,7 @@ class App extends React.Component<{}, IState> {
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path="memberuser" userID={userID} />
-								<Settings path="settings" userID={userID} />
+								<Settings path="settings" userID={userID} settings={this.state.settings}/>
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>

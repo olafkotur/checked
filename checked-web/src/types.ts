@@ -60,3 +60,17 @@ export interface IUser {
     createdAt: Date;
     lastUpdated: Date;
 }
+
+export interface ISettings {
+    userId: number;
+    logoImage: string;
+    darkMode: boolean;
+    timeZone: string;
+    themeColor: string;
+    notifications: {
+        interval: number;
+        minTemperature: number;
+        maxTemperature: number;
+        gatheringThreshold: number;
+    };
+}

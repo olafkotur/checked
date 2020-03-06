@@ -6,20 +6,22 @@ import UseAnimations from 'react-useanimations';
 import { RouteComponentProps } from '@reach/router';
 import { Card, CardContent, Grid, CardHeader } from '@material-ui/core';
 import { DashboardRounded, SettingsRounded } from '@material-ui/icons';
-import {IZone} from '../../types';
+import {IZone, ISettings} from '../../types';
 
 
 interface IState {
+    settings: ISettings;
 }
 
 interface IProps extends RouteComponentProps {
     userID: number;
+    settings: ISettings;
 }
 export class Settings extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
-        this.state = {};
+        this.state = {settings: props.settings};
     }
 
     // componentDidMount(): void {
@@ -40,8 +42,21 @@ export class Settings extends React.Component<IProps, IState> {
                                     </CardHeader>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <CardContent className="pt-1 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
-                                        memes
+                                    <CardContent className="pt-4 ml-3 mr-3 pl-0 pr-0 border-top border-muted">
+                                        <Grid container spacing={3}>
+                                            <Grid item xs={6} className="border-right">
+                                                Logo
+                                                DarkMode
+                                                TimeZone
+                                                ThemeColour
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                Interval
+                                                MinTemp
+                                                MaxTemp
+                                                GatheringThreshold
+                                            </Grid>
+                                        </Grid>
                                     </CardContent>
                                 </Grid>
                             </Grid>
