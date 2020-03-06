@@ -7,8 +7,7 @@ import { Dashboard } from './pages/dashboard';
 import { MemberManagement } from './pages/member-management';
 import { OverseerView } from './pages/overseer-view';
 import {ZoneService} from './api/ZoneService';
-import { ThemeProvider } from '@material-ui/core/styles';
-import {LightTheme, DarkTheme} from './muiTheme';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import { IZone, ISettings } from './types';
@@ -57,7 +56,6 @@ class App extends React.Component<{}, IState> {
 
 	async componentDidMount(): Promise<void> {
 		await this.getUserData();
-		console.log('APP SETTINGS', this.state.settings);
 	}
 
 	async getUserData(): Promise<void> {
@@ -115,8 +113,106 @@ class App extends React.Component<{}, IState> {
 		return renderedZoneRoutes;
 	}
 
+	getDarkTheme(primary: string): Record<string, any> {
+		return createMuiTheme({
+			palette: {
+				type: 'dark',
+				primary: {
+					main: primary.toString(),
+					contrastText: '#ffffff',
+				},
+				error: {
+					main: '#f44336',
+				},
+				warning: {
+					main: '#ff9800'
+				},
+				success: {
+					main: '#4caf50'
+				},
+				info: {
+					main: '#2196f3'
+				}
+			},
+			typography: {
+				button: {
+					fontFamily: 'Montserrat, sans-serif',
+					fontWeight: 600,
+					letterSpacing: '0.1em',
+					textTransform: 'none'
+				},
+			},
+			overrides: {
+				MuiCardHeader: {
+					title: {
+						fontFamily: 'Montserrat, sans-serif',
+						fontWeight: 700,
+						letterSpacing: '0.1em',
+						fontSize: '140%',
+					},
+					avatar: {
+						marginLeft: '10px',
+						width: '30px',
+						height: '30px',
+					}
+				},
+			}
+		});
+	}
+
+	getLightTheme(primary: string): Record<string, any> {
+		return createMuiTheme({
+			palette: {
+				type: 'light',
+				primary: {
+					main: primary.toString(),
+					contrastText: '#ffffff',
+				},
+				error: {
+					main: '#f44336',
+				},
+				warning: {
+					main: '#ff9800'
+				},
+				success: {
+					main: '#4caf50'
+				},
+				info: {
+					main: '#2196f3'
+				}
+			},
+			typography: {
+				button: {
+					fontFamily: 'Montserrat, sans-serif',
+					fontWeight: 600,
+					letterSpacing: '0.1em',
+					textTransform: 'none'
+				},
+			},
+			overrides: {
+				MuiCardHeader: {
+					title: {
+						fontFamily: 'Montserrat, sans-serif',
+						fontWeight: 700,
+						letterSpacing: '0.1em',
+						fontSize: '140%',
+					},
+					avatar: {
+						marginLeft: '10px',
+						width: '30px',
+						height: '30px',
+					}
+				},
+			}
+		});
+	}
+
 
 	render(): JSX.Element {
+
+		const darkTheme = this.getDarkTheme(this.state.settings.themeColor || '#FF9E00');
+		const lightTheme = this.getLightTheme(this.state.settings.themeColor || '#FF9E00');
+
 
 		if (sessionStorage.getItem('authorised') === 'true') {
 
@@ -127,7 +223,7 @@ class App extends React.Component<{}, IState> {
 				if(this.state.settings.darkMode){
 					return (
 						<div className="backgroundDark">
-							<ThemeProvider theme={DarkTheme}>
+							<ThemeProvider theme={darkTheme}>
 								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
 								<OverseerView userID={userID} />
 								
@@ -137,7 +233,7 @@ class App extends React.Component<{}, IState> {
 				} else {
 					return (
 						<div className="background">
-							<ThemeProvider theme={LightTheme}>
+							<ThemeProvider theme={lightTheme}>
 								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
 								<OverseerView userID={userID}/>
 							</ThemeProvider>
@@ -149,7 +245,7 @@ class App extends React.Component<{}, IState> {
 			if (this.state.settings.darkMode && this.state.loaded){
 				return (
 					<div className="backgroundDark">
-						<ThemeProvider theme={DarkTheme}>
+						<ThemeProvider theme={darkTheme}>
 							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
 								<MapEditor path="editor" userID={userID} />
@@ -165,7 +261,7 @@ class App extends React.Component<{}, IState> {
 			} else if(this.state.loaded) {
 				return (
 					<div className="background">
-						<ThemeProvider theme={LightTheme}>
+						<ThemeProvider theme={lightTheme}>
 							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
 								<MapEditor path="editor" userID={userID} />
@@ -187,7 +283,7 @@ class App extends React.Component<{}, IState> {
 
 		} else {
 			return (
-				<ThemeProvider theme={LightTheme}>
+				<ThemeProvider theme={lightTheme}>
 					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian}/>
 				</ThemeProvider>
 			);

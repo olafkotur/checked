@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText, Collapse, Tooltip } from '@material-ui/core/';
-import { Info as Icon, Menu, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline, SettingsRounded, ExitToApp } from '@material-ui/icons/';
+import { Menu, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline, SettingsRounded, ExitToApp } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
 import CheckedLogo from '../media/checkedLogo.jpg';
