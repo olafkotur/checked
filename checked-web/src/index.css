@@ -165,7 +165,8 @@ code {
 .logo {
   width: 200px;
   border-radius: 10%;
-  margin-left: 65px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .signInCard {
