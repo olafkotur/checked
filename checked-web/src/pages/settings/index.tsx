@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardContent, Grid, CardHeader, Typography, Button, Switch, Select, IconButton, MenuItem, Tooltip } from '@material-ui/core';
+import { Card, CardContent, Grid, CardHeader, Typography, Button, Switch, Select, IconButton, MenuItem, Tooltip, Slider } from '@material-ui/core';
 import { SettingsRounded, ColorLens, Delete } from '@material-ui/icons';
 import { ISettings} from '../../types';
 import { DropzoneArea } from 'material-ui-dropzone';
@@ -139,12 +139,12 @@ export class Settings extends React.Component<IProps, IState> {
                                                     </Grid>
                                                     
                                                     <Grid item xs={4} />
-                                                    <Grid item xs={2} className="vcenterParent text-left">
+                                                    <Grid item xs={2} className="vcenterParent text-left mt-5">
                                                         <Typography variant="subtitle2" className="vcenterChild">
                                                             Dark Mode:
                                                         </Typography>
                                                     </Grid>
-                                                    <Grid item xs={2}>
+                                                    <Grid item xs={2} className="mt-5">
                                                         <Switch
                                                             checked={this.state.settings.darkMode}
                                                             onChange={this.toggleDarkMode}
@@ -228,15 +228,66 @@ export class Settings extends React.Component<IProps, IState> {
                                                 
                                             </Grid>
                                             <Grid item xs={6}>
-                                                <Grid item xs={12} className="vcenterParent  mb-5 mt-1">
-                                                    <Typography variant="h6" className="vcenterChild text-center w-100 text-muted">
-                                                        Notification Settings
-                                                    </Typography>
+                                                <Grid container spacing={3}>
+
+                                               
+                                                    <Grid item xs={12} className="vcenterParent  mb-5 mt-1">
+                                                        <Typography variant="h6" className="vcenterChild text-center w-100 text-muted">
+                                                            Notification Settings
+                                                        </Typography>
+                                                    </Grid>
+
+                                                    <Grid item xs={3} />
+                                                    <Grid item xs={3} className="vcenterParent text-left mt-5">
+                                                        <Typography variant="subtitle2" className="vcenterChild">
+                                                            Notification Interval:
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={3} className="mt-5">
+                                                        <Slider
+                                                            defaultValue={this.state.settings.interval || 5}
+                                                            step={5}
+                                                            min={5}
+                                                            max={120}
+                                                            valueLabelDisplay="on"
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={3} />
+
+                                                    <Grid item xs={3} />
+                                                    <Grid item xs={3} className="vcenterParent text-left mt-5">
+                                                        <Typography variant="subtitle2" className="vcenterChild">
+                                                            Temperature Range:
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={3} className="mt-5">
+                                                        <Slider
+                                                            defaultValue={[this.state.settings.minTemperature || 0, this.state.settings.maxTemperature || 50]}
+                                                            min={0}
+                                                            max={50}
+                                                            valueLabelDisplay="on"
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={3} />
+
+                                                    <Grid item xs={3} />
+                                                    <Grid item xs={3} className="vcenterParent text-left mt-5">
+                                                        <Typography variant="subtitle2" className="vcenterChild">
+                                                            Gathering Threshold:
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={3} className="mt-5">
+                                                        <Slider
+                                                            defaultValue={this.state.settings.gatheringThreshold * 100 || 5}
+                                                            step={1}
+                                                            min={1}
+                                                            max={100}
+                                                            valueLabelDisplay="on"
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={3} />
+                                                
                                                 </Grid>
-                                                Interval
-                                                MinTemp
-                                                MaxTemp
-                                                GatheringThreshold
                                             </Grid>
                                             <Grid item xs={3} />
                                             <Grid item xs={6}>

@@ -36,12 +36,10 @@ class App extends React.Component<{}, IState> {
 			darkMode: false,
 			timeZone: 'en-GB',
 			themeColor: '',
-			notifications: {
-				interval: 5,
-				minTemperature: 15,
-				maxTemperature: 25,
-				gatheringThreshold: 0.7,
-			},
+			interval: 5,
+			minTemperature: 15,
+			maxTemperature: 25,
+			gatheringThreshold: 0.7,
 		};
 
 
