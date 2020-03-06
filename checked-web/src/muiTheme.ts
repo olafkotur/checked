@@ -5,8 +5,6 @@ export const LightTheme = createMuiTheme({
         type: 'light',
         primary: {
             main: '#FF9E00',
-            light: '#FFB718',
-            dark: '#DF7E00',
             contrastText: '#ffffff',
         },
         secondary: {
@@ -89,8 +87,6 @@ export const DarkTheme = createMuiTheme({
         type: 'dark',
         primary: {
             main: '#EF8E00',
-            light: '#FFB718',
-            dark: '#DF7E00',
             contrastText: '#ffffff',
         },
         secondary: {

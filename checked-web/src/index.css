@@ -472,3 +472,20 @@ code {
   height: 30px !important;
   transform: translate(0px, -3px);
 }
+
+/* ===== SETTINGS ===== */
+
+.settingsDropZone {
+  max-width: 100px !important;
+  max-height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  padding: 5px;
+}
+
+.settingsLogoPreview {
+    max-width: 100px !important;
+    max-height: 100px !important;
+    min-width: 100px !important;
+    min-height: 100px !important;
+}
