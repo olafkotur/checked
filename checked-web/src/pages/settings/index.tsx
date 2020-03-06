@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { RouteComponentProps } from '@reach/router';
-import { Card, CardContent, Grid, CardHeader, Typography, Button, Switch, Select, IconButton, MenuItem } from '@material-ui/core';
-import { SettingsRounded, ColorLens } from '@material-ui/icons';
+import { Card, CardContent, Grid, CardHeader, Typography, Button, Switch, Select, IconButton, MenuItem, Tooltip } from '@material-ui/core';
+import { SettingsRounded, ColorLens, Delete } from '@material-ui/icons';
 import { ISettings} from '../../types';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { SketchPicker } from 'react-color';
@@ -179,17 +179,17 @@ export class Settings extends React.Component<IProps, IState> {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item xs={2}>
-                                                        <IconButton size='small' aria-label="Change color" className="ml-2" onClick={this.handleColourClick}>
+                                                        <IconButton size='medium' aria-label="Change color" className="ml-2" onClick={this.handleColourClick}>
                                                             <ColorLens style={{color: this.state.settings.themeColor}}/>
                                                         </IconButton>
                                                         <div className={this.state.displayColourPicker} >
                                                             <div className="colorPicker" >
-                                                                <SketchPicker color={this.state.settings.themeColor} onChange={this.handleColourChange} onChangeComplete={this.handleColourClick} />
+                                                                <SketchPicker color={this.state.settings.themeColor} onChangeComplete={this.handleColourChange} />
                                                             </div>
                                                         </div>
                                                     </Grid>
                                                     <Grid item xs={4} />
-
+                                                    
                                                     <Grid item xs={4} />
                                                     <Grid item xs={2} className="vcenterParent text-left">
                                                         <Typography variant="subtitle2" className="vcenterChild">
@@ -197,11 +197,17 @@ export class Settings extends React.Component<IProps, IState> {
                                                         </Typography>
                                                     </Grid>
                                                         
-                                                    <Grid item xs={2}>
+                                                    <Grid item xs={2} className="mt-2">
                                                         {this.state.settings.logoImage !== '' 
                                                             ?
-                                                            
-                                                            <img src={this.state.settings.logoImage} alt="logo-preview" className="settingsLogoPreview" /> 
+                                                            <div style={{position: 'relative'}}>
+                                                                <img src={this.state.settings.logoImage} alt="logo-preview" className="settingsLogoPreview" />
+                                                                <Tooltip title="Delete Logo">
+                                                                    <IconButton onClick={(): void => this.handleLogo([])} className="logoDelete" color="primary">
+                                                                        <Delete></Delete>
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </div>
                                                             
                                                             : 
                                                             
