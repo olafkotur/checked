@@ -272,6 +272,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                         // src={`data:image/jpeg;base64,${this.state.image}`}
                         src={this.state.image}
                         style={{ width: "100%", paddingTop: 10 }}
+                        alt="comment"
                     />
                 </div>
             );
@@ -297,6 +298,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                         <img 
                             src = {this.state.image} 
                             style={{ width: "100%", paddingTop: 10 }}
+                            alt="comment"
                         />
                         
                     </div>
