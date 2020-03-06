@@ -67,10 +67,8 @@ export interface ISettings {
     darkMode: boolean;
     timeZone: string;
     themeColor: string;
-    notifications: {
-        interval: number;
-        minTemperature: number;
-        maxTemperature: number;
-        gatheringThreshold: number;
-    };
+    interval: number;
+    minTemperature: number;
+    maxTemperature: number;
+    gatheringThreshold: number;
 }

@@ -18,10 +18,10 @@ export const SettingsService = {
             darkMode: settings.darkMode,
             timeZone: settings.timeZone,
             themeColor: settings.themeColor,           
-            interval: settings.notifications.interval,
-            minTemperature: settings.notifications.minTemperature,
-            maxTemperature: settings.notifications.maxTemperature,
-            gatheringThreshold: settings.notifications.gatheringThreshold
+            interval: settings.interval,
+            minTemperature: settings.minTemperature,
+            maxTemperature: settings.maxTemperature,
+            gatheringThreshold: settings.gatheringThreshold
             
         };
         return await HttpService.post(uri, body).then((res) => {
