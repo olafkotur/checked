@@ -6,8 +6,8 @@
 *******************************************************************/
 
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText, Collapse } from '@material-ui/core/';
-import { Info as Icon, Menu, Brightness4, Brightness7, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline } from '@material-ui/icons/';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Divider, ListItem, ListItemText, Collapse, Tooltip } from '@material-ui/core/';
+import { Info as Icon, Menu, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline, SettingsRounded, ExitToApp } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
 import Logo from '../media/checkedLogo.jpg';
@@ -20,13 +20,12 @@ interface IState {
     dimmerClass: string;
     open: boolean;
     subDrawerOpen: boolean;
-    themeIcon: JSX.Element;
     darkTheme: boolean;
     zones: Array<IZone>;
 }
 
 interface IProps {
-    setDarkMode(darkMode: boolean): void;
+    setAuthorised(authorised: boolean): void;
     zones: Array<IZone>;
     userID: number;
     menuHidden?: boolean;
@@ -42,7 +41,6 @@ class MenuBar extends React.Component<IProps, IState> {
             drawerClass: 'drawer drawerClosed', 
             dimmerClass: 'dimmer fadeOut', 
             open: false, 
-            themeIcon: <Brightness4 />, 
             darkTheme: false,
             zones: this.props.zones
         };
@@ -58,16 +56,6 @@ class MenuBar extends React.Component<IProps, IState> {
 
     setOpen = (): void => {
         this.setState({ open: true });
-    };
-
-    setDarkMode = (): void => {
-        if(this.state.darkTheme){
-            this.setState({ themeIcon: <Brightness4 />, darkTheme: false });
-            this.props.setDarkMode(false);
-        } else {
-            this.setState({ themeIcon: <Brightness7 />, darkTheme: true });
-            this.props.setDarkMode(true);
-        }
     };
 
     toggleZones = (): void => {
@@ -123,15 +111,17 @@ class MenuBar extends React.Component<IProps, IState> {
                 <div>
                     <AppBar position="fixed" className="topBar" color="inherit" style={{ zIndex: 9999 }}>
                         <Toolbar>
+                            <Tooltip title="Sign Out">
+                                <IconButton onClick={(): void => this.props.setAuthorised(false)}>
+                                    <ExitToApp />
+                                </IconButton>
+                            </Tooltip>
+
                             <div className="text-center w-100">
                                 <Typography variant="h6" className="pl-3 mr-5 montserrat">
                                     - Checked -
                             </Typography>
                             </div>
-
-                            <IconButton onClick={this.setDarkMode} className="mr-1">
-                                {this.state.themeIcon}
-                            </IconButton>
 
                             <Notifications userID={this.props.userID} />
 
@@ -156,10 +146,6 @@ class MenuBar extends React.Component<IProps, IState> {
                                 - Checked -
                             </Typography>
                         </div>
-
-                        <IconButton onClick={this.setDarkMode} className="mr-1">
-                            {this.state.themeIcon}
-                        </IconButton>
 
                         <Notifications userID={this.props.userID} />
 
@@ -205,9 +191,13 @@ class MenuBar extends React.Component<IProps, IState> {
                             </List>
                             <Divider />
                             <List>
-                                <ListItem button key={'placeholder2'} disabled={true}>
-                                    <ListItemIcon><Icon /></ListItemIcon>
-                                    <ListItemText primary={'Placeholder'} />
+                                <ListItem button key={'settings'} onClick={(): any => navigate('settings')}>
+                                    <ListItemIcon><SettingsRounded /></ListItemIcon>
+                                    <ListItemText primary={'Settings'} className="menuText"/>
+                                </ListItem>
+                                <ListItem button key={'logout'} onClick={(): void => this.props.setAuthorised(false)}>
+                                    <ListItemIcon><ExitToApp /></ListItemIcon>
+                                    <ListItemText primary={'Sign Out'} className="menuText"/>
                                 </ListItem>
                             </List>
                         </div>

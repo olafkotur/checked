@@ -16,6 +16,7 @@ import './index.css';
 import { IZone } from './types';
 import { Zone } from './pages/zone';
 import { MemberUserView } from './pages/memberuser-view';
+import { Settings } from './pages/settings';
 
 
 interface IState {
@@ -32,7 +33,7 @@ class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
 		super(props);
-		this.state = { authorised: false, userID: 1, guardian: false, loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { authorised: true, userID: 1, guardian: true, loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
@@ -92,7 +93,7 @@ class App extends React.Component<{}, IState> {
 					return (
 						<div className="backgroundDark">
 							<ThemeProvider theme={DarkTheme}>
-								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={this.state.userID} menuHidden/>
 								<OverseerView userID={this.state.userID} />
 								
 							</ThemeProvider>
@@ -102,7 +103,7 @@ class App extends React.Component<{}, IState> {
 					return (
 						<div className="background">
 							<ThemeProvider theme={LightTheme}>
-								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={this.state.userID} menuHidden/>
 								<OverseerView userID={this.state.userID}/>
 							</ThemeProvider>
 						</div>
@@ -114,13 +115,13 @@ class App extends React.Component<{}, IState> {
 				return (
 					<div className="backgroundDark">
 						<ThemeProvider theme={DarkTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={this.state.userID}/>
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								<MemberUserView path = "memberuser"userID={this.state.userID} />
-								
+								<Settings path="settings" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -130,13 +131,13 @@ class App extends React.Component<{}, IState> {
 				return (
 					<div className="background">
 						<ThemeProvider theme={LightTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={this.state.userID}/>
 							<Router>
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
 								<MemberUserView path="memberuser" userID={this.state.userID} />
-								
+								<Settings path="settings" userID={this.state.userID} />
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
