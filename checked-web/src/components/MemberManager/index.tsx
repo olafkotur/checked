@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, Tooltip, Chip } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember, ILink, IUser } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd, DeleteOutlineRounded } from '@material-ui/icons';
+import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';

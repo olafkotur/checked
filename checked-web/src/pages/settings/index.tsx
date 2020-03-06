@@ -240,7 +240,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     <Grid item xs={3} />
                                                     <Grid item xs={3} className="vcenterParent text-left mt-5">
                                                         <Typography variant="subtitle2" className="vcenterChild">
-                                                            Notification Interval:
+                                                            Notification Interval (sec):
                                                             </Typography>
                                                     </Grid>
                                                     <Grid item xs={3} className="mt-5">
@@ -257,7 +257,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     <Grid item xs={3} />
                                                     <Grid item xs={3} className="vcenterParent text-left mt-5">
                                                         <Typography variant="subtitle2" className="vcenterChild">
-                                                            Temperature Range:
+                                                            Temperature Range (°C):
                                                             </Typography>
                                                     </Grid>
                                                     <Grid item xs={3} className="mt-5">
@@ -273,7 +273,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     <Grid item xs={3} />
                                                     <Grid item xs={3} className="vcenterParent text-left mt-5">
                                                         <Typography variant="subtitle2" className="vcenterChild">
-                                                            Gathering Threshold:
+                                                            Gathering Threshold (%):
                                                             </Typography>
                                                     </Grid>
                                                     <Grid item xs={3} className="mt-5">

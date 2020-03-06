@@ -137,7 +137,7 @@ export class CommentBox extends React.Component<IProps, IState> {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         
-        reader.onload = () => this.setState({ imageDropped: true, image: reader.result });
+        reader.onload = (): void => this.setState({ imageDropped: true, image: reader.result });
            
         reader.onerror = function (error): void {
             console.log('Error: ', error);
