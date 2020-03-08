@@ -23,7 +23,7 @@ interface IState {
 }
 interface IProps {
     members: Array<IMember>;
-    userID: number;
+    memberID: number;
 }
 
 class MemberUser extends React.Component<IProps, IState> {
@@ -58,6 +58,9 @@ class MemberUser extends React.Component<IProps, IState> {
         this.handleConsentToggle = this.handleConsentToggle.bind(this);
         this.handleAcceptConsent = this.handleAcceptConsent.bind(this);
         this.handleDeclineConsent = this.handleDeclineConsent.bind(this);
+
+        console.log(this.props.memberID);
+        this.getFeedList();
     }
 
 
@@ -73,6 +76,7 @@ class MemberUser extends React.Component<IProps, IState> {
 
     changeTab(event: React.ChangeEvent<{}>, newValue: number): void{ 
         this.setState({tabValue: newValue});
+        console.log(CommentService.getComments(this.props.memberID.toString()));
     };
 
     formatAMPM(date: Date): string {
@@ -86,9 +90,9 @@ class MemberUser extends React.Component<IProps, IState> {
         return strTime;
     }
 
-    async getFeedList(memberID: number): Promise<void> {
+    async getFeedList(): Promise<void> {
         this.setState({ loadingComments: true });
-        const serverInfo = await CommentService.getComments(memberID.toString());
+        const serverInfo = await CommentService.getComments(this.props.memberID.toString());
         serverInfo.forEach((comment: { new: boolean }) => {
             comment.new = false;
         });
@@ -96,6 +100,8 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     displayComments(): Array<JSX.Element> {
+
+        console.log(this.state.comments);
 
         if (!this.state.loadingComments) {
 
@@ -135,7 +141,7 @@ class MemberUser extends React.Component<IProps, IState> {
             }
 
             else {
-                return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
+                return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You don't have any comments </p></div>]);
             }
 
         }
@@ -210,7 +216,7 @@ class MemberUser extends React.Component<IProps, IState> {
 
 
         this.setState({ comments: [] });
-        await this.getFeedList(this.state.currentMember);
+        await this.getFeedList();
 
         const tempComments: any = [];
 
@@ -227,6 +233,7 @@ class MemberUser extends React.Component<IProps, IState> {
     handleConsentToggle = (event: any): void => {
         this.setState({consentType: event.target.value});
         // console.log(event.target.value);
+        
     };
 
     handleAcceptConsent (event: any): void  {

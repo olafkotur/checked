@@ -119,7 +119,7 @@ class App extends React.Component<{}, IState> {
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
-								<MemberUserView path = "memberuser"userID={this.state.userID} />
+								<MemberUserView path = "memberuser" memberID={2} />
 								
 								{this.renderZoneRoutes()}
 							</Router>
@@ -135,7 +135,7 @@ class App extends React.Component<{}, IState> {
 								<MapEditor path="editor" userID={this.state.userID} />
 								<Dashboard path="/" userID={this.state.userID} />
 								<MemberManagement path="members" userID={this.state.userID} />
-								<MemberUserView path="memberuser" userID={this.state.userID} />
+								<MemberUserView path="memberuser" memberID={2} />
 								
 								{this.renderZoneRoutes()}
 							</Router>
