@@ -17,6 +17,7 @@ import { SettingHandler } from './handlers/settings';
 import { EventHandler } from './handlers/events';
 import { LegalHandler } from './handlers/legal';
 import { FeedbackHandler } from './handlers/feedback';
+import moment from 'moment';
 
 const cors = require('cors');
 require('dotenv').config();
@@ -30,6 +31,19 @@ async function main() {
   app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
   app.use(bodyParser.json({limit: '50mb'}));
   app.use(cors());
+
+  app.all('*', (req: express.Request, _res: express.Response, next: express.NextFunction) => {
+    console.info(`New request made at ${moment().format('HH:mm:ss')} to ${req.url}`);
+    MongoService.insertOne('logs', {
+      method: req.method,
+      url: req.url,
+      body: req.body,
+      params: req.params,
+      ip: req.ip,
+      createdAt: new Date(),
+    });
+    next();
+  });
 
   // Live handlers
   app.post('/api/live/upload', LiveHandler.uploadLiveData);

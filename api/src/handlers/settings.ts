@@ -5,7 +5,6 @@ import { DbHelperService } from '../services/dbHelper';
 import { MongoService } from '../services/mongo';
 import { ISettingsResponse } from '../types/response';
 import { IDbSettings } from '../types/db';
-import { INotificationSettings } from '../types/misc';
 
 export const SettingHandler = {
 
@@ -22,16 +21,17 @@ export const SettingHandler = {
       return ResponseService.notFound('This user does not have any settings associated', res);
     }
 
-    const notifications: INotificationSettings = JSON.parse(req.body.notifications || '{}');
-
     // Update only the new settings that have been provided in the request
     const newSettings: IDbSettings = {
       userId: previousSettings.userId,
       logoImage: req.body.logoImage || previousSettings.logoImage,
-      darkMode: req.body.darkMode === 'true' || previousSettings.darkMode, // TODO: This may break
+      darkMode: req.body.darkMode ? req.body.darkMode === 'true' : previousSettings.darkMode,
       timeZone: req.body.timeZone || previousSettings.timeZone,
       themeColor: req.body.themeColor || previousSettings.themeColor,
-      notifications: Object.keys(notifications).length === 4 ? notifications : previousSettings.notifications, // Bit hacky
+      interval: req.body.interval ? parseInt(req.body.interval) : previousSettings.req.body.interval,
+      minTemperature: req.body.minTemperature ? parseInt(req.body.minTemperature) : previousSettings.req.body.minTemperature,
+      maxTemperature: req.body.maxTemperature ? parseInt(req.body.maxTemperature) : previousSettings.req.body.maxTemperature,
+      gatheringThreshold: req.body.gatheringThreshold ? parseFloat(req.body.gatheringThreshold) : previousSettings.req.body.gatheringThreshold,
       createdAt: previousSettings.createdAt,
       lastUpdated: new Date(),
     };
@@ -59,7 +59,10 @@ export const SettingHandler = {
       darkMode: data.darkMode,
       timeZone: data.timeZone,
       themeColor: data.themeColor,
-      notifications: data.notifications,
+      interval: data.interval,
+      minTemperature: data.minTemperature,
+      maxTemperature: data.maxTemperature,
+      gatheringThreshold: data.gatheringThreshold,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix(),
     };
