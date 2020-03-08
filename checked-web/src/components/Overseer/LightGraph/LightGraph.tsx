@@ -7,17 +7,7 @@ interface IProps {
     series: any;
     dates: any;
 }
-
-// const options = {
-                
-//     chart: {
-//         id: "basic-line"
-//     },
-//     xaxis: {
-//         categories: this.props.dates,
-//     }
-// };
-            
+  
 
 class LightGraph extends React.Component<IProps, {}> {
 
@@ -32,7 +22,7 @@ class LightGraph extends React.Component<IProps, {}> {
                         <Chart
                             options={{
                                 yaxis: {
-                                    min: 0,
+                                    // min: 0,
                                 },
                                 colors: ["#FF9E00"],
                                 chart: {
@@ -46,6 +36,7 @@ class LightGraph extends React.Component<IProps, {}> {
                             series={this.props.series}
                             type="line"
                             width="100%"
+                            height="200px"
                         />
                     </div>
                 </div>

@@ -111,7 +111,7 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
     handleDelete(event: any): void {
-        console.log("delete me");
+        // console.log("delete me");
         this.props.deleteThisComment(this);
     }
 
@@ -152,8 +152,8 @@ export class CommentBox extends React.Component<IProps, IState> {
     submitHandler = (event: any): void => {
         event.preventDefault(); // Stop the form from reloading the page
         // Submit code below here
-        console.log("form submitted");
-        console.log(this.state.commentVal);
+        // console.log("form submitted");
+        // console.log(this.state.commentVal);
     };
 
     radioChange = (event: any): void => {
@@ -260,7 +260,7 @@ export class CommentBox extends React.Component<IProps, IState> {
        
        
 
-        console.log(this.state.image);
+        // console.log(this.state.image);
 
         if (this.state.image != null && this.props.new === false) {
             return (
