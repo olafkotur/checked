@@ -44,15 +44,13 @@ export const UserHandler = {
       darkMode: false,
       timeZone: '',
       themeColor: '',
-      notifications: {
-        interval: 10,
-        minTemperature: 16,
-        maxTemperature: 35,
-        gatheringThreshold: 0.7
-      },
+      interval: 10,
+      minTemperature: 16,
+      maxTemperature: 35,
+      gatheringThreshold: 0.7,
       createdAt: new Date(),
       lastUpdated: new Date()
-    }
+    };
 
     // Add user to the database and send an email verification
     const body: string = EmailService.generateRegistrationBody();

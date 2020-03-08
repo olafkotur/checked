@@ -1,4 +1,4 @@
-import { ILocations, IZoneTemperatures, INotificationSettings } from './misc';
+import { ILocations, IZoneTemperatures } from './misc';
 
 export interface IDbLive {
   dataType: string;
@@ -110,7 +110,10 @@ export interface IDbSettings {
   darkMode: boolean;
   timeZone: string;
   themeColor: string;
-  notifications: INotificationSettings;
+  interval: number;
+  minTemperature: number;
+  maxTemperature: number;
+  gatheringThreshold: number;
   createdAt: Date;
   lastUpdated: Date;
 }
