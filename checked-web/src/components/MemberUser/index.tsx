@@ -1,13 +1,9 @@
 import React from 'react';
-import { Grid, List, Button, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs, Radio, RadioGroup, FormControlLabel, Avatar, Typography } from "@material-ui/core";
+import { Grid, List,  Button, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs, Radio, RadioGroup, FormControlLabel } from "@material-ui/core";
 import { IMember } from '../../types';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
-import { ConsentService } from '../../api/ConsentService';
-import { Person } from '@material-ui/icons';
-import LightGraph from '../Overseer/LightGraph/LightGraph';
-import { MemberService } from '../../api/MemberService';
 
 
 
@@ -21,14 +17,9 @@ interface IState {
     comments: Array<any>;
     editingComment: boolean;
     loadingComments: boolean;
-    loadingConsent: boolean;
     chaningMember: boolean;
     tabValue: number;
-
     consentType: string;
-    consentForm: string;
-    termsForm: string;
-    privacyForm: string;
 }
 interface IProps {
     members: Array<IMember>;
@@ -50,17 +41,13 @@ class MemberUser extends React.Component<IProps, IState> {
             comments: [],
             editingComment: false,
             loadingComments: false,
-            loadingConsent: false,
             chaningMember: false,
             tabValue: 0,
-
-
-            consentType: "",
-            consentForm: "Consent Here",
-            termsForm: "Terms Here",
-            privacyForm: "Privacy Here",
+            consentType: "Consent"
         };
 
+        this.handleFirstName = this.handleFirstName.bind(this);
+        this.handleLastName = this.handleLastName.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.addComment = this.addComment.bind(this);
         this.saveComment = this.saveComment.bind(this);
@@ -71,88 +58,26 @@ class MemberUser extends React.Component<IProps, IState> {
         this.handleConsentToggle = this.handleConsentToggle.bind(this);
         this.handleAcceptConsent = this.handleAcceptConsent.bind(this);
         this.handleDeclineConsent = this.handleDeclineConsent.bind(this);
-        this.displayConsent = this.displayConsent.bind(this);
-        this.getConsent = this.getConsent.bind(this);
-        this.decideConsent = this.decideConsent.bind(this);
 
-        // console.log(this.props.memberID);
+        console.log(this.props.memberID);
         this.getFeedList();
-        this.getConsent();
-        this.getMemberInfo();
-
     }
 
 
-    async getMemberInfo(): Promise<void>{
+  
 
-       const MemberInfo = await MemberService.getOneMember(this.props.memberID);
-    //    console.log(MemberInfo);
-       this.setState({
-           firstName: MemberInfo.firstName,
-           lastName: MemberInfo.lastName,
-        });
-
+    handleFirstName(event: any): void {
+        this.setState({ firstName: event.target.value });
     };
 
-   
-
-    changeTab(event: React.ChangeEvent<{}>, newValue: number): void {
-
-        this.setState({ tabValue: newValue });
-
-
-        // console.log(CommentService.getComments(this.props.memberID.toString()));
-
-
-
+    handleLastName(event: any): void {
+        this.setState({ lastName: event.target.value });
     };
 
-
-    createChart(): JSX.Element {
-
-        const data: number[] = [];
-        const dates: string[] = [];
-
-        let score = 0;
-
-        this.state.comments.forEach(comment => {
-
-            const rating = comment.rating;
-
-            if (rating === 1) { // red
-                score = score + -2;
-            }
-            else if (rating === 2) { // amber
-                score = score + 0;
-            }
-
-            else if (rating === 3) { // amber
-                score = score + 1;
-            }
-            console.log(score);
-
-            data.push(score);
-            dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
-           
-        });
-        console.log(data);
-        console.log("Rendering");
-        const graph = <LightGraph
-
-            dates={dates}
-
-            series={[
-                {
-                    name: "Score",
-                    data: data
-                }
-            ]}
-
-        />;
-        return (graph);
-    }
-
-
+    changeTab(event: React.ChangeEvent<{}>, newValue: number): void{ 
+        this.setState({tabValue: newValue});
+        console.log(CommentService.getComments(this.props.memberID.toString()));
+    };
 
     formatAMPM(date: Date): string {
         let hours = date.getHours();
@@ -176,7 +101,7 @@ class MemberUser extends React.Component<IProps, IState> {
 
     displayComments(): Array<JSX.Element> {
 
-        // console.log(this.state.comments);
+        console.log(this.state.comments);
 
         if (!this.state.loadingComments) {
 
@@ -206,7 +131,7 @@ class MemberUser extends React.Component<IProps, IState> {
                     timeStamp={timeStamp}
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
-                    canDelete={false}
+                    canDelete = {false}
                     imageSrc={comment.image}
                 />;
             });
@@ -305,130 +230,24 @@ class MemberUser extends React.Component<IProps, IState> {
 
     }
 
-    async getConsent(): Promise<void> {
-
-
-        this.setState({ loadingConsent: true });
-        const Consent = await ConsentService.getConsent();
-        const TandC = await ConsentService.getConditions();
-        const Privacy = await ConsentService.getPrivacy();
-        console.log(Consent);
-        console.log("-----------------------------");
-        console.log(TandC);
-        console.log("-----------------------------");
-        console.log(Privacy);
-        this.setState({
-            consentForm: Consent,
-            termsForm: TandC,
-            privacyForm: Privacy,
-            loadingConsent: false,
-        });
-
-
-    }
-
-    decideConsent(): string {
-
-
-        if (this.state.consentType == "Terms") {
-            return (this.state.termsForm);
-        }
-        else if (this.state.consentType == "Privacy") {
-            return (this.state.privacyForm);
-        }
-        else if (this.state.consentType == "Consent") {
-            return (this.state.consentForm);
-        }
-        else {
-            return ("ERROR");
-        }
-
-
-    }
-
-    displayConsent(): JSX.Element {
-        // console.log(ConsentService.getConsent());
-        if (!this.state.loadingConsent) {
-
-            if(this.state.consentType == ""){
-                return (
-                    <div>  </div>
-                );
-            }
-            else{
-
-            return (
-                <div>
-                    <TextField id="outlined-basic" value={this.decideConsent()} label={this.state.consentType} variant="outlined" style={{ width: "100%" }} disabled />
-
-                    <Grid container spacing={2}>
-                        <Grid item xs={6}>
-
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="contained"
-                                color="secondary"
-                                className="mt-1 mb-3"
-                                onClick={this.handleDeclineConsent}
-                            // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
-                            >
-                                Decline
-                            </Button>
-
-
-
-                        </Grid>
-
-                        <Grid item xs={6}>
-
-                            <Button
-                                type="button"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className="mt-1 mb-3"
-                                onClick={this.handleAcceptConsent}
-                            // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
-                            >
-                                Accept
-                            </Button>
-
-
-
-                        </Grid>
-
-
-
-                    </Grid>
-                </div>
-            );
-        }
-
-        }
-        else {
-            return (<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>);
-        }
-    };
-
     handleConsentToggle = (event: any): void => {
-        this.setState({ consentType: event.target.value });
+        this.setState({consentType: event.target.value});
         // console.log(event.target.value);
-
+        
     };
 
-    handleAcceptConsent(event: any): void {
+    handleAcceptConsent (event: any): void  {
         console.log("Accept");
     };
 
-    handleDeclineConsent(event: any): void {
+    handleDeclineConsent (event: any): void {
         console.log("Decline");
     };
 
 
-    displayTab(): JSX.Element {
+    displayTab(): JSX.Element{
         // Feed
-        if (this.state.tabValue === 0) {
+        if (this.state.tabValue === 0){
             return (
                 <Grid container spacing={3} className="memberManager mt-3">
                     <Grid item xs={6} >
@@ -453,60 +272,8 @@ class MemberUser extends React.Component<IProps, IState> {
             );
         }
 
-        // Info
-        else if (this.state.tabValue === 1) {
-            const listGridWidth = 8;
-            const acceptedGridWidth = 4;
-
-            return (
-                <Grid container spacing={3} className="memberManager mt-3">
-                    <Grid item xs={12} >
-                        {/* <CardHeader title={"Consent Toggle"} /> */}
-                        {/* <Divider /> */}
-                        <CardContent >
-                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                                
-                                <Grid container spacing={1} className="p-4 h-100">
-                                    <Grid item xs={12} className="mt-3 mb-3">
-                                        <Avatar className="memberAvatar">
-                                            <Person fontSize="large" className="w-100 h-100 m-1" />
-                                        </Avatar>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Typography variant="subtitle2">
-                                            Member ID: {this.props.memberID}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} className="mt-2">
-                                        <Typography variant="subtitle2">
-                                            Firstname: {this.state.firstName}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} className="mt-2">
-                                        <Typography variant="subtitle2">
-                                            Lastname: {this.state.lastName}
-                                        </Typography>
-                                    </Grid>
-                                    
-
-                
-                                </Grid>
-                                
-                                    {this.createChart()}
-                                
-                                {/* {this.createChart()} */}
-                                
-                            </List>
-                        </CardContent>
-                    </Grid>
-                    
-                </Grid>
-            );
-        }
-
-
-        // consent forms
-        else if (this.state.tabValue === 2) {
+       // consent forms
+       else if (this.state.tabValue === 1) {
             const listGridWidth = 8;
             const acceptedGridWidth = 4;
 
@@ -518,28 +285,22 @@ class MemberUser extends React.Component<IProps, IState> {
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
                                 {/* {this.displayComments()} */}
-
+                                
                                 <RadioGroup onChange={this.handleConsentToggle}  >
 
                                     <Grid container>
-                                        <Grid item xs={listGridWidth} >
-                                            <FormControlLabel value="Terms" control={<Radio color="primary" />} label="Terms & Conditions" />
+                                        <Grid item xs={listGridWidth} > 
+                                            <FormControlLabel value="General" control={<Radio color="primary" />} label="General Terms & Conditions" />
                                         </Grid>
-                                        {/* <Grid item xs={acceptedGridWidth} >
+                                        <Grid item xs={acceptedGridWidth} > 
                                             <p>Accepted</p>
-                                        </Grid> */}
-                                        <Grid item xs={listGridWidth} >
-                                            <FormControlLabel value="Privacy" control={<Radio color="primary" />} label="Privacy" />
                                         </Grid>
-                                        {/* <Grid item xs={acceptedGridWidth} >
-                                            <p>Accepted</p>
-                                        </Grid> */}
-                                        <Grid item xs={listGridWidth} >
-                                            <FormControlLabel value="Consent" control={<Radio color="primary" />} label="Consent" />
+                                        <Grid item xs={listGridWidth} > 
+                                            <FormControlLabel value="Location" control={<Radio color="primary" />} label="Location Tracking" />
                                         </Grid>
-                                        {/* <Grid item xs={acceptedGridWidth} >
+                                        <Grid item xs={acceptedGridWidth} >
                                             <p>Accepted</p>
-                                        </Grid> */}
+                                        </Grid>
                                     </Grid>
                                 </RadioGroup>
                             </List>
@@ -548,7 +309,48 @@ class MemberUser extends React.Component<IProps, IState> {
                     <Grid item xs={6} >
                         <CardContent >
                             <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                                {this.displayConsent()}
+                                <TextField id="outlined-basic" value = "Hello" label={this.state.consentType} variant="outlined" style={{ width: "100%" }} disabled/>
+
+                                <Grid container spacing={2}>
+                                    <Grid item  xs={6}>
+
+                                        <Button
+                                            type="button"
+                                            fullWidth
+                                            variant="contained"
+                                            color="secondary"
+                                            className="mt-1 mb-3"
+                                            onClick={this.handleDeclineConsent}
+                                            // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
+                                        >
+                                            Decline
+                                        </Button>
+
+                                      
+
+                                    </Grid>
+
+                                    <Grid item xs={6}>
+
+                                        <Button
+                                            type="button"
+                                            fullWidth
+                                            variant="contained"
+                                            color="primary"
+                                            className="mt-1 mb-3"
+                                            onClick={this.handleAcceptConsent}
+                                        // disabled={!this.state.email.includes('@') || this.state.password.length < 6}
+                                        >
+                                           Accept
+                                        </Button>
+
+
+
+                                    </Grid>
+
+                                    
+
+                                </Grid>
 
                             </List>
                         </CardContent>
@@ -558,8 +360,8 @@ class MemberUser extends React.Component<IProps, IState> {
         }
 
 
-        // Settings
-        else if (this.state.tabValue === 3) {
+        // consent forms
+        else if (this.state.tabValue === 2) {
             return (
                 <Grid container spacing={3} className="memberManager mt-3">
                     <Grid item xs={6} >
@@ -587,10 +389,10 @@ class MemberUser extends React.Component<IProps, IState> {
         }
 
 
-        else {
+        else{
             return (
-                <Grid container spacing={0} className="memberManager mt-3">
-                    <Grid item><h1>Error NO Tab Found</h1></Grid>
+                 <Grid container spacing={0} className="memberManager mt-3">
+                     <Grid item><h1>Error NO Tab Found</h1></Grid>
                 </Grid>
             );
         }
@@ -604,19 +406,18 @@ class MemberUser extends React.Component<IProps, IState> {
             <div>
                 <AppBar position="static">
                     <Tabs value={this.state.tabValue} onChange={this.changeTab} aria-label="simple tabs example">
-                        <Tab label="Feed" />
-                        <Tab label="Info" />
-                        <Tab label="Consent" />
-                        <Tab label="Settings" />
+                        <Tab label="Feed"/>
+                        <Tab label="Consent"/>
+                        <Tab label="Settings"/>
                     </Tabs>
                 </AppBar>
+                
+               
 
+                    {this.displayTab()}
 
-
-                {this.displayTab()}
-
-
-
+              
+               
 
             </div>
         );

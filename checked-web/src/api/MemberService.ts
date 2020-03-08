@@ -17,15 +17,5 @@ export const MemberService = {
     deleteMember: async (memberID: number): Promise<any> => {
         const uri = 'members/delete/' + memberID.toString();
         return await HttpService.delete(uri);
-    },
-
-   getOneMember: async (memberID: number): Promise<any> => {
-        const uri = 'members/' + memberID.toString();
-       return await HttpService.get(uri).then((res: any) => {
-           // console.log(res);
-           return res.result;
-       });
-    },
-
-
+    }
 };
