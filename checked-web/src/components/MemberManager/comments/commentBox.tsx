@@ -1,9 +1,11 @@
 import React from "react";
+import '../../../../node_modules/regenerator-runtime';
 import { RouteComponentProps } from "@reach/router";
 import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton} from "@material-ui/core";
 import '../../../index.css';
 import { Delete, Save,  AddAPhoto } from "@material-ui/icons";
 import { DropzoneArea } from '../../../../node_modules/material-ui-dropzone';
+
 
 
 
@@ -260,7 +262,7 @@ export class CommentBox extends React.Component<IProps, IState> {
        
        
 
-        console.log(this.state.image);
+        // console.log(this.state.image);
 
         if (this.state.image != null && this.props.new === false) {
             return (

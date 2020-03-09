@@ -55,4 +55,6 @@ export const HttpService = {
             });
         });
     },
+
+    // getEndpoint: (): string => (endpoint)
 };

@@ -1,11 +1,13 @@
 import React from 'react';
 import Chart from "react-apexcharts";
+import { Height } from '@material-ui/icons';
 
 
 
 interface IProps {
     series: any;
     dates: any;
+    height: string;
 }
 
 // const options = {
@@ -41,8 +43,9 @@ class LightGraph extends React.Component<IProps, {}> {
                                 xaxis: {
                                     categories: this.props.dates,
                                 }
+                               
                             }}
-                            
+                            height={this.props.height}
                             series={this.props.series}
                             type="line"
                             width="100%"

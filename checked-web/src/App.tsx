@@ -268,11 +268,13 @@ class App extends React.Component<{}, IState> {
 						<ThemeProvider theme={darkTheme}>
 							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
+
 								<MapEditor path="editor" userID={userID} />
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path = "memberuser"userID={userID} />
 								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
+
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -284,11 +286,13 @@ class App extends React.Component<{}, IState> {
 						<ThemeProvider theme={lightTheme}>
 							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
+
 								<MapEditor path="editor" userID={userID} />
 								<Dashboard path="/" userID={userID} />
 								<MemberManagement path="members" userID={userID} />
 								<MemberUserView path="memberuser" userID={userID} />
 								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
+
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
