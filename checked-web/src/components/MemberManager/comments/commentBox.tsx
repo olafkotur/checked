@@ -139,7 +139,7 @@ export class CommentBox extends React.Component<IProps, IState> {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         
-        reader.onload = () => this.setState({ imageDropped: true, image: reader.result });
+        reader.onload = (): void => this.setState({ imageDropped: true, image: reader.result });
            
         reader.onerror = function (error): void {
             console.log('Error: ', error);
@@ -274,6 +274,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                         // src={`data:image/jpeg;base64,${this.state.image}`}
                         src={this.state.image}
                         style={{ width: "100%", paddingTop: 10 }}
+                        alt="comment"
                     />
                 </div>
             );
@@ -299,6 +300,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                         <img 
                             src = {this.state.image} 
                             style={{ width: "100%", paddingTop: 10 }}
+                            alt="comment"
                         />
                         
                     </div>

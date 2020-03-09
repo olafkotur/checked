@@ -8,13 +8,6 @@ export interface IZoneTemperatures {
   value: number;
 }
 
-export interface INotificationSettings {
-  interval: number;
-  maxTemperature: number;
-  minTemperature: number;
-  gatheringThreshold: number;
-}
-
 export interface IDecodedToken {
   exp: number;
   email: string;

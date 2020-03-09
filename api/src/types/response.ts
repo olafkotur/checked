@@ -1,4 +1,4 @@
-import { IZoneTemperatures, ILocations, INotificationSettings } from "./misc";
+import { IZoneTemperatures, ILocations } from "./misc";
 
 export interface IResponse {
   code: number;
@@ -129,7 +129,10 @@ export interface ISettingsResponse {
   darkMode: boolean;
   timeZone: string;
   themeColor: string;
-  notifications: INotificationSettings;
+  interval: number;
+  minTemperature: number;
+  maxTemperature: number;
+  gatheringThreshold: number;
   createdAt: number;
   lastUpdated: number;
 }

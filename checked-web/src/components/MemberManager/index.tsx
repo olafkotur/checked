@@ -1,8 +1,8 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, Tooltip } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, Tooltip, Chip } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember, ILink, IUser } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd, DeleteOutlineRounded } from '@material-ui/icons';
+import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';
@@ -158,23 +158,15 @@ class MemberManager extends React.Component<IProps, IState> {
         this.state.overseers.forEach((link) => {
             const user = this.state.users.find((user) => user.userId === link.userId);
             overseers.push(
-                <Grid item xs={6}>
-                    <div className="overseer h-100 w-100">
-                        <Grid container spacing={0}>
-                            <Grid item xs={9} className="vcenterParent text-center">
-                                <Typography variant="subtitle2" className="pl-3 vcenterChild">
-                                    {user?.email}
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={3}>
-                                <IconButton onClick={(): Promise<void> => this.deleteLink(link.linkId)}>
-                                    <DeleteOutlineRounded style={{ color: 'white' }} />
-                                </IconButton>
-                            </Grid>
-                        </Grid>
-                    </div>
-
-                </Grid>
+            <Grid item>
+                    <Chip
+                        className="overseer"
+                        color="primary"
+                        label={user?.email}
+                        onDelete={(): Promise<void> => this.deleteLink(link.linkId)}
+                    />
+            </Grid>
+                    
             );
         });
 
@@ -511,7 +503,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                     <Typography variant="subtitle2" className="mb-4 pt-4 border-top text-center">
                                         Overseers
                                     </Typography>
-                                    <Grid container spacing={4}>
+                                    <Grid container spacing={2}>
                                         {this.renderOverseers()}
                                     </Grid>
                                 </Grid>
@@ -536,7 +528,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                                 <Grid item xs={2} className="vcenterParent mb-4">
                                     <Tooltip title="Asign new Overseer" className="vcenterChild mt-1">
-                                        <IconButton style={{ backgroundColor: '#ff9e00', color: '#fff' }} onClick={this.createLink}>
+                                        <IconButton style={{ backgroundColor: '#dddddd09' }} onClick={this.createLink} color="primary" className="overseerAdd">
                                             <Add />
                                         </IconButton>
                                     </Tooltip>

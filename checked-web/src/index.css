@@ -165,7 +165,8 @@ code {
 .logo {
   width: 200px;
   border-radius: 10%;
-  margin-left: 65px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .signInCard {
@@ -185,7 +186,7 @@ code {
 
 .loaderDiv {
   min-height: 45px;
-  transform: rotate(-90deg) translateY(-4px);
+  transform: rotate(-90deg);
 }
 
 .loginLoader {
@@ -267,6 +268,7 @@ code {
   top: 0;
   height: calc(100vh - 235px) !important;
   box-shadow: -5px 0 5px -5px rgba(255, 255, 255, 0.651);
+  min-width: 200px;
 }
 
 .dashMemberHeight {
@@ -348,11 +350,16 @@ code {
   background-color: #b82a20 !important;
 }
 
-.overseer {
-  border-radius: 10px;
-  background-color: #ff9e00;
-  color: #ffffffef;
+.overseerAdd {
+  border: solid 1px #00000025 !important;
+  transition: 0.3s;
 }
+
+.overseerAdd:hover {
+  transition: 0.3s;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.185);
+}
+
 
 /* ===== ZONES ===== */
 
@@ -469,4 +476,35 @@ code {
   width: 30px !important;
   height: 30px !important;
   transform: translate(0px, -3px);
+}
+
+/* ===== SETTINGS ===== */
+
+.settingsDropZone {
+  max-width: 100px !important;
+  max-height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  padding: 5px;
+}
+
+.settingsLogoPreview {
+    max-width: 100px !important;
+    max-height: 100px !important;
+    min-width: 100px !important;
+    min-height: 100px !important;
+}
+
+.logoDelete {
+  position: absolute !important;
+  background-color: #fff !important;
+  border: solid 1px #00000025 !important;
+  bottom: -10px;
+  right: 10px;
+  transition: 0.3s;
+}
+
+.logoDelete:hover {
+  transition: 0.3s;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.185);
 }

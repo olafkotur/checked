@@ -1,54 +1,98 @@
 import React from 'react';
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
 import { Dashboard } from './pages/dashboard';
 import { MemberManagement } from './pages/member-management';
 import { OverseerView } from './pages/overseer-view';
-
 import {ZoneService} from './api/ZoneService';
-
-import { ThemeProvider } from '@material-ui/core/styles';
-import {LightTheme, DarkTheme} from './muiTheme';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
-import { IZone } from './types';
+import { IZone, ISettings } from './types';
 import { Zone } from './pages/zone';
 import { MemberUserView } from './pages/memberuser-view';
+import { Settings } from './pages/settings';
+import { SettingsService } from './api/SettingsService';
 
 
 interface IState {
-	authorised: boolean;
-	userID: number;
 	darkTheme: boolean;
 	zones: Array<IZone>;
 	loaded: boolean;
-	guardian: boolean;
+	settings: ISettings;
 }
 
 
 class App extends React.Component<{}, IState> {
 
 	constructor(props: any){
+		
+		
+		const tempSettings: ISettings = {
+			userId: -1,
+			logoImage: '',
+			darkMode: false,
+			timeZone: 'en-GB',
+			themeColor: '',
+			interval: 5,
+			minTemperature: 15,
+			maxTemperature: 25,
+			gatheringThreshold: 0.7,
+		};
+
+
 		super(props);
-		this.state = { authorised: false, userID: 1, guardian: false, loaded: false, darkTheme: false, zones: []}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
+		this.state = { loaded: false, darkTheme: false, zones: [], settings: tempSettings}; // SET AUTH TO TRUE IF YOU DONT WANT TO LOG IN EVERYTIME
 		this.setAuthorised = this.setAuthorised.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 		this.setUserID = this.setUserID.bind(this);
 		this.setGuardian = this.setGuardian.bind(this);
+		this.updateUserSettings = this.updateUserSettings.bind(this);
 	}
 
-	componentDidMount(): void {
-		this.getZones();
+	async componentDidMount(): Promise<void> {
+		await this.getUserData();
+	}
+
+	async getUserData(): Promise<void> {
+		await ZoneService.loadZonesByUser(Number(sessionStorage.getItem('userID'))).then((res) => {
+			this.setState({
+				zones: res.result,
+			});
+		}).catch(() => {
+			console.error('Error loading Zone Data.');
+		}).finally(async () => {
+			await SettingsService.getUserSettings(Number(sessionStorage.getItem('userID'))).then((res2) => {
+				this.setState({
+					settings: res2.result as ISettings,
+					loaded: true
+				});
+			}).catch(() => {
+				console.error('Error loading Settings Data.');
+			});
+		});
+	}
+
+	updateUserSettings(settings: ISettings): void {
+		SettingsService.setUserSettings(Number(sessionStorage.getItem('userID')), settings as ISettings).then(() => {
+			this.setState({settings});
+		}).catch(() => {
+			console.error('Error saving user settings.');
+		});
 	}
 
 	setAuthorised(authState: boolean): void {
-		this.setState({authorised: authState});
+		sessionStorage.setItem('authorised', authState.toString());
+		if(!authState){
+			navigate('');
+		}
+		window.location.reload();
 	};
 
 	setUserID(userID: number): void {
-		this.setState({ userID });
+		sessionStorage.setItem('userID', userID.toString());
 	};
 
 	setDarkMode(darkMode: boolean): void {
@@ -56,18 +100,11 @@ class App extends React.Component<{}, IState> {
 	}
 
 	setGuardian(isGuardian: boolean): void {
-		this.setState({guardian: isGuardian});
+		sessionStorage.setItem('guardian', isGuardian.toString());
 	}
 
-	getZones(): void {
-		ZoneService.loadZonesByUser(this.state.userID).then((res) => {
-			this.setState({
-				zones: res.result,
-				loaded: true
-			});
-		}).catch(() => {
-			console.error('Error loading Zone Data.');
-		});
+	setMember(isMember: boolean): void {
+		sessionStorage.setItem('member', isMember.toString());
 	}
 
 	renderZoneRoutes(): Array<JSX.Element> {
@@ -75,25 +112,125 @@ class App extends React.Component<{}, IState> {
 
 		this.state.zones.forEach((zone: IZone) => {
 			renderedZoneRoutes.push(
-				<Zone userID={this.state.userID} zoneDetails={zone} path={zone.zoneId.toString()} key={zone.zoneId}/>
+				<Zone userID={Number(sessionStorage.getItem('userID'))} zoneDetails={zone} path={zone.zoneId.toString()} key={zone.zoneId}/>
 			);
 		});
 		return renderedZoneRoutes;
 	}
 
+	getDarkTheme(primary: string): Record<string, any> {
+		return createMuiTheme({
+			palette: {
+				type: 'dark',
+				primary: {
+					main: primary.toString(),
+					contrastText: '#ffffff',
+				},
+				error: {
+					main: '#f44336',
+				},
+				warning: {
+					main: '#ff9800'
+				},
+				success: {
+					main: '#4caf50'
+				},
+				info: {
+					main: '#2196f3'
+				}
+			},
+			typography: {
+				button: {
+					fontFamily: 'Montserrat, sans-serif',
+					fontWeight: 600,
+					letterSpacing: '0.1em',
+					textTransform: 'none'
+				},
+			},
+			overrides: {
+				MuiCardHeader: {
+					title: {
+						fontFamily: 'Montserrat, sans-serif',
+						fontWeight: 700,
+						letterSpacing: '0.1em',
+						fontSize: '140%',
+					},
+					avatar: {
+						marginLeft: '10px',
+						width: '30px',
+						height: '30px',
+					}
+				},
+			}
+		});
+	}
+
+	getLightTheme(primary: string): Record<string, any> {
+		return createMuiTheme({
+			palette: {
+				type: 'light',
+				primary: {
+					main: primary.toString(),
+					contrastText: '#ffffff',
+				},
+				error: {
+					main: '#f44336',
+				},
+				warning: {
+					main: '#ff9800'
+				},
+				success: {
+					main: '#4caf50'
+				},
+				info: {
+					main: '#2196f3'
+				}
+			},
+			typography: {
+				button: {
+					fontFamily: 'Montserrat, sans-serif',
+					fontWeight: 600,
+					letterSpacing: '0.1em',
+					textTransform: 'none'
+				},
+			},
+			overrides: {
+				MuiCardHeader: {
+					title: {
+						fontFamily: 'Montserrat, sans-serif',
+						fontWeight: 700,
+						letterSpacing: '0.1em',
+						fontSize: '140%',
+					},
+					avatar: {
+						marginLeft: '10px',
+						width: '30px',
+						height: '30px',
+					}
+				},
+			}
+		});
+	}
+
 
 	render(): JSX.Element {
 
-		if (this.state.authorised) {
+		const darkTheme = this.getDarkTheme(this.state.settings.themeColor || '#FF9E00');
+		const lightTheme = this.getLightTheme(this.state.settings.themeColor || '#FF9E00');
 
 
-			if (this.state.guardian) {
-				if(this.state.darkTheme){
+		if (sessionStorage.getItem('authorised') === 'true') {
+
+			const userID = Number(sessionStorage.getItem('userID'));
+
+			//=================== OVERSEER VIEW ===================//
+			if (sessionStorage.getItem('guardian') === 'true') {
+				if(this.state.settings.darkMode){
 					return (
 						<div className="backgroundDark">
-							<ThemeProvider theme={DarkTheme}>
-								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
-								<OverseerView userID={this.state.userID} />
+							<ThemeProvider theme={darkTheme}>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
+								<OverseerView userID={userID} />
 								
 							</ThemeProvider>
 						</div>
@@ -101,26 +238,43 @@ class App extends React.Component<{}, IState> {
 				} else {
 					return (
 						<div className="background">
-							<ThemeProvider theme={LightTheme}>
-								<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID} menuHidden/>
-								<OverseerView userID={this.state.userID}/>
+							<ThemeProvider theme={lightTheme}>
+								<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage}/>
+								<OverseerView userID={userID}/>
 							</ThemeProvider>
 						</div>
 					);
 				}
 			} 
 
-			if(this.state.darkTheme && this.state.loaded){
+			//=================== MEMBER VIEW ===================//
+			if (sessionStorage.getItem('member') === 'true') {
+				return (
+					<div className="background">
+						<ThemeProvider theme={lightTheme}>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage} />
+							<div>
+								MEMES HERE
+							</div>
+						</ThemeProvider>
+					</div>
+				);
+			} 
+
+			//=================== ADMIN VIEW ===================//
+			if (this.state.settings.darkMode && this.state.loaded){
 				return (
 					<div className="backgroundDark">
-						<ThemeProvider theme={DarkTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
+						<ThemeProvider theme={darkTheme}>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
-								<MapEditor path="editor" userID={this.state.userID} />
-								<Dashboard path="/" userID={this.state.userID} />
-								<MemberManagement path="members" userID={this.state.userID} />
-								<MemberUserView path = "memberuser" memberID={2} />
-								
+
+								<MapEditor path="editor" userID={userID} />
+								<Dashboard path="/" userID={userID} />
+								<MemberManagement path="members" userID={userID} />
+								<MemberUserView path = "memberuser"userID={userID} />
+								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
+
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -129,14 +283,16 @@ class App extends React.Component<{}, IState> {
 			} else if(this.state.loaded) {
 				return (
 					<div className="background">
-						<ThemeProvider theme={LightTheme}>
-							<MenuBar setDarkMode={this.setDarkMode} zones={this.state.zones} userID={this.state.userID}/>
+						<ThemeProvider theme={lightTheme}>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} logo={this.state.settings.logoImage}/>
 							<Router>
-								<MapEditor path="editor" userID={this.state.userID} />
-								<Dashboard path="/" userID={this.state.userID} />
-								<MemberManagement path="members" userID={this.state.userID} />
-								<MemberUserView path="memberuser" memberID={2} />
-								
+
+								<MapEditor path="editor" userID={userID} />
+								<Dashboard path="/" userID={userID} />
+								<MemberManagement path="members" userID={userID} />
+								<MemberUserView path="memberuser" userID={userID} />
+								<Settings path="settings" userID={userID} settings={this.state.settings} saveSettings={this.updateUserSettings}/>
+
 								{this.renderZoneRoutes()}
 							</Router>
 						</ThemeProvider>
@@ -148,11 +304,14 @@ class App extends React.Component<{}, IState> {
 				);
 			}
 
-
-		} else {
+		//=================== LOGIN VIEW ===================//
+		} else { 
 			return (
-				<ThemeProvider theme={LightTheme}>
-					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian}/>
+				<ThemeProvider theme={this.getLightTheme('#FF9E00')}>
+					<Router>
+						<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian} setMember={this.setMember} path='/'/>
+						<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian} setMember={this.setMember} isMemberLogin path='member'/>
+					</Router>
 				</ThemeProvider>
 			);
 		}
