@@ -61,8 +61,8 @@ class Notifications extends React.Component<IProps, IState> {
 
         if(this.state.notifications.length === 0){
             renderedNotis.push(
-                <Grid item xs={12} className="h-100 w-100 vcenterParent text-center">
-                    <Typography variant="subtitle2">
+                <Grid item xs={12} className="h-100 w-100 vcenterParent text-center pt-5">
+                    <Typography variant="subtitle2" className="mt-5">
                         No notifications at present.
                     </Typography>
                 </Grid>
