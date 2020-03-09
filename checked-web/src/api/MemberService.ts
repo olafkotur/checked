@@ -17,5 +17,11 @@ export const MemberService = {
     deleteMember: async (memberID: number): Promise<any> => {
         const uri = 'members/delete/' + memberID.toString();
         return await HttpService.delete(uri);
-    }
+    },
+
+    login: async (id: string, password: string): Promise<any> => {
+        const uri = 'members/login';
+        const body = { memberId: id, password };
+        return await HttpService.post(uri, body);
+    },
 };
