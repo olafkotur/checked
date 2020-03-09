@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { Typography, IconButton, Divider, Backdrop, Fade, Modal, Card, CardContent, List, ListItem, Grid } from '@material-ui/core/';
+import { Typography, IconButton, Divider, Backdrop, Fade, Modal, Card, CardContent, Grid } from '@material-ui/core/';
 import { NotificationsNoneOutlined, NotificationsActive, Close } from '@material-ui/icons/';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerHalf, faLightbulb, faTint } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from '../../api/NotificationService';
 import _ from 'lodash';
 
@@ -63,8 +61,8 @@ class Notifications extends React.Component<IProps, IState> {
 
         if(this.state.notifications.length === 0){
             renderedNotis.push(
-                <Grid item xs={12} className="h-100 w-100 vcenterParent text-center">
-                    <Typography variant="subtitle2">
+                <Grid item xs={12} className="h-100 w-100 vcenterParent text-center pt-5">
+                    <Typography variant="subtitle2" className="mt-5">
                         No notifications at present.
                     </Typography>
                 </Grid>

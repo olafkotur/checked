@@ -115,7 +115,7 @@ export class Login extends React.Component<IProps, IState> {
             <div className="tiledBackground vcenterParent overflow-hidden">
                 <Card className="col-md-4 offset-md-4 col-sm-8 offset-sm-2 col-10 offset-1 pr-5 pl-5 vcenterChild signInCard signInCardOnScreen">
                     <CardContent>
-                        <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12">
+                        <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2 col-12 text-center">
                             <img src={Logo} className="logo mb-4 mt-5" alt="logo" />
                         </div>
                         <div className="text-center w-100">

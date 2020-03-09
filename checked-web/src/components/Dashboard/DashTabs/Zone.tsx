@@ -8,7 +8,7 @@ import { AssemblyService } from '../../../api/AssemblyService';
 import {LiveService} from '../../../api/LiveService';
 import { navigate } from '@reach/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThermometerHalf, faUser, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faThermometerHalf, faUser } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
     zone: IZone;
