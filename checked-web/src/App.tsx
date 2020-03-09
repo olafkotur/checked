@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import { Login } from './pages/login';
 import MenuBar from './components/MenuBar';
 import MapEditor from './pages/map-editor';
@@ -85,6 +85,9 @@ class App extends React.Component<{}, IState> {
 
 	setAuthorised(authState: boolean): void {
 		sessionStorage.setItem('authorised', authState.toString());
+		if(!authState){
+			navigate('');
+		}
 		window.location.reload();
 	};
 
@@ -98,6 +101,10 @@ class App extends React.Component<{}, IState> {
 
 	setGuardian(isGuardian: boolean): void {
 		sessionStorage.setItem('guardian', isGuardian.toString());
+	}
+
+	setMember(isMember: boolean): void {
+		sessionStorage.setItem('member', isMember.toString());
 	}
 
 	renderZoneRoutes(): Array<JSX.Element> {
@@ -216,7 +223,7 @@ class App extends React.Component<{}, IState> {
 
 			const userID = Number(sessionStorage.getItem('userID'));
 
-
+			//=================== OVERSEER VIEW ===================//
 			if (sessionStorage.getItem('guardian') === 'true') {
 				if(this.state.settings.darkMode){
 					return (
@@ -240,6 +247,21 @@ class App extends React.Component<{}, IState> {
 				}
 			} 
 
+			//=================== MEMBER VIEW ===================//
+			if (sessionStorage.getItem('member') === 'true') {
+				return (
+					<div className="background">
+						<ThemeProvider theme={lightTheme}>
+							<MenuBar setAuthorised={this.setAuthorised} zones={this.state.zones} userID={userID} menuHidden logo={this.state.settings.logoImage} />
+							<div>
+								MEMES HERE
+							</div>
+						</ThemeProvider>
+					</div>
+				);
+			} 
+
+			//=================== ADMIN VIEW ===================//
 			if (this.state.settings.darkMode && this.state.loaded){
 				return (
 					<div className="backgroundDark">
@@ -278,11 +300,14 @@ class App extends React.Component<{}, IState> {
 				);
 			}
 
-
-		} else {
+		//=================== LOGIN VIEW ===================//
+		} else { 
 			return (
-				<ThemeProvider theme={lightTheme}>
-					<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian}/>
+				<ThemeProvider theme={this.getLightTheme('#FF9E00')}>
+					<Router>
+						<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian} setMember={this.setMember} path='/'/>
+						<Login setAuthorised={this.setAuthorised} setUserID={this.setUserID} setGuardian={this.setGuardian} setMember={this.setMember} isMemberLogin path='member'/>
+					</Router>
 				</ThemeProvider>
 			);
 		}
