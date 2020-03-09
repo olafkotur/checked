@@ -186,7 +186,7 @@ code {
 
 .loaderDiv {
   min-height: 45px;
-  transform: rotate(-90deg) translateY(-4px);
+  transform: rotate(-90deg);
 }
 
 .loginLoader {
