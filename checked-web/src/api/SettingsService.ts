@@ -25,7 +25,6 @@ export const SettingsService = {
             
         };
         return await HttpService.post(uri, body).then((res) => {
-            console.log(res);
             return res;
         });
     }

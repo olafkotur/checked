@@ -43,10 +43,8 @@ Content-Type: application/x-www-form-urlencoded
 
 {
     "darkMode": false,
-    "notifications": {
-        "interval": 100,
-        "maxTemperature": 20,
-        "minTemperature": 10,
-        "gatheringThreshold": 1
-    }
+    "interval": 100,
+    "maxTemperature": 20,
+    "minTemperature": 10,
+    "gatheringThreshold": 1
 }

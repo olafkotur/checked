@@ -34,6 +34,9 @@ export class Settings extends React.Component<IProps, IState> {
         this.handleLogo = this.handleLogo.bind(this);
         this.toggleDarkMode = this.toggleDarkMode.bind(this);
         this.setTimeZone = this.setTimeZone.bind(this);
+        this.handleTemp = this.handleTemp.bind(this);
+        this.handleNotis = this.handleNotis.bind(this);
+        this.handleThreshold = this.handleThreshold.bind(this);
     }
 
     // componentDidMount(): void {
@@ -114,6 +117,32 @@ export class Settings extends React.Component<IProps, IState> {
 
         this.setState({settings: tempSettings});
     }
+
+    handleTemp(event: any, newValue: any): void {
+        const tempSettings = this.state.settings;
+
+        tempSettings.minTemperature = newValue[0] || 0;
+        tempSettings.maxTemperature = newValue[1] || 50;
+
+        this.setState({ settings: tempSettings });
+    }
+
+    handleNotis(event: any, newValue: any): void {
+        const tempSettings = this.state.settings;
+
+        tempSettings.interval = newValue || 5;
+
+        this.setState({ settings: tempSettings });
+    }
+
+    handleThreshold(event: any, newValue: any): void {
+        const tempSettings = this.state.settings;
+
+        tempSettings.gatheringThreshold = newValue/100 || 0.7;
+
+        this.setState({ settings: tempSettings });
+    }
+
 
     render(): JSX.Element {
         return (
@@ -250,6 +279,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                             min={5}
                                                             max={120}
                                                             valueLabelDisplay="on"
+                                                            onChangeCommitted={this.handleNotis}
                                                         />
                                                     </Grid>
                                                     <Grid item xs={3} />
@@ -258,7 +288,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                     <Grid item xs={3} className="vcenterParent text-left mt-5">
                                                         <Typography variant="subtitle2" className="vcenterChild">
                                                             Temperature Range (°C):
-                                                            </Typography>
+                                                        </Typography>
                                                     </Grid>
                                                     <Grid item xs={3} className="mt-5">
                                                         <Slider
@@ -266,6 +296,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                             min={0}
                                                             max={50}
                                                             valueLabelDisplay="on"
+                                                            onChangeCommitted={this.handleTemp}
                                                         />
                                                     </Grid>
                                                     <Grid item xs={3} />
@@ -283,6 +314,7 @@ export class Settings extends React.Component<IProps, IState> {
                                                             min={1}
                                                             max={100}
                                                             valueLabelDisplay="on"
+                                                            onChangeCommitted={this.handleThreshold}
                                                         />
                                                     </Grid>
                                                     <Grid item xs={3} />
