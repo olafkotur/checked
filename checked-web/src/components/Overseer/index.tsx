@@ -317,7 +317,7 @@ class Overseer extends React.Component<IProps, IState> {
         const graph = <LightGraph 
            
             dates = {dates}
-
+            height={"200"}
             series = {[
                 {
                     name: "Score",
