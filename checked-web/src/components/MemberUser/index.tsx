@@ -357,6 +357,79 @@ class MemberUser extends React.Component<IProps, IState> {
 
     }
 
+    handleConsentToggle = (event: any): void => {
+        this.setState({ consentType: event.target.value });
+        // console.log(event.target.value);
+
+    };
+
+    async handleAcceptConsent(event: any): Promise<void> {
+        await ConsentService.updateConsent(true, this.props.memberID, this.state.consentType);
+        this.getAccepted();
+    };
+
+    async handleDeclineConsent(event: any): Promise<void> {
+        await ConsentService.updateConsent(false, this.props.memberID, this.state.consentType);
+        this.getAccepted();
+    };
+
+    determineAccepted(value: string): JSX.Element {
+
+        if (!this.state.loadingAccepted) {
+            if (value === "Consent") {
+                if (this.state.consentAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else if (value === "Privacy") {
+                if (this.state.privacyAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else if (value === "Terms") {
+                if (this.state.termsAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else {
+                return (<div> Error </div>);
+            }
+        }
+        else {
+            return (<div> Loading </div>);
+        }
+
+
+        // return(<div> Accepted </div>);
+    }
+    async getAccepted(): Promise<void> {
+        this.setState({ loadingAccepted: true });
+        const Consent = await ConsentService.getConsentMember(this.props.memberID);
+        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
+        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
+        // console.log(Consent);
+        // console.log("-----------------------------");
+        // console.log(TandC);
+        // console.log("-----------------------------");
+        // console.log(Privacy);
+        this.setState({
+            consentAccepted: Consent.isAccepted,
+            // termsAccepted: TandC,
+            // privacyAccepted: Privacy,
+            loadingAccepted: false,
+        });
+    }
+
+
     displayConsent(): JSX.Element {
         // console.log(ConsentService.getConsent());
         if (!this.state.loadingConsent) {
@@ -422,25 +495,7 @@ class MemberUser extends React.Component<IProps, IState> {
         }
     };
 
-    handleConsentToggle = (event: any): void => {
-        this.setState({ consentType: event.target.value });
-        // console.log(event.target.value);
 
-    };
-
-    handleAcceptConsent(event: any): void {
-        // console.log("Accept");
-        // console.log(this.state.consentType);
-        ConsentService.updateConsent(true, this.props.memberID, this.state.consentType);
-        this.getAccepted();
-    };
-
-    handleDeclineConsent(event: any): void {
-        // console.log("Decline");
-        // console.log(this.state.consentType);
-        ConsentService.updateConsent(false, this.props.memberID, this.state.consentType);
-        this.getAccepted();
-    };
 
 
     displayTab(): JSX.Element {
@@ -614,62 +669,8 @@ class MemberUser extends React.Component<IProps, IState> {
             );
         }
     }
-    determineAccepted(value: string): JSX.Element {
-        
-        if(!this.state.loadingAccepted){
-            if (value === "Consent") {
-                if (this.state.consentAccepted){
-                    return (<div> Accepted </div>);
-                }
-                else{
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else if (value === "Privacy") {
-                if (this.state.privacyAccepted) {
-                    return (<div> Accepted </div>);
-                }
-                else {
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else if (value === "Terms") {
-                if (this.state.termsAccepted) {
-                    return (<div> Accepted </div>);
-                }
-                else {
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else {
-                return (<div> Error </div>);
-            }
-        }
-        else{
-            return (<div> Loading </div>);
-        }
 
-
-        // return(<div> Accepted </div>);
-    }
-    async getAccepted(): Promise <void>{
-        this.setState({ loadingAccepted: true });
-        const Consent = await ConsentService.getConsentMember(this.props.memberID);
-        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
-        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
-        // console.log(Consent);
-        // console.log("-----------------------------");
-        // console.log(TandC);
-        // console.log("-----------------------------");
-        // console.log(Privacy);
-        this.setState({
-            consentAccepted: Consent,
-            // termsAccepted: TandC,
-            // privacyAccepted: Privacy,
-            loadingAccepted: false,
-        });
-    }
-
+   
 
 
     render(): JSX.Element {
