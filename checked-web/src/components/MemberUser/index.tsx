@@ -1,13 +1,15 @@
 import React from 'react';
-import { Grid, List, Button, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs, Radio, RadioGroup, FormControlLabel, Avatar, Typography } from "@material-ui/core";
-import { IMember } from '../../types';
+import { Grid, List, Button, TextField, CardContent, CardHeader, Divider, AppBar, Tab, Tabs, Radio, RadioGroup, FormControlLabel, Avatar, Typography, Chip, IconButton } from "@material-ui/core";
+import { IMember, IUser, ILink } from '../../types';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
 import { ConsentService } from '../../api/ConsentService';
-import { Person } from '@material-ui/icons';
+import { Person, Add } from '@material-ui/icons';
 import LightGraph from '../Overseer/LightGraph/LightGraph';
 import { MemberService } from '../../api/MemberService';
+import { LinkService } from '../../api/LinkService';
+import { UserService } from '../../api/UserService';
 
 
 
@@ -17,7 +19,7 @@ interface IState {
     currentMember: number;
     firstName: string;
     lastName: string;
-    overseers: Array<object>;
+
     comments: Array<any>;
     editingComment: boolean;
     loadingComments: boolean;
@@ -33,6 +35,13 @@ interface IState {
     termsAccepted: boolean;
     privacyAccepted: boolean;
     loadingAccepted: boolean;
+
+    overseers: Array<ILink>;
+    users: Array<IUser>;
+    loadingOverseers: boolean;
+    selectedOverseerNum: number;
+    selectedOverseer: any;
+    overseerComments: Array<any>;
 }
 interface IProps {
     members: Array<IMember>;
@@ -46,11 +55,7 @@ class MemberUser extends React.Component<IProps, IState> {
             currentMember: -1,
             firstName: '',
             lastName: '',
-            overseers: [
-                { name: 'Parent McParentson', email: 'this@memes.com' },
-                { name: 'Parent McParentson2', email: 'this2@memes.com' },
-                { name: 'Parent McParentson3', email: 'this3@memes.com' },
-            ],
+            overseers: [],
             comments: [],
             editingComment: false,
             loadingComments: false,
@@ -67,9 +72,16 @@ class MemberUser extends React.Component<IProps, IState> {
             termsAccepted: false,
             privacyAccepted: false,
             loadingAccepted: false,
+
+            users: [],
+            loadingOverseers: false,
+            selectedOverseerNum: 0,
+            selectedOverseer: null,
+            overseerComments: [],
         };
 
         this.deleteComment = this.deleteComment.bind(this);
+        this.addComments = this.addComments.bind(this);
         this.addComment = this.addComment.bind(this);
         this.saveComment = this.saveComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
@@ -83,11 +95,15 @@ class MemberUser extends React.Component<IProps, IState> {
         this.getConsent = this.getConsent.bind(this);
         this.decideConsent = this.decideConsent.bind(this);
         this.getAccepted = this.getAccepted.bind(this);
+        this.renderOverseers = this.renderOverseers.bind(this);
         // console.log(this.props.memberID);
         this.getFeedList();
         this.getConsent();
         this.getMemberInfo();
         this.getAccepted();
+
+        this.getUsers();
+        this.getOverseers(this.props.memberID);
 
     }
 
@@ -102,7 +118,6 @@ class MemberUser extends React.Component<IProps, IState> {
         });
 
     };
-
 
 
     changeTab(event: React.ChangeEvent<{}>, newValue: number): void {
@@ -154,10 +169,10 @@ class MemberUser extends React.Component<IProps, IState> {
                 {
                     name: "Score",
                     data: data
-                    
+
                 }
             ]}
-            
+
 
         />;
         return (graph);
@@ -237,84 +252,18 @@ class MemberUser extends React.Component<IProps, IState> {
 
     }
 
-    async deleteComment(commentBox: any): Promise<void> {
-        // console.log("i have been called");
-
-        if (commentBox != null) {
-
-            const tempComments: any = [];
-
-            this.state.comments.forEach(async commentBoxTmp => {
-
-                if (commentBoxTmp.commentId !== commentBox.props.dbid) {
-                    tempComments[tempComments.length] = commentBoxTmp;
-                }
-                else if (!commentBox.props.new) {
-                    await CommentService.deleteComment(commentBox.props.dbid.toString());
-                }
-            });
-
-            this.setState({ comments: tempComments, editingComment: false });
-
-        }
-
-
-
-    }
-
-    addComment(): void {
-
+    async addComments(userId: number): Promise<void> {
         if (!this.state.editingComment) {
 
-            const tempComments: any = this.state.comments;
+            const tempComments: any = await CommentService.getCommentsByUser(userId.toString());
 
-            const newComment = {
-                commentId: 0,
-                rating: 0,
-                value: "",
-                new: true,
-            };
-
-            tempComments.push(newComment);
-
-            // console.log(tempComments);
-
-            this.setState({ comments: tempComments, editingComment: true });
+            this.setState({ overseerComments: tempComments });
         }
         else {
             alert("you can only add one comment at a time");
         }
     }
 
-    async saveComment(commentBox: any): Promise<void> {
-        // console.log("Saving Now");
-
-
-        const body = {
-            memberId: this.state.currentMember,
-            rating: parseInt(commentBox.state.radio),
-            value: commentBox.state.commentVal,
-        };
-
-        // console.log(body);
-
-        await CommentService.saveComment(body);
-
-
-        this.setState({ comments: [] });
-        await this.getFeedList();
-
-        const tempComments: any = [];
-
-        this.state.comments.forEach(async commentBoxTmp => {
-            if (commentBoxTmp.commentId !== commentBox.props.dbid) {
-                tempComments[tempComments.length] = commentBoxTmp;
-            }
-        });
-
-        this.setState({ comments: tempComments, editingComment: false });
-
-    }
 
     async getConsent(): Promise<void> {
 
@@ -357,6 +306,253 @@ class MemberUser extends React.Component<IProps, IState> {
 
     }
 
+    handleConsentToggle = (event: any): void => {
+        this.setState({ consentType: event.target.value });
+        // console.log(event.target.value);
+
+    };
+
+    async handleAcceptConsent(event: any): Promise<void> {
+        await ConsentService.updateConsent(true, this.props.memberID, this.state.consentType);
+        this.getAccepted();
+    };
+
+    async handleDeclineConsent(event: any): Promise<void> {
+        await ConsentService.updateConsent(false, this.props.memberID, this.state.consentType);
+        this.getAccepted();
+    };
+
+    determineAccepted(value: string): JSX.Element {
+
+        if (!this.state.loadingAccepted) {
+            if (value === "Consent") {
+                if (this.state.consentAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else if (value === "Privacy") {
+                if (this.state.privacyAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else if (value === "Terms") {
+                if (this.state.termsAccepted) {
+                    return (<div> Accepted </div>);
+                }
+                else {
+                    return (<div> Not Accepted </div>);
+                }
+            }
+            else {
+                return (<div> Error </div>);
+            }
+        }
+        else {
+            return (<div> Loading </div>);
+        }
+
+
+        // return(<div> Accepted </div>);
+    }
+    async getAccepted(): Promise<void> {
+        this.setState({ loadingAccepted: true });
+        const Consent = await ConsentService.getConsentMember(this.props.memberID);
+        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
+        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
+        // console.log(Consent);
+        // console.log("-----------------------------");
+        // console.log(TandC);
+        // console.log("-----------------------------");
+        // console.log(Privacy);
+        this.setState({
+            consentAccepted: Consent.isAccepted,
+            // termsAccepted: TandC,
+            // privacyAccepted: Privacy,
+            loadingAccepted: false,
+        });
+    }
+
+
+    async getOverseers(memberID: number): Promise<void> {
+        this.setState({ loadingOverseers: true });
+        const overseers = await LinkService.getOverseersByMember(memberID);
+        this.setState({ overseers: overseers.result, loadingOverseers: false });
+    }
+
+    async getUsers(): Promise<void> {
+        const users = await UserService.getAllUsers();
+        this.setState({ users: users.result, loadingOverseers: false });
+    }
+
+    renderOverseers(): Array<JSX.Element> {
+        const overseers: Array<JSX.Element> = [];
+
+        if (this.state.overseers.length === 0) {
+            overseers.push(
+                <Grid item xs={12} className="pb-3">
+                    <Typography variant="caption">
+                        No assigned overseers.
+                    </Typography>
+                </Grid>
+            );
+            return overseers;
+        }
+
+
+        this.state.overseers.forEach((link) => {
+            const user = this.state.users.find((user) => user.userId === link.userId);
+            overseers.push(
+                <Grid item>
+                    <Chip
+                        className="overseer"
+                        color="primary"
+                        label={user?.email}
+                        onClick={() => this.changeOverseer(user)}
+                    // onDelete={(): Promise<void> => this.deleteLink(link.linkId)}
+                    />
+                </Grid>
+
+            );
+        });
+
+        return overseers;
+    }
+
+    changeOverseer(user: any): void {
+        this.setState({ selectedOverseer: user, selectedOverseerNum: user.userId });
+        this.addComments(user.userId);
+    }
+
+    addComment(): void {
+
+
+        if (!this.state.editingComment) {
+
+            const tempComments: any = this.state.overseerComments;
+
+            const newComment = {
+                commentId: 0,
+                rating: 0,
+                value: "",
+                new: true,
+                image: undefined,
+            };
+
+            tempComments.push(newComment);
+
+            this.setState({ overseerComments: tempComments, editingComment: true });
+        }
+        else {
+            alert("you can only add one comment at a time");
+        }
+    }
+
+    async saveComment(commentBox: any): Promise<void> {
+        // console.log("Saving Now");
+
+
+        const body = {
+            userId: this.state.selectedOverseer.userId, //number
+            memberId: this.props.memberID, //number
+            rating: parseInt(commentBox.state.radio), //number
+            value: commentBox.state.commentVal, // string
+            image: commentBox.state.image, // string
+        };
+
+        // console.log(body);
+
+        await CommentService.saveCommentForOverseer(body);
+
+
+        this.setState({ overseerComments: [] });
+        await this.getFeedList();
+
+        const tempComments: any = [];
+
+        this.state.overseerComments.forEach(async commentBoxTmp => {
+            if (commentBoxTmp.commentId !== commentBox.props.dbid) {
+                tempComments[tempComments.length] = commentBoxTmp;
+            }
+        });
+
+        this.setState({ overseerComments: tempComments, editingComment: false });
+
+    }
+
+    async deleteComment(commentBox: any): Promise<void> {
+        // console.log("i have been called");
+        console.log("I shouldnt have been called in this file");
+    }
+
+    renderFeedback(): Array<JSX.Element> {
+
+        if (this.state.selectedOverseerNum !== 0) {
+            if (!this.state.loadingComments) {
+
+                const commentsTmp: JSX.Element[] = [];
+
+                // if(!this.state.editingComment){
+                this.state.overseerComments.forEach(comment => {
+
+                    const dateTmp = new Date(comment.createdAt * 1000);
+                    const date = dateTmp.getDate(); //Current Date
+                    const month = dateTmp.getMonth() + 1; //Current Month
+                    const year = dateTmp.getFullYear(); //Current Year
+
+                    let timeStamp = "";
+                    if (comment.new) {
+                        timeStamp = "New Comment";
+                    }
+                    else {
+                        timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
+                    }
+
+                    
+                    //TODO uncomment these
+                    commentsTmp[commentsTmp.length] = <CommentBox
+                        key={comment.commentId}
+                        dbid={comment.commentId}
+                        //  radioVal={comment.rating.toString()}
+                        radioVal = "2"
+                        textContent={comment.value}
+                        new={comment.new}
+                        timeStamp={timeStamp}
+                        deleteThisComment={this.deleteComment}
+                        saveThisComment={this.saveComment}
+                        canDelete={false}
+                        //  imageSrc={comment.image}
+                        imageSrc={""}
+                    />;
+                });
+
+                // }
+
+                if (commentsTmp.length > 0) {
+
+                    return (commentsTmp.reverse());
+                }
+
+                else {
+                    return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
+                }
+            }
+            else {
+                return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+            }
+        }
+        else {
+            return ([<div> Select and overseer to give feedback </div>]);
+        }
+
+    }
+
+
     displayConsent(): JSX.Element {
         // console.log(ConsentService.getConsent());
         if (!this.state.loadingConsent) {
@@ -370,7 +566,14 @@ class MemberUser extends React.Component<IProps, IState> {
 
                 return (
                     <div>
-                        <TextField id="outlined-basic" value={this.decideConsent()} label={this.state.consentType} variant="outlined" style={{ width: "100%" }} disabled />
+                        <TextField
+                            id="outlined-basic"
+                            value={this.decideConsent()}
+                            label={this.state.consentType}
+                            variant="outlined"
+                            color="primary"
+                            fullWidth={true}
+                            disabled />
 
                         <Grid container spacing={2}>
                             <Grid item xs={6}>
@@ -422,25 +625,7 @@ class MemberUser extends React.Component<IProps, IState> {
         }
     };
 
-    handleConsentToggle = (event: any): void => {
-        this.setState({ consentType: event.target.value });
-        // console.log(event.target.value);
 
-    };
-
-    handleAcceptConsent(event: any): void {
-        // console.log("Accept");
-        // console.log(this.state.consentType);
-        ConsentService.updateConsent(true, this.props.memberID, this.state.consentType);
-        this.getAccepted();
-    };
-
-    handleDeclineConsent(event: any): void {
-        // console.log("Decline");
-        // console.log(this.state.consentType);
-        ConsentService.updateConsent(false, this.props.memberID, this.state.consentType);
-        this.getAccepted();
-    };
 
 
     displayTab(): JSX.Element {
@@ -458,11 +643,18 @@ class MemberUser extends React.Component<IProps, IState> {
                         </CardContent>
                     </Grid>
                     <Grid item xs={6} >
-                        <CardHeader title={"OverSeer Feedback"} />
+                        <CardHeader title={"OverSeer Feedback"} action={
+                            <IconButton disabled={this.state.selectedOverseerNum === 0} >
+                                <Add onClick={this.addComment} />
+                            </IconButton>
+                        } />
                         <Divider />
                         <CardContent >
-                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                                {/* {this.displayComments()} */}
+                            <Grid container xs={12} spacing={2}>
+                                {this.renderOverseers()}
+                            </Grid>
+                            <List className="pr-3 pl-2 commentList" style={{ width: "100%" }} >
+                                {this.renderFeedback()}
                             </List>
                         </CardContent>
                     </Grid>
@@ -543,7 +735,7 @@ class MemberUser extends React.Component<IProps, IState> {
                                             <FormControlLabel value="Terms" control={<Radio color="primary" />} label="Terms & Conditions" />
                                         </Grid>
                                         <Grid item xs={acceptedGridWidth} >
-                                            <Typography style={{marginTop:10}}>
+                                            <Typography style={{ marginTop: 10 }}>
                                                 {this.determineAccepted("Terms")}
                                             </Typography>
                                         </Grid>
@@ -552,7 +744,7 @@ class MemberUser extends React.Component<IProps, IState> {
                                         </Grid>
                                         <Typography style={{ marginTop: 10 }}>
                                             {this.determineAccepted("Privacy")}
-                                            </Typography>
+                                        </Typography>
                                         <Grid item xs={listGridWidth} >
                                             <FormControlLabel value="Consent" control={<Radio color="primary" />} label="Consent" />
                                         </Grid>
@@ -614,61 +806,7 @@ class MemberUser extends React.Component<IProps, IState> {
             );
         }
     }
-    determineAccepted(value: string): JSX.Element {
-        
-        if(!this.state.loadingAccepted){
-            if (value === "Consent") {
-                if (this.state.consentAccepted){
-                    return (<div> Accepted </div>);
-                }
-                else{
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else if (value === "Privacy") {
-                if (this.state.privacyAccepted) {
-                    return (<div> Accepted </div>);
-                }
-                else {
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else if (value === "Terms") {
-                if (this.state.termsAccepted) {
-                    return (<div> Accepted </div>);
-                }
-                else {
-                    return (<div> Not Accepted </div>);
-                }
-            }
-            else {
-                return (<div> Error </div>);
-            }
-        }
-        else{
-            return (<div> Loading </div>);
-        }
 
-
-        // return(<div> Accepted </div>);
-    }
-    async getAccepted(): Promise <void>{
-        this.setState({ loadingAccepted: true });
-        const Consent = await ConsentService.getConsentMember(this.props.memberID);
-        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
-        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
-        // console.log(Consent);
-        // console.log("-----------------------------");
-        // console.log(TandC);
-        // console.log("-----------------------------");
-        // console.log(Privacy);
-        this.setState({
-            consentAccepted: Consent,
-            // termsAccepted: TandC,
-            // privacyAccepted: Privacy,
-            loadingAccepted: false,
-        });
-    }
 
 
 
@@ -677,7 +815,7 @@ class MemberUser extends React.Component<IProps, IState> {
         return (
             <div>
                 <AppBar position="static">
-                    <Tabs value={this.state.tabValue} onChange={this.changeTab} aria-label="simple tabs example">
+                    <Tabs value={this.state.tabValue} onChange={this.changeTab} aria-label="simple tabs example" textColor="inherit">
                         <Tab label="Feed" />
                         <Tab label="Info" />
                         <Tab label="Consent" />
