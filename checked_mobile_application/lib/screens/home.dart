@@ -287,7 +287,6 @@ class DragBox extends StatefulWidget {
   final String label;
   final Color itemColor;
 
-  final rng = Random();
   DragBox(this.initPos, this.width, this.height, this.label, this.itemColor, this.fontSize);
 
   @override

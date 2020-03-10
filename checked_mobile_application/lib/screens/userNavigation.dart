@@ -33,10 +33,11 @@ class User_NavigationState extends State<UserNavigation> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.refresh,
+              Icons.event,
               color: Colors.white,
             ),
             onPressed: () async {
+              // Add events page route here
             },
           ),
         ],
