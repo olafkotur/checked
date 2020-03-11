@@ -422,7 +422,7 @@ code {
 
 .radioBox{
   border: 0px none;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  /* border-left: 1px solid rgba(0, 0, 0, 0.1); */
 }
 
 .commentItem{
