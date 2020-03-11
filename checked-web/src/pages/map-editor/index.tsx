@@ -70,7 +70,7 @@ class MapEditor extends React.Component<IProps, IState> {
 
     handleColorChange = (color: any): void => {
         if (this.state.selectedZone != null) {
-            console.log(color.hex);
+            //console.log(color.hex);
             this.setState({ pickerColor: color.hex });
             this.state.selectedZone.setBackground(color.hex);
             this.state.selectedZone.setTextColor(this.determineTextColor(color.hex));
@@ -134,7 +134,7 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     async save(): Promise<void> {
-        console.log("saving now");
+        //console.log("saving now");
         const zones = document.getElementsByClassName("zoneBlock");
         // checks if the zones are not overlapping (reused from 330)
         if (checkCollision(zones) === false) {
@@ -211,7 +211,7 @@ class MapEditor extends React.Component<IProps, IState> {
     }
 
     deleteZone(): void {
-        console.log('deleteing zone');
+        //console.log('deleteing zone');
         if (this.state.selectedZone != null) {
 
             const selectedZone = this.state.selectedZone;
@@ -267,7 +267,7 @@ class MapEditor extends React.Component<IProps, IState> {
         if (activitiesDB.result.length > 0) {
             activity = activitiesDB.result[0].name;
         }
-        console.log("------------------------" + DBZone.color);
+        //console.log("------------------------" + DBZone.color);
         const tempZones = this.state.zones;
         tempZones[tempZones.length] = <ZoneBlock
             key={(tempZones.length + 1).toString()}

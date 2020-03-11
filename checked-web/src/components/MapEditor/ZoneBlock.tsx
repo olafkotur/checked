@@ -56,8 +56,8 @@ class ZoneBlock extends React.Component<IProps, IState> {
     mySubmitHandler = (event: any): void => {
         event.preventDefault(); // Stop the form from reloading the page
         // Submit code below here
-        console.log("form submitted");
-        console.log(this.state.value);
+        // console.log("form submitted");
+        // console.log(this.state.value);
     };
 
     setBackground(color: any): void{
@@ -66,7 +66,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
 
     setPlaceholderColor(hex: any): string{
         //this.setState({textColor: hex});
-        console.log("---" + hex);
+        //console.log("---" + hex);
         if(hex === "#ffffff"){
             // white
             return("activityInput" );
@@ -86,7 +86,7 @@ class ZoneBlock extends React.Component<IProps, IState> {
     };
 
     render(): JSX.Element {
-        console.log(this.state.textColor);
+        //console.log(this.state.textColor);
         return (
             <div 
             className="zoneBlock" 
