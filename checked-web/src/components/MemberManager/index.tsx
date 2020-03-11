@@ -99,7 +99,7 @@ class MemberManager extends React.Component<IProps, IState> {
 
     handleCreateUser(): void {
         MemberService.createMember(this.props.userID, this.state.firstName, this.state.lastName).then((res) => {
-            console.log(res);
+            //console.log(res);
             this.setState({ currentMember: -4, firstName: '', lastName: '' });
         }).catch(() => {
             this.setState({ currentMember: -3 });
@@ -107,7 +107,7 @@ class MemberManager extends React.Component<IProps, IState> {
     }
 
     handleUpdateUser(): void {
-        console.log('UPDATE MEME');
+        //console.log('UPDATE MEME');
     }
 
     handleDeleteUser(memberID: number): void {
@@ -600,13 +600,13 @@ class MemberManager extends React.Component<IProps, IState> {
             else if (rating === 3) { // amber
                 score = score + 1;
             }
-            console.log(score);
+            //console.log(score);
 
             data.push(score);
             dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
         });
-        console.log(data);
-        console.log("Rendering");
+        // console.log(data);
+        // console.log("Rendering");
         const graph = <LightGraph
 
             dates={dates}

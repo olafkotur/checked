@@ -113,7 +113,7 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
     handleDelete(event: any): void {
-        console.log("delete me");
+        //console.log("delete me");
         this.props.deleteThisComment(this);
     }
 

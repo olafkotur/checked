@@ -153,14 +153,14 @@ class MemberUser extends React.Component<IProps, IState> {
             else if (rating === 3) { // amber
                 score = score + 1;
             }
-            console.log(score);
+            //console.log(score);
 
             data.push(score);
             dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
 
         });
-        console.log(data);
-        console.log("Rendering");
+        // console.log(data);
+        // console.log("Rendering");
         const graph = <LightGraph
 
             dates={dates}
@@ -487,7 +487,7 @@ class MemberUser extends React.Component<IProps, IState> {
 
     async deleteComment(commentBox: any): Promise<void> {
         // console.log("i have been called");
-        console.log("I shouldnt have been called in this file");
+        //console.log("I shouldnt have been called in this file");
     }
 
     renderFeedback(): Array<JSX.Element> {

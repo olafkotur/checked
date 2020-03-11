@@ -101,7 +101,7 @@ class Overseer extends React.Component<IProps, IState> {
 
     handleCreateUser(): void {
         MemberService.createMember(this.props.userID, this.state.firstName, this.state.lastName).then((res) => {
-            console.log(res);
+            //console.log(res);
             this.setState({ currentMember: -4, firstName: '', lastName: '' });
         }).catch(() => {
             this.setState({ currentMember: -3 });
@@ -109,7 +109,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     handleUpdateUser(): void {
-        console.log('UPDATE MEME');
+        //console.log('UPDATE MEME');
     }
 
     handleDeleteUser(memberID: number): void {
@@ -393,7 +393,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     displayComments(): Array<JSX.Element> {
-        console.log(this.state.comments);
+        //console.log(this.state.comments);
         if (!this.state.loadingComments) {
 
             const commentsTmp: JSX.Element[] = [];
