@@ -1,4 +1,5 @@
 import 'package:checked_mobile_application/screens/analysis.dart';
+import 'package:checked_mobile_application/screens/feedback.dart';
 import 'package:checked_mobile_application/screens/notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -33,11 +34,11 @@ class User_NavigationState extends State<UserNavigation> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.event,
+              Icons.info,
               color: Colors.white,
             ),
             onPressed: () async {
-              // Add events page route here
+              // Re-direct to privacy policy
             },
           ),
         ],
@@ -245,7 +246,7 @@ class User_NavigationState extends State<UserNavigation> {
                                 Positioned(
                                   top: 150,
                                   left: 23,
-                                  child: Text("Notification",style: TextStyle(
+                                  child: Text("Notifications",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700
@@ -272,9 +273,11 @@ class User_NavigationState extends State<UserNavigation> {
                                       ),
                                     ),
                                     child: IconButton(
-                                    onPressed: (){},
+                                    onPressed: (){
+                                      Navigator.push(context,MaterialPageRoute(builder: (context) => FeedbackForm(widget.userId)));
+                                    },
                                     icon: Icon(
-                                      Icons.person,
+                                      Icons.feedback,
                                       size: 100,
                                       color: Colors.white,
                                     ),
@@ -284,7 +287,7 @@ class User_NavigationState extends State<UserNavigation> {
                                 Positioned(
                                   top: 150,
                                   left: 14,
-                                  child: Text("Members Info",style: TextStyle(
+                                  child: Text("Feedback Form",style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
                                     fontWeight: FontWeight.w700
