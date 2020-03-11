@@ -54,6 +54,7 @@ export interface IUserResponse {
   companyName: string;
   isGuardian: boolean;
   policyAccepted: boolean;
+  nickName: string;
   createdAt: number;
   lastUpdated: number
 }

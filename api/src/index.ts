@@ -78,6 +78,7 @@ async function main() {
   app.get('/api/users/:userId', UserHandler.getUser);
   app.get('/api/users', UserHandler.getUsers);
   app.post('/api/users/update/:userId', UserHandler.updateUser);
+  app.post('/api/users/set/nickname/:userId', UserHandler.updateNickname);
 
   // Member handlers
   app.post('/api/members/create', MemberHandler.createMember);

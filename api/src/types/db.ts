@@ -39,6 +39,7 @@ export interface IDbUser {
   companyName: string;
   isGuardian: boolean;
   policyAccepted: boolean;
+  nickName: string;
   createdAt: Date;
   lastUpdated: Date;
 }
