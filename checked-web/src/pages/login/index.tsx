@@ -7,7 +7,7 @@ import UseAnimations from 'react-useanimations';
 
 import Logo from '../../media/checkedLogo.jpg';
 import { RouteComponentProps, navigate } from '@reach/router';
-import { SwapHorizRounded, SwapHorizontalCircle } from '@material-ui/icons';
+import { SwapHorizontalCircle } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 interface IState {
     email: string;

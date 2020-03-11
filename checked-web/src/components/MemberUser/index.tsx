@@ -664,8 +664,6 @@ class MemberUser extends React.Component<IProps, IState> {
 
         // Info
         else if (this.state.tabValue === 1) {
-            const listGridWidth = 8;
-            const acceptedGridWidth = 4;
 
             return (
                 <Grid container spacing={3} className="memberManager mt-3">
