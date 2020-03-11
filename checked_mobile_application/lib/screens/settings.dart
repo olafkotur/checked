@@ -15,22 +15,62 @@ class _SettingsState extends State<Settings> {
             color: Colors.white,
           ),
         ),
-      ),
-      body: Center(
-        child: Container(
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    
-                  ],
-                ),
-              ],
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.update,
+              color: Colors.white,
             ),
+            onPressed: () async {
+              // update settings endpoint
+            },
           ),
-        ),
+        ],
       ),
+      body: Column(children: <Widget>[
+        Row(
+          children: [
+            Expanded(
+              child: Text("App Icon"),
+            ),
+            Container(
+              color: Colors.orange,
+              margin: EdgeInsets.all(25.0),
+              child: FlutterLogo(
+                size: 60.0,
+              ),
+            ),
+            Container(
+              color: Colors.blue,
+              margin: EdgeInsets.all(25.0),
+              child: FlutterLogo(
+                size: 60.0,
+              ),
+            ),
+            Container(
+              color: Colors.purple,
+              margin: EdgeInsets.all(25.0),
+              child: FlutterLogo(
+                size: 60.0,
+              ),
+            ),
+          ]
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text("Logo Image"),
+            ),
+          ]
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: Text("Dark mode"),
+            ),
+          ]
+        )
+      ],)
     );
   }
 }

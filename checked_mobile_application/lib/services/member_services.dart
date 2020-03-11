@@ -11,6 +11,7 @@ class MembersServices{
   };
 
   static const createMemberEndpoint = "/members/create";
+  static const updateSettingsEndpoint = "/settings/update/";
 
   Future<APIResponse> postCreateMember(String _userId, String _firstName, String _lastName) async {
     String _body = 'userId=$_userId&firstName=$_firstName&companyName=$_lastName';
@@ -27,6 +28,7 @@ class MembersServices{
         }
       }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
+
 
 
 }
