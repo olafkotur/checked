@@ -6,7 +6,7 @@ import { Person, ArrowForwardIos, Add, PersonAdd, Feedback } from '@material-ui/
 import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';
-import UseAnimations from 'react-useanimations';
+// import UseAnimations from 'react-useanimations';
 import { LinkService } from '../../api/LinkService';
 import { UserService } from '../../api/UserService';
 import LightGraph from '../Overseer/LightGraph/LightGraph';
@@ -244,7 +244,14 @@ class MemberManager extends React.Component<IProps, IState> {
 
         }
         else {
-            return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+            // return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+            return ([
+                <div className="w-100 h-100 vcenterParent">
+                    <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                        Loading
+                </Typography>
+                </div>
+            ]);
         }
 
     }

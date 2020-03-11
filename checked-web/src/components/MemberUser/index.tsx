@@ -3,7 +3,7 @@ import { Grid, List, Button, TextField, CardContent, CardHeader, Divider, AppBar
 import { IMember, IUser, ILink } from '../../types';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
-import UseAnimations from 'react-useanimations';
+// import UseAnimations from 'react-useanimations';
 import { ConsentService } from '../../api/ConsentService';
 import { Person, Add } from '@material-ui/icons';
 import LightGraph from '../Overseer/LightGraph/LightGraph';
@@ -121,19 +121,11 @@ class MemberUser extends React.Component<IProps, IState> {
 
 
     changeTab(event: React.ChangeEvent<{}>, newValue: number): void {
-
         this.setState({ tabValue: newValue });
-
-
-        // console.log(CommentService.getComments(this.props.memberID.toString()));
-
-
-
     };
 
 
     createChart(): JSX.Element {
-
         const data: number[] = [];
         const dates: string[] = [];
 
@@ -247,7 +239,14 @@ class MemberUser extends React.Component<IProps, IState> {
 
         }
         else {
-            return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+            // return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+             return ([
+            <div className="w-100 h-100 vcenterParent">
+                <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                  Loading
+                </Typography>
+            </div>
+            ]);
         }
 
     }
@@ -288,27 +287,26 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     decideConsent(): string {
+        return(this.decideConsentCalc(this.state.consentType, this.state.termsForm, this.state.privacyForm, this.state.consentForm));
+    }
 
-
-        if (this.state.consentType === "Terms") {
-            return (this.state.termsForm);
+    decideConsentCalc(type: string, terms: string, privacy: string, consent: string, ): string { // refactored for jest
+        if (type === "Terms") {
+            return (terms);
         }
-        else if (this.state.consentType === "Privacy") {
-            return (this.state.privacyForm);
+        else if (type === "Privacy") {
+            return (privacy);
         }
-        else if (this.state.consentType === "Consent") {
-            return (this.state.consentForm);
+        else if (type === "Consent") {
+            return (consent);
         }
         else {
             return ("ERROR");
         }
-
-
     }
 
     handleConsentToggle = (event: any): void => {
         this.setState({ consentType: event.target.value });
-        // console.log(event.target.value);
 
     };
 
@@ -356,24 +354,12 @@ class MemberUser extends React.Component<IProps, IState> {
         else {
             return (<div> Loading </div>);
         }
-
-
-        // return(<div> Accepted </div>);
     }
     async getAccepted(): Promise<void> {
         this.setState({ loadingAccepted: true });
         const Consent = await ConsentService.getConsentMember(this.props.memberID);
-        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
-        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
-        // console.log(Consent);
-        // console.log("-----------------------------");
-        // console.log(TandC);
-        // console.log("-----------------------------");
-        // console.log(Privacy);
         this.setState({
             consentAccepted: Consent.isAccepted,
-            // termsAccepted: TandC,
-            // privacyAccepted: Privacy,
             loadingAccepted: false,
         });
     }
@@ -546,7 +532,14 @@ class MemberUser extends React.Component<IProps, IState> {
                 }
             }
             else {
-                return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+                // return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+                 return ([
+            <div className="w-100 h-100 vcenterParent">
+                <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                  Loading
+                </Typography>
+            </div>
+            ]);
             }
         }
         else {
@@ -624,7 +617,14 @@ class MemberUser extends React.Component<IProps, IState> {
 
         }
         else {
-            return (<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>);
+            // return (<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>);
+            return (
+                <div className="w-100 h-100 vcenterParent">
+                    <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                        Loading
+                </Typography>
+                </div>
+            );
         }
     };
 

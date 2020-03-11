@@ -147,6 +147,7 @@ export class CommentBox extends React.Component<IProps, IState> {
             console.log('Error: ', error);
         };
     }
+    
 
 
     commentChangeHandler = (event: any): void => {
@@ -208,13 +209,6 @@ export class CommentBox extends React.Component<IProps, IState> {
         }
     };
 
-    // const toggleTheme = () => {
-    //     if (theme === 'light') {
-    //         setTheme('dark');
-    //     } else {
-    //         setTheme('light');
-    //     }
-    // }
 
     trafficLight(): JSX.Element {
         
@@ -223,15 +217,6 @@ export class CommentBox extends React.Component<IProps, IState> {
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={12} >
                         <div style={{ width: "100%", height: "100%" }}>
-                            {/* <form style={{ height: "100%" }} onSubmit={this.submitHandler}>
-                                <textarea 
-                                color="text.primary"
-                                // disabled={!this.props.new} 
-                                onChange={this.commentChangeHandler} 
-                                value={this.state.commentVal} 
-                                placeholder="Type Here" 
-                                className="commentBox" />
-                            </form> */}
                             <Typography variant="body1" align="left" color="textPrimary">
                                 <TextField
                                     onChange={this.commentChangeHandler}
@@ -255,16 +240,6 @@ export class CommentBox extends React.Component<IProps, IState> {
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={11} >
                         <div style={{ width: "100%", height: "100%" }}>
-                            {/* <form style={{ height: "100%" }} onSubmit={this.submitHandler}>
-                                <textarea 
-                                color="text.primary"
-                                // disabled={!this.props.new} 
-                                onChange={this.commentChangeHandler} 
-                                value={this.state.commentVal} 
-                                placeholder="Type Here" 
-                                className="commentBox" 
-                                />
-                            </form> */}
                             <Typography variant="body1" align="left" color="textPrimary">
                                 <TextField
                                     onChange={this.commentChangeHandler}
@@ -306,10 +281,6 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     getImage(): JSX.Element {
 
-       
-       
-
-        // console.log(this.state.image);
 
         if (this.state.image != null && this.props.new === false && this.state.image !== undefined) {
             return (
@@ -317,8 +288,6 @@ export class CommentBox extends React.Component<IProps, IState> {
                     <Divider />
 
                     <img
-                        // className={classes.media}
-                        // src={`data:image/jpeg;base64,${this.state.image}`}
                         src={this.state.image}
                         style={{ width: "100%", paddingTop: 10 }}
                         alt="comment"
