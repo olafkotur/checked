@@ -96,7 +96,6 @@ class MemberUser extends React.Component<IProps, IState> {
         this.decideConsent = this.decideConsent.bind(this);
         this.getAccepted = this.getAccepted.bind(this);
         this.renderOverseers = this.renderOverseers.bind(this);
-        // console.log(this.props.memberID);
         this.getFeedList();
         this.getConsent();
         this.getMemberInfo();
@@ -111,7 +110,6 @@ class MemberUser extends React.Component<IProps, IState> {
     async getMemberInfo(): Promise<void> {
 
         const MemberInfo = await MemberService.getOneMember(this.props.memberID);
-        //    console.log(MemberInfo);
         this.setState({
             firstName: MemberInfo.firstName,
             lastName: MemberInfo.lastName,
@@ -145,14 +143,11 @@ class MemberUser extends React.Component<IProps, IState> {
             else if (rating === 3) { // amber
                 score = score + 1;
             }
-            console.log(score);
 
             data.push(score);
             dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
 
         });
-        console.log(data);
-        console.log("Rendering");
         const graph = <LightGraph
 
             dates={dates}
@@ -190,12 +185,6 @@ class MemberUser extends React.Component<IProps, IState> {
             comment.new = false;
         });
   
-
-        // serverInfo.forEach(Comment => {
-        //     console.log("COMMENT: " + Comment);
-        // });
-        
-
         this.setState({ comments: serverInfo, loadingComments: false });
     }
 
@@ -203,18 +192,10 @@ class MemberUser extends React.Component<IProps, IState> {
 
     displayComments(): Array<JSX.Element> {
 
-        // console.log(this.state.comments);
-
-
-
         if (!this.state.loadingComments) {
-
-            console.log("Comment INFO ");
-            console.log(this.state.comments);
             const commentsTmp: JSX.Element[] = [];
 
             this.state.comments.forEach(comment => {
-                console.log(comment);
                 const dateTmp = new Date(comment.createdAt * 1000);
                 const date = dateTmp.getDate(); //Current Date
                 const month = dateTmp.getMonth() + 1; //Current Month
@@ -269,7 +250,6 @@ class MemberUser extends React.Component<IProps, IState> {
         if (!this.state.editingComment) {
 
             const tempComments: any = await CommentService.getCommentsByUser(userId.toString());
-            console.log(tempComments);
 
             tempComments.forEach((comment: { new: boolean }) => {
                 comment.new = false;
@@ -290,11 +270,6 @@ class MemberUser extends React.Component<IProps, IState> {
         const Consent = await ConsentService.getConsent();
         const TandC = await ConsentService.getConditions();
         const Privacy = await ConsentService.getPrivacy();
-        // console.log(Consent);
-        // console.log("-----------------------------");
-        // console.log(TandC);
-        // console.log("-----------------------------");
-        // console.log(Privacy);
         this.setState({
             consentForm: Consent,
             termsForm: TandC,
@@ -462,8 +437,6 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     async saveComment(commentBox: any): Promise<void> {
-        // console.log("Saving Now");
-
 
         const body = {
             userId: this.state.selectedOverseer.userId, //number
@@ -473,7 +446,6 @@ class MemberUser extends React.Component<IProps, IState> {
             image: commentBox.state.image, // string
         };
 
-        // console.log(body);
 
         await CommentService.saveCommentForOverseer(body);
 
@@ -494,7 +466,6 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     async deleteComment(commentBox: any): Promise<void> {
-        // console.log("i have been called");
         console.log("I shouldnt have been called in this file");
     }
 
@@ -502,8 +473,6 @@ class MemberUser extends React.Component<IProps, IState> {
 
         if (this.state.selectedOverseerNum !== 0) {
             if (!this.state.loadingComments) {
-                console.log("OVERSEER COMMENTS");
-                console.log(this.state.overseerComments);
                 const commentsTmp: JSX.Element[] = [];
 
                 // if(!this.state.editingComment){
@@ -521,11 +490,6 @@ class MemberUser extends React.Component<IProps, IState> {
                     else {
                         timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
                     }
-                    console.log(comment);
-                    console.log("-----------------");
-                    console.log(comment.image);
-                    console.log(comment.rating);
-                    console.log(comment.new);
                     
                     commentsTmp[commentsTmp.length] = <CommentBox
                         key={comment.commentId}
@@ -572,7 +536,6 @@ class MemberUser extends React.Component<IProps, IState> {
 
 
     displayConsent(): JSX.Element {
-        // console.log(ConsentService.getConsent());
         if (!this.state.loadingConsent) {
 
             if (this.state.consentType === "") {
