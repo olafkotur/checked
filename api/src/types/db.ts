@@ -50,6 +50,7 @@ export interface IDbMember {
   firstName: string;
   lastName: string;
   password: string;
+  nickName: string;
   createdAt: Date;
   lastUpdated: Date;
 }

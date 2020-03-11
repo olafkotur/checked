@@ -65,6 +65,7 @@ export interface IMemberResponse {
   firstName: string;
   lastName: string;
   password: string;
+  nickName: string;
   createdAt: number;
   lastUpdated: number
 }
