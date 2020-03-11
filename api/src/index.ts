@@ -69,6 +69,7 @@ async function main() {
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
   app.get('/api/zones/users/:userId', ZoneHandler.getZonesByUser);
   app.get('/api/zones/activity/users/:userId', ZoneHandler.getZonesWithActivityByUser);
+  app.post('/api/zones/set/nickname/:zoneId', ZoneHandler.updateNickname);
 
   // User handlers
   app.post('/api/users/create', UserHandler.createUser);

@@ -38,6 +38,7 @@ export interface ILocationResponse {
   zoneId: number;
   userId: number;
   name: number;
+  nickName: string;
   width: number;
   height: number;
   xValue: number;

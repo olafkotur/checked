@@ -22,6 +22,7 @@ export interface IDbZone {
   zoneId: number;
   userId: number;
   name: number;
+  nickName: number;
   width: number;
   height: number;
   xValue: number;
