@@ -137,8 +137,10 @@ async function main() {
 
   // Legal handlers
   app.get('/api/legal/copy/:copyType', LegalHandler.getLegalCopy);
-  app.get('/api/consent/:memberId', LegalHandler.getConsentByMember);
-  app.post('/api/consent/update/:memberId', LegalHandler.updateConsentByMember);
+  app.post('/api/agreement/users/update/:userId', LegalHandler.updateAgreementByUser);
+  app.post('/api/agreement/members/update/:memberId', LegalHandler.updateAgreementByMember);
+  app.get('/api/agreement/users/:agreementType/:userId', LegalHandler.getAgreementByUser);
+  app.get('/api/agreement/members/:agreementType/:memberId', LegalHandler.getAgreementByMember);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

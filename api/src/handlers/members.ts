@@ -20,14 +20,6 @@ export const MemberHandler = {
     const memberId: number = await DbHelperService.assignAvailableId('members', 'memberId');
     const securePassword: string = AuthService.generateSecurePassword();
 
-    // Create a default entry for the consent form
-    await MongoService.insertOne('consent', {
-      memberId,
-      isAccepted: false,
-      createdAt: new Date(),
-      lastUpdated: new Date()
-    });
-
     const data: IDbMember = {
       memberId,
       userId: parseInt(req.body.userId || '0'),
