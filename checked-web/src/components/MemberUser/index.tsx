@@ -644,7 +644,7 @@ class MemberUser extends React.Component<IProps, IState> {
                     </Grid>
                     <Grid item xs={6} >
                         <CardHeader title={"OverSeer Feedback"} action={
-                            <IconButton disabled={this.state.selectedOverseerNum === 0} >
+                            <IconButton disabled={this.state.selectedOverseerNum === 0 || this.state.editingComment} >
                                 <Add onClick={this.addComment} />
                             </IconButton>
                         } />

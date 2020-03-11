@@ -76,13 +76,13 @@ class Overseer extends React.Component<IProps, IState> {
         this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment: false });
         // setTimeout()
 
-        if (memberID !== -6){
+        if (memberID !== -6) {
             this.getFeedList(memberID);
         }
-        else{
+        else {
             this.getUserComments();
         }
-        
+
 
     }
 
@@ -153,7 +153,7 @@ class Overseer extends React.Component<IProps, IState> {
         return membersList;
     }
 
-  
+
 
     getSelectedMember(): JSX.Element {
         if (this.state.currentMember === -1) {
@@ -191,13 +191,26 @@ class Overseer extends React.Component<IProps, IState> {
         } else if (this.state.currentMember === -6) {
             return (
                 <div >
-                    <CardHeader title={"Feedback Feed"} />
-                    <Divider />
-                    <CardContent >
-                        <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
-                            {this.displayComments()}
-                        </List>
-                    </CardContent>
+                    <Grid container spacing={3} className="memberManager mt-3">
+                        <Grid item xs={6}>
+                            <CardHeader title={"Score"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.createChart()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <CardHeader title={"Feedback Feed"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                    </Grid>
                 </div>
             );
         } else if (this.state.currentMember === -2) {
@@ -403,7 +416,7 @@ class Overseer extends React.Component<IProps, IState> {
                 }
 
 
-               
+
 
                 //TODO uncomment these
                 commentsTmp[commentsTmp.length] = <CommentBox
@@ -418,7 +431,7 @@ class Overseer extends React.Component<IProps, IState> {
                     saveThisComment={this.saveComment}
                     canDelete={false}
                     imageSrc={comment.image}
-                    // imageSrc={""}
+                // imageSrc={""}
                 />;
             });
 
@@ -519,7 +532,7 @@ class Overseer extends React.Component<IProps, IState> {
 
     }
 
-    async getUserComments(): Promise <void>{
+    async getUserComments(): Promise<void> {
         this.setState({ loadingComments: true });
         const serverInfo = await CommentService.getCommentsByUser(this.props.userID.toString());
         console.log(serverInfo);
