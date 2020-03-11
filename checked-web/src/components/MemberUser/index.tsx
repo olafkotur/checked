@@ -3,7 +3,7 @@ import { Grid, List, Button, TextField, CardContent, CardHeader, Divider, AppBar
 import { IMember, IUser, ILink } from '../../types';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
-import UseAnimations from 'react-useanimations';
+// import UseAnimations from 'react-useanimations';
 import { ConsentService } from '../../api/ConsentService';
 import { Person, Add } from '@material-ui/icons';
 import LightGraph from '../Overseer/LightGraph/LightGraph';
@@ -247,7 +247,14 @@ class MemberUser extends React.Component<IProps, IState> {
 
         }
         else {
-            return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+            // return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+             return ([
+            <div className="w-100 h-100 vcenterParent">
+                <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                  Loading
+                </Typography>
+            </div>
+            ]);
         }
 
     }
@@ -546,7 +553,14 @@ class MemberUser extends React.Component<IProps, IState> {
                 }
             }
             else {
-                return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+                // return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
+                 return ([
+            <div className="w-100 h-100 vcenterParent">
+                <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                  Loading
+                </Typography>
+            </div>
+            ]);
             }
         }
         else {
@@ -624,7 +638,14 @@ class MemberUser extends React.Component<IProps, IState> {
 
         }
         else {
-            return (<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>);
+            // return (<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>);
+            return (
+                <div className="w-100 h-100 vcenterParent">
+                    <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
+                        Loading
+                </Typography>
+                </div>
+            );
         }
     };
 
