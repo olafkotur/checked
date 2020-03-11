@@ -1,9 +1,9 @@
 import React from "react";
 import '../../../../node_modules/regenerator-runtime';
 import { RouteComponentProps } from "@reach/router";
-import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton, TextareaAutosize, Typography, TextField} from "@material-ui/core";
+import { Card, CardContent, CardHeader, Divider, Grid, Radio, RadioGroup, createMuiTheme, MuiThemeProvider, IconButton, TextareaAutosize, Typography, TextField } from "@material-ui/core";
 import '../../../index.css';
-import { Delete, Save,  AddAPhoto } from "@material-ui/icons";
+import { Delete, Save, AddAPhoto } from "@material-ui/icons";
 import { DropzoneArea } from '../../../../node_modules/material-ui-dropzone';
 
 
@@ -140,27 +140,24 @@ export class CommentBox extends React.Component<IProps, IState> {
     getBase64(file: any): void {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        
+
         reader.onload = (): void => this.setState({ imageDropped: true, image: reader.result });
-           
+
         reader.onerror = function (error): void {
             console.log('Error: ', error);
         };
     }
-    
+
 
 
     commentChangeHandler = (event: any): void => {
-        if (this.props.new){
+        if (this.props.new) {
             this.setState({ commentVal: event.target.value });
         }
     };
 
     submitHandler = (event: any): void => {
         event.preventDefault(); // Stop the form from reloading the page
-        // Submit code below here
-        console.log("form submitted");
-        console.log(this.state.commentVal);
     };
 
     radioChange = (event: any): void => {
@@ -211,8 +208,33 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
     trafficLight(): JSX.Element {
-        
-        if (this.props.radioVal === "0" && this.props.new === false) {
+        if (this.props.textContent === "" && this.props.radioVal === "0" && this.props.new === false) {
+
+            return (
+                <div />
+            );
+
+        }
+        else if (this.props.textContent === "" && this.props.new === false) {
+            return (
+                <Grid item xs={12}>
+                    <div style={{ height: "100%", paddingLeft: "7px" }} className="radioBox">
+                        <RadioGroup row onChange={this.radioChange} value={this.state.radio} >
+                            <MuiThemeProvider theme={redLight}>
+                                <Radio size="medium" color="primary" value={"1"} disabled={!this.props.new} />
+                            </MuiThemeProvider>
+                            <MuiThemeProvider theme={amberLight}>
+                                <Radio size="medium" color="primary" disabled={!this.props.new} value={"2"} />
+                            </MuiThemeProvider>
+                            <MuiThemeProvider theme={greenLight}>
+                                <Radio size="medium" color="primary" disabled={!this.props.new} value={"3"} />
+                            </MuiThemeProvider>
+                        </RadioGroup>
+                    </div>
+                </Grid>
+            );
+        }
+        else if (this.props.radioVal === "0" && this.props.new === false) {
             return (
                 <Grid container style={{ height: "100%" }}>
                     <Grid item xs={12} >
@@ -222,7 +244,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                                     onChange={this.commentChangeHandler}
                                     value={this.state.commentVal}
                                     placeholder="Type Here"
-                                    className="commentBox" 
+                                    className="commentBox"
                                     multiline={true}
                                     fullWidth={true}
                                     variant="outlined"
@@ -230,7 +252,7 @@ export class CommentBox extends React.Component<IProps, IState> {
                             </Typography>
 
 
-                            
+
                         </div>
                     </Grid>
 
@@ -249,12 +271,12 @@ export class CommentBox extends React.Component<IProps, IState> {
                                     value={this.state.commentVal}
                                     placeholder="Type Here"
                                     className="commentBox"
-                                    multiline = {true}
-                                    fullWidth = {true}
+                                    multiline={true}
+                                    fullWidth={true}
                                     variant="outlined"
-            
+
                                 />
-                            </Typography> 
+                            </Typography>
                         </div>
                     </Grid>
 
@@ -280,50 +302,82 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     }
 
-    
+
 
     getImage(): JSX.Element {
-
-        console.log(this.state.image);
-        if (this.state.image != null && this.state.image != "" && this.props.new === false) {
+        if (this.state.image != null && this.state.image != "" && this.props.new === false && this.props.textContent === "" && this.props.radioVal !== "0") {
             return (
-                <div>
-                    <Divider />
-
-                    <img
-                        src={this.state.image}
-                        style={{ width: "100%", paddingTop: 10 }}
-                        alt="comment"
-                    />
-                </div>
-            );
-        }
-
-        else if (this.props.new && this.state.hasImage) {
-            if(!this.state.imageDropped){
-                return (
-                    <div style= {{paddingTop:10}}>
-                        <Divider />
-                        <DropzoneArea
-                            onChange={this.handleDropImage}
-                            filesLimit = {1}
-                            acceptedFiles = {['image/*']}
-                    />
-                    </div>
-                );
-            }
-            else{
-                return (
-                    <div style={{ paddingTop: 10 }}>
-                        <Divider />
-                        <img 
-                            src = {this.state.image} 
+                <Grid item xs={12}>
+                    <div>
+                        <img
+                            src={this.state.image}
                             style={{ width: "100%", paddingTop: 10 }}
                             alt="comment"
                         />
-                        
+                    </div>
+                </Grid>
+            );
+        }
+        else if (this.state.image != null && this.state.image != "" && this.props.new === false) {
+            if (this.props.textContent === "") {
+                return (
+                    <div>
+                        <img
+                            src={this.state.image}
+                            style={{ width: "100%", paddingTop: 10 }}
+                            alt="comment"
+                        />
                     </div>
                 );
+            }
+            else {
+
+
+                return (
+                    <div>
+                        <Divider />
+
+                        <img
+                            src={this.state.image}
+                            style={{ width: "100%", paddingTop: 10 }}
+                            alt="comment"
+                        />
+                    </div>
+                );
+            }
+        }
+
+        else if (this.props.new && this.state.hasImage) {
+            if (!this.state.imageDropped) {
+
+
+                return (
+                    <div style={{ paddingTop: 10 }}>
+
+                        <DropzoneArea
+                            onChange={this.handleDropImage}
+                            filesLimit={1}
+                            acceptedFiles={['image/*']}
+                        />
+                    </div>
+                );
+
+
+            }
+            else {
+
+                return (
+                    <div style={{ paddingTop: 10 }}>
+                        <img
+                            src={this.state.image}
+                            style={{ width: "100%", paddingTop: 10 }}
+                            alt="comment"
+                        />
+
+                    </div>
+                );
+
+
             }
         }
 
@@ -351,10 +405,11 @@ export class CommentBox extends React.Component<IProps, IState> {
 
 
                     <CardContent >
+                        <Grid container>
                         {this.trafficLight()}
 
                         {this.getImage()}
-
+                        </Grid>
                     </CardContent>
                 </Card>
             </div>

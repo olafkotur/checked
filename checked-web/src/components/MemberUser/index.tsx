@@ -305,12 +305,12 @@ class MemberUser extends React.Component<IProps, IState> {
     };
 
     async handleAcceptConsent(event: any): Promise<void> {
-        await ConsentService.updateConsent(true, this.props.memberID, this.state.consentType);
+        await ConsentService.updateConsentMember(true, this.props.memberID, this.state.consentType);
         this.getAccepted();
     };
 
     async handleDeclineConsent(event: any): Promise<void> {
-        await ConsentService.updateConsent(false, this.props.memberID, this.state.consentType);
+        await ConsentService.updateConsentMember(false, this.props.memberID, this.state.consentType);
         this.getAccepted();
     };
 
@@ -352,8 +352,12 @@ class MemberUser extends React.Component<IProps, IState> {
     async getAccepted(): Promise<void> {
         this.setState({ loadingAccepted: true });
         const Consent = await ConsentService.getConsentMember(this.props.memberID);
+        const privacy = await ConsentService.getPrivacyMember(this.props.memberID);
+        const terms = await ConsentService.getConditionsMember(this.props.memberID);
         this.setState({
             consentAccepted: Consent.isAccepted,
+            privacyAccepted: privacy.isAccepted,
+            termsAccepted: terms.isAccepted,
             loadingAccepted: false,
         });
     }

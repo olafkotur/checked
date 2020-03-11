@@ -9,7 +9,6 @@ export const ConsentService = {
         const uri = "legal/copy/conditions";
 
         return await HttpService.get(uri).then((res: any) => {
-            // console.log(res);
             return res.result;
         });
     },
@@ -19,7 +18,6 @@ export const ConsentService = {
         const uri = "legal/copy/privacy";
 
         return await HttpService.get(uri).then((res: any) => {
-            // console.log(res);
             return res.result;
         });
     },
@@ -29,7 +27,6 @@ export const ConsentService = {
         const uri = "legal/copy/consent";
 
         return await HttpService.get(uri).then((res: any) => {
-            // console.log(res);
             return res.result;
         });
     },
@@ -39,7 +36,6 @@ export const ConsentService = {
         const uri = "agreement/members/conditions/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
-            // console.log(res);
             return res.result;
         });
     },
@@ -49,7 +45,6 @@ export const ConsentService = {
         const uri = "agreement/members/privacy/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
-            // console.log(res);
             return res.result;
         });
     },
@@ -59,29 +54,30 @@ export const ConsentService = {
         const uri = "agreement/members/consent/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
-            console.log(res);
             return res.result;
         });
     },
 
 
-    updateConsent: async (value: boolean, memberID: number, consentType: string): Promise<any> => {
-        let uri = "";
+    updateConsentMember: async (value: boolean, memberID: number, consentType: string): Promise<any> => {
+        const uri = "agreement/members/update/" + memberID.toString();
+        let type = "";
 
         if(consentType === "Consent"){
-            uri = "consent/update/" + memberID.toString();
+            type = "consent";
         }
         else if (consentType === "Privacy"){
-            uri = "privacy/update/" + memberID.toString();
-            return(null);
+            type = "privacy";
         }
         else {
-            uri = "conditions/update/" + memberID.toString();
-            return (null);
+            type = "conditions";
         }
+
+
 
         const body = {
             isAccepted: value,
+            agreementType: type,
         };
 
         return await HttpService.post(uri, body).then((res: any) => {
