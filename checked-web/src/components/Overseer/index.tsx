@@ -545,62 +545,8 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     handleUserCommentsToggle(): void {
-        // this.getUserComments();
         this.setCurrentMember(-6);
     }
-
-    // displayUserComments(): Array<JSX.Element>{
-    //     if (!this.state.loadingComments) {
-
-    //         const commentsTmp: JSX.Element[] = [];
-
-    //         // if(!this.state.editingComment){
-    //         this.state.comments.forEach(comment => {
-
-    //             const dateTmp = new Date(comment.createdAt * 1000);
-    //             const date = dateTmp.getDate(); //Current Date
-    //             const month = dateTmp.getMonth() + 1; //Current Month
-    //             const year = dateTmp.getFullYear(); //Current Year
-    //             // console.log(comment);
-
-    //             let timeStamp = "";
-    //             if (comment.new) {
-    //                 timeStamp = "New Comment";
-    //             }
-    //             else {
-    //                 timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
-    //             }
-
-
-    //             commentsTmp[commentsTmp.length] = <CommentBox
-    //                 key={comment.commentId}
-    //                 dbid={comment.commentId}
-    //                 radioVal={comment.rating.toString()}
-    //                 textContent={comment.value}
-    //                 new={comment.new}
-    //                 timeStamp={timeStamp}
-    //                 deleteThisComment={this.deleteComment}
-    //                 saveThisComment={this.saveComment}
-    //                 canDelete={false}
-    //                 imageSrc={comment.image}
-    //             />;
-    //         });
-
-    //         // }
-
-    //         if (commentsTmp.length > 0) {
-    //             return (commentsTmp.reverse());
-    //         }
-
-    //         else {
-    //             return ([<div style={{ textAlign: "center", marginTop: "20%" }}><p> You dont seem to have any comments, add some with the plus icon </p></div>]);
-    //         }
-
-    //     }
-    //     else {
-    //         return ([<div style={{ height: "500px" }}><UseAnimations animationKey="loading2" size={100} className="loginLoader vcenterChild" style={{ transform: 'rotate(-90deg)' }} /></div>]);
-    //     }
-    // }
 
 
     render(): JSX.Element {
