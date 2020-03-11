@@ -220,7 +220,6 @@ class App extends React.Component<{}, IState> {
 
 
 		if (sessionStorage.getItem('authorised') === 'true') {
-
 			const userID = Number(sessionStorage.getItem('userID'));
 
 			//=================== OVERSEER VIEW ===================//

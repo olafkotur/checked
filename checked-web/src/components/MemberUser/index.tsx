@@ -425,7 +425,7 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     changeOverseer(user: any): void {
-        this.setState({ selectedOverseer: user, selectedOverseerNum: user.userId });
+        this.setState({ selectedOverseer: user, selectedOverseerNum: user.userId, overseerComments:[] });
         this.addComments(user.userId);
     }
 

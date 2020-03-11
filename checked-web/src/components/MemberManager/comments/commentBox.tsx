@@ -264,7 +264,7 @@ export class CommentBox extends React.Component<IProps, IState> {
 
         // console.log(this.state.image);
 
-        if (this.state.image != null && this.props.new === false && this.state.image != undefined) {
+        if (this.state.image != null && this.props.new === false && this.state.image !== undefined) {
             return (
                 <div>
                     <Divider />
