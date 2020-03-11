@@ -1,6 +1,6 @@
 import { HttpService } from './HttpService';
 
-export const MemberService = {
+export const EventService = {
 
     createEvent: async (userId: number, title: string, description: string, eventDate: number): Promise<any> => {
         const uri = 'events/create';
