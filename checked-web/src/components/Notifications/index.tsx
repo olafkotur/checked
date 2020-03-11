@@ -123,7 +123,7 @@ class Notifications extends React.Component<IProps, IState> {
                 <Fade in={notiModal}>
                     <Card className="modalPaper styledScrollBar">
                         <CardContent>
-                            <Typography color="textSecondary" gutterBottom align="left">
+                            <Typography gutterBottom align="left">
                                 Notifications
                                 </Typography>
                             <Divider light />

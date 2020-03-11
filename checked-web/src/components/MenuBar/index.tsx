@@ -10,9 +10,10 @@ import { AppBar, Toolbar, Typography, IconButton, Drawer, ListItemIcon, List, Di
 import { Menu, Dashboard, Map, Person, ExpandLess, ExpandMore, FormatListNumbered, ErrorOutline, SettingsRounded, ExitToApp } from '@material-ui/icons/';
 import { navigate } from '@reach/router';
 
-import CheckedLogo from '../media/checkedLogo.jpg';
-import { IZone } from '../types';
-import Notifications from './Notifications';
+import CheckedLogo from '../../media/checkedLogo.jpg';
+import { IZone } from '../../types';
+import Notifications from '../Notifications';
+import Events from '../Events';
 
 interface IState {
     drawerOpen: boolean;
@@ -129,13 +130,15 @@ class MenuBar extends React.Component<IProps, IState> {
                             <div className="text-center w-100">
                                 <Typography variant="h6" className="pl-3 mr-5 montserrat">
                                     - Checked -
-                            </Typography>
+                                </Typography>
                             </div>
+
+                            <Events userID={this.props.userID} admin={false}/>
 
                             <Notifications userID={this.props.userID} />
 
                             <div aria-label="logo">
-                                <img src={Logo} className="topBarLogo" alt="logo" />
+                                <img src={Logo} className="topBarLogo ml-1" alt="logo" />
                             </div>
                         </Toolbar>
                     </AppBar>
@@ -156,10 +159,12 @@ class MenuBar extends React.Component<IProps, IState> {
                             </Typography>
                         </div>
 
+                        <Events userID={this.props.userID} admin={true}/>
+
                         <Notifications userID={this.props.userID} />
 
                         <div aria-label="logo">
-                            <img src={Logo} className="topBarLogo" alt="logo" />
+                            <img src={Logo} className="topBarLogo ml-1" alt="logo" />
                         </div>
                     </Toolbar>
                 </AppBar>

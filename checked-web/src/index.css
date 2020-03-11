@@ -508,3 +508,10 @@ code {
   transition: 0.3s;
   box-shadow: 0 5px 8px rgba(0, 0, 0, 0.185);
 }
+
+/* ===== EVENTS ===== */
+
+.eventsCard {
+  max-height: 500px !important;
+  overflow: scroll;
+}
