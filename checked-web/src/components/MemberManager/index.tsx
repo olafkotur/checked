@@ -214,13 +214,12 @@ class MemberManager extends React.Component<IProps, IState> {
                     timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
                 }
 
+                
 
-                //TODO uncomment these
                 commentsTmp[commentsTmp.length] = <CommentBox
                     key={comment.commentId}
                     dbid={comment.commentId}
-                    //  radioVal={comment.rating.toString()}
-                    radioVal="2"
+                    radioVal={comment.rating.toString()}
                     textContent={comment.value}
                     new={comment.new}
                     timeStamp={timeStamp}
@@ -228,7 +227,6 @@ class MemberManager extends React.Component<IProps, IState> {
                     saveThisComment={this.saveComment}
                     canDelete={false}
                     imageSrc={comment.image}
-                // imageSrc={""}
                 />;
             });
 

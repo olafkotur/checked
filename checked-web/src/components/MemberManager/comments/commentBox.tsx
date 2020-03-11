@@ -223,6 +223,9 @@ export class CommentBox extends React.Component<IProps, IState> {
                                     value={this.state.commentVal}
                                     placeholder="Type Here"
                                     className="commentBox" 
+                                    multiline={true}
+                                    fullWidth={true}
+                                    variant="outlined"
                                 />
                             </Typography>
 
@@ -281,8 +284,8 @@ export class CommentBox extends React.Component<IProps, IState> {
 
     getImage(): JSX.Element {
 
-
-        if (this.state.image != null && this.props.new === false && this.state.image !== undefined) {
+        console.log(this.state.image);
+        if (this.state.image != null && this.state.image != "" && this.props.new === false) {
             return (
                 <div>
                     <Divider />

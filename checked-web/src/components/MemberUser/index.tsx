@@ -189,19 +189,32 @@ class MemberUser extends React.Component<IProps, IState> {
         serverInfo.forEach((comment: { new: boolean }) => {
             comment.new = false;
         });
+  
+
+        // serverInfo.forEach(Comment => {
+        //     console.log("COMMENT: " + Comment);
+        // });
+        
+
         this.setState({ comments: serverInfo, loadingComments: false });
     }
+
+    
 
     displayComments(): Array<JSX.Element> {
 
         // console.log(this.state.comments);
 
+
+
         if (!this.state.loadingComments) {
 
+            console.log("Comment INFO ");
+            console.log(this.state.comments);
             const commentsTmp: JSX.Element[] = [];
 
             this.state.comments.forEach(comment => {
-
+                console.log(comment);
                 const dateTmp = new Date(comment.createdAt * 1000);
                 const date = dateTmp.getDate(); //Current Date
                 const month = dateTmp.getMonth() + 1; //Current Month
@@ -214,6 +227,7 @@ class MemberUser extends React.Component<IProps, IState> {
                     timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
                 }
 
+                
 
                 commentsTmp[commentsTmp.length] = <CommentBox
                     key={comment.commentId}
@@ -255,6 +269,11 @@ class MemberUser extends React.Component<IProps, IState> {
         if (!this.state.editingComment) {
 
             const tempComments: any = await CommentService.getCommentsByUser(userId.toString());
+            console.log(tempComments);
+
+            tempComments.forEach((comment: { new: boolean }) => {
+                comment.new = false;
+            });
 
             this.setState({ overseerComments: tempComments });
         }
@@ -430,7 +449,7 @@ class MemberUser extends React.Component<IProps, IState> {
                 rating: 0,
                 value: "",
                 new: true,
-                image: undefined,
+                image: "",
             };
 
             tempComments.push(newComment);
@@ -483,7 +502,8 @@ class MemberUser extends React.Component<IProps, IState> {
 
         if (this.state.selectedOverseerNum !== 0) {
             if (!this.state.loadingComments) {
-
+                console.log("OVERSEER COMMENTS");
+                console.log(this.state.overseerComments);
                 const commentsTmp: JSX.Element[] = [];
 
                 // if(!this.state.editingComment){
@@ -501,22 +521,24 @@ class MemberUser extends React.Component<IProps, IState> {
                     else {
                         timeStamp = this.formatAMPM(dateTmp) + ' ' + date + '/' + month + '/' + year;
                     }
-
+                    console.log(comment);
+                    console.log("-----------------");
+                    console.log(comment.image);
+                    console.log(comment.rating);
+                    console.log(comment.new);
                     
-                    //TODO uncomment these
                     commentsTmp[commentsTmp.length] = <CommentBox
                         key={comment.commentId}
                         dbid={comment.commentId}
-                        //  radioVal={comment.rating.toString()}
-                        radioVal = "2"
+                        radioVal={comment.rating.toString()}
                         textContent={comment.value}
                         new={comment.new}
                         timeStamp={timeStamp}
                         deleteThisComment={this.deleteComment}
                         saveThisComment={this.saveComment}
                         canDelete={false}
-                        //  imageSrc={comment.image}
-                        imageSrc={""}
+                        imageSrc={comment.image}
+                       
                     />;
                 });
 

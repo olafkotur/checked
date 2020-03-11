@@ -36,7 +36,7 @@ export const ConsentService = {
 
 
     getConditionsMember: async (memberID: number): Promise<any> => {
-        const uri = "conditions/"+memberID.toString();
+        const uri = "agreement/members/conditions/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
             // console.log(res);
@@ -46,7 +46,7 @@ export const ConsentService = {
 
 
     getPrivacyMember: async (memberID: number): Promise<any> => {
-        const uri = "privacy/"+memberID.toString();
+        const uri = "agreement/members/privacy/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
             // console.log(res);
@@ -56,7 +56,7 @@ export const ConsentService = {
 
 
     getConsentMember: async (memberID: number): Promise<any> => {
-        const uri = "consent/"+memberID.toString();
+        const uri = "agreement/members/consent/"+memberID.toString();
 
         return await HttpService.get(uri).then((res: any) => {
             console.log(res);
