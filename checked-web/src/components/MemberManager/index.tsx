@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, List, ListItem, ListItemAvatar, Typography, Card, IconButton, Button, Avatar, TextField, CardContent, CardHeader, Divider, Tooltip, Chip } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { IMember, ILink, IUser } from '../../types';
-import { Person, ArrowForwardIos, Add, PersonAdd } from '@material-ui/icons';
+import { Person, ArrowForwardIos, Add, PersonAdd, Feedback } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 import CommentBox from './comments/commentBox';
 import { CommentService } from '../../api/CommentService';
@@ -79,7 +79,12 @@ class MemberManager extends React.Component<IProps, IState> {
 
         this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment: false });
         // setTimeout()
-        this.getFeedList(memberID);
+        if (memberID !== -6) {
+            this.getFeedList(memberID);
+        }
+        else {
+            this.getUserComments();
+        }
         this.getOverseers(memberID);
         this.getUsers();
     }
@@ -207,17 +212,20 @@ class MemberManager extends React.Component<IProps, IState> {
                 }
 
 
+                //TODO uncomment these
                 commentsTmp[commentsTmp.length] = <CommentBox
                     key={comment.commentId}
                     dbid={comment.commentId}
-                    radioVal={comment.rating.toString()}
+                    //  radioVal={comment.rating.toString()}
+                    radioVal="2"
                     textContent={comment.value}
                     new={comment.new}
                     timeStamp={timeStamp}
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
-                    canDelete={true}
-                    imageSrc = {comment.image}
+                    canDelete={false}
+                    imageSrc={comment.image}
+                // imageSrc={""}
                 />;
             });
 
@@ -388,6 +396,31 @@ class MemberManager extends React.Component<IProps, IState> {
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
                         Member successfully deleted.
                     </Typography>
+                </div>
+            );
+        } else if (this.state.currentMember === -6) {
+            return (
+                <div >
+                    <Grid container spacing={3} className="memberManager mt-3">
+                        <Grid item xs={6}>
+                            <CardHeader title={"Score"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.createChart()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <CardHeader title={"Feedback Feed"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                    </Grid>
                 </div>
             );
         } else if (this.state.currentMember === -2) {
@@ -625,7 +658,22 @@ class MemberManager extends React.Component<IProps, IState> {
         return (graph);
     }
 
-    
+    handleUserCommentsToggle(): void {
+        this.setCurrentMember(-6);
+    }
+
+    async getUserComments(): Promise<void> {
+        this.setState({ loadingComments: true });
+        const serverInfo = await CommentService.getCommentsByUser(this.props.userID.toString());
+        console.log(serverInfo);
+
+        serverInfo.forEach((comment: { new: boolean }) => {
+            comment.new = false;
+        });
+
+        this.setState({ comments: serverInfo, loadingComments: false });
+    }
+
 
     
 
@@ -635,6 +683,33 @@ class MemberManager extends React.Component<IProps, IState> {
             <Grid container spacing={0} className="memberManager mt-3">
                 <Grid item xs={2} className="border-right border-muted minw-250px">
                     <List className="pr-3 pl-2 memberList">
+
+
+                        <ListItem alignItems="center" className="border-bottom border-muted p-0" >
+                            <Button onClick={(): void => this.handleUserCommentsToggle()} className="w-100 h-100 p-2">
+                                <ListItemAvatar>
+                                    <Person />
+                                </ListItemAvatar>
+                                <Grid container spacing={0}>
+                                    <Grid item xs={10}>
+                                        <Grid container spacing={0}>
+                                            <Grid item xs={12}>
+
+                                                <Typography variant="body1" align="left" color="textPrimary">Your Feedback</Typography>
+                                            </Grid>
+                                            
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={2} className="pl-1">
+                                        <ArrowForwardIos className="vcenterChild p-1 mr-5" fontSize="small" />
+                                    </Grid>
+                                </Grid>
+                            </Button>
+                        </ListItem>
+                        
+
+
+
                         <ListItem alignItems="center" className="border-bottom border-muted p-0">
                             <Button onClick={this.setAddNewMember} className="w-100 h-100 p-3">
                                 <ListItemAvatar>

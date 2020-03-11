@@ -819,7 +819,7 @@ class MemberUser extends React.Component<IProps, IState> {
                         <Tab label="Feed" />
                         <Tab label="Info" />
                         <Tab label="Consent" />
-                        <Tab label="Settings" />
+                        {/* <Tab label="Settings" /> */}
                     </Tabs>
                 </AppBar>
 
