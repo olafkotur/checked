@@ -1,6 +1,8 @@
 import 'package:checked_mobile_application/screens/analysis.dart';
 import 'package:checked_mobile_application/screens/feedback.dart';
 import 'package:checked_mobile_application/screens/notifications.dart';
+import 'package:checked_mobile_application/screens/privacyPolicy.dart';
+import 'package:checked_mobile_application/screens/settings.dart';
 import 'package:flutter/material.dart';
 
 import 'historic.dart';
@@ -34,11 +36,11 @@ class User_NavigationState extends State<UserNavigation> {
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.info,
+              Icons.info_outline,
               color: Colors.white,
             ),
             onPressed: () async {
-              // Re-direct to privacy policy
+              Navigator.push(context,MaterialPageRoute(builder: (context) => PrivacyPolicy()));
             },
           ),
         ],
@@ -315,7 +317,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     ),
                                     child: IconButton(
                                     onPressed: (){
-                                      Navigator.push(context,MaterialPageRoute(builder: (context) => NewsFeed(userId: widget.userId,membersIds: widget.membersIds,)));
+                                      Navigator.push(context,MaterialPageRoute(builder: (context) => Settings()));
                                     },
                                     icon: Icon(
                                       Icons.settings,

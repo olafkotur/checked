@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'decodejson.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 
 class FeedbackForm extends StatefulWidget {
@@ -31,7 +30,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
           ),
         ),
       ),
-              body: Center(
+      body: Center(
           child: Container(
             child: Center(
                 child: Column(
@@ -55,8 +54,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
                   ),
                 ),
                 Container(
-                  width: 150,
-                  
+                  width: 200,
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
@@ -103,11 +101,21 @@ class _FeedbackFormState extends State<FeedbackForm> {
           await FeedbackForm.platform.invokeMethod('predictData', {"arg": inp});
       if (result == "1") {
         offensive_color = Colors.red;
-      } else
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Feedback Sent'),
+            duration: Duration(seconds: 3),
+          )
+        );
+      } else {
         offensive_color = Colors.green;
-    
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unable to send feedback'),
+            duration: Duration(seconds: 3),
+          )
+        );      }
     } on PlatformException catch (e) {
-     
       print(e.message);
     }
   }

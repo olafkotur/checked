@@ -30,8 +30,7 @@ protected Interpreter tflite;
     } catch (Exception e) {
       //TODO: handle exception
     }
-
-   
+    
     new MethodChannel(getFlutterView(), CHANNEL).setMethodCallHandler(
     new MethodCallHandler() {
         @Override
@@ -51,7 +50,6 @@ protected Interpreter tflite;
     });
   }
   
- 
   String predictData(ArrayList<Integer> input_data)
   {
     float intArray[][] = new float[1][input_data.size()];
