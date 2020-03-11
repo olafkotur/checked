@@ -23,7 +23,7 @@ class AppIcon {
         iconName = 'NHS';
         break;
       default:
-        iconName = 'Checked';
+        iconName = 'Spar';
         break;
     }
 

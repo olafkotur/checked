@@ -40,24 +40,24 @@ class _SettingsState extends State<Settings> {
         title: Text('App Icon'),
         leading: Icon(Icons.settings),
         trailing: Container(
-          width: 50.0,
+          width: 100.0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconSelector(
                 appIcon: IconType.Checked,
-                imageAsset: 'assets/checkedLogo.jpg',
+                imageAsset: 'assets/checked_icon.png',
                 //name: 'Checked',
-              ),
-              IconSelector(
-                appIcon: IconType.Spar,
-                imageAsset: 'assets/spar_icon.jpg',
-                //name: 'Spar',
               ),
               IconSelector(
                 appIcon: IconType.NHS,
                 imageAsset: 'assets/nhs_icon.png',
                 //name: 'NHS',
+              ),
+              IconSelector(
+                appIcon: IconType.Spar,
+                imageAsset: 'assets/spar_icon.png',
+                //name: 'Spar',
               ),
             ],
           ),
@@ -381,7 +381,10 @@ class IconSelector extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Image.asset(imageAsset),
+              Image.asset(
+                imageAsset,            
+                scale: 2.0,
+              ),
             ],
           ),
         ),

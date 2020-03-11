@@ -293,7 +293,7 @@ class _SignInState extends State<SignIn> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Children Privacy Policy!",
+                  "Data Privacy Policy!",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

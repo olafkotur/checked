@@ -23,9 +23,9 @@
 			<key>Spar</key>
 			<dict>
 				<key>CFBundleIconFiles</key>
-				<array/>
-				<key>Item 0</key>
-				<string>spar_icon</string>
+				<array>
+					<string>spar_icon</string>
+				</array>
 			</dict>
 		</dict>
 	</dict>
