@@ -33,7 +33,7 @@ export class Zone extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         this.getZoneData();
-        console.log(this.state.zoneDetails.zoneId, this.state.currentCount, this.state.currentTemp);
+        //console.log(this.state.zoneDetails.zoneId, this.state.currentCount, this.state.currentTemp);
     }
 
     getZoneData(): void {

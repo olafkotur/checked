@@ -86,6 +86,8 @@ class App extends React.Component<{}, IState> {
 	setAuthorised(authState: boolean): void {
 		sessionStorage.setItem('authorised', authState.toString());
 		if(!authState){
+			sessionStorage.setItem('member', authState.toString());
+			sessionStorage.setItem('guardian', authState.toString());
 			navigate('');
 		}
 		window.location.reload();

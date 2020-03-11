@@ -19,6 +19,7 @@ export const UserHandler = {
       companyName: req.body.companyName || '',
       isGuardian: req.body.isGuardian === 'true',
       policyAccepted: req.body.policyAccepted === 'true',
+      nickName: req.body.nickName || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -87,6 +88,7 @@ export const UserHandler = {
       companyName: data.companyName || '',
       isGuardian: data.isGuardian,
       policyAccepted: data.policyAccepted,
+      nickName: data.nickName || '',
       createdAt: data.createdAt,
       lastUpdated: data.lastUpdated
     };
@@ -108,6 +110,7 @@ export const UserHandler = {
         companyName: user.companyName,
         isGuardian: user.isGuardian,
         policyAccepted: user.policyAccepted,
+        nickName: user.nickName || '',
         createdAt: user.createdAt,
         lastUpdated: user.lastUpdated
       }
@@ -151,6 +154,7 @@ export const UserHandler = {
       companyName: req.body.companyName || user.companyName,
       isGuardian: req.body.isGuardian ? req.body.isGuardian === 'true' : user.isGuardian,
       policyAccepted: req.body.policyAccepted ? req.body.policyAccepted === 'true' : user.policyAccepted,
+      nickName: req.body.nickName || user.nickName,
       createdAt: user.createdAt,
       lastUpdated: new Date()
     }
@@ -159,6 +163,29 @@ export const UserHandler = {
     await MongoService.deleteOne('users', { userId: user.userId });
     await MongoService.insertOne('users', data);
     return ResponseService.ok('Updated existing user', res);
+  },
+
+  updateNickname: async (req: express.Request, res: express.Response) => {
+    const userId: number = parseInt(req.params.userId || '0');
+    const data: any = await MongoService.findOne('users', { userId });
+    if (!data) {
+      return ResponseService.bad('This user does not exist', res);
+    }
+
+    const formatted: IDbUser = {
+      userId: data.userId,
+      email: data.email,
+      password: data.password,
+      companyName: data.companyName,
+      isGuardian: data.isGuardian,
+      policyAccepted: data.policyAccepted,
+      nickName: req.body.nickName,
+      createdAt: data.createdAt,
+      lastUpdated: data.lastUpdated
+    };
+    
+    await MongoService.updateOne('users', { userId }, formatted);
+    return ResponseService.ok('Updated nickname successfully', res);
   },
 
 }

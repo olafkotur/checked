@@ -20,20 +20,13 @@ export const MemberHandler = {
     const memberId: number = await DbHelperService.assignAvailableId('members', 'memberId');
     const securePassword: string = AuthService.generateSecurePassword();
 
-    // Create a default entry for the consent form
-    await MongoService.insertOne('consent', {
-      memberId,
-      isAccepted: false,
-      createdAt: new Date(),
-      lastUpdated: new Date()
-    });
-
     const data: IDbMember = {
       memberId,
       userId: parseInt(req.body.userId || '0'),
       firstName: req.body.firstName || '',
       lastName: req.body.lastName || '',
       password: securePassword,
+      nickName: req.body.nickName || '',
       createdAt: new Date(),
       lastUpdated: new Date(),
     };
@@ -67,9 +60,9 @@ export const MemberHandler = {
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
+      nickName: data.nickName,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix()
-
     };
 
     return ResponseService.data(formatted, res);
@@ -88,6 +81,7 @@ export const MemberHandler = {
         firstName: member.firstName,
         lastName: member.lastName,
         password: member.password,
+        nickName: member.nickName,
         createdAt: moment(data.createdAt).unix(),
         lastUpdated: moment(data.lastUpdated).unix()
       }
@@ -109,6 +103,7 @@ export const MemberHandler = {
         firstName: member.firstName,
         lastName: member.lastName,
         password: member.password,
+        nickName: member.nickName,
         createdAt: moment(data.createdAt).unix(),
         lastUpdated: moment(data.lastUpdated).unix()
       }
@@ -135,5 +130,27 @@ export const MemberHandler = {
 
     // Default to unauthorized
     return ResponseService.unauthorized('Member identification number or password is incorrect', res);
+  },
+
+  updateNickname: async (req: express.Request, res: express.Response) => {
+    const memberId: number = parseInt(req.params.memberId || '0');
+    const data: any = await MongoService.findOne('members', { memberId });
+    if (!data) {
+      return ResponseService.bad('This member does not exist', res);
+    }
+
+    const formatted: IDbMember = {
+      memberId: data.memberId,
+      userId: data.userId,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      nickName: req.body.nickName,
+      createdAt: data.createdAt,
+      lastUpdated: data.lastUpdated
+    };
+    
+    await MongoService.updateOne('members', { memberId }, formatted);
+    return ResponseService.ok('Updated nickname successfully', res);
   },
 };

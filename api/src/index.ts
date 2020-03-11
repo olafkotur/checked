@@ -69,6 +69,7 @@ async function main() {
   app.get('/api/zones/:zoneId', ZoneHandler.getSingleZoneData);
   app.get('/api/zones/users/:userId', ZoneHandler.getZonesByUser);
   app.get('/api/zones/activity/users/:userId', ZoneHandler.getZonesWithActivityByUser);
+  app.post('/api/zones/set/nickname/:zoneId', ZoneHandler.updateNickname);
 
   // User handlers
   app.post('/api/users/create', UserHandler.createUser);
@@ -77,6 +78,7 @@ async function main() {
   app.get('/api/users/:userId', UserHandler.getUser);
   app.get('/api/users', UserHandler.getUsers);
   app.post('/api/users/update/:userId', UserHandler.updateUser);
+  app.post('/api/users/set/nickname/:userId', UserHandler.updateNickname);
 
   // Member handlers
   app.post('/api/members/create', MemberHandler.createMember);
@@ -85,6 +87,7 @@ async function main() {
   app.get('/api/members', MemberHandler.getMembers);
   app.get('/api/members/users/:userId', MemberHandler.getMembersByUser);
   app.post('/api/members/login', MemberHandler.login);
+  app.post('/api/members/set/nickname/:memberId', MemberHandler.updateNickname);
 
   // Activity handlers
   app.post('/api/activity/create', ActivityHandler.createActivity);
@@ -137,8 +140,10 @@ async function main() {
 
   // Legal handlers
   app.get('/api/legal/copy/:copyType', LegalHandler.getLegalCopy);
-  app.get('/api/consent/:memberId', LegalHandler.getConsentByMember);
-  app.post('/api/consent/update/:memberId', LegalHandler.updateConsentByMember);
+  app.post('/api/agreement/users/update/:userId', LegalHandler.updateAgreementByUser);
+  app.post('/api/agreement/members/update/:memberId', LegalHandler.updateAgreementByMember);
+  app.get('/api/agreement/users/:agreementType/:userId', LegalHandler.getAgreementByUser);
+  app.get('/api/agreement/members/:agreementType/:memberId', LegalHandler.getAgreementByMember);
 
   // Misc handlers
   app.get(['/', '/api', '/api/docs'], MiscHandler.getDocumentation);

@@ -22,6 +22,7 @@ export interface IDbZone {
   zoneId: number;
   userId: number;
   name: number;
+  nickName: number;
   width: number;
   height: number;
   xValue: number;
@@ -38,6 +39,7 @@ export interface IDbUser {
   companyName: string;
   isGuardian: boolean;
   policyAccepted: boolean;
+  nickName: string;
   createdAt: Date;
   lastUpdated: Date;
 }
@@ -48,6 +50,7 @@ export interface IDbMember {
   firstName: string;
   lastName: string;
   password: string;
+  nickName: string;
   createdAt: Date;
   lastUpdated: Date;
 }
@@ -128,9 +131,11 @@ export interface IDbEvent {
   lastUpdated: Date;
 }
 
-export interface IDbConsentForm {
-  memberId: number;
-  isAccepeted: boolean;
+export interface IDbAgreementForm {
+  id: number;
+  agreementType: string;
+  idType: string;
+  isAccepted: boolean;
   createdAt: Date;
   lastUpdated: Date;
 }
@@ -140,6 +145,8 @@ export interface IDbFeedback {
   userId: number;
   memberId: number;
   value: string;
+  rating: number;
+  image: string;
   createdAt: Date;
   lastUpdated: Date;
 }

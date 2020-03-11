@@ -20,6 +20,7 @@ export const ZoneHandler = {
       zoneId: await DbHelperService.assignAvailableId('zones', 'zoneId'),
       userId,
       name: req.body.name || '',
+      nickName: req.body.nickName || '',
       width: parseInt(req.body.width || '100'),
       height: parseInt(req.body.height || '100'),
       xValue: parseInt(req.body.xValue || '0'),
@@ -53,6 +54,7 @@ export const ZoneHandler = {
       zoneId: parseInt(req.params.zoneId || '0'),
       userId: parseInt(req.body.userId || '0'),
       name: req.body.name || '',
+      nickName: req.body.nickName || '',
       width: parseInt(req.body.width || '100'),
       height: parseInt(req.body.height || '100'),
       xValue: parseInt(req.body.xValue || '0'),
@@ -101,6 +103,7 @@ export const ZoneHandler = {
       zoneId: data.zoneId,
       userId: data.userId,
       name: data.name,
+      nickName: data.nickName,
       width: data.width,
       height: data.height,
       xValue: data.xValue,
@@ -127,6 +130,7 @@ export const ZoneHandler = {
         zoneId: val.zoneId,
         userId: val.userId,
         name: val.name,
+        nickName: val.nickName,
         width: val.width,
         height: val.height,
         xValue: val.xValue,
@@ -155,6 +159,7 @@ export const ZoneHandler = {
         zoneId: val.zoneId,
         userId: val.userId,
         name: val.name,
+        nickName: val.nickName,
         width: val.width,
         height: val.height,
         xValue: val.xValue,
@@ -196,6 +201,7 @@ export const ZoneHandler = {
         zoneId: val.zoneId,
         userId: val.userId,
         name: val.name,
+        nickName: val.nickName,
         width: val.width,
         height: val.height,
         xValue: val.xValue,
@@ -209,5 +215,30 @@ export const ZoneHandler = {
 
     ResponseService.data(formatted, res);
     return true;
-  }
+  },
+
+  updateNickname: async (req: express.Request, res: express.Response) => {
+    const zoneId: number = parseInt(req.params.zoneId || '0');
+    const data: any = await MongoService.findOne('zones', { zoneId });
+    if (!data) {
+      return ResponseService.bad('This zone does not exist', res);
+    }
+
+    const formatted: IDbZone = {
+      zoneId: data.zoneId,
+      userId: data.userId,
+      name: data.name,
+      nickName: req.body.nickName,
+      width: data.width,
+      height: data.height,
+      xValue: data.xValue,
+      yValue: data.yValue,
+      color: data.color,
+      createdAt: data.createdAt,
+      lastUpdated: data.lastUpdated,
+    };
+    
+    await MongoService.updateOne('zones', { zoneId }, formatted);
+    return ResponseService.ok('Updated nickname successfully', res);
+  },
 }

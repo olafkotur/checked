@@ -51,14 +51,14 @@ function checkCollision(zones: any): boolean {
     for (let i = 0; i < zones.length; i++) {
 
         const thisZone = zones[i];
-        console.log(thisZone);
+        //console.log(thisZone);
         const thisRect = thisZone.getBoundingClientRect();
-        console.log(thisRect);
+        //console.log(thisRect);
         for (let j = 0; j < zones.length; j++) {
             if (thisZone !== zones[j]) {
                 const otherZone = zones[j];
                 const otherRect = otherZone.getBoundingClientRect();
-                console.log(compareTwoRects(thisRect, otherRect));
+                //console.log(compareTwoRects(thisRect, otherRect));
                 if(compareTwoRects(thisRect, otherRect)){
                     return true;
                 }

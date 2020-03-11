@@ -148,6 +148,7 @@ class MemberUser extends React.Component<IProps, IState> {
             dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
 
         });
+
         const graph = <LightGraph
 
             dates={dates}
@@ -470,7 +471,9 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     async deleteComment(commentBox: any): Promise<void> {
+
         console.log("I shouldnt have been called in this file");
+
     }
 
     renderFeedback(): Array<JSX.Element> {
@@ -656,8 +659,6 @@ class MemberUser extends React.Component<IProps, IState> {
 
         // Info
         else if (this.state.tabValue === 1) {
-            const listGridWidth = 8;
-            const acceptedGridWidth = 4;
 
             return (
                 <Grid container spacing={3} className="memberManager mt-3">
