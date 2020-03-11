@@ -38,6 +38,7 @@ export interface ILocationResponse {
   zoneId: number;
   userId: number;
   name: number;
+  nickName: string;
   width: number;
   height: number;
   xValue: number;
@@ -53,6 +54,7 @@ export interface IUserResponse {
   companyName: string;
   isGuardian: boolean;
   policyAccepted: boolean;
+  nickName: string;
   createdAt: number;
   lastUpdated: number
 }
@@ -63,6 +65,7 @@ export interface IMemberResponse {
   firstName: string;
   lastName: string;
   password: string;
+  nickName: string;
   createdAt: number;
   lastUpdated: number
 }
@@ -147,9 +150,12 @@ export interface IEventResponse {
   lastUpdated: number;
 }
 
-export interface IConsentFormResponse {
-  memberId: number;
-  isAccepeted: boolean;
+export interface IAgreementFormResponse {
+  userId?: number;
+  memberId?: number;
+  agreementType: string;
+  idType: string;
+  isAccepted: boolean;
   createdAt: number;
   lastUpdated: number;
 }
@@ -159,6 +165,8 @@ export interface IFeedbackResponse {
   userId: number;
   memberId: number;
   value: string;
+  rating: number;
+  image: string;
   createdAt: number;
   lastUpdated: number;
 }

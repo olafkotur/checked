@@ -28,6 +28,8 @@ export const FeedbackHandler = {
       feedbackId: await DbHelperService.assignAvailableId('feedback', 'feedbackId'),
       userId,
       memberId,
+      rating: parseInt(req.body.rating || '0'),
+      image: req.body.image,
       value: req.body.value,
       createdAt: new Date(),
       lastUpdated: new Date()
@@ -48,6 +50,8 @@ export const FeedbackHandler = {
       feedbackId: data.feedbackId,
       userId: data.userId,
       memberId: data.memberId,
+      rating: data.rating,
+      image: data.image,
       value: data.value,
       createdAt: moment(data.createdAt).unix(),
       lastUpdated: moment(data.lastUpdated).unix()
@@ -68,6 +72,8 @@ export const FeedbackHandler = {
         feedbackId: feedback.feedbackId,
         userId: feedback.userId,
         memberId: feedback.memberId,
+        rating: feedback.rating,
+        image: feedback.image,
         value: feedback.value,
         createdAt: moment(feedback.createdAt).unix(),
         lastUpdated: moment(feedback.lastUpdated).unix()
@@ -89,6 +95,8 @@ export const FeedbackHandler = {
         feedbackId: feedback.feedbackId,
         userId: feedback.userId,
         memberId: feedback.memberId,
+        rating: feedback.rating,
+        image: feedback.image,
         value: feedback.value,
         createdAt: moment(feedback.createdAt).unix(),
         lastUpdated: moment(feedback.lastUpdated).unix()
