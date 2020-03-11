@@ -307,7 +307,6 @@ class MemberUser extends React.Component<IProps, IState> {
 
     handleConsentToggle = (event: any): void => {
         this.setState({ consentType: event.target.value });
-        // console.log(event.target.value);
 
     };
 
