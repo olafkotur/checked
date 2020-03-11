@@ -121,19 +121,11 @@ class MemberUser extends React.Component<IProps, IState> {
 
 
     changeTab(event: React.ChangeEvent<{}>, newValue: number): void {
-
         this.setState({ tabValue: newValue });
-
-
-        // console.log(CommentService.getComments(this.props.memberID.toString()));
-
-
-
     };
 
 
     createChart(): JSX.Element {
-
         const data: number[] = [];
         const dates: string[] = [];
 
@@ -295,22 +287,22 @@ class MemberUser extends React.Component<IProps, IState> {
     }
 
     decideConsent(): string {
+        return(this.decideConsentCalc(this.state.consentType, this.state.termsForm, this.state.privacyForm, this.state.consentForm));
+    }
 
-
-        if (this.state.consentType === "Terms") {
-            return (this.state.termsForm);
+    decideConsentCalc(type: string, terms: string, privacy: string, consent: string, ): string { // refactored for jest
+        if (type === "Terms") {
+            return (terms);
         }
-        else if (this.state.consentType === "Privacy") {
-            return (this.state.privacyForm);
+        else if (type === "Privacy") {
+            return (privacy);
         }
-        else if (this.state.consentType === "Consent") {
-            return (this.state.consentForm);
+        else if (type === "Consent") {
+            return (consent);
         }
         else {
             return ("ERROR");
         }
-
-
     }
 
     handleConsentToggle = (event: any): void => {
@@ -363,24 +355,12 @@ class MemberUser extends React.Component<IProps, IState> {
         else {
             return (<div> Loading </div>);
         }
-
-
-        // return(<div> Accepted </div>);
     }
     async getAccepted(): Promise<void> {
         this.setState({ loadingAccepted: true });
         const Consent = await ConsentService.getConsentMember(this.props.memberID);
-        // const TandC = await ConsentService.getConditionsMember(this.props.memberID);
-        // const Privacy = await ConsentService.getPrivacyMember(this.props.memberID);
-        // console.log(Consent);
-        // console.log("-----------------------------");
-        // console.log(TandC);
-        // console.log("-----------------------------");
-        // console.log(Privacy);
         this.setState({
             consentAccepted: Consent.isAccepted,
-            // termsAccepted: TandC,
-            // privacyAccepted: Privacy,
             loadingAccepted: false,
         });
     }
