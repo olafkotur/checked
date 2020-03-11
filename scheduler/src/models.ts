@@ -70,20 +70,16 @@ export interface IGrouping {
   count: number
 }
 
-export interface INotificationSettings {
-  interval: number;
-  maxTemperature: number;
-  minTemperature: number;
-  gatheringThreshold: number;
-}
-
 export interface ISettingsResponse {
   userId: number;
   logoImage: string;
   darkMode: boolean;
   timeZone: string;
   themeColor: string;
-  notifications: INotificationSettings;
+  interval: number;
+  maxTemperature: number;
+  minTemperature: number;
+  gatheringThreshold: number;
   createdAt: number;
   lastUpdated: number;
 }

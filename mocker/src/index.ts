@@ -42,7 +42,8 @@ async function main() {
     password: config.default.user.password,
     companyName: config.default.user.companyName,
     isGuardian: false,
-    policyAccepted: false
+    policyAccepted: false,
+    nickName: ''
   }).then(async (res: any) => {
     if (res.code === 201) {
       ids.user = res.result.userId;
@@ -51,13 +52,14 @@ async function main() {
       console.error('CreateUser: Error user already exists');
     }
 
-    if (true) { // TODO: Skip creating new zones and members
+    if (false) { // TODO: Skip creating new zones and members
       // Create new mock zones
       ids.zone = [];
       for (let i = 0; i < config.default.numberOfZones; i++) {
         await HttpService.post(DOMAIN + '/api/zones/create', {
           userId: ids.user,
           name: config.default.zone.name,
+          nickName: '',
           width: zoneDetails[i].width,
           height: zoneDetails[i].height,
           xValue: zoneDetails[i].xValue,
@@ -79,7 +81,8 @@ async function main() {
         await HttpService.post(DOMAIN + '/api/members/create', {
           userId: ids.user,
           firstName: config.default.member.firstName,
-          lastName: config.default.member.lastName
+          lastName: config.default.member.lastName,
+          nickName: '',
         }).then((res: any) => {
           if (res.code === 201) {
             ids.member.push(res.result.memberId);
