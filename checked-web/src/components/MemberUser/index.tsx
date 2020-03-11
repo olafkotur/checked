@@ -396,7 +396,8 @@ class MemberUser extends React.Component<IProps, IState> {
         if (this.state.overseers.length === 0) {
             overseers.push(
                 <Grid item xs={12} className="pb-3">
-                    <Typography variant="caption">
+                    
+                    <Typography variant="caption" align="left" color="textPrimary">
                         No assigned overseers.
                     </Typography>
                 </Grid>
@@ -409,13 +410,15 @@ class MemberUser extends React.Component<IProps, IState> {
             const user = this.state.users.find((user) => user.userId === link.userId);
             overseers.push(
                 <Grid item>
+                    <Typography variant="body1" align="left" color="textPrimary">
                     <Chip
                         className="overseer"
-                        color="primary"
+                        color="inherit"
                         label={user?.email}
                         onClick={() => this.changeOverseer(user)}
-                    // onDelete={(): Promise<void> => this.deleteLink(link.linkId)}
-                    />
+                        variant= "outlined"
+                    /> 
+                    </Typography>
                 </Grid>
 
             );
@@ -815,12 +818,14 @@ class MemberUser extends React.Component<IProps, IState> {
         return (
             <div>
                 <AppBar position="static">
+                    <Typography variant="body1" align="left" color="textPrimary">
                     <Tabs value={this.state.tabValue} onChange={this.changeTab} aria-label="simple tabs example" textColor="inherit">
                         <Tab label="Feed" />
                         <Tab label="Info" />
                         <Tab label="Consent" />
                         {/* <Tab label="Settings" /> */}
                     </Tabs>
+                    </Typography>
                 </AppBar>
 
 

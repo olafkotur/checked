@@ -163,15 +163,18 @@ class MemberManager extends React.Component<IProps, IState> {
         this.state.overseers.forEach((link) => {
             const user = this.state.users.find((user) => user.userId === link.userId);
             overseers.push(
-            <Grid item>
-                    <Chip
-                        className="overseer"
-                        color="primary"
-                        label={user?.email}
-                        onDelete={(): Promise<void> => this.deleteLink(link.linkId)}
-                    />
-            </Grid>
-                    
+                <Grid item>
+                    <Typography variant="body1" align="left" color="textPrimary">
+                        <Chip
+                            className="overseer"
+                            color="inherit"
+                            label={user?.email}
+                            onDelete={(): Promise<void> => this.deleteLink(link.linkId)}
+                            variant="outlined"
+                        />
+                    </Typography>
+                </Grid>
+
             );
         });
 
@@ -553,7 +556,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                                 margin="normal"
                                                 onBlur={(event: any): void => {
                                                     const value = event.target.value.split(' ')[1];
-                                                    this.setState({selectedOverseer: Number(value) });
+                                                    this.setState({ selectedOverseer: Number(value) });
                                                 }}
                                             />
                                         )}
@@ -582,28 +585,28 @@ class MemberManager extends React.Component<IProps, IState> {
                                     {this.createChart()}
                                 </Grid>
                             </Grid>
-                            
+
                         </Grid>
                         <Grid item xs={7} >
                             {/* Comment feed here */}
                             {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
-                                
-                               
-                                <CardHeader title={"Comment Feed"} action={
-                                    
-                                    <IconButton >
-                                        <Add onClick={this.addComment} />
-                                    </IconButton>
-                                } />
-                                <Divider />
-                                    <CardContent >
-                                        <List className="pr-3 pl-2 commentList" style={{ width: "100%"}}>
-                                            {this.displayComments()}
-                                        </List>
-                                    </CardContent>          
-                                
+
+
+                            <CardHeader title={"Comment Feed"} action={
+
+                                <IconButton >
+                                    <Add onClick={this.addComment} />
+                                </IconButton>
+                            } />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+
                             {/* </div> */}
-                           
+
 
                         </Grid>
                     </Grid>
@@ -653,7 +656,7 @@ class MemberManager extends React.Component<IProps, IState> {
 
         />;
 
-        
+
 
         return (graph);
     }
@@ -675,7 +678,7 @@ class MemberManager extends React.Component<IProps, IState> {
     }
 
 
-    
+
 
     render(): JSX.Element {
 
@@ -697,7 +700,7 @@ class MemberManager extends React.Component<IProps, IState> {
 
                                                 <Typography variant="body1" align="left" color="textPrimary">Your Feedback</Typography>
                                             </Grid>
-                                            
+
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={2} className="pl-1">
@@ -706,7 +709,7 @@ class MemberManager extends React.Component<IProps, IState> {
                                 </Grid>
                             </Button>
                         </ListItem>
-                        
+
 
 
 
