@@ -1,5 +1,5 @@
 import { HttpService } from "./HttpService";
-import request from 'request';
+
 
 
 export const ConsentService = {

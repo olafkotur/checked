@@ -1,12 +1,13 @@
 import React from 'react';
-import { Grid, List, ListItem, ListItemAvatar, Typography, Card,  Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemAvatar, Typography, Card, Button, Avatar, TextField, CardContent, CardHeader, Divider } from "@material-ui/core";
 import { IMember } from '../../types';
-import { Person, ArrowForwardIos } from '@material-ui/icons';
+import { Person, ArrowForwardIos, Feedback } from '@material-ui/icons';
 import { MemberService } from '../../api/MemberService';
 import CommentBox from '../MemberManager/comments/commentBox';
 import { CommentService } from '../../api/CommentService';
 import UseAnimations from 'react-useanimations';
 import LightGraph from './LightGraph/LightGraph';
+
 
 
 
@@ -55,6 +56,8 @@ class Overseer extends React.Component<IProps, IState> {
         this.saveComment = this.saveComment.bind(this);
         this.deleteComment = this.deleteComment.bind(this);
         this.displayComments = this.displayComments.bind(this);
+        // this.displayUserComments = this.displayUserComments.bind(this);
+        this.handleUserCommentsToggle = this.handleUserCommentsToggle.bind(this);
     }
 
     setCurrentMember(memberID: number): void {
@@ -72,7 +75,14 @@ class Overseer extends React.Component<IProps, IState> {
 
         this.setState({ currentMember: memberID, firstName: currentMember.firstName, lastName: currentMember.lastName, comments: [], editingComment: false });
         // setTimeout()
-        this.getFeedList(memberID);
+
+        if (memberID !== -6) {
+            this.getFeedList(memberID);
+        }
+        else {
+            this.getUserComments();
+        }
+
 
     }
 
@@ -112,6 +122,7 @@ class Overseer extends React.Component<IProps, IState> {
 
     getMembersList(): Array<JSX.Element> {
         const membersList: Array<JSX.Element> = [];
+
         this.props.members.forEach((member: any) => {
             membersList.push(
                 <ListItem alignItems="center" className="border-bottom border-muted p-0" key={member.memberId}>
@@ -141,6 +152,8 @@ class Overseer extends React.Component<IProps, IState> {
         });
         return membersList;
     }
+
+
 
     getSelectedMember(): JSX.Element {
         if (this.state.currentMember === -1) {
@@ -173,6 +186,31 @@ class Overseer extends React.Component<IProps, IState> {
                     <Typography variant="h6" className="fontMontserrat vcenterChild w-100 text-center">
                         Member successfully deleted.
                     </Typography>
+                </div>
+            );
+        } else if (this.state.currentMember === -6) {
+            return (
+                <div >
+                    <Grid container spacing={3} className="memberManager mt-3">
+                        <Grid item xs={6}>
+                            <CardHeader title={"Score"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.createChart()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                        <Grid item xs={6} >
+                            <CardHeader title={"Feedback Feed"} />
+                            <Divider />
+                            <CardContent >
+                                <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
+                                    {this.displayComments()}
+                                </List>
+                            </CardContent>
+                        </Grid>
+                    </Grid>
                 </div>
             );
         } else if (this.state.currentMember === -2) {
@@ -250,15 +288,15 @@ class Overseer extends React.Component<IProps, IState> {
                                 </Grid>
                                 <Grid item xs={12}>
 
-                               
-                                    
+
+
                                 </Grid>
-                                
-                               
+
+
                                 {/* TODO: Pull parents, allow multiple select, add list of already selected parents */}
-                               
-                               
-                                
+
+
+
                             </Grid>
                             {this.createChart()}
                         </Grid>
@@ -267,7 +305,7 @@ class Overseer extends React.Component<IProps, IState> {
                             {/* <div style={{width:"100%", height:"calc(100% - 500px)", backgroundColor:"red"}}> */}
 
 
-                            <CardHeader title={"Comment Feed"}  />
+                            <CardHeader title={"Comment Feed"} />
                             <Divider />
                             <CardContent >
                                 <List className="pr-3 pl-2 commentList" style={{ width: "100%" }}>
@@ -286,9 +324,9 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
 
-    createChart(): JSX.Element{
-       
-        const data:  number[]  = [];
+    createChart(): JSX.Element {
+
+        const data: number[] = [];
         const dates: string[] = [];
 
         let score = 0;
@@ -297,9 +335,9 @@ class Overseer extends React.Component<IProps, IState> {
 
             const rating = comment.rating;
 
-            if (rating === 1){ // red
+            if (rating === 1) { // red
                 score = score + -2;
-            } 
+            }
             else if (rating === 2) { // amber
                 score = score + 0;
             }
@@ -307,24 +345,24 @@ class Overseer extends React.Component<IProps, IState> {
             else if (rating === 3) { // amber
                 score = score + 1;
             }
-            
+
 
             data.push(score);
-            dates.push(this.formatAMPM(new Date(comment.createdAt*1000)));
+            dates.push(this.formatAMPM(new Date(comment.createdAt * 1000)));
         });
         // console.log(data);
 
-        const graph = <LightGraph 
-           
-            dates = {dates}
+        const graph = <LightGraph
+
+            dates={dates}
             height={"200"}
-            series = {[
+            series={[
                 {
                     name: "Score",
                     data: data
                 }
             ]}
-        
+
         />;
 
         return (graph);
@@ -355,7 +393,7 @@ class Overseer extends React.Component<IProps, IState> {
     }
 
     displayComments(): Array<JSX.Element> {
-
+        console.log(this.state.comments);
         if (!this.state.loadingComments) {
 
             const commentsTmp: JSX.Element[] = [];
@@ -378,17 +416,22 @@ class Overseer extends React.Component<IProps, IState> {
                 }
 
 
+
+
+                //TODO uncomment these
                 commentsTmp[commentsTmp.length] = <CommentBox
                     key={comment.commentId}
                     dbid={comment.commentId}
-                    radioVal={comment.rating.toString()}
+                    //  radioVal={comment.rating.toString()}
+                    radioVal="2"
                     textContent={comment.value}
                     new={comment.new}
                     timeStamp={timeStamp}
                     deleteThisComment={this.deleteComment}
                     saveThisComment={this.saveComment}
-                    canDelete = {false}
+                    canDelete={false}
                     imageSrc={comment.image}
+                // imageSrc={""}
                 />;
             });
 
@@ -487,9 +530,22 @@ class Overseer extends React.Component<IProps, IState> {
 
         this.setState({ comments: tempComments, editingComment: false });
 
+    }
 
+    async getUserComments(): Promise<void> {
+        this.setState({ loadingComments: true });
+        const serverInfo = await CommentService.getCommentsByUser(this.props.userID.toString());
+        console.log(serverInfo);
 
+        serverInfo.forEach((comment: { new: boolean }) => {
+            comment.new = false;
+        });
 
+        this.setState({ comments: serverInfo, loadingComments: false });
+    }
+
+    handleUserCommentsToggle(): void {
+        this.setCurrentMember(-6);
     }
 
 
@@ -499,6 +555,34 @@ class Overseer extends React.Component<IProps, IState> {
             <Grid container spacing={0} className="memberManager mt-3">
                 <Grid item xs={2} className="border-right border-muted">
                     <List className="pr-3 pl-2 memberList">
+
+                        <ListItem alignItems="center" className=" border-muted border-bottom  p-0" key={0} >
+                            <Button onClick={(): void => this.handleUserCommentsToggle()} className="w-100 h-100 p-2">
+                                <ListItemAvatar>
+                                    <Feedback />
+                                </ListItemAvatar>
+                                <Grid container spacing={0}>
+                                    <Grid item xs={10}>
+                                        <Grid container spacing={0}>
+                                            <Grid item xs={12}>
+
+                                                <Typography variant="body1" align="left" color="textPrimary">Your Feedback</Typography>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                {/* <Typography variant="body2" align="left" color="textPrimary">Member ID:  {member.memberId} </Typography> */}
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs={2} className="pl-1">
+                                        <ArrowForwardIos className="vcenterChild p-1 mr-5" fontSize="small" />
+                                    </Grid>
+                                </Grid>
+                            </Button>
+                        </ListItem>
+                        <Divider /> <Divider />
+
+
+
                         {this.getMembersList()}
                     </List>
                 </Grid>
