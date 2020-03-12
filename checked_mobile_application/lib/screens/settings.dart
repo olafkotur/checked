@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_icon.dart';
 
 class Settings extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
 
+  bool _darkMode = false;
   double _valueInterval = 10;
   double _valueMinTemp = 16;
   double _valueMaxTemp = 36;
@@ -38,19 +40,25 @@ class _SettingsState extends State<Settings> {
         title: Text('App Icon'),
         leading: Icon(Icons.settings),
         trailing: Container(
-          width: 50.0,
+          width: 100.0,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Expanded(
-                child: new IconButton(
-                  icon: new Icon(Icons.insert_photo),
-                  color: Colors.black26,
-                  onPressed: () {
-                    // open gallery
-                  },
-                ),
-              )
+              IconSelector(
+                appIcon: IconType.Checked,
+                imageAsset: 'assets/checked_icon.png',
+                //name: 'Checked',
+              ),
+              IconSelector(
+                appIcon: IconType.NHS,
+                imageAsset: 'assets/nhs_icon.png',
+                //name: 'NHS',
+              ),
+              IconSelector(
+                appIcon: IconType.Spar,
+                imageAsset: 'assets/spar_icon.png',
+                //name: 'Spar',
+              ),
             ],
           ),
         ),
@@ -77,10 +85,15 @@ class _SettingsState extends State<Settings> {
         ),
       ),
       SwitchListTile(
-        value: false,
+        value: _darkMode,
         title: Text("Dark mode"),
         secondary: Icon(Icons.settings),
-        onChanged: (value) {},
+        onChanged: (value) {
+          setState(() {
+              _darkMode = value;
+            },
+          );
+        },
       ),
       ListTile(
         title: Text('Time Zone'),
@@ -347,6 +360,38 @@ class _SettingsState extends State<Settings> {
         ),
       ),
     ]),
+    );
+  }
+}
+
+class IconSelector extends StatelessWidget {
+  final IconType appIcon;
+  final String imageAsset;
+
+  IconSelector(
+      {@required this.appIcon, @required this.imageAsset});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        child: Container(
+          margin: EdgeInsets.all(1),
+          width: 250,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset(
+                imageAsset,            
+                scale: 2.0,
+              ),
+            ],
+          ),
+        ),
+        onTap: () {
+          AppIcon.setLauncherIcon(appIcon);
+        },
+      ),
     );
   }
 }
