@@ -23,6 +23,7 @@ class _NewsFeedState extends State<NewsFeed> {
   APIResponse _apiresponse;
 
   _getCommentsAsync() async {
+    print(widget.membersIds);
     _apiresponse = await service.getComments(widget.membersIds);
     return _apiresponse;
   }
@@ -75,6 +76,7 @@ class _NewsFeedState extends State<NewsFeed> {
                         case ConnectionState.active:
                           return Text("");
                         case ConnectionState.done:
+                          print(snapshot.data.data);
                           if(snapshot.data.data == null){
                             return new Center(child: new CircularProgressIndicator());
                           }else {
@@ -87,7 +89,7 @@ class _NewsFeedState extends State<NewsFeed> {
                               Uint8List bytes;
                               var imageData;
                               if(rawData.length>1){
-                                String _base64 = rawData.substring(23, rawData.length);
+                                String _base64 = rawData.substring(22, rawData.length);
                                 bytes = Base64Decoder().convert(_base64);
                                 imageData = MemoryImage(bytes);
                               }else{

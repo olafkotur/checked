@@ -1,9 +1,19 @@
+import 'dart:convert';
+
+import 'dart:typed_data';
+
+import 'package:checked_mobile_application/module/api_respose.dart';
 import 'package:checked_mobile_application/screens/analysis.dart';
 import 'package:checked_mobile_application/screens/feedback.dart';
 import 'package:checked_mobile_application/screens/notifications.dart';
 import 'package:checked_mobile_application/screens/privacyPolicy.dart';
 import 'package:checked_mobile_application/screens/settings.dart';
+import 'package:checked_mobile_application/services/user_services.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+
+//import 'package:tinycolor/tinycolor.dart';
+
 
 import 'historic.dart';
 import 'newsfeed.dart';
@@ -13,24 +23,56 @@ class UserNavigation extends StatefulWidget {
   int userId;
   String companyName;
   List membersIds;
-  UserNavigation({this.userId,this.membersIds,this.companyName});
+  String logoImage;
+  String theme;
+  String timeZone;
+  Color color1;
+  var imageDatareal;
+  UserNavigation({this.userId,this.membersIds,this.companyName,this.theme,this.logoImage,this.timeZone});
+
+
   @override
   User_NavigationState createState() => User_NavigationState();
 }
 
 class User_NavigationState extends State<UserNavigation> {
+
+  UserServices get service => GetIt.I<UserServices>();
+
+  APIResponse _apiresponse;
+  set imageData(var imageData) {
+    var imageDatareal = imageData;
+  }
+
+  _getsettingsAsync() async {
+    _apiresponse = await service.getSettings(widget.userId.toString());
+    return _apiresponse;
+  }
+
   @override
+  void initState() { 
+    super.initState();
+    
+    widget.color1 = HexColor(widget.theme);
+  
+  }
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: SizedBox(
           width: 100.0,
           height: 50.0,
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Image.asset('assets/checkedLogo.jpg'),
-            )
+          child: StreamBuilder<Object>(
+            stream: null,
+            builder: (context, snapshot) {
+              return Container(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: widget.imageDatareal,
+                )
+              );
+            }
           ),
         ),
         actions: <Widget>[
@@ -62,7 +104,7 @@ class User_NavigationState extends State<UserNavigation> {
                         Container(
                           height: MediaQuery.of(context).size.height*.5,
                           width: MediaQuery.of(context).size.width,
-                          color: Colors.orange[600],
+                          color: widget.color1,
                         ),
                       ],
                     ),
@@ -84,20 +126,46 @@ class User_NavigationState extends State<UserNavigation> {
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: 20,
-                      left: MediaQuery.of(context).size.width*.5-100,
-                      child: Container(
-                        height: 200,
-                        width: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                              'assets/checkedLogo.jpg'
-                            )
-                          )
-                        ),
-                      ),
+                    FutureBuilder(
+                      future: _getsettingsAsync(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.none:
+                            return Text("Doing nothing");
+                          case ConnectionState.waiting:
+                            return new Center(child: new CircularProgressIndicator());
+                          case ConnectionState.active:
+                            return Text("");
+                          case ConnectionState.done:
+                          if(snapshot.data.data == null){
+                            return new Center(child: new CircularProgressIndicator());
+                          }else{
+                            String rawData = (snapshot.data.data["logoImage"]);
+                              Uint8List bytes;
+                              var imageData;
+                              if(rawData.length>1){
+                                String _base64 = rawData.substring(22, rawData.length);
+                                bytes = Base64Decoder().convert(_base64);
+                                imageData = MemoryImage(bytes);
+                              }else{
+                                imageData = AssetImage("assets/checkedLogo.jpg");
+                              }
+                            return Positioned(
+                          top: 20,
+                          left: MediaQuery.of(context).size.width*.5-100,
+                          child: Container(
+                            height: 200,
+                            width: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageData,
+                              )
+                            ),
+                          ),
+                        );
+                        }
+                        }
+                      }
                     ),
                     Positioned(
                       top: 230,
@@ -144,7 +212,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: widget.color1,
                                       borderRadius: BorderRadius.all(Radius.circular(200)),
                                       border: Border.all(
                                         color:Colors.orange[700],
@@ -185,7 +253,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: widget.color1,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
                                       border: Border.all(
                                         color:Colors.orange[700],
@@ -226,7 +294,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: widget.color1,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
                                       border: Border.all(
                                         color:Colors.orange[700],
@@ -267,7 +335,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: widget.color1,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
                                       border: Border.all(
                                         color:Colors.orange[700],
@@ -308,7 +376,7 @@ class User_NavigationState extends State<UserNavigation> {
                                     width: 100,
                                     height: 100,
                                     decoration: BoxDecoration(
-                                      color: Colors.orange,
+                                      color: widget.color1,
                                       borderRadius: BorderRadius.all(Radius.circular(100)),
                                       border: Border.all(
                                         color:Colors.orange[700],
@@ -354,7 +422,7 @@ class User_NavigationState extends State<UserNavigation> {
                           width: 300,
                           height:60,
                           decoration: BoxDecoration(
-                            color:Colors.orange,
+                            color:widget.color1,
                             border: Border.all(
                               color: Colors.orange[700],
                               width: 2,
@@ -393,4 +461,15 @@ class User_NavigationState extends State<UserNavigation> {
       ),
     );
   }
+}
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }
