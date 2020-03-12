@@ -19,6 +19,9 @@ export const LiveHandler = {
     // Fetch location data to figure out the zone
     const memberId: number = parseInt(req.body.memberId || '0');
     const location: any = await MongoService.findOne('location', { memberId });
+    if (!location) {
+      return ResponseService.bad('Failed to upload live without a valid location', res);
+    }
     
     const data: IDbLive = {
       dataType: req.body.type,
