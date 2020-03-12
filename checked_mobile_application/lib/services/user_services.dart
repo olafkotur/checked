@@ -14,6 +14,7 @@ class UserServices{
   static const getCommentsEndpoint = "/comments/members/";
   static const getMembersByUserEndpoint = "/members/users/";
   static const getHistoryEndpoint = "/historic/";
+  static const getSettingsEndpoint = "/settings/";
 
   // signup a user and return a response
   Future<APIResponse> postSignup(String _email, String _password, String _company) async {
@@ -83,7 +84,6 @@ class UserServices{
   Future<APIResponse> getComments(List<dynamic> memberId) async {
   dynamic jsonData;
   List results = [];
-
   for (var item in memberId) {
     try{
       var uriResponse = await http.get(API+getCommentsEndpoint+item.toString(),headers: headers);
@@ -110,6 +110,20 @@ class UserServices{
   //       return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
   //     }
   //   }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
+  }
+
+  Future<APIResponse> getSettings(String userId) async {
+  dynamic jsonData;
+  
+  return http.get(API+getSettingsEndpoint+userId,headers: headers)
+    .then((data){
+      var jsonData = json.decode(data.body);
+      if(jsonData["code"] == 200){
+        return APIResponse(data:jsonData["result"]);
+      }else if(jsonData["code"] == 401){
+        return APIResponse(data:"",errorMessage: jsonData["message"], error: true);
+      }
+    }).catchError((e) => APIResponse(data: "",errorMessage: jsonData["message"], error: true));
   }
   
 }

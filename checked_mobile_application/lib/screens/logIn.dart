@@ -23,8 +23,10 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
 
   UserServices get service => GetIt.I<UserServices>();
+  
 
   APIResponse _apiresponse;
+  APIResponse _settingsApiresponse;
 
   bool _isloading = false;
 
@@ -41,6 +43,9 @@ class _SignInState extends State<SignIn> {
   String _companyName;
   bool _isGuardian;
   int _userId;
+  String _logoImage;
+  String _timeZone;
+  String _theme;
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +181,14 @@ class _SignInState extends State<SignIn> {
                                 if(_formKey.currentState.validate()){
                                   setState(() => _isloading = true);
                                   _apiresponse = await service.postLogIn(_email, _password);
+                                 
                                   if(!_apiresponse.error){
+                                    _userId =_apiresponse.data["userId"];
+
+                                    _settingsApiresponse = await service.getSettings(_userId.toString());
+                                    _logoImage = _settingsApiresponse.data["logoImage"];
+                                    _theme = _settingsApiresponse.data["themeColor"];
+                                    _timeZone = _settingsApiresponse.data["timeZone"];
                                     _isGuardian = _apiresponse.data["isGuardian"];
                                     _userId =_apiresponse.data["userId"];
                                     _companyName = _apiresponse.data["companyName"];
@@ -186,7 +198,7 @@ class _SignInState extends State<SignIn> {
                                       if(!_isGuardian){
                                         _isloading = false;
                                         errorMessage = _apiresponse.errorMessage;
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => UserNavigation(userId: _userId,membersIds: memberIds,companyName: _companyName,)));
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => UserNavigation(userId: _userId,membersIds: memberIds,companyName: _companyName,logoImage: _logoImage,theme: _theme,timeZone: _timeZone,)));
                                         showPrivacyPolicy(context);
                                       } else {
                                         _isloading = false;
@@ -293,7 +305,7 @@ class _SignInState extends State<SignIn> {
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Children Privacy Policy!",
+                  "Data Privacy Policy!",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,

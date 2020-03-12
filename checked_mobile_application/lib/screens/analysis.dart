@@ -22,6 +22,7 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
   APIResponse _apiResponseByZone;
   int index =0;
   List<Entry> Linedata =[];
+  
 
   _getTemperatureByzone(String zone) async {
     _apiResponseByZone = await service.getTemperatureByZone(zone);
@@ -94,6 +95,8 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
     _generateData();
   
   }
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +143,52 @@ class _AnalysisBoardState extends State<AnalysisBoard> {
     );
   }
   Container buildContainer(){
-    return Container();
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+            SizedBox(height:30),
+            Text("Zone1:          "),
+            Text("30")
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+            SizedBox(height:30),
+            Text("Zone2:          "),
+            Text("47")
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+            SizedBox(height:30),
+            Text("Zone3:          "),
+            Text("30")
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+            SizedBox(height:30),
+            Text("Zone5:          "),
+            Text("40")
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+            SizedBox(height:30),
+            Text("Zone6:          "),
+            Text("42")
+            ],
+          )
+        ]
+      ),
+    );
   }
   Container buildTemperatureReading(String zone){
     int temperatureNum = 0;
@@ -224,4 +272,31 @@ class Entry{
   int index;
 
   Entry({this.value,this.time,this.index});
+}
+
+  /// Create one series with sample hard coded data.
+  List<charts.Series<LinearSales, int>> _createSampleData() {
+    final data = [
+      new LinearSales(0, 100),
+      new LinearSales(1, 75),
+      new LinearSales(2, 25),
+      new LinearSales(3, 5),
+    ];
+
+    return [
+      new charts.Series<LinearSales, int>(
+        id: 'Sales',
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+        data: data,
+      )
+    ];
+  }
+
+/// Sample linear data type.
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
 }

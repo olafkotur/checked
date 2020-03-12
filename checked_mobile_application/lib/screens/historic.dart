@@ -51,7 +51,11 @@ class _HistoryState extends State<History> {
                           fontSize: 15.3,
                         ),
                       ),
-                      IconButton(icon: Icon(Icons.filter_list), onPressed:(){})
+                      IconButton(icon: Icon(Icons.filter_list), 
+                      onPressed:(){
+                        
+                        }
+                      )
                     ]
                   ),
                 ),
